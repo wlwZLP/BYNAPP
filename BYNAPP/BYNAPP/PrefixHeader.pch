@@ -1,0 +1,25 @@
+//
+//  PrefixHeader.pch
+//  BYNAPP
+//
+//  Created by apple on 2020/3/30.
+//  Copyright © 2020 xidian. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+//全局宏
+#import "YYURLMacros.h"
+#import "YYColorMacros.h"
+#import "YYSizeMacros.h"
+
+
+
+
+
+
+
+
+
+#endif /* PrefixHeader_pch */
