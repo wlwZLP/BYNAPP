@@ -10,6 +10,6 @@
 
 @implementation YYBaseObject
 
-NSString * myExternString = @"abc";
+
 
 @end

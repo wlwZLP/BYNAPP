@@ -21,8 +21,8 @@
 #define YY56Color   [UIColor colorWithHexString:@"#565656"]
 #define YY99Color   [UIColor colorWithHexString:@"#999999"]
 #define YYBGColor   [UIColor colorWithHexString:@"#F6F6F6"]
-#define YYE1Color   [UIColor colorWithHexString:@"#E1E1E1"]
 #define YYCCColor   [UIColor colorWithHexString:@"#CCCCCC"]
+#define YYE1Color   [UIColor colorWithHexString:@"#E1E1E1"]
 #define YYRandomColor KRGBColor(arc4random_uniform(256)/255.0,arc4random_uniform(256)/255.0,arc4random_uniform(256)/255.0)
 
 

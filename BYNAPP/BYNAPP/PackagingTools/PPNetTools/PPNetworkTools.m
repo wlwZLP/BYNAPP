@@ -7,9 +7,10 @@
 //
 
 
-#import "PPNetworkHelper.h"
+#import "PPNetworkTools.h"
 #import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
+
 
 #ifdef DEBUG
 #define PPLog(...) printf("[%s] %s [第%d行]: %s\n", __TIME__ ,__PRETTY_FUNCTION__ ,__LINE__, [[NSString stringWithFormat:__VA_ARGS__] UTF8String])
@@ -19,14 +20,14 @@
 
 #define NSStringFormat(format,...) [NSString stringWithFormat:format,##__VA_ARGS__]
 
-@implementation PPNetworkHelper
+@implementation PPNetworkTools
 
 static BOOL _isOpenLog;   // 是否已开启日志打印
 static NSMutableArray *_allSessionTask;
 static AFHTTPSessionManager *_sessionManager;
 
 #pragma mark - 开始监听网络
-+ (void)networkStatusWithBlock:(PPNetworkStatus)networkStatus {
++(void)networkStatusWithBlock:(PPNetworkStatus)networkStatus {
     
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status) {
@@ -328,6 +329,24 @@ static AFHTTPSessionManager *_sessionManager;
     _sessionManager = [AFHTTPSessionManager manager];
     _sessionManager.requestSerializer.timeoutInterval = 30.f;
     _sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", @"text/json", @"text/plain", @"text/javascript", @"text/xml", @"image/*", nil];
+    NSDate * datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+
+    NSString * timeSp = [NSString stringWithFormat:@"%ld", (long)([datenow timeIntervalSince1970])];
+       
+    NSString * appsecret = [YYSaveTool GetCacheForKey:CacheAPPSecret];
+       
+    NSString * appkey = [YYSaveTool GetCacheForKey:CacheAPPkey];
+    
+    NSString * appVersion = [YYSaveTool GetCacheForKey:CacheAPPVersion];
+       
+    NSString * Md5String = [NSString stringWithFormat:@"%@appkey=%@tm=%@%@",appsecret,appkey,timeSp,appsecret];
+       
+    NSString * AppSign = [XMGFileTool BYNMd5:Md5String];
+    [_sessionManager.requestSerializer setValue:appkey forHTTPHeaderField:@"app-key"];
+    [_sessionManager.requestSerializer setValue:AppSign forHTTPHeaderField:@"sign"];
+    [_sessionManager.requestSerializer setValue:timeSp forHTTPHeaderField:@"t"];
+    [_sessionManager.requestSerializer setValue:appVersion forHTTPHeaderField:@"v"];
+    
     // 打开状态栏的等待菊花
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 }
@@ -370,6 +389,11 @@ static AFHTTPSessionManager *_sessionManager;
     
     [_sessionManager setSecurityPolicy:securityPolicy];
 }
+
+
+
+
+
 
 @end
 

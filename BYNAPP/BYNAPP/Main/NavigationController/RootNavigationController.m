@@ -26,17 +26,17 @@
     //导航栏主题 title文字属性
     UINavigationBar * navBar = [UINavigationBar appearance];
     //导航栏背景图
-    [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor whiteColor], NSFontAttributeName : [UIFont systemFontOfSize:18]}];
+    [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName :YY32Color, NSFontAttributeName : [UIFont systemFontOfSize:18]}];
     
-//    [navBar setBackgroundImage:[UIImage ZLPCreateimageWithCoupon]  forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+    [navBar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]]  forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     
-    [navBar setShadowImage:[UIImage new]];//去掉阴影线
+    [navBar setShadowImage:[UIImage imageWithColor:YYE1Color]];//去掉阴影线
     
     [UITabBar appearance].translucent = NO;
     
-    [UITabBar appearance].barTintColor = [UIColor redColor];
+    [UITabBar appearance].barTintColor = YY32Color;
     
-    [UITabBar appearance].tintColor = [UIColor redColor];
+    [UITabBar appearance].tintColor = YY32Color;
     
 
 }
@@ -104,17 +104,17 @@
 
 -(void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
     
-//    if ([viewController isKindOfClass:[BaseViewController class]]) {
-//        
-//        BaseViewController * vc = (BaseViewController *)viewController;
-//        if (vc.isHidenNaviBar) {
-//            vc.view.top = 0;
-//            [vc.navigationController setNavigationBarHidden:YES animated:animated];
-//        }else{
-//            vc.view.top = kTopHeight;
-//            [vc.navigationController setNavigationBarHidden:NO animated:animated];
-//        }
-//    }
+    if ([viewController isKindOfClass:[YYBaseViewController class]]) {
+        
+        YYBaseViewController * vc = (YYBaseViewController *)viewController;
+        if (vc.isHidenNaviBar) {
+            vc.view.top = 0;
+            [vc.navigationController setNavigationBarHidden:YES animated:animated];
+        }else{
+            vc.view.top = YYBarHeight;
+            [vc.navigationController setNavigationBarHidden:NO animated:animated];
+        }
+    }
     
 }
 

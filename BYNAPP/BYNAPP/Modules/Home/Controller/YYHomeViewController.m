@@ -18,12 +18,28 @@
     
     
     [super viewDidLoad];
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsHome];
   
-    
-//    YYNSLog(@"打印exten---%@",myExternString)
-    
+    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+        
+//        YYNSLog(@"请求返回数据----%@",responseObject);
+        
+    } failure:^(NSError *error) {
+        
+        
+        
+    }];
+
+ 
     
 }
+
+
+
+
+
+
 
 
 

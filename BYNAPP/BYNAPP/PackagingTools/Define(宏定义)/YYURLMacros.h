@@ -10,16 +10,15 @@
 #define URLMacros_h
 
 /**生产服务器*/
-#define Common_URL @"http://api.dac9.cn/"
+//#define Common_URL @" http://open.biyingniao.com/"
 
 ///**测试服务器*/
-//#define Common_URL @"http://api.test.dac9.cn/"
+#define Common_URL @"http://test.wef2.top/"
 
 #pragma mark - ——————— 详细接口地址 ————————
 
-#define URL_TabBar @"api/tabbar"
-//1.登录注册获取验证码
-#define URL_AutoSendsms @"api/auth/send_sms"
+//1.获取首页商品数据
+#define URL_APIGoodsHome @"api/goods/home"
 //2.用户填写的推荐码获取推荐人信息
 #define URL_AutoRecomender @"api/auth/recommender"
 //3.用户手机号 注册、登录

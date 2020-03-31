@@ -65,7 +65,7 @@ typedef void(^PPNetworkStatus)(PPNetworkStatusType status);
 
 @class AFHTTPSessionManager;
 
-@interface PPNetworkHelper : NSObject
+@interface PPNetworkTools : NSObject
 
 /// 有网YES, 无网:NO
 + (BOOL)isNetwork;

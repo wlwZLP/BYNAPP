@@ -10,8 +10,9 @@
 #import "RootNavigationController.h"
 
 #import "YYHomeViewController.h"
-#import "YYMemViewController.h"
-#import "YYLiveCouponViewController.h"
+
+#import "YYLiveCollectionViewController.h"
+#import "YYMemCollectionViewController.h"
 #import "YYPersonViewController.h"
 
 
@@ -33,13 +34,12 @@
      //添加子控制器
      [self setUpAllChildViewController];
     
-//     self.tabBar.backgroundImage = [UIImage imageWithColor:[UIColor whiteColor]];
-//
-//     self.tabBar.selectionIndicatorImage = [UIImage imageWithColor:[UIColor whiteColor]];
+     self.tabBar.backgroundImage = [UIImage imageWithColor:[UIColor whiteColor]];
+
+     self.tabBar.selectionIndicatorImage = [UIImage imageWithColor:[UIColor whiteColor]];
 
     
 }
-
 
 
 
@@ -52,16 +52,15 @@
     YYHomeViewController *homeVC = [[YYHomeViewController alloc]init];
     [self setupChildViewController:homeVC title:@"首页" imageName:@"icon_tabbar_homepage" seleceImageName:@"icon_tabbar_homepage_selected"];
     
-    
-    YYLiveCouponViewController * LiveVC = [[YYLiveCouponViewController alloc]init];
-    [self setupChildViewController:LiveVC title:@"生活券" imageName:@"icon_tabbar_Super" seleceImageName:@"icon_tabbar_Super_selected"];
+    YYLiveCollectionViewController * LiveVC = [[YYLiveCollectionViewController alloc]init];
+    [self setupChildViewController:LiveVC title:@"生活券" imageName:@"icon_tabbar_live" seleceImageName:@"icon_tabbar_live_selected"];
     
  
-    YYMemViewController * VipVC = [[YYMemViewController alloc]init];
-    [self setupChildViewController:VipVC title:@"分类" imageName:@"icon_tabbar_live" seleceImageName:@"icon_tabbar_live_selected"];
+    YYMemCollectionViewController * VipVC = [[YYMemCollectionViewController alloc]init];
+    [self setupChildViewController:VipVC title:@"分类" imageName:@"icon_tabbar_mem" seleceImageName:@"icon_tabbar_mem_selected"];
     
     YYPersonViewController * MeVC = [[YYPersonViewController alloc]init];
-    [self setupChildViewController:MeVC title:@"我的" imageName:@"icon_tabbar_mine" seleceImageName:@"icon_tabbar_mine_selected"];
+    [self setupChildViewController:MeVC title:@"我的" imageName:@"icon_tabbar_Person" seleceImageName:@"icon_tabbar_Person_selected"];
     
     self.viewControllers = _VCS;
     
@@ -79,9 +78,7 @@
     controller.tabBarItem.image = [[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
     controller.tabBarItem.selectedImage = [[UIImage imageNamed:selectImageName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    
   
-
     //包装导航控制器
      RootNavigationController *nav = [[RootNavigationController alloc]initWithRootViewController:controller];
     

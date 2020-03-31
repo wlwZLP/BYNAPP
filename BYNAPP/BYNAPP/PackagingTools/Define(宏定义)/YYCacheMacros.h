@@ -8,10 +8,14 @@
 
 //关于用户的配置
 
-#ifndef ThirdMacros_h
-#define ThirdMacros_h
+#ifndef YYCacheMacros
+#define YYCacheMacros
 
+#define CacheAPPVersion  @"APPVersion"
 
+#define CacheAPPkey  @"app_key"
+
+#define CacheAPPSecret  @"app_secret"
 
 
 

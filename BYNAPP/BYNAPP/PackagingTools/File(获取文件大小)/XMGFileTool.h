@@ -7,7 +7,7 @@
 //  处理文件缓存
 
 #import <Foundation/Foundation.h>
-
+#import <CommonCrypto/CommonCrypto.h>
 /*
  业务类:以后开发中用来专门处理某件事情,网络处理,缓存处理
  */
@@ -29,6 +29,13 @@
  *  @param directoryPath 文件夹路径
  */
 + (void)removeDirectoryPath:(NSString *)directoryPath;
+
+/**
+*  MD5加密
+*
+*  @param NSMutableString 文件夹路径
+*/
++(NSMutableString *)BYNMd5:(NSString *)bynappkeystring;
 
 
 

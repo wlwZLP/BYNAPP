@@ -12,6 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YYBaseViewController : UIViewController
 
+/**
+ 是否隐藏导航栏
+ */
+@property (nonatomic, assign) BOOL isHidenNaviBar;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -2,21 +2,25 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 target 'BYNAPP' do
-
+#网络请求数据
 pod 'AFNetworking'
+#上拉下拉刷新
 pod 'MJRefresh'
+#加载动画
 pod 'MBProgressHUD'
+#YYModel 等遍历框架
 pod 'YYKit'
+#图片处理 ，三级缓存
 pod 'SDWebImage'
-
-#MVVM布局
-pod 'Masonry'
+#空白界面框架
+pod 'DZNEmptyDataSet'
+#RACl
 pod 'ReactiveObjC', '~> 3.1.0'
-
-#高少东自动布局
+#自动轮滑
 pod 'SDCycleScrollView'
+#自动布局
 pod 'SDAutoLayout', '~> 2.1.3'
-
+pod 'Masonry'
 #键盘控制
 pod 'IQKeyboardManager'
 

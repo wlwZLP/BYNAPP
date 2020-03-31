@@ -102,5 +102,23 @@
     
 }
 
++(NSMutableString *)BYNMd5:(NSString *)bynappkeystring{
+    //md5加密
+    const char *cStr = [bynappkeystring UTF8String];
+    unsigned char digest[16];
+    
+    CC_MD5( cStr,(CC_LONG)strlen(cStr), digest ); // This is the md5 call
+    
+    //加密成md5的字符串
+    NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    
+    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
+        [output appendFormat:@"%02x", digest[i]];
+    
+    return output;
+    
+}
+
+
 
 @end
