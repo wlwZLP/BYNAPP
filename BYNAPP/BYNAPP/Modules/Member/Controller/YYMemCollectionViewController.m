@@ -18,7 +18,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     
-    [super viewDidLoad];
+     [super viewDidLoad];
     
 
     
@@ -28,13 +28,19 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 
--(void)viewDidDisappear:(BOOL)animated{
+-(void)viewDidAppear:(BOOL)animated{
     
     [self.collectionView removeFromSuperview];
     
+ 
+}
+
+-(void)viewDidLayoutSubviews{
+    
     
     
 }
+
 
 #pragma mark <DZNEmptyDataSetSource>
 

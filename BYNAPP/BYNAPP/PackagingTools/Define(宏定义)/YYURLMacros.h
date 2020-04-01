@@ -19,8 +19,11 @@
 
 //1.获取首页商品数据
 #define URL_APIGoodsHome @"api/goods/home"
-//2.用户填写的推荐码获取推荐人信息
-#define URL_AutoRecomender @"api/auth/recommender"
+//2.首页头部商品类目
+#define URL_APIGoodsCategories @"api/goods/categories"
+//3.根据商品类目搜索
+#define URL_APIGoodsItems @"api/goods/items"
+
 //3.用户手机号 注册、登录
 #define URL_AutoLogin @"api/auth/login"
 //4.手机号绑定微信
@@ -33,8 +36,7 @@
 #define URL_UserInfo @"api/user/info"
 //8.获取用户首页信息
 #define URL_HomeMain @"api/home/main_v3"
-//9.获取APP首页类目API
-#define URL_HomeCategories @"api/home/categories"
+
 //10.获取APP我的消息
 #define URL_UserNotice @"api/user/notices"
 //11.获取APP分享界面发圈数据

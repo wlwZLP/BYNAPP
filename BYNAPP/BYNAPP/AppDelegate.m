@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "YYMainTabBarController.h"
+#import "HomeGoodsCategoriesModel.h"
 @interface AppDelegate ()
 
 @end
@@ -20,6 +21,8 @@
     
     // 设置APP配置数据
     [self SetAPPSignSaveTool];
+    
+    [self GetAPPCachLocalData];
   
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
@@ -51,6 +54,14 @@
     
 }
 
+-(void)GetAPPCachLocalData{
+    
+
+   
+   
+    
+    
+}
 
 
 

@@ -9,8 +9,9 @@
 #import "YYMainTabBarController.h"
 #import "RootNavigationController.h"
 
-#import "YYHomeViewController.h"
+#import "HomeGoodsCategoriesModel.h"
 
+#import "YYHomeCollectionViewController.h"
 #import "YYLiveCollectionViewController.h"
 #import "YYMemCollectionViewController.h"
 #import "YYPersonViewController.h"
@@ -20,9 +21,27 @@
 
 @property (nonatomic,strong) NSMutableArray * VCS;//tabbar root VC
 
+@property (nonatomic,strong) NSArray * GoodsModelArray;//tabbar root VC
+
 @end
 
 @implementation YYMainTabBarController
+
+
+-(instancetype)init{
+    
+    //1.初始化父类
+    self = [super init];
+    //2.判断父类是否初始化成功
+    if(self){
+       //3.初始化子类
+       //设置属性的值
+     
+    }
+    //4.返回地址
+    return self;
+    
+}
 
 
 - (void)viewDidLoad {
@@ -30,7 +49,7 @@
      [super viewDidLoad];
     
      self.delegate = self;
-    
+ 
      //添加子控制器
      [self setUpAllChildViewController];
     
@@ -38,10 +57,7 @@
 
      self.tabBar.selectionIndicatorImage = [UIImage imageWithColor:[UIColor whiteColor]];
 
-    
 }
-
-
 
 
 #pragma mark - ——————— 初始化VC ————————
@@ -49,15 +65,15 @@
     
     _VCS = @[].mutableCopy;
     
-    YYHomeViewController *homeVC = [[YYHomeViewController alloc]init];
+    YYHomeCollectionViewController *homeVC = [[YYHomeCollectionViewController alloc]init];
     [self setupChildViewController:homeVC title:@"首页" imageName:@"icon_tabbar_homepage" seleceImageName:@"icon_tabbar_homepage_selected"];
     
     YYLiveCollectionViewController * LiveVC = [[YYLiveCollectionViewController alloc]init];
     [self setupChildViewController:LiveVC title:@"生活券" imageName:@"icon_tabbar_live" seleceImageName:@"icon_tabbar_live_selected"];
     
  
-    YYMemCollectionViewController * VipVC = [[YYMemCollectionViewController alloc]init];
-    [self setupChildViewController:VipVC title:@"分类" imageName:@"icon_tabbar_mem" seleceImageName:@"icon_tabbar_mem_selected"];
+    YYMemCollectionViewController * MemVC = [[YYMemCollectionViewController alloc]init];
+    [self setupChildViewController:MemVC title:@"分类" imageName:@"icon_tabbar_mem" seleceImageName:@"icon_tabbar_mem_selected"];
     
     YYPersonViewController * MeVC = [[YYPersonViewController alloc]init];
     [self setupChildViewController:MeVC title:@"我的" imageName:@"icon_tabbar_Person" seleceImageName:@"icon_tabbar_Person_selected"];

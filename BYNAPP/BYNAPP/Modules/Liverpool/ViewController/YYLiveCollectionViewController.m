@@ -10,6 +10,8 @@
 
 @interface YYLiveCollectionViewController ()
 
+
+
 @end
 
 @implementation YYLiveCollectionViewController
@@ -46,10 +48,20 @@
 
 - (void)emptyDataSet:(UIScrollView *)scrollView didTapButton:(UIButton *)button {
 
-      YYNSLog(@"重新请求获取数据");
+    [[button rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
+                  //发送信号
+//        [self.btnClickSingle sendNext:@"按钮点击咯"];//这句代码时demo3的
+
+    }];
     
 }
 
+//-(RACSubject *)btnClickSingle{
+//    if (!_btnClickSingle) {
+//        _btnClickSingle = [RACSubject subject];
+//    }
+//    return _btnClickSingle;
+//}
 
 
 

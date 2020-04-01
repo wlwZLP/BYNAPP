@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Data</key>
+	<array>
+        
+        <dict>
+            <key>id</key>
+            <integer>0</integer>
+            <key>mark</key>
+            <string>JingXuan</string>
+            <key>name</key>
+            <string>精选</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>888</integer>
+            <key>mark</key>
+            <string>like</string>
+            <key>name</key>
+            <string>猜你喜欢</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>4</integer>
+            <key>mark</key>
+            <string>category_4</string>
+            <key>name</key>
+            <string>美妆</string>
+        </dict>
+        
+        <dict>
+        <key>id</key>
+        <integer>2</integer>
+        <key>mark</key>
+        <string>category_2</string>
+        <key>name</key>
+        <string>男装</string>
+        </dict>
+    
+        <dict>
+            <key>id</key>
+            <integer>3</integer>
+            <key>mark</key>
+            <string>category_3</string>
+            <key>name</key>
+            <string>内衣</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>1</integer>
+            <key>mark</key>
+            <string>category_1</string>
+            <key>name</key>
+            <string>女装</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>5</integer>
+            <key>mark</key>
+            <string>category_5</string>
+            <key>name</key>
+            <string>配饰</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>6</integer>
+            <key>mark</key>
+            <string>category_6</string>
+            <key>name</key>
+            <string>鞋品</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>7</integer>
+            <key>mark</key>
+            <string>category_7</string>
+            <key>name</key>
+            <string>箱包</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>8</integer>
+            <key>mark</key>
+            <string>category_8</string>
+            <key>name</key>
+            <string>儿童</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>9</integer>
+            <key>mark</key>
+            <string>category_9</string>
+            <key>name</key>
+            <string>母婴</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>10</integer>
+            <key>mark</key>
+            <string>category_10</string>
+            <key>name</key>
+            <string>居家</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>11</integer>
+            <key>mark</key>
+            <string>category_11</string>
+            <key>name</key>
+            <string>美食</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>12</integer>
+            <key>mark</key>
+            <string>category_12</string>
+            <key>name</key>
+            <string>数码</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>13</integer>
+            <key>mark</key>
+            <string>category_13</string>
+            <key>name</key>
+            <string>家电</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>15</integer>
+            <key>mark</key>
+            <string>category_15</string>
+            <key>name</key>
+            <string>车品</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>16</integer>
+            <key>mark</key>
+            <string>category_16</string>
+            <key>name</key>
+            <string>文体</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>17</integer>
+            <key>mark</key>
+            <string>category_17</string>
+            <key>name</key>
+            <string>宠物</string>
+        </dict>
+        
+        <dict>
+            <key>id</key>
+            <integer>14</integer>
+            <key>mark</key>
+            <string>category_14</string>
+            <key>name</key>
+            <string>其他</string>
+        </dict>
+        
+	</array>
+	
+	
+</dict>
+</plist>

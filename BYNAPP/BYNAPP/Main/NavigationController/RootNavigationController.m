@@ -106,14 +106,15 @@
     
     if ([viewController isKindOfClass:[YYBaseViewController class]]) {
         
-        YYBaseViewController * vc = (YYBaseViewController *)viewController;
-        if (vc.isHidenNaviBar) {
-            vc.view.top = 0;
-            [vc.navigationController setNavigationBarHidden:YES animated:animated];
-        }else{
-            vc.view.top = YYBarHeight;
-            [vc.navigationController setNavigationBarHidden:NO animated:animated];
-        }
+//        YYBaseViewController * vc = (YYBaseViewController *)viewController;
+//        if (vc.isHidenNaviBar) {
+//            vc.view.top = 0;
+//            [vc.navigationController setNavigationBarHidden:YES animated:animated];
+//        }else{
+//            vc.view.top = YYBarHeight;
+//            [vc.navigationController setNavigationBarHidden:NO animated:animated];
+//        }
+        
     }
     
 }
