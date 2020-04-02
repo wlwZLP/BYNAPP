@@ -1,20 +1,14 @@
 //
-//  HomeMainCollectionViewCell.m
+//  LiveSpreadCollectionViewCell.m
 //  BYNAPP
 //
-//  Created by apple on 2020/4/1.
+//  Created by apple on 2020/4/2.
 //  Copyright © 2020 xidian. All rights reserved.
 //
 
-#import "HomeMainCollectionViewCell.h"
+#import "LiveSpreadCollectionViewCell.h"
 
-@interface HomeMainCollectionViewCell ()
-
-@end
-
-
-@implementation HomeMainCollectionViewCell
-
+@implementation LiveSpreadCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
     
@@ -199,6 +193,8 @@
     
     
 }
+
+
 
 
 @end

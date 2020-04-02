@@ -29,6 +29,9 @@ typedef void(^GoodsRequestSuccess)(NSArray<HomeGoodsCategoriesModel*> * ModelArr
 /** 标题按钮数量 */
 @property(nonatomic,strong)NSArray<HomeGoodsCategoriesModel*> * HomeTitleModelArray;
 
+/** 首页搜索空间 */
+@property (nonatomic, strong) UISearchBar * HomeSearchBar;
+
 @end
 
 @implementation YYHomeCollectionViewController
@@ -36,6 +39,11 @@ typedef void(^GoodsRequestSuccess)(NSArray<HomeGoodsCategoriesModel*> * ModelArr
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    [self CreateHomeNavTopSearch];
+    
+    
+    [self.navigationController setNavigationBarHidden:YES animated:nil];
    
     [self GetAPPCachLocalCompleteData:^(NSArray<HomeGoodsCategoriesModel *> *ModelArray) {
     
@@ -59,7 +67,7 @@ typedef void(^GoodsRequestSuccess)(NSArray<HomeGoodsCategoriesModel*> * ModelArr
      
           }];
        
-        self.HomeTitleModelArray = ModelArray;
+         self.HomeTitleModelArray = ModelArray;
         
         [self CreateHomeBaseViewController];
         
@@ -89,6 +97,74 @@ NSLog(@"1---viewVillAppera");
 - (void)viewDidDisappear:(BOOL)animated {
     NSLog(@"4---viewDidDisappear");
 }
+
+
+-(void)CreateHomeNavTopSearch{
+    
+    UIView * TopBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, YYScreenWidth, YYBarHeight)];
+    TopBarView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:TopBarView];
+    
+    [TopBarView addSubview:self.HomeSearchBar];
+    
+    UIButton * SearchBtn = [[UIButton alloc] initWithFrame:CGRectMake(YYScreenWidth - 125, YYStatusHeight + 6 , 66, 32)];
+    [SearchBtn addTarget:self action:@selector(SearchButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    SearchBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
+    SearchBtn.backgroundColor = YYHexColor(@"#FFD409");
+    [SearchBtn setTitleColor:YY66Color forState:UIControlStateNormal];
+    [SearchBtn setTitle:@"搜索" forState:UIControlStateNormal];
+    [SearchBtn.titleLabel setFont :[ UIFont fontWithName :@"Helvetica-Bold" size : 15]];
+    [TopBarView addSubview:SearchBtn];
+    [YYTools ChangeView:SearchBtn RadiusSize:16 BorderColor:YYHexColor(@"#FFD409")];
+    
+    UIButton * HomeRightBtn = [[UIButton alloc]init];
+    [HomeRightBtn setBackgroundImage:[UIImage imageNamed:@"HomeMes"] forState:UIControlStateNormal];
+    // frame
+    HomeRightBtn.frame = CGRectMake(YYScreenWidth - 40 , YYStatusHeight + 10, 26, 24);
+    [TopBarView addSubview:HomeRightBtn];
+    
+    
+    
+    
+}
+
+
+/**
+ *  懒加载UISearchBar
+ *
+ *  @return SalesSearchBar
+ */
+- (UISearchBar *)HomeSearchBar
+{
+    
+    if (_HomeSearchBar== nil) {
+        
+       _HomeSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, YYStatusHeight + 6 , YYScreenWidth - 100 , 32)];
+       _HomeSearchBar.backgroundColor = [UIColor colorWithRed:255/255.0 green:254/255.0 blue:248/255.0 alpha:1.0];
+       _HomeSearchBar.showsCancelButton = NO;
+       _HomeSearchBar.tintColor = [UIColor orangeColor];
+       _HomeSearchBar.backgroundImage = [UIImage imageWithColor:[UIColor clearColor]];
+       _HomeSearchBar.placeholder = @"粘贴标题，搜索优惠";
+       _HomeSearchBar.delegate = self;
+       _HomeSearchBar.searchBarStyle  = UISearchBarStyleProminent;
+        [YYTools ChangeView:_HomeSearchBar RadiusSize:10 BorderColor:YYHexColor(@"#FFD409")];
+        UITextField *textField = _HomeSearchBar.BYNGetSearchTextFiled;
+        textField.backgroundColor = [UIColor colorWithRed:255/255.0 green:254/255.0 blue:248/255.0 alpha:1.0];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10 , 17 , 17)];
+        imageView.backgroundColor = [UIColor clearColor];
+        imageView.image = [UIImage imageNamed:@"HomeSearch"];
+        textField.leftView = imageView;
+        NSMutableAttributedString *arrStr = [[NSMutableAttributedString alloc]initWithString:textField.placeholder attributes:@{NSForegroundColorAttributeName:YY99Color,NSFontAttributeName:[UIFont systemFontOfSize:12]}];
+        textField.attributedPlaceholder = arrStr;
+        
+        
+    }
+    
+    return _HomeSearchBar;
+    
+}
+
+
 
 
 -(void)GetAPPCachLocalCompleteData:(GoodsRequestSuccess)CompleteData{
@@ -134,7 +210,7 @@ NSLog(@"1---viewVillAppera");
     // 文字
     UIScrollView * TitlescrollView = [[UIScrollView alloc] init];
     TitlescrollView.backgroundColor = [UIColor blueColor];
-    TitlescrollView.frame = CGRectMake(0, 0, YYScreenWidth, 50);
+    TitlescrollView.frame = CGRectMake(0, YYBarHeight, YYScreenWidth, 40);
     TitlescrollView.showsHorizontalScrollIndicator = NO;
     TitlescrollView.showsVerticalScrollIndicator = NO;
     TitlescrollView.pagingEnabled = YES;
@@ -185,7 +261,7 @@ NSLog(@"1---viewVillAppera");
     // 不允许自动修改UIScrollView的内边距
     UIScrollView * scrollView = [[UIScrollView alloc] init];
     scrollView.backgroundColor = [UIColor whiteColor];
-    scrollView.frame = CGRectMake(0, 50, YYScreenWidth, YYScreenHeight  - 50 - YYTabBarHeight - YYBarHeight);
+    scrollView.frame = CGRectMake(0, YYBarHeight + 40, YYScreenWidth, YYScreenHeight  - 40 - YYTabBarHeight - YYBarHeight);
     scrollView.delegate = self;
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;

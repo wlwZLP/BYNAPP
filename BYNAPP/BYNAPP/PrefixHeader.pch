@@ -38,13 +38,14 @@
 #import "PPNetworkTools.h"
 #import "XMGFileTool.h"
 #import "YYSaveTool.h"
+#import "YYTools.h"
 #import "DefineConstant.h"
 #import "HomeMainModel.h"
 
 //常用分类
 #import "UIView+AnimationExtend.h"
-
-
+#import "UIColor+Hex.h"
+#import "UISearchBar+Text.h"
 
 
 

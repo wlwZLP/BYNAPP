@@ -11,7 +11,34 @@
 @implementation HomeMainViewModel
 
 
-
+- (instancetype)init
+    {
+        if(self = [super init])
+        {
+            [self setUp];
+        }
+        return self;
+    }
+    
+- (void)setUp{
+    
+    _requestCommand = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        
+    // 创建信号
+    RACSignal * signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber){
+            
+           
+    
+    
+            return nil;
+            
+      }];
+        
+    
+        return signal;
+        
+    }];
+}
 
 
 
