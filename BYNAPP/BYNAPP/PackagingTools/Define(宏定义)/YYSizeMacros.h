@@ -43,15 +43,24 @@ NO
 CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size) : \
 NO
 
+#define SYSTEM_VERSION [[[UIDevice currentDevice] systemVersion] floatValue]
 
+//float statusBarHeight = 0;
+//if (@available(iOS 13.0, *)) {
+//    UIStatusBarManager *statusBarManager = [UIApplication sharedApplication].windows.firstObject.windowScene.statusBarManager;
+//    statusBarHeight = statusBarManager.statusBarFrame.size.height;
+//}
+//else {
+//    statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+//}
 
-#define YYBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?88:64)
+#define YYStatusHeight  [UIApplication sharedApplication].statusBarFrame.size.height
 
-#define YYStatusHeight [[UIApplication sharedApplication] statusBarFrame].size.height
+#define YYBarHeight     [UIApplication sharedApplication].statusBarFrame.size.height>20?88:64
 
-#define YYNavHeight self.navigationController.navigationBar.frame.size.height
+#define YYNavHeight     self.navigationController.navigationBar.frame.size.height
 
-#define YYTabBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?83:49)
+#define YYTabBarHeight  [UIApplication sharedApplication].statusBarFrame.size.height>20?83:49
 
 
 

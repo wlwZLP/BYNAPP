@@ -30,10 +30,9 @@
  */
 + (void)removeDirectoryPath:(NSString *)directoryPath;
 
+
 /**
 *  MD5加密
-*
-*  @param NSMutableString 文件夹路径
 */
 +(NSMutableString *)BYNMd5:(NSString *)bynappkeystring;
 

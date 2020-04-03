@@ -26,7 +26,7 @@
     //导航栏主题 title文字属性
     UINavigationBar * navBar = [UINavigationBar appearance];
     //导航栏背景图
-    [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName :YY32Color, NSFontAttributeName : [UIFont systemFontOfSize:18]}];
+    [navBar setTitleTextAttributes:@{NSForegroundColorAttributeName :YY33Color, NSFontAttributeName : [UIFont systemFontOfSize:18]}];
     
     [navBar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]]  forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     
@@ -34,9 +34,9 @@
     
     [UITabBar appearance].translucent = NO;
     
-    [UITabBar appearance].barTintColor = YY32Color;
+    [UITabBar appearance].barTintColor = YY33Color;
     
-    [UITabBar appearance].tintColor = YY32Color;
+    [UITabBar appearance].tintColor = YY33Color;
     
 
 }

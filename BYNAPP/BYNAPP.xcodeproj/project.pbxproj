@@ -24,7 +24,7 @@
 		1836AFC82431E28300EA8F30 /* XMGFileTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836AFBE2431E28300EA8F30 /* XMGFileTool.m */; };
 		1836AFCB2431E53900EA8F30 /* YYBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836AFCA2431E53900EA8F30 /* YYBaseViewController.m */; };
 		1836AFCE2431E55400EA8F30 /* YYWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836AFCD2431E55400EA8F30 /* YYWebViewController.m */; };
-		1836AFD42431E61B00EA8F30 /* YYPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836AFD32431E61B00EA8F30 /* YYPersonViewController.m */; };
+		1836AFD42431E61B00EA8F30 /* YYPersonCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1836AFD32431E61B00EA8F30 /* YYPersonCollectionViewController.m */; };
 		18633B842432D79100CE3E60 /* UIImage+imgaeWithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 18633B612432D79000CE3E60 /* UIImage+imgaeWithColor.m */; };
 		18633B862432D79100CE3E60 /* UIButton+EX.m in Sources */ = {isa = PBXBuildFile; fileRef = 18633B682432D79000CE3E60 /* UIButton+EX.m */; };
 		18633B872432D79100CE3E60 /* UIButton+XYButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 18633B692432D79000CE3E60 /* UIButton+XYButton.m */; };
@@ -38,6 +38,10 @@
 		18633B8F2432D79100CE3E60 /* UIViewController+AlertViewAndActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 18633B802432D79000CE3E60 /* UIViewController+AlertViewAndActionSheet.m */; };
 		18633B902432D79100CE3E60 /* UITextField+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 18633B822432D79000CE3E60 /* UITextField+Placeholder.m */; };
 		18633B9D24331B7A00CE3E60 /* YYBaseCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18633B9C24331B7A00CE3E60 /* YYBaseCollectionViewController.m */; };
+		1871A0412436EE62000955D5 /* PersonHeaderCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871A0402436EE62000955D5 /* PersonHeaderCollectionViewCell.m */; };
+		1871A04424373267000955D5 /* PersonTeamCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871A04324373267000955D5 /* PersonTeamCollectionViewCell.m */; };
+		1871A047243732BA000955D5 /* PersonToolsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871A046243732BA000955D5 /* PersonToolsCollectionViewCell.m */; };
+		1871A04A243732D8000955D5 /* PersonMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871A049243732D8000955D5 /* PersonMainCollectionViewCell.m */; };
 		18999018243436D700B5D1D6 /* HomeMainViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18999017243436D700B5D1D6 /* HomeMainViewModel.m */; };
 		1899901B24343FBB00B5D1D6 /* YYHomeCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1899901A24343FBB00B5D1D6 /* YYHomeCollectionViewController.m */; };
 		1899902524344A4F00B5D1D6 /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 1899902424344A4F00B5D1D6 /* data.json */; };
@@ -92,8 +96,8 @@
 		1836AFCA2431E53900EA8F30 /* YYBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYBaseViewController.m; sourceTree = "<group>"; };
 		1836AFCC2431E55400EA8F30 /* YYWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYWebViewController.h; sourceTree = "<group>"; };
 		1836AFCD2431E55400EA8F30 /* YYWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYWebViewController.m; sourceTree = "<group>"; };
-		1836AFD22431E61B00EA8F30 /* YYPersonViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYPersonViewController.h; sourceTree = "<group>"; };
-		1836AFD32431E61B00EA8F30 /* YYPersonViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYPersonViewController.m; sourceTree = "<group>"; };
+		1836AFD22431E61B00EA8F30 /* YYPersonCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYPersonCollectionViewController.h; sourceTree = "<group>"; };
+		1836AFD32431E61B00EA8F30 /* YYPersonCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYPersonCollectionViewController.m; sourceTree = "<group>"; };
 		1836AFD52431E67300EA8F30 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		1836AFDD2431ECC900EA8F30 /* YYSizeMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYSizeMacros.h; sourceTree = "<group>"; };
 		1836AFDF2431ECC900EA8F30 /* YYCacheMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYCacheMacros.h; sourceTree = "<group>"; };
@@ -125,6 +129,14 @@
 		18633B832432D79000CE3E60 /* UITextField+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+Placeholder.h"; sourceTree = "<group>"; };
 		18633B9B24331B7A00CE3E60 /* YYBaseCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYBaseCollectionViewController.h; sourceTree = "<group>"; };
 		18633B9C24331B7A00CE3E60 /* YYBaseCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYBaseCollectionViewController.m; sourceTree = "<group>"; };
+		1871A03F2436EE62000955D5 /* PersonHeaderCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonHeaderCollectionViewCell.h; sourceTree = "<group>"; };
+		1871A0402436EE62000955D5 /* PersonHeaderCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonHeaderCollectionViewCell.m; sourceTree = "<group>"; };
+		1871A04224373267000955D5 /* PersonTeamCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonTeamCollectionViewCell.h; sourceTree = "<group>"; };
+		1871A04324373267000955D5 /* PersonTeamCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonTeamCollectionViewCell.m; sourceTree = "<group>"; };
+		1871A045243732BA000955D5 /* PersonToolsCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonToolsCollectionViewCell.h; sourceTree = "<group>"; };
+		1871A046243732BA000955D5 /* PersonToolsCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonToolsCollectionViewCell.m; sourceTree = "<group>"; };
+		1871A048243732D8000955D5 /* PersonMainCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonMainCollectionViewCell.h; sourceTree = "<group>"; };
+		1871A049243732D8000955D5 /* PersonMainCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonMainCollectionViewCell.m; sourceTree = "<group>"; };
 		18999016243436D700B5D1D6 /* HomeMainViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeMainViewModel.h; sourceTree = "<group>"; };
 		18999017243436D700B5D1D6 /* HomeMainViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeMainViewModel.m; sourceTree = "<group>"; };
 		1899901924343FBB00B5D1D6 /* YYHomeCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYHomeCollectionViewController.h; sourceTree = "<group>"; };
@@ -418,8 +430,8 @@
 		1836AE582431E16A00EA8F30 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1836AFD22431E61B00EA8F30 /* YYPersonViewController.h */,
-				1836AFD32431E61B00EA8F30 /* YYPersonViewController.m */,
+				1836AFD22431E61B00EA8F30 /* YYPersonCollectionViewController.h */,
+				1836AFD32431E61B00EA8F30 /* YYPersonCollectionViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -434,6 +446,14 @@
 		1836AE892431E16A00EA8F30 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1871A03F2436EE62000955D5 /* PersonHeaderCollectionViewCell.h */,
+				1871A0402436EE62000955D5 /* PersonHeaderCollectionViewCell.m */,
+				1871A04224373267000955D5 /* PersonTeamCollectionViewCell.h */,
+				1871A04324373267000955D5 /* PersonTeamCollectionViewCell.m */,
+				1871A045243732BA000955D5 /* PersonToolsCollectionViewCell.h */,
+				1871A046243732BA000955D5 /* PersonToolsCollectionViewCell.m */,
+				1871A048243732D8000955D5 /* PersonMainCollectionViewCell.h */,
+				1871A049243732D8000955D5 /* PersonMainCollectionViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -782,6 +802,7 @@
 				18633B8D2432D79100CE3E60 /* UIBarButtonItem+Item.m in Sources */,
 				1836AFCB2431E53900EA8F30 /* YYBaseViewController.m in Sources */,
 				1836AFC52431E28300EA8F30 /* LPRefreshFooter.m in Sources */,
+				1871A04A243732D8000955D5 /* PersonMainCollectionViewCell.m in Sources */,
 				18633B882432D79100CE3E60 /* UILabel+Coupon.m in Sources */,
 				18633B842432D79100CE3E60 /* UIImage+imgaeWithColor.m in Sources */,
 				18633B8C2432D79100CE3E60 /* UITextView+ZWPlaceHolder.m in Sources */,
@@ -794,6 +815,7 @@
 				1836AFCE2431E55400EA8F30 /* YYWebViewController.m in Sources */,
 				1836AF562431E16A00EA8F30 /* LiveModel.m in Sources */,
 				18999018243436D700B5D1D6 /* HomeMainViewModel.m in Sources */,
+				1871A04424373267000955D5 /* PersonTeamCollectionViewCell.m in Sources */,
 				18633B8A2432D79100CE3E60 /* UIColor+Hex.m in Sources */,
 				1836ACCC2431BE4200EA8F30 /* main.m in Sources */,
 				18633B892432D79100CE3E60 /* CoponLabel.m in Sources */,
@@ -807,15 +829,17 @@
 				1899D8242435F18000809BFD /* LiveAllCollectionViewController.m in Sources */,
 				1836AFC82431E28300EA8F30 /* XMGFileTool.m in Sources */,
 				1836ACD52431D18100EA8F30 /* YYNetHTTPTool.m in Sources */,
-				1836AFD42431E61B00EA8F30 /* YYPersonViewController.m in Sources */,
+				1836AFD42431E61B00EA8F30 /* YYPersonCollectionViewController.m in Sources */,
 				1899D8212435E73A00809BFD /* UISearchBar+Text.m in Sources */,
 				1836AFC42431E28300EA8F30 /* LPRefreshGifHeader.m in Sources */,
 				18633B8B2432D79100CE3E60 /* UIView+AnimationExtend.m in Sources */,
+				1871A0412436EE62000955D5 /* PersonHeaderCollectionViewCell.m in Sources */,
 				1836AFC32431E28300EA8F30 /* DefineConstant.m in Sources */,
 				18633B8E2432D79100CE3E60 /* NSString+TwoPoint.m in Sources */,
 				18999039243494AC00B5D1D6 /* HomeMainModel.m in Sources */,
 				18633B9D24331B7A00CE3E60 /* YYBaseCollectionViewController.m in Sources */,
 				1836ACDC2431D48600EA8F30 /* PPNetworkCache.m in Sources */,
+				1871A047243732BA000955D5 /* PersonToolsCollectionViewCell.m in Sources */,
 				1836AFC62431E28300EA8F30 /* YYSaveTool.m in Sources */,
 				1899903624348DC600B5D1D6 /* HomeMainCollectionViewCell.m in Sources */,
 			);

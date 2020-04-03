@@ -16,7 +16,8 @@
 
 
 #define YYMainColor [UIColor colorWithHexString:@"#FF2323"]
-#define YY32Color   [UIColor colorWithHexString:@"#323232"]
+#define YY22Color   [UIColor colorWithHexString:@"#222222"]
+#define YY33Color   [UIColor colorWithHexString:@"#333333"]
 #define YY66Color   [UIColor colorWithHexString:@"#665353"]
 #define YY56Color   [UIColor colorWithHexString:@"#565656"]
 #define YY99Color   [UIColor colorWithHexString:@"#999999"]

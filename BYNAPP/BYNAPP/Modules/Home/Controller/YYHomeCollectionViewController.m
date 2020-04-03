@@ -101,6 +101,8 @@ NSLog(@"1---viewVillAppera");
 
 -(void)CreateHomeNavTopSearch{
     
+//    [UIApplication sharedApplication].windowScene.statusBarManager.size.height
+    
     UIView * TopBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, YYScreenWidth, YYBarHeight)];
     TopBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:TopBarView];
@@ -258,6 +260,7 @@ NSLog(@"1---viewVillAppera");
  */
 - (void)setupScrollView
 {
+    
     // 不允许自动修改UIScrollView的内边距
     UIScrollView * scrollView = [[UIScrollView alloc] init];
     scrollView.backgroundColor = [UIColor whiteColor];

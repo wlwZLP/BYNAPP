@@ -54,7 +54,7 @@
     
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"实时热卖";
-    TitleLabel.textColor = YY32Color;
+    TitleLabel.textColor = YY33Color;
     TitleLabel.textAlignment = NSTextAlignmentLeft;
     TitleLabel.font = [UIFont systemFontOfSize:20 weight:2];
     [self addSubview:TitleLabel];
@@ -87,7 +87,7 @@
     
     UILabel * CouponPriceLabel = [[UILabel alloc]init];
     CouponPriceLabel.text = @"￥15券后价";
-    CouponPriceLabel.textColor = YY32Color;
+    CouponPriceLabel.textColor = YY33Color;
     CouponPriceLabel.textAlignment = NSTextAlignmentLeft;
     CouponPriceLabel.font = [UIFont systemFontOfSize:13 weight:0];
     [self addSubview:CouponPriceLabel];

@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LiveOtherCollectionViewController : YYBaseCollectionViewController
 
+@property(nonatomic,strong)NSString * LiveID;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -14,7 +14,7 @@
 #import "YYHomeCollectionViewController.h"
 #import "YYLiveCollectionViewController.h"
 #import "YYMemCollectionViewController.h"
-#import "YYPersonViewController.h"
+#import "YYPersonCollectionViewController.h"
 
 
 @interface YYMainTabBarController ()<UITabBarControllerDelegate>
@@ -69,13 +69,13 @@
     [self setupChildViewController:homeVC title:@"首页" imageName:@"icon_tabbar_homepage" seleceImageName:@"icon_tabbar_homepage_selected"];
     
     YYLiveCollectionViewController * LiveVC = [[YYLiveCollectionViewController alloc]init];
-    [self setupChildViewController:LiveVC title:@"生活券" imageName:@"icon_tabbar_live" seleceImageName:@"icon_tabbar_live_selected"];
+    [self setupChildViewController:LiveVC title:@"品牌馆" imageName:@"icon_tabbar_live" seleceImageName:@"icon_tabbar_live_selected"];
     
  
     YYMemCollectionViewController * MemVC = [[YYMemCollectionViewController alloc]init];
     [self setupChildViewController:MemVC title:@"分类" imageName:@"icon_tabbar_mem" seleceImageName:@"icon_tabbar_mem_selected"];
     
-    YYPersonViewController * MeVC = [[YYPersonViewController alloc]init];
+    YYPersonCollectionViewController * MeVC = [[YYPersonCollectionViewController alloc]init];
     [self setupChildViewController:MeVC title:@"我的" imageName:@"icon_tabbar_Person" seleceImageName:@"icon_tabbar_Person_selected"];
     
     self.viewControllers = _VCS;

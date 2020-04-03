@@ -6,11 +6,11 @@
 //  Copyright © 2020 xidian. All rights reserved.
 //
 
-#import "YYBaseViewController.h"
+#import "YYPersonCollectionViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YYPersonViewController : YYBaseViewController
+@interface YYPersonCollectionViewController : YYBaseCollectionViewController
 
 @end
 
