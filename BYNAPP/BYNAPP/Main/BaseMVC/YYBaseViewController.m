@@ -14,6 +14,13 @@
 
 @implementation YYBaseViewController
 
+
++(void)load{
+    
+  
+    
+}
+
 - (void)viewDidLoad {
     
       [super viewDidLoad];

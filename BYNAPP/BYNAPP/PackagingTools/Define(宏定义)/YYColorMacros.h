@@ -26,6 +26,7 @@
 #define YYE1Color   [UIColor colorWithHexString:@"#E1E1E1"]
 #define YYRGBColor(r,g,b) [UIColor colorWithRed:(r) / 256.0 green:(g) / 256.0 blue:(b) / 256.0 alpha:1]
 #define YYHexColor(hex) [UIColor colorWithHexString:(hex)]
+#define YYRandomColor YYRGBColor(arc4random_uniform(255), arc4random_uniform(255), arc4random_uniform(255))
 
 //-------------------打印日志-------------------------
 //DEBUG  模式下打印日志,当前行

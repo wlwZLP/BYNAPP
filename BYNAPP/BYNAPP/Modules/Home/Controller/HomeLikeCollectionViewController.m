@@ -66,6 +66,7 @@
            self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
 
            YYNSLog(@"获取类目数据----%@",self.ListDataArray);
+           
            [self.collectionView reloadData];
           
       } failure:^(NSError *error) {

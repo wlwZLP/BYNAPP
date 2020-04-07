@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YYBaseCollectionViewController : UICollectionViewController
 
+
 @property(nonatomic,strong)NSArray * ListDataArray;
 
 

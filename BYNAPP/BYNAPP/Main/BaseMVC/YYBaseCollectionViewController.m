@@ -14,6 +14,7 @@
 
 @implementation YYBaseCollectionViewController
 
+
 static NSString * const reuseIdentifier = @"Cell";
 
 
@@ -41,8 +42,8 @@ static NSString * const reuseIdentifier = @"Cell";
     
       self.collectionView.emptyDataSetDelegate = self;
     
-    
 }
+
 
 
 
@@ -72,10 +73,9 @@ static NSString * const reuseIdentifier = @"Cell";
 
 #pragma mark <DZNEmptyDataSetSource>
 
-- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
     
      return [UIImage imageNamed:@"kongbai"];
-    
     
 }
 

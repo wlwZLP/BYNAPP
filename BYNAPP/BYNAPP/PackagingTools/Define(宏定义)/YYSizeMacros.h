@@ -11,7 +11,13 @@
 #ifndef UtilsMacros_h
 #define UtilsMacros_h
 
+#define YYBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?88:64)
 
+#define YYStatusHeight [[UIApplication sharedApplication] statusBarFrame].size.height
+
+#define YYNavHeight self.navigationController.navigationBar.frame.size.height
+
+#define YYTabBarHeight ([[UIApplication sharedApplication] statusBarFrame].size.height>20?83:49)
 
 //获取屏幕宽高
 #define YYScreenWidth  [[UIScreen mainScreen] bounds].size.width
@@ -53,14 +59,6 @@ NO
 //else {
 //    statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
 //}
-
-#define YYStatusHeight  [UIApplication sharedApplication].statusBarFrame.size.height
-
-#define YYBarHeight     [UIApplication sharedApplication].statusBarFrame.size.height>20?88:64
-
-#define YYNavHeight     self.navigationController.navigationBar.frame.size.height
-
-#define YYTabBarHeight  [UIApplication sharedApplication].statusBarFrame.size.height>20?83:49
 
 
 

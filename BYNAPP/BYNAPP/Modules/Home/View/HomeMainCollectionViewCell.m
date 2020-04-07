@@ -24,7 +24,6 @@
         
         [self setup];
         
-       
     }
     
     return self;
@@ -33,14 +32,12 @@
 
 
 
-- (void)setup
-{
+- (void)setup{
     
     UIView * MainBGView = UIView.new;
     MainBGView.backgroundColor = UIColor.whiteColor;
     [YYTools ChangeView:MainBGView RadiusSize:5 BorderColor:[UIColor clearColor]];
     [self addSubview:MainBGView];
-    
     
     UIImageView * Mainimage = [[UIImageView alloc] init];
     Mainimage.backgroundColor = [UIColor clearColor];
@@ -75,7 +72,6 @@
     CouponLabel.layer.borderWidth = 2;
     CouponLabel.font = [UIFont systemFontOfSize:12 weight:0];
     [self addSubview:CouponLabel];
-    
     
     UILabel * GainMoneyLabel = [[UILabel alloc]init];
     GainMoneyLabel.text = @"最多赚一元";
@@ -195,10 +191,9 @@
     
     }];
 
-    
-    
-    
+
 }
+
 
 
 @end

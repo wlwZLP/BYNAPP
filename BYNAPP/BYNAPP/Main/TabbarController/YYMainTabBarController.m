@@ -9,10 +9,8 @@
 #import "YYMainTabBarController.h"
 #import "RootNavigationController.h"
 
-#import "HomeGoodsCategoriesModel.h"
-
 #import "YYHomeCollectionViewController.h"
-#import "YYLiveCollectionViewController.h"
+#import "YYBrandCollectionViewController.h"
 #import "YYMemCollectionViewController.h"
 #import "YYPersonCollectionViewController.h"
 
@@ -68,7 +66,7 @@
     YYHomeCollectionViewController *homeVC = [[YYHomeCollectionViewController alloc]init];
     [self setupChildViewController:homeVC title:@"首页" imageName:@"icon_tabbar_homepage" seleceImageName:@"icon_tabbar_homepage_selected"];
     
-    YYLiveCollectionViewController * LiveVC = [[YYLiveCollectionViewController alloc]init];
+    YYBrandCollectionViewController * LiveVC = [[YYBrandCollectionViewController alloc]init];
     [self setupChildViewController:LiveVC title:@"品牌馆" imageName:@"icon_tabbar_live" seleceImageName:@"icon_tabbar_live_selected"];
     
  
@@ -110,8 +108,8 @@
         
        
         
+        
      }
-    
     
 }
 

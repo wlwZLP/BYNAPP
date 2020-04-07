@@ -7,14 +7,12 @@
 //
 
 #import "YYHomeCollectionViewController.h"
-#import "HomeGoodsCategoriesModel.h"
+#import "HomePlistModel.h"
 #import "HomeMainCollectionViewController.h"
 #import "HomeLikeCollectionViewController.h"
 
 static int const HomelabelWith = 90;
 
-/// 请求成功的Block
-typedef void(^GoodsRequestSuccess)(NSArray<HomeGoodsCategoriesModel*> * ModelArray);
 
 @interface YYHomeCollectionViewController ()
 
@@ -27,7 +25,7 @@ typedef void(^GoodsRequestSuccess)(NSArray<HomeGoodsCategoriesModel*> * ModelArr
 /** 上一次点击的标题按钮 */
 @property (nonatomic, strong) UIButton * previousClickedTitleButton;
 /** 标题按钮数量 */
-@property(nonatomic,strong)NSArray<HomeGoodsCategoriesModel*> * HomeTitleModelArray;
+@property(nonatomic,strong)NSArray<HomePlistModel*> * HomeTitleModelArray;
 
 /** 首页搜索空间 */
 @property (nonatomic, strong) UISearchBar * HomeSearchBar;
@@ -42,12 +40,19 @@ typedef void(^GoodsRequestSuccess)(NSArray<HomeGoodsCategoriesModel*> * ModelArr
     
     [self CreateHomeNavTopSearch];
     
-    
     [self.navigationController setNavigationBarHidden:YES animated:nil];
    
-    [self GetAPPCachLocalCompleteData:^(NSArray<HomeGoodsCategoriesModel *> *ModelArray) {
     
-        [ModelArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    
+}
+
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [self GetHomePlistDataCompleteData:^(NSArray<HomePlistModel *> *HomePlistArray) {
+     
+    
+        [HomePlistArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
              
             if (idx == 0) {
                 
@@ -59,45 +64,46 @@ typedef void(^GoodsRequestSuccess)(NSArray<HomeGoodsCategoriesModel*> * ModelArr
                  
                  HomeLikeCollectionViewController * OneVC = [[HomeLikeCollectionViewController alloc]init];
                   
-                 OneVC.HomeID = ModelArray[idx].parent_id;
-                           
+                 OneVC.HomeID = HomePlistArray[idx].parent_id;
+    
                  [self addChildViewController:OneVC];
                 
              }
      
           }];
        
-         self.HomeTitleModelArray = ModelArray;
+         self.HomeTitleModelArray = HomePlistArray;
         
-        [self CreateHomeBaseViewController];
+         [self CreateHomeBaseViewController];
         
     }];
     
+
+    
+}
+
+-(void)GetHomePlistDataCompleteData:(nullable void(^)(NSArray<HomePlistModel*> * HomePlistArray))CompleteData{
+    
+
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsCategories];
+                  
+    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+              
+        NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
+     
+        CompleteData([NSArray modelArrayWithClass:[HomePlistModel class] json:DataArray]);
+      
+
+    } failure:^(NSError *error) {
+              
+         CompleteData(nil);
+       
+    }];
     
 }
 
 
 #pragma mark 视图控制器的生命周期
-//init－初始化程序
-//viewDidLoad－加载视图
-#pragma mark - 1
-- (void)viewWillAppear:(BOOL)animated {
-NSLog(@"1---viewVillAppera");
-}
-#pragma mark - 2
--(void)viewDidAppear:(BOOL)animated {
-    NSLog(@"2---didAppear");
-    [self.collectionView removeFromSuperview];
-}
-#pragma mark - 3
-- (void)viewWillDisappear:(BOOL)animated {
-    NSLog(@"3---viewWillDisappera");
-}
-#pragma mark -4
-- (void)viewDidDisappear:(BOOL)animated {
-    NSLog(@"4---viewDidDisappear");
-}
-
 
 -(void)CreateHomeNavTopSearch{
     
@@ -107,6 +113,7 @@ NSLog(@"1---viewVillAppera");
     TopBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:TopBarView];
     
+    //添加搜索控价
     [TopBarView addSubview:self.HomeSearchBar];
     
     UIButton * SearchBtn = [[UIButton alloc] initWithFrame:CGRectMake(YYScreenWidth - 125, YYStatusHeight + 6 , 66, 32)];
@@ -169,26 +176,7 @@ NSLog(@"1---viewVillAppera");
 
 
 
--(void)GetAPPCachLocalCompleteData:(GoodsRequestSuccess)CompleteData{
-    
 
-    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsCategories];
-                  
-    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
-              
-       NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
-     
-       CompleteData([NSArray modelArrayWithClass:[HomeGoodsCategoriesModel class] json:DataArray]);
-      
-
-    } failure:^(NSError *error) {
-              
-             
-       
-    }];
-    
-    
-}
 
 #pragma mark 创建头部滑动视图
 
@@ -211,7 +199,7 @@ NSLog(@"1---viewVillAppera");
     
     // 文字
     UIScrollView * TitlescrollView = [[UIScrollView alloc] init];
-    TitlescrollView.backgroundColor = [UIColor blueColor];
+    TitlescrollView.backgroundColor = [UIColor whiteColor];
     TitlescrollView.frame = CGRectMake(0, YYBarHeight, YYScreenWidth, 40);
     TitlescrollView.showsHorizontalScrollIndicator = NO;
     TitlescrollView.showsVerticalScrollIndicator = NO;
@@ -237,8 +225,8 @@ NSLog(@"1---viewVillAppera");
     // 下划线
     UIView *titleUnderline = [[UIView alloc] init];
     titleUnderline.ZLP_height = 3;
-    titleUnderline.ZLP_y = self.titleScrollView.ZLP_height - titleUnderline.ZLP_height- 10;
-    titleUnderline.backgroundColor = [UIColor whiteColor];
+    titleUnderline.ZLP_y = self.titleScrollView.ZLP_height - titleUnderline.ZLP_height- 3;
+    titleUnderline.backgroundColor = YYHexColor(@"#FFD409");
     [self.titleScrollView addSubview:titleUnderline];
     self.titleUnderline = titleUnderline;
     
@@ -263,8 +251,8 @@ NSLog(@"1---viewVillAppera");
     
     // 不允许自动修改UIScrollView的内边距
     UIScrollView * scrollView = [[UIScrollView alloc] init];
-    scrollView.backgroundColor = [UIColor whiteColor];
-    scrollView.frame = CGRectMake(0, YYBarHeight + 40, YYScreenWidth, YYScreenHeight  - 40 - YYTabBarHeight - YYBarHeight);
+    scrollView.backgroundColor = YYBGColor;
+    scrollView.frame = CGRectMake(0, 128, YYScreenWidth, YYScreenHeight  - 40 );
     scrollView.delegate = self;
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;
@@ -308,8 +296,8 @@ NSLog(@"1---viewVillAppera");
         
         CGFloat X =  i * titleButtonW + rowMargin*(i + 1) ;
         UIButton *titleButton = [[UIButton alloc]init];
-        [titleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-        [titleButton setTitleColor:[UIColor colorWithHexString:@"#ffe3e3"] forState:UIControlStateNormal];
+        [titleButton setTitleColor:YY22Color forState:UIControlStateSelected];
+        [titleButton setTitleColor:YY66Color forState:UIControlStateNormal];
         titleButton.titleLabel.hidden = YES;
         // frame
         titleButton.frame = CGRectMake(X , 10, titleButtonW, titleButtonH);
@@ -322,9 +310,9 @@ NSLog(@"1---viewVillAppera");
         titleButton.layer.cornerRadius = 10;
         [self.titleScrollView addSubview:titleButton];
         [titleButton setTitle:self.HomeTitleModelArray[i].name forState:UIControlStateNormal];
+    
         
     }
-
     
 }
 
@@ -368,7 +356,7 @@ NSLog(@"1---viewVillAppera");
             
            self.titleScrollView.contentOffset = CGPointMake(HomelabelWith * (index -  1), 0);
             
-        }else{
+         }else{
             
            
          }

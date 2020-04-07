@@ -44,12 +44,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 #pragma mark <DZNEmptyDataSetSource>
 
-//- (UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
-//
-//     return nil;
-//
-//
-//}
+
 
 
 

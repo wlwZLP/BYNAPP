@@ -8,7 +8,8 @@
 
 #import "AppDelegate.h"
 #import "YYMainTabBarController.h"
-#import "HomeGoodsCategoriesModel.h"
+
+
 @interface AppDelegate ()
 
 @end

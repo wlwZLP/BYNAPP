@@ -24,6 +24,10 @@
 //3.根据商品类目搜索
 #define URL_APIGoodsItems @"api/goods/items"
 
+//3.品牌券类目列表
+#define URL_APIMpvCategories @"api/mpv2/categories"
+
+
 //3.用户手机号 注册、登录
 #define URL_AutoLogin @"api/auth/login"
 //4.手机号绑定微信
