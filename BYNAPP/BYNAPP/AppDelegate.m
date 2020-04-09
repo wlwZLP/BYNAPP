@@ -24,6 +24,8 @@
     [self SetAPPSignSaveTool];
     
     [self GetAPPCachLocalData];
+    
+    //我改了一些东西，想重新建立一个分支
   
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     

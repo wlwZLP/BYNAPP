@@ -83,7 +83,6 @@
 		18DC38F5243ED7730030DE97 /* LimitBuyCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC38F4243ED7730030DE97 /* LimitBuyCollectionViewController.m */; };
 		18DC38F9243EF4DC0030DE97 /* LimitBuyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC38F8243EF4DC0030DE97 /* LimitBuyCollectionViewCell.m */; };
 		18DC38FC243F12AC0030DE97 /* UIImageView+YY.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC38FB243F12AC0030DE97 /* UIImageView+YY.m */; };
-		18DC3900243F14420030DE97 /* SetCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC38FF243F14420030DE97 /* SetCollectionViewController.m */; };
 		18DC3906243F15F30030DE97 /* SetTopCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3905243F15F30030DE97 /* SetTopCollectionViewCell.m */; };
 		18DC3909243F16070030DE97 /* SetMidCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3908243F16060030DE97 /* SetMidCollectionViewCell.m */; };
 		18DC390C243F161B0030DE97 /* SetBottomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC390B243F161B0030DE97 /* SetBottomCollectionViewCell.m */; };
@@ -102,6 +101,7 @@
 		18DC3937243F2AF80030DE97 /* MyNewCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3936243F2AF80030DE97 /* MyNewCollectionViewController.m */; };
 		18ED3632243F320D00056ADD /* MyReportCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18ED3631243F320D00056ADD /* MyReportCollectionViewController.m */; };
 		6B6E85979B985D0442E45834 /* libPods-BYNAPP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08274BEB44E2894270F3A15C /* libPods-BYNAPP.a */; };
+		DCB7EC00243F721B00AFD302 /* SetCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCB7EBFF243F721B00AFD302 /* SetCollectionViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -260,8 +260,6 @@
 		18DC38F8243EF4DC0030DE97 /* LimitBuyCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LimitBuyCollectionViewCell.m; sourceTree = "<group>"; };
 		18DC38FA243F12AC0030DE97 /* UIImageView+YY.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+YY.h"; sourceTree = "<group>"; };
 		18DC38FB243F12AC0030DE97 /* UIImageView+YY.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+YY.m"; sourceTree = "<group>"; };
-		18DC38FE243F14420030DE97 /* SetCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetCollectionViewController.h; sourceTree = "<group>"; };
-		18DC38FF243F14420030DE97 /* SetCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetCollectionViewController.m; sourceTree = "<group>"; };
 		18DC3904243F15F30030DE97 /* SetTopCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetTopCollectionViewCell.h; sourceTree = "<group>"; };
 		18DC3905243F15F30030DE97 /* SetTopCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetTopCollectionViewCell.m; sourceTree = "<group>"; };
 		18DC3907243F16060030DE97 /* SetMidCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetMidCollectionViewCell.h; sourceTree = "<group>"; };
@@ -298,6 +296,8 @@
 		18ED3631243F320D00056ADD /* MyReportCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyReportCollectionViewController.m; sourceTree = "<group>"; };
 		AA9DCAEBEF3C519A745E3E5B /* Pods-BYNAPP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BYNAPP.debug.xcconfig"; path = "Target Support Files/Pods-BYNAPP/Pods-BYNAPP.debug.xcconfig"; sourceTree = "<group>"; };
 		AEF2C5D843CA070C2CFC657A /* Pods-BYNAPP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BYNAPP.release.xcconfig"; path = "Target Support Files/Pods-BYNAPP/Pods-BYNAPP.release.xcconfig"; sourceTree = "<group>"; };
+		DCB7EBFE243F721B00AFD302 /* SetCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetCollectionViewController.h; sourceTree = "<group>"; };
+		DCB7EBFF243F721B00AFD302 /* SetCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetCollectionViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -905,8 +905,8 @@
 		18DC38FD243F141B0030DE97 /* SubController */ = {
 			isa = PBXGroup;
 			children = (
-				18DC38FE243F14420030DE97 /* SetCollectionViewController.h */,
-				18DC38FF243F14420030DE97 /* SetCollectionViewController.m */,
+				DCB7EBFE243F721B00AFD302 /* SetCollectionViewController.h */,
+				DCB7EBFF243F721B00AFD302 /* SetCollectionViewController.m */,
 				18DC3914243F28D50030DE97 /* WithdrawCollectionViewController.h */,
 				18DC3915243F28D50030DE97 /* WithdrawCollectionViewController.m */,
 				18DC3920243F295D0030DE97 /* TeamOrderCollectionViewController.h */,
@@ -1119,7 +1119,6 @@
 				18DC3909243F16070030DE97 /* SetMidCollectionViewCell.m in Sources */,
 				1869CA63243DAFB700F3C79E /* GoodsTitleCollectionViewCell.m in Sources */,
 				18DC3919243F29040030DE97 /* MyOrderCollectionViewController.m in Sources */,
-				18DC3900243F14420030DE97 /* SetCollectionViewController.m in Sources */,
 				1869CA72243DB0D000F3C79E /* GoodsSameCollectionViewCell.m in Sources */,
 				1836AFC52431E28300EA8F30 /* LPRefreshFooter.m in Sources */,
 				1871A04A243732D8000955D5 /* PersonMainCollectionViewCell.m in Sources */,
@@ -1142,6 +1141,7 @@
 				1869CA5C243DA06100F3C79E /* MenListCollectionViewController.m in Sources */,
 				1880F3A2243C8E41003EECB9 /* BrandDetailsCollectionViewController.m in Sources */,
 				18BD467D243C1E0100707A53 /* HomeBannerCollectionViewCell.m in Sources */,
+				DCB7EC00243F721B00AFD302 /* SetCollectionViewController.m in Sources */,
 				18DC3928243F29B60030DE97 /* MyTraceCollectionViewController.m in Sources */,
 				18633B872432D79100CE3E60 /* UIButton+XYButton.m in Sources */,
 				1836ACBB2431BE3F00EA8F30 /* AppDelegate.m in Sources */,
