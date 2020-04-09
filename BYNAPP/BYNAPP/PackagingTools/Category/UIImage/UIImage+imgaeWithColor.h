@@ -10,15 +10,10 @@
 
 @interface UIImage (imgaeWithColor)
 
-+ (UIImage *)imageWithColor:(UIColor *)color;
 
-+ (UIImage *)ZLPCreateimageWithCoupon;
++(UIImage *_Nullable)imageWithColor:(UIColor *_Nullable)color;
 
-+ (UIImage *)SmallCreateimageWithCoupon;
 
-+ (UIImage *)CreateDetailsBgimageWithCoupon;
-
-+ (UIImage *)MyColor:(UIColor *)color ;
 
 
 

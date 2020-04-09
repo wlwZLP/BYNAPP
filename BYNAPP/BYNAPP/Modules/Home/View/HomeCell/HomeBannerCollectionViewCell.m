@@ -25,7 +25,7 @@
     
     if (self = [super initWithFrame:frame]) {
         
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor whiteColor];
         
         [self addSubview:self.TopCycleScrollView];
         
@@ -37,24 +37,46 @@
 
 
 
+-(void)setImgListArray:(NSArray *)ImgListArray{
+    
+     _ImgListArray = ImgListArray;
+    
+     self.TopCycleScrollView.localizationImageNamesGroup = self.ImgListArray;
+    
+}
+
+
+
 
 -(SDCycleScrollView*)TopCycleScrollView{
     
     if (_TopCycleScrollView == nil) {
         
-        _TopCycleScrollView= [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 10, self.ZLP_width , self.ZLP_height) delegate:self placeholderImage:[UIImage imageNamed:@"banner01"]];
+        _TopCycleScrollView= [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.ZLP_width , self.ZLP_height) delegate:self placeholderImage:[UIImage imageNamed:@"banner01"]];
         _TopCycleScrollView.backgroundColor = [UIColor redColor];
-        _TopCycleScrollView.localizationImageNamesGroup = self.ImgListArray;
         _TopCycleScrollView.backgroundColor = [UIColor clearColor];
         _TopCycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated;
         _TopCycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
-        _TopCycleScrollView.pageDotImage = [UIImage imageNamed:@"pageControl"];
-        _TopCycleScrollView.currentPageDotImage = [UIImage imageNamed:@"pageControlCurrent"];
+        _TopCycleScrollView.pageDotImage = [UIImage imageNamed:@"yqwhite"];
+        _TopCycleScrollView.currentPageDotImage = [UIImage imageNamed:@"yqyellow"];
         
      }
     
     return _TopCycleScrollView;
     
+}
+
+
+
+#pragma mark - SDCycleScrollViewDelegate
+
+/** 点击图片回调 */
+- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
+  
+        
+     self.SdClyImgBlockClick(index);
+  
+
 }
 
 

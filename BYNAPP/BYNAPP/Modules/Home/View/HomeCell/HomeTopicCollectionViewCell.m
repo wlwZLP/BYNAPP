@@ -24,7 +24,7 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-      
+        
         [self addSubview:self.ImgCollectionView];
         
         self.ImgCollectionView.delegate = self;
@@ -62,7 +62,7 @@
         
         UICollectionViewFlowLayout * flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-        _ImgCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 10, self.ZLP_width , self.ZLP_height - 20 ) collectionViewLayout:flowLayout];
+        _ImgCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 10, self.ZLP_width , self.ZLP_height) collectionViewLayout:flowLayout];
         _ImgCollectionView.backgroundColor= [UIColor whiteColor];
         _ImgCollectionView.scrollsToTop = YES;
         _ImgCollectionView.showsHorizontalScrollIndicator = YES;
@@ -80,6 +80,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
 
+    
     
 }
 
@@ -118,12 +119,6 @@
 }
 
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
-    
-       return 0;
-    
-}
-
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     
@@ -137,10 +132,9 @@
     if (indexPath.item ==0) {
         return CGSizeMake(self.ZLP_width , 85);
     }else{
-        return CGSizeMake(self.ZLP_width/2 , 85);
+        return CGSizeMake(self.ZLP_width/2 -1 , 85);
     }
      
-    
 }
 
 
@@ -162,11 +156,17 @@
 }
 
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
-{
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
+   
+    return 5;
+}
+
+
+-(CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
     
-      return 0;
-    
+   
+    return 2;
+
 }
 
 

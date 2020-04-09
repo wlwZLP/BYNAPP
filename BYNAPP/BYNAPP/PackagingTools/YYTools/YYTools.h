@@ -16,7 +16,7 @@
 
 
 //封装一个渐变色渐变的过程
-+ (CAGradientLayer *)setGradualChangingColor:(UIView *)view fromColor:(NSString *)fromHexColorStr toColor:(NSString *)toHexColorStr;
++ (CAGradientLayer *)SetGradLayerView:(UIView *)view FromColor:(NSString *)fromColor ToColor:(NSString *)toColor;
 
 
 

@@ -40,44 +40,42 @@ static int const HomelabelWith = 90;
     
     [self CreateHomeNavTopSearch];
     
-    [self.navigationController setNavigationBarHidden:YES animated:nil];
+    
    
-
+    [self GetBrandPlistDataCompleteData:^(NSArray<BrandPlistModel *> *ModelArray) {
+       
+       [ModelArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                 
+         if (idx == 0) {
+                    
+            BrandAllCollectionViewController * OneVC = [[BrandAllCollectionViewController alloc]init];
+                               
+            [self addChildViewController:OneVC];
+                    
+          }else{
+                     
+            BrandOtherCollectionViewController * OneVC = [[BrandOtherCollectionViewController alloc]init];
+                               
+            [self addChildViewController:OneVC];
+                    
+          }
+         
+        }];
+           
+        self.BrandTitleModelArray = ModelArray;
+            
+        [self CreateBrandBaseViewController];
+            
+    }];
     
 }
 
 
 -(void)viewWillAppear:(BOOL)animated{
     
+    [self.navigationController setNavigationBarHidden:YES animated:nil];
+   
     
-    [self GetBrandPlistDataCompleteData:^(NSArray<BrandPlistModel *> *ModelArray) {
-    
-         [ModelArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-              
-             if (idx == 0) {
-                 
-                  BrandAllCollectionViewController * OneVC = [[BrandAllCollectionViewController alloc]init];
-                            
-                  [self addChildViewController:OneVC];
-                 
-              }else{
-                  
-                  BrandOtherCollectionViewController * OneVC = [[BrandOtherCollectionViewController alloc]init];
-                            
-                  [self addChildViewController:OneVC];
-                 
-              }
-      
-           }];
-        
-        self.BrandTitleModelArray = ModelArray;
-         
-        [self CreateBrandBaseViewController];
-         
-     }];
-    
-    
- 
 }
 
 
@@ -88,13 +86,15 @@ static int const HomelabelWith = 90;
                   
     [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
               
-        NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
+         NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
      
-        CompleteData([NSArray modelArrayWithClass:[BrandPlistModel class] json:DataArray]);
+         CompleteData([NSArray modelArrayWithClass:[BrandPlistModel class] json:DataArray]);
 
-    } failure:^(NSError *error) {
+    } failure:^(NSError *error, id responseCache) {
+     
+          NSArray * DataArray = EncodeArrayFromDic(responseCache, @"data");
               
-        CompleteData(nil);
+          CompleteData([NSArray modelArrayWithClass:[BrandPlistModel class] json:DataArray]);
        
     }];
     

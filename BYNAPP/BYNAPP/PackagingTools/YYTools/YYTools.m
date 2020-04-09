@@ -29,13 +29,14 @@
 
 //封装一个渐变色渐变的过程
 
-+ (CAGradientLayer *)setGradualChangingColor:(UIView *)view fromColor:(NSString *)fromHexColorStr toColor:(NSString *)toHexColorStr{
++(CAGradientLayer *)SetGradLayerView:(UIView *)view FromColor:(NSString *)fromColor ToColor:(NSString *)toColor{
+    
     //    CAGradientLayer类对其绘制渐变背景颜色、填充层的形状(包括圆角)
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
     gradientLayer.frame = view.bounds;
     //  创建渐变色数组，需要转换为CGColor颜色
-    gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:fromHexColorStr].CGColor,(__bridge id)[UIColor colorWithHexString:toHexColorStr].CGColor];
-    //  设置渐变颜色方向，左上点为(0,0), 右下点为(1,1)
+    gradientLayer.colors = @[(__bridge id)[UIColor colorWithHexString:fromColor].CGColor,(__bridge id)[UIColor colorWithHexString:toColor].CGColor];
+    //  设置渐变颜色方向，左上点为(0,0), 左下点为(1,0),右上点为(0,1),右下点为(1,1)
     gradientLayer.startPoint = CGPointMake(1, 0);
     gradientLayer.endPoint = CGPointMake(0, 1);
     //  设置颜色变化点，取值范围 0.0~1.0

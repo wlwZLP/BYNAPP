@@ -32,7 +32,6 @@
 
 //常用自定义
 #import "AppDelegate.h"
-#import "YYBaseViewController.h"
 #import "YYBaseCollectionViewController.h"
 #import "RootNavigationController.h"
 #import "PPNetworkTools.h"
@@ -46,7 +45,7 @@
 #import "UIView+AnimationExtend.h"
 #import "UIColor+Hex.h"
 #import "UISearchBar+Text.h"
-
+#import "UIImageView+YY.h"
 
 
 

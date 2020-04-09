@@ -6,11 +6,12 @@
 //  Copyright © 2020 xidian. All rights reserved.
 //
 
-#import "YYBaseViewController.h"
+
+
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YYWebViewController : YYBaseViewController
+@interface YYWebViewController : UIViewController
 
 @end
 

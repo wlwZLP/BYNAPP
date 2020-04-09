@@ -15,9 +15,11 @@
 {
     // setPlaceholder
     Method setPlaceholderMethod = class_getInstanceMethod(self, @selector(setPlaceholder:));
+    
     Method setXmg_PlaceholderMethod = class_getInstanceMethod(self, @selector(setXmg_Placeholder:));
     
     method_exchangeImplementations(setPlaceholderMethod, setXmg_PlaceholderMethod);
+    
 }
 
 
@@ -49,6 +51,7 @@
     [self setXmg_Placeholder:placeholder];
     
     self.placeholderColor = self.placeholderColor;
+    
 }
 
 - (void)shake {

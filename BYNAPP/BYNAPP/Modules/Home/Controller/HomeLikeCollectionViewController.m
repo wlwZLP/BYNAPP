@@ -9,6 +9,8 @@
 #import "HomeLikeCollectionViewController.h"
 #import "HomeMainCollectionViewCell.h"
 #import "HomeMainViewModel.h"
+#import "HomeDetailsCollectionViewController.h"
+
 @interface HomeLikeCollectionViewController ()
 
 @property(nonatomic,strong)HomeMainViewModel * ViewModel;
@@ -29,28 +31,19 @@
      
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
-//    RACSignal * signal = [[[HomeMainViewModel alloc]init].requestCommand execute:nil];
-//
-//    [signal subscribeNext:^(id x) {
-//
-//       NSLog(@"%@",x);
-//
-//
-//   }];
-    
     [self GetHomeLikeNetworkData];
   
 }
 
-//- (HomeMainViewModel *)ViewModel{
-//
-//    if (!_ViewModel) {
-//
-//        _ViewModel = [[HomeMainViewModel alloc] init];
-//
-//    }
-//    return _ViewModel;
-//}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [self.navigationController setNavigationBarHidden:YES animated:nil];
+    
+}
+
+
+
 
 
 -(void)GetHomeLikeNetworkData{
@@ -64,20 +57,20 @@
            NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
        
            self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
-
-           YYNSLog(@"获取类目数据----%@",self.ListDataArray);
            
            [self.collectionView reloadData];
           
-      } failure:^(NSError *error) {
-                
+       } failure:^(NSError *error, id responseCache) {
+              
+            NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
             
+            self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+                
+            [self.collectionView reloadData];
           
-         
-      }];
-    
 
-    
+       }];
+
     
 }
 
@@ -92,6 +85,21 @@
     return cell;
 
 }
+
+#pragma mark -选中某item进行跳转
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+
+    HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
+    
+    HomeVc.title = @"商品详情";
+    
+    [self.navigationController pushViewController:HomeVc animated:YES];
+    
+    
+}
+
 
 #pragma mark <UICollectionViewDelegate>
 

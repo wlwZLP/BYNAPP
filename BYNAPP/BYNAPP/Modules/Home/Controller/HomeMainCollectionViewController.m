@@ -12,6 +12,9 @@
 #import "HomeTopicCollectionViewCell.h"
 #import "HomeTimeCollectionViewCell.h"
 #import "HomeMainCollectionViewCell.h"
+#import "HomeDetailsCollectionViewController.h"
+#import "LimitBuyCollectionViewController.h"
+
 
 @interface HomeMainCollectionViewController ()
 
@@ -28,7 +31,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
      [super viewDidLoad];
     
-     self.LocalImgArray = [[NSArray alloc]initWithObjects:@"banner01",nil ];
+     self.LocalImgArray = [[NSArray alloc]initWithObjects:@"banner01",@"banner02",@"banner03",nil ];
    
      [self.collectionView registerClass:[HomeBannerCollectionViewCell class] forCellWithReuseIdentifier:@"HomeBannerCollectionViewCell"];
     
@@ -48,8 +51,9 @@ static NSString * const reuseIdentifier = @"Cell";
 
 -(void)viewWillAppear:(BOOL)animated{
     
+    [self.navigationController setNavigationBarHidden:YES animated:nil];
     
-     [self.collectionView reloadData];
+    [self.collectionView reloadData];
     
 }
 
@@ -83,6 +87,14 @@ static NSString * const reuseIdentifier = @"Cell";
          HomeBannerCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeBannerCollectionViewCell" forIndexPath:indexPath];
         
          cell.ImgListArray = self.LocalImgArray;
+        
+        cell.SdClyImgBlockClick = ^(NSInteger ImgIndex) {
+            
+            HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
+            
+            [self.navigationController pushViewController:HomeVc animated:YES];
+            
+        };
 
          return cell;
         
@@ -96,7 +108,7 @@ static NSString * const reuseIdentifier = @"Cell";
         
         HomeTopicCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeTopicCollectionViewCell" forIndexPath:indexPath];
         
-        cell.backgroundColor = [UIColor greenColor];
+        cell.backgroundColor = [UIColor whiteColor];
         
         cell.ImgListArray = self.LocalImgArray;
     
@@ -105,15 +117,22 @@ static NSString * const reuseIdentifier = @"Cell";
     }else if (indexPath.section == 3){
         
          HomeTimeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeTimeCollectionViewCell" forIndexPath:indexPath];
+        
+         cell.PushLimtbuyBlockClick = ^{
+         
+             LimitBuyCollectionViewController * LimitVc = [[LimitBuyCollectionViewController alloc]init];
+             LimitVc.title = @"限时抢购";
+             [self.navigationController pushViewController:LimitVc animated:YES];
+             
+          };
     
-         return cell;
+          return cell;
+        
         
     }else{
         
         HomeMainCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeMainCollectionViewCell" forIndexPath:indexPath];
         
-
-
          return cell;
            
     }
@@ -123,9 +142,23 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 
+#pragma mark -选中某item进行跳转
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+
+    HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
+    
+    [self.navigationController pushViewController:HomeVc animated:YES];
+    
+    
+}
+
+
+
 #pragma mark <UICollectionViewDelegate>
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     if (indexPath.section == 0) {
         
@@ -136,10 +169,11 @@ static NSString * const reuseIdentifier = @"Cell";
         return CGSizeMake(YYScreenWidth - 24 , 170);
         
     }else if (indexPath.section == 2){
+        
         if (self.LocalImgArray.count == 1) {
             return CGSizeMake(YYScreenWidth - 24 , 105);
         }else{
-            return CGSizeMake(YYScreenWidth - 24 , ( self.LocalImgArray.count / 2  + 1) * 85);
+            return CGSizeMake(YYScreenWidth - 24 , 105 + (self.LocalImgArray.count / 2 ) * 90);
         }
     }else if (indexPath.section == 3){
         
@@ -148,6 +182,7 @@ static NSString * const reuseIdentifier = @"Cell";
     }else{
         
         return CGSizeMake(YYScreenWidth , YYScreenWidth * 0.36);
+        
     }
     
 }
@@ -199,19 +234,18 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
-{
-       return 0;
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section{
+   
+     return 0;
+    
 }
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
+    
+   
+    return 0;
 
-
-
-
-
-
-
-
+}
 
 
 @end

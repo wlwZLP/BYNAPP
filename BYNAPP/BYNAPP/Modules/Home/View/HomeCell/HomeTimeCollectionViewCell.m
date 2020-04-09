@@ -48,6 +48,25 @@
     TitleLabel.font = [UIFont systemFontOfSize:18 weight:0];
     [MainBGView addSubview:TitleLabel];
     
+    UILabel * MoreLabel = [[UILabel alloc]init];
+    MoreLabel.text = @"更多";
+    MoreLabel.textColor = YY99Color;
+    MoreLabel.frame = CGRectMake(YYScreenWidth -60, 16 ,30, 20);
+    MoreLabel.textAlignment = NSTextAlignmentLeft;
+    MoreLabel.font = [UIFont systemFontOfSize:12 weight:0];
+    [MainBGView addSubview:MoreLabel];
+    
+    UIImageView * Rightimage = [[UIImageView alloc] init];
+    Rightimage.backgroundColor = [UIColor clearColor];
+    Rightimage.image = [UIImage imageNamed:@"More"];
+    Rightimage.frame = CGRectMake(YYScreenWidth -25, 22, 6, 10);
+    [MainBGView addSubview:Rightimage];
+    
+    UIButton * MoreBtn = [[UIButton alloc]init];
+    MoreBtn.backgroundColor = UIColor.clearColor;
+    MoreBtn.frame = CGRectMake(YYScreenWidth - 100, 0 ,100, 50);
+    [MoreBtn addTarget:self action:@selector(LimtMoreButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [MainBGView addSubview:MoreBtn];
     
     [MainBGView addSubview:self.SaleCollectionView];
            
@@ -68,8 +87,6 @@
     
   
 }
-
-
 
 /**
  *  懒加载collectionView
@@ -93,7 +110,12 @@
     return _SaleCollectionView;
 }
 
-
+#pragma mark ---- 点击跳转更多页面
+-(void)LimtMoreButtonClick{
+    
+    self.PushLimtbuyBlockClick();
+    
+}
 
 #pragma mark ---- UIScrollViewDelegate
 

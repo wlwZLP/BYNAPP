@@ -31,8 +31,6 @@ static YYCache *_dataCache;
 }
 
 
-
-
 + (NSString *)cacheKeyWithURL:(NSString *)URL parameters:(NSDictionary *)parameters {
     
     if(!parameters || parameters.count == 0){return URL;};
@@ -42,6 +40,9 @@ static YYCache *_dataCache;
     return [NSString stringWithFormat:@"%@%@",URL,paraString];
     
 }
+
+
+
 
 
 @end

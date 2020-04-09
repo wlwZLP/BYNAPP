@@ -81,15 +81,13 @@
 
 
 //push时隐藏tabbar
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
-{
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated{
 
     if (self.childViewControllers.count > 0) {// 非根控制器
    
         self.interactivePopGestureRecognizer.enabled = NO;
         
-         viewController.hidesBottomBarWhenPushed = YES;
-        
+        viewController.hidesBottomBarWhenPushed = YES;
     }
     
     CGRect frame = self.tabBarController.tabBar.frame;
@@ -104,16 +102,9 @@
 
 -(void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
     
-    if ([viewController isKindOfClass:[YYBaseViewController class]]) {
+    if ([viewController isKindOfClass:[YYBaseCollectionViewController class]]) {
+     
         
-//        YYBaseViewController * vc = (YYBaseViewController *)viewController;
-//        if (vc.isHidenNaviBar) {
-//            vc.view.top = 0;
-//            [vc.navigationController setNavigationBarHidden:YES animated:animated];
-//        }else{
-//            vc.view.top = YYBarHeight;
-//            [vc.navigationController setNavigationBarHidden:NO animated:animated];
-//        }
         
     }
     

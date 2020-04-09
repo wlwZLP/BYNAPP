@@ -13,8 +13,7 @@
 
 static int const HomelabelWith = 90;
 
-
-@interface YYHomeCollectionViewController ()
+@interface YYHomeCollectionViewController ()<UISearchBarDelegate>
 
 /** 用来存放所有文字的scrollView */
 @property (nonatomic, strong) UIScrollView * titleScrollView;
@@ -39,15 +38,6 @@ static int const HomelabelWith = 90;
     [super viewDidLoad];
     
     [self CreateHomeNavTopSearch];
-    
-    [self.navigationController setNavigationBarHidden:YES animated:nil];
-   
-    
-    
-}
-
-
--(void)viewWillAppear:(BOOL)animated{
     
     [self GetHomePlistDataCompleteData:^(NSArray<HomePlistModel *> *HomePlistArray) {
      
@@ -78,27 +68,38 @@ static int const HomelabelWith = 90;
         
     }];
     
+    
+}
+
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    
+    [self.navigationController setNavigationBarHidden:YES animated:nil];
 
     
 }
+
 
 -(void)GetHomePlistDataCompleteData:(nullable void(^)(NSArray<HomePlistModel*> * HomePlistArray))CompleteData{
     
 
     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsCategories];
-                  
+    
     [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
-              
+        
         NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
-     
+        
         CompleteData([NSArray modelArrayWithClass:[HomePlistModel class] json:DataArray]);
-      
-
-    } failure:^(NSError *error) {
+        
+    } failure:^(NSError *error, id responseCache) {
+    
+         NSArray * DataArray = EncodeArrayFromDic(responseCache, @"data");
               
-         CompleteData(nil);
-       
+        CompleteData([NSArray modelArrayWithClass:[HomePlistModel class] json:DataArray]);
+        
     }];
+    
     
 }
 
@@ -107,7 +108,7 @@ static int const HomelabelWith = 90;
 
 -(void)CreateHomeNavTopSearch{
     
-//    [UIApplication sharedApplication].windowScene.statusBarManager.size.height
+//   [UIApplication sharedApplication].windowScene.statusBarManager.size.height
     
     UIView * TopBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, YYScreenWidth, YYBarHeight)];
     TopBarView.backgroundColor = [UIColor whiteColor];
@@ -128,7 +129,6 @@ static int const HomelabelWith = 90;
     
     UIButton * HomeRightBtn = [[UIButton alloc]init];
     [HomeRightBtn setBackgroundImage:[UIImage imageNamed:@"HomeMes"] forState:UIControlStateNormal];
-    // frame
     HomeRightBtn.frame = CGRectMake(YYScreenWidth - 40 , YYStatusHeight + 10, 26, 24);
     [TopBarView addSubview:HomeRightBtn];
     
@@ -165,7 +165,6 @@ static int const HomelabelWith = 90;
         textField.leftView = imageView;
         NSMutableAttributedString *arrStr = [[NSMutableAttributedString alloc]initWithString:textField.placeholder attributes:@{NSForegroundColorAttributeName:YY99Color,NSFontAttributeName:[UIFont systemFontOfSize:12]}];
         textField.attributedPlaceholder = arrStr;
-        
         
     }
     
@@ -211,7 +210,6 @@ static int const HomelabelWith = 90;
     
     // 标题栏按钮
     [self setupTitleButtons];
-    
 
 }
 
@@ -252,7 +250,7 @@ static int const HomelabelWith = 90;
     // 不允许自动修改UIScrollView的内边距
     UIScrollView * scrollView = [[UIScrollView alloc] init];
     scrollView.backgroundColor = YYBGColor;
-    scrollView.frame = CGRectMake(0, 128, YYScreenWidth, YYScreenHeight  - 40 );
+    scrollView.frame = CGRectMake(0, YYBarHeight + 40, YYScreenWidth, YYScreenHeight  - YYBarHeight - YYTabBarHeight - 40 );
     scrollView.delegate = self;
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;

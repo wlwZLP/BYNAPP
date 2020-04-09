@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSArray * ImgListArray;
 
-
+@property (nonatomic,copy) void(^SdClyImgBlockClick)(NSInteger ImgIndex);
 
 @end
 

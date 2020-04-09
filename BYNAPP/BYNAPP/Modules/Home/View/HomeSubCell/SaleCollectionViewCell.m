@@ -14,8 +14,6 @@
     
     if (self = [super initWithFrame:frame]) {
         
-        [YYTools ChangeView:self RadiusSize:0 BorderColor:YY99Color];
-        
         self.backgroundColor = [UIColor whiteColor];
         
         [self setup];

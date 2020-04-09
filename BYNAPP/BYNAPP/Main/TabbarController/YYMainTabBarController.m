@@ -11,7 +11,7 @@
 
 #import "YYHomeCollectionViewController.h"
 #import "YYBrandCollectionViewController.h"
-#import "YYMemCollectionViewController.h"
+#import "YYMemViewController.h"
 #import "YYPersonCollectionViewController.h"
 
 
@@ -44,7 +44,7 @@
 
 - (void)viewDidLoad {
     
-     [super viewDidLoad];
+    [super viewDidLoad];
     
      self.delegate = self;
  
@@ -70,7 +70,7 @@
     [self setupChildViewController:LiveVC title:@"品牌馆" imageName:@"icon_tabbar_live" seleceImageName:@"icon_tabbar_live_selected"];
     
  
-    YYMemCollectionViewController * MemVC = [[YYMemCollectionViewController alloc]init];
+    YYMemViewController * MemVC = [[YYMemViewController alloc]init];
     [self setupChildViewController:MemVC title:@"分类" imageName:@"icon_tabbar_mem" seleceImageName:@"icon_tabbar_mem_selected"];
     
     YYPersonCollectionViewController * MeVC = [[YYPersonCollectionViewController alloc]init];
@@ -106,10 +106,9 @@
     
     if ([viewController.title isEqualToString:@"首页"]) {
         
-       
+   
         
-        
-     }
+    }
     
 }
 
@@ -119,6 +118,7 @@
 
     
 }
+
 
 
 - (BOOL)shouldAutorotate {

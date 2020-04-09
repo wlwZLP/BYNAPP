@@ -11,7 +11,25 @@
 #import "PersonTeamCollectionViewCell.h"
 #import "PersonToolsCollectionViewCell.h"
 #import "PersonMainCollectionViewCell.h"
+#import "SetCollectionViewController.h"
+#import "MyOrderCollectionViewController.h"
+#import "TeamOrderCollectionViewController.h"
+#import "MyCouponCollectionViewController.h"
+#import "MyTeamCollectionViewController.h"
+#import "MYCollectCollectionViewController.h"
+#import "MyTraceCollectionViewController.h"
+#import "MyNewCollectionViewController.h"
+#import "MyInvitCollectionViewController.h"
+#import "MyVipCollectionViewController.h"
+#import "MyCustomCollectionViewController.h"
+#import "MyReportCollectionViewController.h"
+#import "WithdrawCollectionViewController.h"
+
 @interface YYPersonCollectionViewController ()
+
+@property(nonatomic,strong)NSArray * ImgArray;
+
+@property(nonatomic,strong)NSArray * TitleArray;
 
 @end
 
@@ -23,6 +41,7 @@
     
     
     [super viewDidLoad];
+
     
     self.collectionView.frame = CGRectMake(0, -YYStatusHeight, YYScreenWidth, YYScreenHeight + YYStatusHeight);
     
@@ -40,10 +59,17 @@
      
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
+  
+}
 
+-(void)viewWillAppear:(BOOL)animated{
     
     [self GetHomeLikeNetworkData];
-  
+    
+    [self.navigationController setNavigationBarHidden:YES animated:nil];
+    
+    [super viewWillAppear:animated];
+    
 }
 
 
@@ -52,9 +78,6 @@
      
     [self.collectionView reloadData];
           
-    
-    
-
     
     
 }
@@ -71,9 +94,9 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    if (section == 3) {
-        return 4;
-    }
+     if (section == 3) {
+         return 4;
+     }
      return 1;
     
 }
@@ -84,34 +107,50 @@
     if (indexPath.section == 0) {
         
         PersonHeaderCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonHeaderCollectionViewCell" forIndexPath:indexPath];
-
+         
+         cell.TopSetBtnBlockClick = ^{
+            
+             SetCollectionViewController * SetVc = [[SetCollectionViewController alloc]init];
+             SetVc.title = @"个人信息";
+             [self.navigationController pushViewController:SetVc animated:YES];
+         
+         };
+        
          return cell;
         
     }else if (indexPath.section ==1){
         
         PersonTeamCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonTeamCollectionViewCell" forIndexPath:indexPath];
         
-        cell.LeftBtnBlockClick = ^{
+          cell.LeftBtnBlockClick = ^{
            
-              NSLog(@"1");
+              MyOrderCollectionViewController * MyVc = [[MyOrderCollectionViewController alloc]init];
+              MyVc.title = @"我的订单";
+              [self.navigationController pushViewController:MyVc animated:YES];
              
           };
         
           cell.LeftCenterBtnBlockClick = ^{
             
-               NSLog(@"2");
+               TeamOrderCollectionViewController * SetVc = [[TeamOrderCollectionViewController alloc]init];
+               SetVc.title = @"团队订单";
+               [self.navigationController pushViewController:SetVc animated:YES];
               
           };
         
           cell.RightCenterBtnBlockClick = ^{
             
-               NSLog(@"3");
+               MyCouponCollectionViewController * SetVc = [[MyCouponCollectionViewController alloc]init];
+               SetVc.title = @"我的卡券";
+               [self.navigationController pushViewController:SetVc animated:YES];
               
           };
         
            cell.RightBtnBlockClick = ^{
             
-               NSLog(@"4");
+               MyTeamCollectionViewController * SetVc = [[MyTeamCollectionViewController alloc]init];
+               SetVc.title = @"我的团队";
+               [self.navigationController pushViewController:SetVc animated:YES];
               
            };
 
@@ -124,25 +163,33 @@
        
          cell.LeftBtnBlockClick = ^{
            
-              NSLog(@"1");
+              MYCollectCollectionViewController * SetVc = [[MYCollectCollectionViewController alloc]init];
+              SetVc.title = @"我的收藏";
+              [self.navigationController pushViewController:SetVc animated:YES];
              
           };
         
           cell.LeftCenterBtnBlockClick = ^{
             
-               NSLog(@"2");
+               MyTraceCollectionViewController * SetVc = [[MyTraceCollectionViewController alloc]init];
+               SetVc.title = @"我的足迹";
+               [self.navigationController pushViewController:SetVc animated:YES];
               
           };
         
           cell.RightCenterBtnBlockClick = ^{
             
-               NSLog(@"3");
+               MyNewCollectionViewController * SetVc = [[MyNewCollectionViewController alloc]init];
+               SetVc.title = @"新人必看";
+               [self.navigationController pushViewController:SetVc animated:YES];
               
           };
         
            cell.RightBtnBlockClick = ^{
             
-               NSLog(@"4");
+               MyInvitCollectionViewController * SetVc = [[MyInvitCollectionViewController alloc]init];
+               SetVc.title = @"邀请好友";
+               [self.navigationController pushViewController:SetVc animated:YES];
               
            };
         
@@ -150,13 +197,62 @@
         
     }else{
         
+        
         PersonMainCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonMainCollectionViewCell" forIndexPath:indexPath];
+        
+        NSArray * CellImgArray = [[NSArray alloc]initWithObjects:@"Vip",@"custom",@"invitation",@"version",nil ];
+        
+        NSArray * CellTitleArray = [[NSArray alloc]initWithObjects:@"会员中心",@"召唤客服",@"邀请人微信",@"检查版本",nil];
+        
+        cell.LeftImg.image = [UIImage imageNamed:CellImgArray[indexPath.item]];
+        
+        cell.Leftlabel.text = CellTitleArray[indexPath.item];
+        
+        cell.LeftBtn.tag = indexPath.item;
+        
+        cell.TopRowBtnBlockClick = ^(NSInteger TagIndex) {
+          
+            [self PersonPushToViewController:TagIndex];
+            
+        };
 
         return cell;
         
     }
      
 
+}
+#pragma mark 最后一区间点击事件
+-(void)PersonPushToViewController:(NSInteger)rowIndex{
+    
+    if (rowIndex == 0) {
+       
+        MyVipCollectionViewController * SetVc = [[MyVipCollectionViewController alloc]init];
+        SetVc.title = @"会员中心";
+        [self.navigationController pushViewController:SetVc animated:YES];
+        
+    }else if (rowIndex == 1){
+        
+        MyCustomCollectionViewController * SetVc = [[MyCustomCollectionViewController alloc]init];
+        SetVc.title = @"召唤客服";
+        [self.navigationController pushViewController:SetVc animated:YES];
+
+        
+    }else if (rowIndex == 2){
+     
+        MyReportCollectionViewController * SetVc = [[MyReportCollectionViewController alloc]init];
+        SetVc.title = @"我的报表";
+        [self.navigationController pushViewController:SetVc animated:YES];
+        
+    }else if (rowIndex == 3){
+        
+        WithdrawCollectionViewController * SetVc = [[WithdrawCollectionViewController alloc]init];
+        SetVc.title = @"提现";
+        [self.navigationController pushViewController:SetVc animated:YES];
+        
+    }
+    
+    
 }
 
 #pragma mark <UICollectionViewDelegate>
@@ -172,9 +268,6 @@
     }else{
           return CGSizeMake(YYScreenWidth , 50);
     }
-
-   
-     
 
 }
 
