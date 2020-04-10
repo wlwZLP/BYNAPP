@@ -10,7 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+
 @interface MyOrderCollectionViewController : YYBaseCollectionViewController
+
+/// 订单类型 1为我个人订单  2为团队订单
+@property(nonatomic,strong) NSString * OrderType;
+
 
 @end
 

@@ -50,6 +50,7 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 
+
 - (void)setIsShowLiftBack:(BOOL)isShowLiftBack
 {
     _isShowLiftBack = isShowLiftBack;
@@ -149,6 +150,22 @@ static NSString * const reuseIdentifier = @"Cell";
     
 }
 
+#pragma mark 设置右边导航栏
+
+-(void)YYSetRightNavTitle:(NSString *)title target:(id)target action:(SEL)action{
+    
+    UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:title forState:UIControlStateNormal];
+    [btn setTitleColor:YY66Color forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [btn sizeToFit];
+    [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    UIView *containView = [[UIView alloc] initWithFrame:btn.bounds];
+    [containView addSubview:btn];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:containView];
+    
+}
 
 
 

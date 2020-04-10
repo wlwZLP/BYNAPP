@@ -60,7 +60,7 @@
     
     UIButton * RowBtn = [[UIButton alloc]init];
     RowBtn.backgroundColor = UIColor.clearColor;
-    RowBtn.frame = CGRectMake(self.ZLP_width - 100, 0 ,100, 60);
+    RowBtn.frame = CGRectMake(self.ZLP_width - 300, 0 ,300, 60);
     [RowBtn addTarget:self action:@selector(RowButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:RowBtn];
     self.LeftBtn = RowBtn;

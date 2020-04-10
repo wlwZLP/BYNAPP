@@ -30,11 +30,11 @@
     
     [navBar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]]  forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     
-    [navBar setShadowImage:[UIImage imageWithColor:YYE1Color]];//去掉阴影线
+    [navBar setShadowImage:[UIImage imageWithColor:YYE5Color]];//去掉阴影线
     
     [UITabBar appearance].translucent = NO;
     
-    [UITabBar appearance].barTintColor = YY33Color;
+    [UITabBar appearance].barTintColor = YYE5Color;
     
     [UITabBar appearance].tintColor = YY33Color;
     

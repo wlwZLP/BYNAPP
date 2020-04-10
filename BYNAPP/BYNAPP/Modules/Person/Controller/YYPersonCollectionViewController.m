@@ -13,7 +13,6 @@
 #import "PersonMainCollectionViewCell.h"
 #import "SetCollectionViewController.h"
 #import "MyOrderCollectionViewController.h"
-#import "TeamOrderCollectionViewController.h"
 #import "MyCouponCollectionViewController.h"
 #import "MyTeamCollectionViewController.h"
 #import "MYCollectCollectionViewController.h"
@@ -132,7 +131,7 @@
         
           cell.LeftCenterBtnBlockClick = ^{
             
-               TeamOrderCollectionViewController * SetVc = [[TeamOrderCollectionViewController alloc]init];
+               MyOrderCollectionViewController * SetVc = [[MyOrderCollectionViewController alloc]init];
                SetVc.title = @"团队订单";
                [self.navigationController pushViewController:SetVc animated:YES];
               
@@ -260,7 +259,7 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
  
     if (indexPath.section == 0) {
-          return CGSizeMake(YYScreenWidth , YYScreenWidth * 0.52 + 65);
+          return CGSizeMake(YYScreenWidth , YYScreenWidth * 0.52 + 70);
     }else if (indexPath.section == 1){
           return CGSizeMake(YYScreenWidth , 72);
     }else if (indexPath.section == 2){

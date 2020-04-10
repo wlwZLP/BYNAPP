@@ -1,8 +1,8 @@
 //
-//  TeamOrderCollectionViewController.h
+//  WithRecordCollectionViewController.h
 //  BYNAPP
 //
-//  Created by apple on 2020/4/9.
+//  Created by apple on 2020/4/10.
 //  Copyright © 2020 xidian. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TeamOrderCollectionViewController : YYBaseCollectionViewController
+@interface WithRecordCollectionViewController : YYBaseCollectionViewController
 
 @end
 

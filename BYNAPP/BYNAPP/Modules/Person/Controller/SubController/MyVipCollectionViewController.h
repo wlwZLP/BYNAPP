@@ -6,11 +6,12 @@
 //  Copyright © 2020 xidian. All rights reserved.
 //
 
-#import "YYBaseCollectionViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MyVipCollectionViewController : YYBaseCollectionViewController
+@interface MyVipCollectionViewController : YYBaseViewController
+
+@property(nonatomic,strong)NSString * WebUrlString;
 
 @end
 

@@ -32,7 +32,9 @@
 
 //常用自定义
 #import "AppDelegate.h"
+#import "YYBaseViewController.h"
 #import "YYBaseCollectionViewController.h"
+#import "WeakWKScriptMessageDelegate.h"
 #import "RootNavigationController.h"
 #import "PPNetworkTools.h"
 #import "XMGFileTool.h"

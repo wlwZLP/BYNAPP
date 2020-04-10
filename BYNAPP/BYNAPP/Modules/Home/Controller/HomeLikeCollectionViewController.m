@@ -21,8 +21,7 @@
 
 
 - (void)viewDidLoad {
-    
-    
+        
     [super viewDidLoad];
     
     self.collectionView.backgroundColor = YYBGColor;
@@ -31,7 +30,7 @@
      
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
-    [self GetHomeLikeNetworkData];
+   
   
 }
 
@@ -39,6 +38,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     [self.navigationController setNavigationBarHidden:YES animated:nil];
+    
+    [self GetHomeLikeNetworkData];
     
 }
 
@@ -67,7 +68,6 @@
             self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
                 
             [self.collectionView reloadData];
-          
 
        }];
 

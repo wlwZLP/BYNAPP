@@ -7,87 +7,156 @@
 //
 
 #import "MyReportCollectionViewController.h"
+#import "ReportCollectionViewCell.h"
+#import "YYReportHeadView.h"
+#import "MyIncomeCollectionViewController.h"
 
 @interface MyReportCollectionViewController ()
+
+
+@property(nonatomic,strong)YYReportHeadView * ReportHeadView;
+
 
 @end
 
 @implementation MyReportCollectionViewController
 
-static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
+    [self YYSetRightNavTitle:@"收益明细" target:self action:@selector(RightRecordButtonClick)];
     
-    // Register cell classes
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [self.collectionView registerClass:[ReportCollectionViewCell class] forCellWithReuseIdentifier:@"ReportCollectionViewCell"];
     
-    // Do any additional setup after loading the view.
+    self.collectionView.backgroundColor = YYBGColor;
+    
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
+    
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark 收益明细
+-(void)RightRecordButtonClick{
+    
+    MyIncomeCollectionViewController * IncomeVc = [[MyIncomeCollectionViewController alloc]init];
+    IncomeVc.title = @"收益明细";
+    [self.navigationController pushViewController:IncomeVc animated:YES];
+    
 }
-*/
+
+
 
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+
+     return 1;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of items
-    return 0;
+    
+     return 4;
+    
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
-    // Configure the cell
+    ReportCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ReportCollectionViewCell" forIndexPath:indexPath];
     
     return cell;
+    
 }
+
+
 
 #pragma mark <UICollectionViewDelegate>
 
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
-
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+ 
+     return CGSizeMake(YYScreenWidth , 125);
+   
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
+#pragma mark 设置区头区尾
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    
+     return (CGSize){YYScreenWidth,225};
+    
 }
 
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
+    
+     return (CGSize){YYScreenWidth,0};
+    
 }
-*/
+
+
+// 和UITableView类似，UICollectionView也可设置段头段尾
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if([kind isEqualToString:UICollectionElementKindSectionHeader])
+    {
+        UICollectionReusableView *headerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"headerId" forIndexPath:indexPath];
+        
+        if(headerView == nil){
+            headerView = [[UICollectionReusableView alloc] init];
+        }
+        
+        headerView.backgroundColor = YYBGColor;
+        
+        [headerView addSubview:self.ReportHeadView];
+     
+        return headerView;
+    
+    }
+    
+    return nil;
+    
+}
+
+/**
+ *  @return ReportHeadView
+ */
+-(YYReportHeadView *)ReportHeadView
+{
+    
+    if (_ReportHeadView == nil) {
+        
+       _ReportHeadView = [[YYReportHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 225)];
+        
+     }
+    
+    return _ReportHeadView;
+    
+}
+
+#pragma mark ---- UICollectionViewDelegateFlowLayout
+
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    
+      return UIEdgeInsetsMake(0, 0, 0, 0);//上左下右
+   
+}
+
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+    
+      return 0;
+    
+}
+
+
+
+
+
 
 @end

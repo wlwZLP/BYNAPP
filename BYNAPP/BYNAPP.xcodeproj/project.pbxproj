@@ -50,6 +50,25 @@
 		1871A04424373267000955D5 /* PersonTeamCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871A04324373267000955D5 /* PersonTeamCollectionViewCell.m */; };
 		1871A047243732BA000955D5 /* PersonToolsCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871A046243732BA000955D5 /* PersonToolsCollectionViewCell.m */; };
 		1871A04A243732D8000955D5 /* PersonMainCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1871A049243732D8000955D5 /* PersonMainCollectionViewCell.m */; };
+		187D06682440552F005DAA0C /* WeakWKScriptMessageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 187D06672440552F005DAA0C /* WeakWKScriptMessageDelegate.m */; };
+		187D066B24405858005DAA0C /* YYTeamHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187D066A24405858005DAA0C /* YYTeamHeadView.m */; };
+		187D066E2440599E005DAA0C /* TeamCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187D066D2440599E005DAA0C /* TeamCollectionViewCell.m */; };
+		187D0671244065CB005DAA0C /* WithdrawCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187D0670244065CB005DAA0C /* WithdrawCollectionViewCell.m */; };
+		187D0674244069A1005DAA0C /* WithRecordCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187D0673244069A1005DAA0C /* WithRecordCollectionViewController.m */; };
+		187D067824406A8A005DAA0C /* WithRecordCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187D067724406A8A005DAA0C /* WithRecordCollectionViewCell.m */; };
+		187D067B24407184005DAA0C /* ReportCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187D067A24407184005DAA0C /* ReportCollectionViewCell.m */; };
+		187D067E24407260005DAA0C /* YYReportHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187D067D24407260005DAA0C /* YYReportHeadView.m */; };
+		187D0681244075E8005DAA0C /* MyIncomeCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187D0680244075E8005DAA0C /* MyIncomeCollectionViewController.m */; };
+		187D068424407652005DAA0C /* IncomeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187D068324407652005DAA0C /* IncomeCollectionViewCell.m */; };
+		187D06872440832F005DAA0C /* SFLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 187D06862440832F005DAA0C /* SFLabel.m */; };
+		187F55512440004F005205E1 /* MyOrderCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F55502440004F005205E1 /* MyOrderCollectionViewCell.m */; };
+		187F555424400F66005205E1 /* CouponCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F555324400F66005205E1 /* CouponCollectionViewCell.m */; };
+		187F55582440146B005205E1 /* YYCouponHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F55572440146B005205E1 /* YYCouponHeadView.m */; };
+		187F555B24401F3B005205E1 /* CollectCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F555A24401F3B005205E1 /* CollectCollectionViewCell.m */; };
+		187F555E244025BB005205E1 /* TraceCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F555D244025BB005205E1 /* TraceCollectionViewCell.m */; };
+		187F5561244033D2005205E1 /* InvitImgCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5560244033D2005205E1 /* InvitImgCollectionViewCell.m */; };
+		187F556424404B91005205E1 /* YYBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F556324404B91005205E1 /* YYBaseViewController.m */; };
+		187F55672440503F005205E1 /* CustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F55662440503F005205E1 /* CustomCollectionViewCell.m */; };
 		1880F395243C8393003EECB9 /* BrandPlistModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F394243C8393003EECB9 /* BrandPlistModel.m */; };
 		1880F398243C881E003EECB9 /* HomePlistModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F397243C881E003EECB9 /* HomePlistModel.m */; };
 		1880F39B243C8D32003EECB9 /* BrandRecomdCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F39A243C8D32003EECB9 /* BrandRecomdCollectionViewCell.m */; };
@@ -93,7 +112,6 @@
 		18DC3919243F29040030DE97 /* MyOrderCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3918243F29040030DE97 /* MyOrderCollectionViewController.m */; };
 		18DC391C243F291B0030DE97 /* MyTeamCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC391B243F291B0030DE97 /* MyTeamCollectionViewController.m */; };
 		18DC391F243F29370030DE97 /* MyCouponCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC391E243F29370030DE97 /* MyCouponCollectionViewController.m */; };
-		18DC3922243F295D0030DE97 /* TeamOrderCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3921243F295D0030DE97 /* TeamOrderCollectionViewController.m */; };
 		18DC3925243F29880030DE97 /* MYCollectCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3924243F29880030DE97 /* MYCollectCollectionViewController.m */; };
 		18DC3928243F29B60030DE97 /* MyTraceCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC3927243F29B60030DE97 /* MyTraceCollectionViewController.m */; };
 		18DC392E243F29F60030DE97 /* MyInvitCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC392D243F29F60030DE97 /* MyInvitCollectionViewController.m */; };
@@ -196,6 +214,44 @@
 		1871A046243732BA000955D5 /* PersonToolsCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonToolsCollectionViewCell.m; sourceTree = "<group>"; };
 		1871A048243732D8000955D5 /* PersonMainCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonMainCollectionViewCell.h; sourceTree = "<group>"; };
 		1871A049243732D8000955D5 /* PersonMainCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonMainCollectionViewCell.m; sourceTree = "<group>"; };
+		187D06662440552F005DAA0C /* WeakWKScriptMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakWKScriptMessageDelegate.h; sourceTree = "<group>"; };
+		187D06672440552F005DAA0C /* WeakWKScriptMessageDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeakWKScriptMessageDelegate.m; sourceTree = "<group>"; };
+		187D066924405858005DAA0C /* YYTeamHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYTeamHeadView.h; sourceTree = "<group>"; };
+		187D066A24405858005DAA0C /* YYTeamHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYTeamHeadView.m; sourceTree = "<group>"; };
+		187D066C2440599E005DAA0C /* TeamCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TeamCollectionViewCell.h; sourceTree = "<group>"; };
+		187D066D2440599E005DAA0C /* TeamCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TeamCollectionViewCell.m; sourceTree = "<group>"; };
+		187D066F244065CB005DAA0C /* WithdrawCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WithdrawCollectionViewCell.h; sourceTree = "<group>"; };
+		187D0670244065CB005DAA0C /* WithdrawCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WithdrawCollectionViewCell.m; sourceTree = "<group>"; };
+		187D0672244069A1005DAA0C /* WithRecordCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WithRecordCollectionViewController.h; sourceTree = "<group>"; };
+		187D0673244069A1005DAA0C /* WithRecordCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WithRecordCollectionViewController.m; sourceTree = "<group>"; };
+		187D067624406A8A005DAA0C /* WithRecordCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WithRecordCollectionViewCell.h; sourceTree = "<group>"; };
+		187D067724406A8A005DAA0C /* WithRecordCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WithRecordCollectionViewCell.m; sourceTree = "<group>"; };
+		187D067924407184005DAA0C /* ReportCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportCollectionViewCell.h; sourceTree = "<group>"; };
+		187D067A24407184005DAA0C /* ReportCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReportCollectionViewCell.m; sourceTree = "<group>"; };
+		187D067C24407260005DAA0C /* YYReportHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYReportHeadView.h; sourceTree = "<group>"; };
+		187D067D24407260005DAA0C /* YYReportHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYReportHeadView.m; sourceTree = "<group>"; };
+		187D067F244075E8005DAA0C /* MyIncomeCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyIncomeCollectionViewController.h; sourceTree = "<group>"; };
+		187D0680244075E8005DAA0C /* MyIncomeCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyIncomeCollectionViewController.m; sourceTree = "<group>"; };
+		187D068224407652005DAA0C /* IncomeCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IncomeCollectionViewCell.h; sourceTree = "<group>"; };
+		187D068324407652005DAA0C /* IncomeCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IncomeCollectionViewCell.m; sourceTree = "<group>"; };
+		187D06852440832F005DAA0C /* SFLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFLabel.h; sourceTree = "<group>"; };
+		187D06862440832F005DAA0C /* SFLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFLabel.m; sourceTree = "<group>"; };
+		187F554F2440004F005205E1 /* MyOrderCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyOrderCollectionViewCell.h; sourceTree = "<group>"; };
+		187F55502440004F005205E1 /* MyOrderCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyOrderCollectionViewCell.m; sourceTree = "<group>"; };
+		187F555224400F66005205E1 /* CouponCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CouponCollectionViewCell.h; sourceTree = "<group>"; };
+		187F555324400F66005205E1 /* CouponCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CouponCollectionViewCell.m; sourceTree = "<group>"; };
+		187F55562440146B005205E1 /* YYCouponHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYCouponHeadView.h; sourceTree = "<group>"; };
+		187F55572440146B005205E1 /* YYCouponHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYCouponHeadView.m; sourceTree = "<group>"; };
+		187F555924401F3B005205E1 /* CollectCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectCollectionViewCell.h; sourceTree = "<group>"; };
+		187F555A24401F3B005205E1 /* CollectCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectCollectionViewCell.m; sourceTree = "<group>"; };
+		187F555C244025BB005205E1 /* TraceCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TraceCollectionViewCell.h; sourceTree = "<group>"; };
+		187F555D244025BB005205E1 /* TraceCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TraceCollectionViewCell.m; sourceTree = "<group>"; };
+		187F555F244033D2005205E1 /* InvitImgCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InvitImgCollectionViewCell.h; sourceTree = "<group>"; };
+		187F5560244033D2005205E1 /* InvitImgCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InvitImgCollectionViewCell.m; sourceTree = "<group>"; };
+		187F556224404B91005205E1 /* YYBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYBaseViewController.h; sourceTree = "<group>"; };
+		187F556324404B91005205E1 /* YYBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYBaseViewController.m; sourceTree = "<group>"; };
+		187F55652440503F005205E1 /* CustomCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewCell.h; sourceTree = "<group>"; };
+		187F55662440503F005205E1 /* CustomCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewCell.m; sourceTree = "<group>"; };
 		1880F393243C8393003EECB9 /* BrandPlistModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrandPlistModel.h; sourceTree = "<group>"; };
 		1880F394243C8393003EECB9 /* BrandPlistModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrandPlistModel.m; sourceTree = "<group>"; };
 		1880F396243C881E003EECB9 /* HomePlistModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePlistModel.h; sourceTree = "<group>"; };
@@ -280,8 +336,6 @@
 		18DC391B243F291B0030DE97 /* MyTeamCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyTeamCollectionViewController.m; sourceTree = "<group>"; };
 		18DC391D243F29370030DE97 /* MyCouponCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyCouponCollectionViewController.h; sourceTree = "<group>"; };
 		18DC391E243F29370030DE97 /* MyCouponCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyCouponCollectionViewController.m; sourceTree = "<group>"; };
-		18DC3920243F295D0030DE97 /* TeamOrderCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TeamOrderCollectionViewController.h; sourceTree = "<group>"; };
-		18DC3921243F295D0030DE97 /* TeamOrderCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TeamOrderCollectionViewController.m; sourceTree = "<group>"; };
 		18DC3923243F29880030DE97 /* MYCollectCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MYCollectCollectionViewController.h; sourceTree = "<group>"; };
 		18DC3924243F29880030DE97 /* MYCollectCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MYCollectCollectionViewController.m; sourceTree = "<group>"; };
 		18DC3926243F29B60030DE97 /* MyTraceCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyTraceCollectionViewController.h; sourceTree = "<group>"; };
@@ -382,6 +436,8 @@
 		1836ACE12431E0E900EA8F30 /* WebViewController */ = {
 			isa = PBXGroup;
 			children = (
+				187D06662440552F005DAA0C /* WeakWKScriptMessageDelegate.h */,
+				187D06672440552F005DAA0C /* WeakWKScriptMessageDelegate.m */,
 				1836AFCC2431E55400EA8F30 /* YYWebViewController.h */,
 				1836AFCD2431E55400EA8F30 /* YYWebViewController.m */,
 			);
@@ -400,6 +456,8 @@
 		1836ACED2431E0E900EA8F30 /* BaseMVC */ = {
 			isa = PBXGroup;
 			children = (
+				187F556224404B91005205E1 /* YYBaseViewController.h */,
+				187F556324404B91005205E1 /* YYBaseViewController.m */,
 				18633B9B24331B7A00CE3E60 /* YYBaseCollectionViewController.h */,
 				18633B9C24331B7A00CE3E60 /* YYBaseCollectionViewController.m */,
 			);
@@ -564,8 +622,9 @@
 			isa = PBXGroup;
 			children = (
 				1836AE582431E16A00EA8F30 /* Controller */,
-				1836AE7C2431E16A00EA8F30 /* Model */,
 				1836AE892431E16A00EA8F30 /* View */,
+				1836AE7C2431E16A00EA8F30 /* Model */,
+				187F555524401431005205E1 /* Resource */,
 			);
 			path = Person;
 			sourceTree = "<group>";
@@ -591,8 +650,10 @@
 		1836AE892431E16A00EA8F30 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				18DC3903243F15C80030DE97 /* SetCell */,
 				18DC3901243F15B00030DE97 /* PersonCell */,
+				187F554E24400005005205E1 /* MyCell */,
+				187D067524406A69005DAA0C /* SubCell */,
+				18DC3903243F15C80030DE97 /* SetCell */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -704,6 +765,8 @@
 		18633B6A2432D79000CE3E60 /* UILabel */ = {
 			isa = PBXGroup;
 			children = (
+				187D06852440832F005DAA0C /* SFLabel.h */,
+				187D06862440832F005DAA0C /* SFLabel.m */,
 				18633B6C2432D79000CE3E60 /* CoponLabel.h */,
 				18633B6E2432D79000CE3E60 /* CoponLabel.m */,
 			);
@@ -814,6 +877,55 @@
 			path = GoodsCell;
 			sourceTree = "<group>";
 		};
+		187D067524406A69005DAA0C /* SubCell */ = {
+			isa = PBXGroup;
+			children = (
+				187D067624406A8A005DAA0C /* WithRecordCollectionViewCell.h */,
+				187D067724406A8A005DAA0C /* WithRecordCollectionViewCell.m */,
+				187D068224407652005DAA0C /* IncomeCollectionViewCell.h */,
+				187D068324407652005DAA0C /* IncomeCollectionViewCell.m */,
+			);
+			path = SubCell;
+			sourceTree = "<group>";
+		};
+		187F554E24400005005205E1 /* MyCell */ = {
+			isa = PBXGroup;
+			children = (
+				187F554F2440004F005205E1 /* MyOrderCollectionViewCell.h */,
+				187F55502440004F005205E1 /* MyOrderCollectionViewCell.m */,
+				187F555224400F66005205E1 /* CouponCollectionViewCell.h */,
+				187F555324400F66005205E1 /* CouponCollectionViewCell.m */,
+				187F555924401F3B005205E1 /* CollectCollectionViewCell.h */,
+				187F555A24401F3B005205E1 /* CollectCollectionViewCell.m */,
+				187F555C244025BB005205E1 /* TraceCollectionViewCell.h */,
+				187F555D244025BB005205E1 /* TraceCollectionViewCell.m */,
+				187F555F244033D2005205E1 /* InvitImgCollectionViewCell.h */,
+				187F5560244033D2005205E1 /* InvitImgCollectionViewCell.m */,
+				187F55652440503F005205E1 /* CustomCollectionViewCell.h */,
+				187F55662440503F005205E1 /* CustomCollectionViewCell.m */,
+				187D066C2440599E005DAA0C /* TeamCollectionViewCell.h */,
+				187D066D2440599E005DAA0C /* TeamCollectionViewCell.m */,
+				187D066F244065CB005DAA0C /* WithdrawCollectionViewCell.h */,
+				187D0670244065CB005DAA0C /* WithdrawCollectionViewCell.m */,
+				187D067924407184005DAA0C /* ReportCollectionViewCell.h */,
+				187D067A24407184005DAA0C /* ReportCollectionViewCell.m */,
+			);
+			path = MyCell;
+			sourceTree = "<group>";
+		};
+		187F555524401431005205E1 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				187F55562440146B005205E1 /* YYCouponHeadView.h */,
+				187F55572440146B005205E1 /* YYCouponHeadView.m */,
+				187D066924405858005DAA0C /* YYTeamHeadView.h */,
+				187D066A24405858005DAA0C /* YYTeamHeadView.m */,
+				187D067C24407260005DAA0C /* YYReportHeadView.h */,
+				187D067D24407260005DAA0C /* YYReportHeadView.m */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		1880F39F243C8E23003EECB9 /* SubController */ = {
 			isa = PBXGroup;
 			children = (
@@ -909,8 +1021,8 @@
 				18DC38FF243F14420030DE97 /* SetCollectionViewController.m */,
 				18DC3914243F28D50030DE97 /* WithdrawCollectionViewController.h */,
 				18DC3915243F28D50030DE97 /* WithdrawCollectionViewController.m */,
-				18DC3920243F295D0030DE97 /* TeamOrderCollectionViewController.h */,
-				18DC3921243F295D0030DE97 /* TeamOrderCollectionViewController.m */,
+				187D0672244069A1005DAA0C /* WithRecordCollectionViewController.h */,
+				187D0673244069A1005DAA0C /* WithRecordCollectionViewController.m */,
 				18DC3917243F29040030DE97 /* MyOrderCollectionViewController.h */,
 				18DC3918243F29040030DE97 /* MyOrderCollectionViewController.m */,
 				18DC391A243F291B0030DE97 /* MyTeamCollectionViewController.h */,
@@ -931,6 +1043,8 @@
 				18DC3933243F2A360030DE97 /* MyCustomCollectionViewController.m */,
 				18ED3630243F320D00056ADD /* MyReportCollectionViewController.h */,
 				18ED3631243F320D00056ADD /* MyReportCollectionViewController.m */,
+				187D067F244075E8005DAA0C /* MyIncomeCollectionViewController.h */,
+				187D0680244075E8005DAA0C /* MyIncomeCollectionViewController.m */,
 			);
 			path = SubController;
 			sourceTree = "<group>";
@@ -1115,11 +1229,13 @@
 				18633B8D2432D79100CE3E60 /* UIBarButtonItem+Item.m in Sources */,
 				1869CA59243D7B1100F3C79E /* RightCollectionViewCell.m in Sources */,
 				18DC3906243F15F30030DE97 /* SetTopCollectionViewCell.m in Sources */,
+				187F55512440004F005205E1 /* MyOrderCollectionViewCell.m in Sources */,
 				18DC3916243F28D50030DE97 /* WithdrawCollectionViewController.m in Sources */,
 				18DC3909243F16070030DE97 /* SetMidCollectionViewCell.m in Sources */,
 				1869CA63243DAFB700F3C79E /* GoodsTitleCollectionViewCell.m in Sources */,
 				18DC3919243F29040030DE97 /* MyOrderCollectionViewController.m in Sources */,
 				18DC3900243F14420030DE97 /* SetCollectionViewController.m in Sources */,
+				187D067E24407260005DAA0C /* YYReportHeadView.m in Sources */,
 				1869CA72243DB0D000F3C79E /* GoodsSameCollectionViewCell.m in Sources */,
 				1836AFC52431E28300EA8F30 /* LPRefreshFooter.m in Sources */,
 				1871A04A243732D8000955D5 /* PersonMainCollectionViewCell.m in Sources */,
@@ -1129,14 +1245,19 @@
 				1869CA6C243DB07600F3C79E /* GoodsShopCollectionViewCell.m in Sources */,
 				18633B842432D79100CE3E60 /* UIImage+imgaeWithColor.m in Sources */,
 				18633B8C2432D79100CE3E60 /* UITextView+ZWPlaceHolder.m in Sources */,
+				187D067B24407184005DAA0C /* ReportCollectionViewCell.m in Sources */,
 				18DC3934243F2A360030DE97 /* MyCustomCollectionViewController.m in Sources */,
+				187D0674244069A1005DAA0C /* WithRecordCollectionViewController.m in Sources */,
 				1869CA66243DAFCC00F3C79E /* GoodsCouponCollectionViewCell.m in Sources */,
 				1869CA69243DB01A00F3C79E /* GoodsCourseCollectionViewCell.m in Sources */,
 				1836ACDB2431D48600EA8F30 /* PPNetworkTools.m in Sources */,
 				18DC38EC243EC12F0030DE97 /* DetailsTopCollectionViewCell.m in Sources */,
+				187F556424404B91005205E1 /* YYBaseViewController.m in Sources */,
+				187D06872440832F005DAA0C /* SFLabel.m in Sources */,
 				18633B862432D79100CE3E60 /* UIButton+EX.m in Sources */,
 				18BD4683243C1EC100707A53 /* HomeTimeCollectionViewCell.m in Sources */,
 				18633B8F2432D79100CE3E60 /* UIViewController+AlertViewAndActionSheet.m in Sources */,
+				187D066E2440599E005DAA0C /* TeamCollectionViewCell.m in Sources */,
 				1869CA6F243DB0BE00F3C79E /* GoodsDetailsCollectionViewCell.m in Sources */,
 				18BD4680243C1E1A00707A53 /* HomeGridCollectionViewCell.m in Sources */,
 				1869CA5C243DA06100F3C79E /* MenListCollectionViewController.m in Sources */,
@@ -1149,13 +1270,18 @@
 				18999018243436D700B5D1D6 /* HomeMainViewModel.m in Sources */,
 				1871A04424373267000955D5 /* PersonTeamCollectionViewCell.m in Sources */,
 				18633B8A2432D79100CE3E60 /* UIColor+Hex.m in Sources */,
+				187F555E244025BB005205E1 /* TraceCollectionViewCell.m in Sources */,
 				18DC391C243F291B0030DE97 /* MyTeamCollectionViewController.m in Sources */,
 				1836ACCC2431BE4200EA8F30 /* main.m in Sources */,
 				18DC3937243F2AF80030DE97 /* MyNewCollectionViewController.m in Sources */,
 				18633B892432D79100CE3E60 /* CoponLabel.m in Sources */,
 				1836AD042431E0E900EA8F30 /* YYMainTabBarController.m in Sources */,
+				187D068424407652005DAA0C /* IncomeCollectionViewCell.m in Sources */,
+				187D06682440552F005DAA0C /* WeakWKScriptMessageDelegate.m in Sources */,
 				18DC391F243F29370030DE97 /* MyCouponCollectionViewController.m in Sources */,
+				187D0671244065CB005DAA0C /* WithdrawCollectionViewCell.m in Sources */,
 				1869CA60243DAF8400F3C79E /* GoodsTopCollectionViewCell.m in Sources */,
+				187F555B24401F3B005205E1 /* CollectCollectionViewCell.m in Sources */,
 				1869CA53243D5FB000F3C79E /* BrandTopCollectionViewCell.m in Sources */,
 				1836ACFA2431E0E900EA8F30 /* RootNavigationController.m in Sources */,
 				1899D81E2435C0F500809BFD /* YYTools.m in Sources */,
@@ -1163,7 +1289,6 @@
 				1880F395243C8393003EECB9 /* BrandPlistModel.m in Sources */,
 				18A216072433459400DC0FF8 /* YYMemViewController.m in Sources */,
 				1899D8272435F19A00809BFD /* BrandOtherCollectionViewController.m in Sources */,
-				18DC3922243F295D0030DE97 /* TeamOrderCollectionViewController.m in Sources */,
 				1899D8242435F18000809BFD /* BrandAllCollectionViewController.m in Sources */,
 				1836AFC82431E28300EA8F30 /* XMGFileTool.m in Sources */,
 				1836ACD52431D18100EA8F30 /* YYNetHTTPTool.m in Sources */,
@@ -1173,17 +1298,23 @@
 				18DC38FC243F12AC0030DE97 /* UIImageView+YY.m in Sources */,
 				18DC38F9243EF4DC0030DE97 /* LimitBuyCollectionViewCell.m in Sources */,
 				1836AFC42431E28300EA8F30 /* LPRefreshGifHeader.m in Sources */,
+				187F555424400F66005205E1 /* CouponCollectionViewCell.m in Sources */,
+				187D0681244075E8005DAA0C /* MyIncomeCollectionViewController.m in Sources */,
 				18DC38EF243EC1420030DE97 /* DetailsNumCollectionViewCell.m in Sources */,
 				18633B8B2432D79100CE3E60 /* UIView+AnimationExtend.m in Sources */,
 				18BD4690243C4C0300707A53 /* ImgCollectionViewCell.m in Sources */,
 				1871A0412436EE62000955D5 /* PersonHeaderCollectionViewCell.m in Sources */,
+				187F55582440146B005205E1 /* YYCouponHeadView.m in Sources */,
 				1836AFC32431E28300EA8F30 /* DefineConstant.m in Sources */,
 				1880F39B243C8D32003EECB9 /* BrandRecomdCollectionViewCell.m in Sources */,
 				18DC3913243F28200030DE97 /* TaobaoCollectionViewController.m in Sources */,
+				187F55672440503F005205E1 /* CustomCollectionViewCell.m in Sources */,
+				187D066B24405858005DAA0C /* YYTeamHeadView.m in Sources */,
 				18DC390C243F161B0030DE97 /* SetBottomCollectionViewCell.m in Sources */,
 				18BD4689243C300100707A53 /* GridCollectionViewCell.m in Sources */,
 				18BD468C243C4AE500707A53 /* HomeTopicCollectionViewCell.m in Sources */,
 				18633B8E2432D79100CE3E60 /* NSString+TwoPoint.m in Sources */,
+				187F5561244033D2005205E1 /* InvitImgCollectionViewCell.m in Sources */,
 				18ED3632243F320D00056ADD /* MyReportCollectionViewController.m in Sources */,
 				189CD51E243C7BD000CC279C /* HomeDetailsCollectionViewController.m in Sources */,
 				18999039243494AC00B5D1D6 /* HomeMainModel.m in Sources */,
@@ -1193,6 +1324,7 @@
 				18DC3931243F2A1E0030DE97 /* MyVipCollectionViewController.m in Sources */,
 				18DC392E243F29F60030DE97 /* MyInvitCollectionViewController.m in Sources */,
 				1836AFC62431E28300EA8F30 /* YYSaveTool.m in Sources */,
+				187D067824406A8A005DAA0C /* WithRecordCollectionViewCell.m in Sources */,
 				1899903624348DC600B5D1D6 /* HomeMainCollectionViewCell.m in Sources */,
 				18DC3910243F28050030DE97 /* WChatCollectionViewController.m in Sources */,
 				18DC38F5243ED7730030DE97 /* LimitBuyCollectionViewController.m in Sources */,
@@ -1330,6 +1462,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KKMQ2LC855;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BYNAPP/PrefixHeader.pch;
 				INFOPLIST_FILE = BYNAPP/Info.plist;
@@ -1352,6 +1485,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KKMQ2LC855;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = BYNAPP/PrefixHeader.pch;
 				INFOPLIST_FILE = BYNAPP/Info.plist;
