@@ -44,7 +44,7 @@
         
      NSString * app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
 
-     NSString * BuildId = [infoDictionary objectForKey:@"CFBundleIdentifier"];
+//     NSString * BuildId = [infoDictionary objectForKey:@"CFBundleIdentifier"];
     
      [YYSaveTool SetCahceForvalue:app_Version forKey:CacheAPPVersion];
     

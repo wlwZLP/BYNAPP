@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GridCollectionViewCell : UICollectionViewCell
 
+
+@property(nonatomic,copy)void(^GridBtnBlockClick)(void);
+
 @end
 
 NS_ASSUME_NONNULL_END

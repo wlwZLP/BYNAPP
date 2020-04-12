@@ -24,7 +24,9 @@
     self = [super initWithFrame:frame];
     if (self) {
    
-      self.TitleArray = [[NSArray alloc]initWithObjects:@"全部",@"待支付",@"发货中",@"已成功",@"已失败",nil ];
+//      self.TitleArray = [[NSArray alloc]initWithObjects:@"全部",@"待支付",@"发货中",@"已成功",@"已失败",nil ];
+     
+        self.TitleArray = [[NSArray alloc]initWithObjects:@"全部",@"待结算",@"已结算",@"已失败",nil ];
         
       [self CreateHeaderBtn];
 
@@ -36,7 +38,7 @@
 
 -(void)CreateHeaderBtn{
     
-    int  HomelabelWith =  [[UIScreen mainScreen] bounds].size.width / 5;
+    int  HomelabelWith =  [[UIScreen mainScreen] bounds].size.width / self.TitleArray.count;
     
      for (NSUInteger i = 0; i < self.TitleArray.count; i++) {
          

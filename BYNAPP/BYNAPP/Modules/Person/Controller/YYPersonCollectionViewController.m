@@ -106,6 +106,14 @@
     if (indexPath.section == 0) {
         
         PersonHeaderCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonHeaderCollectionViewCell" forIndexPath:indexPath];
+        
+         cell.TopMoneyBtnBlockClick = ^{
+            
+            MyReportCollectionViewController * SetVc = [[MyReportCollectionViewController alloc]init];
+            SetVc.title = @"我的报表";
+            [self.navigationController pushViewController:SetVc animated:YES];
+             
+         };
          
          cell.TopSetBtnBlockClick = ^{
             
@@ -114,6 +122,12 @@
              [self.navigationController pushViewController:SetVc animated:YES];
          
          };
+        
+        cell.TopWithdrawBtnBlockClick = ^{
+            WithdrawCollectionViewController * SetVc = [[WithdrawCollectionViewController alloc]init];
+            SetVc.title = @"提现";
+            [self.navigationController pushViewController:SetVc animated:YES];
+        };
         
          return cell;
         
@@ -239,15 +253,12 @@
         
     }else if (rowIndex == 2){
      
-        MyReportCollectionViewController * SetVc = [[MyReportCollectionViewController alloc]init];
-        SetVc.title = @"我的报表";
-        [self.navigationController pushViewController:SetVc animated:YES];
+       
+        
         
     }else if (rowIndex == 3){
         
-        WithdrawCollectionViewController * SetVc = [[WithdrawCollectionViewController alloc]init];
-        SetVc.title = @"提现";
-        [self.navigationController pushViewController:SetVc animated:YES];
+       
         
     }
     

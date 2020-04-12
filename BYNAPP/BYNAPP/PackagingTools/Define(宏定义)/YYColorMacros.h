@@ -15,7 +15,7 @@
 #pragma mark -  颜色区
 
 
-#define YYMainColor [UIColor colorWithHexString:@"#FF2323"]
+#define YY11Color   [UIColor colorWithHexString:@"#111111"]
 #define YY22Color   [UIColor colorWithHexString:@"#222222"]
 #define YY33Color   [UIColor colorWithHexString:@"#333333"]
 #define YY66Color   [UIColor colorWithHexString:@"#665353"]

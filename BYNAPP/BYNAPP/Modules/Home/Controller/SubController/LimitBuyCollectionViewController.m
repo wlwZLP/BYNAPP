@@ -50,8 +50,8 @@ static int const TimelabelWith = 90;
    [TopNavView.layer addSublayer:[YYTools SetGradLayerView:TopNavView FromColor:@"#FFDD39" ToColor:@"#FFD117"]];
    
    UIButton * BackBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-   [BackBtn setImage:[UIImage imageNamed:@"Limitback"] forState:UIControlStateNormal];
-   [BackBtn setImage:[UIImage imageNamed:@"Limitback"] forState:UIControlStateHighlighted];
+   [BackBtn setImage:[UIImage imageNamed:@"LeftBack"] forState:UIControlStateNormal];
+   [BackBtn setImage:[UIImage imageNamed:@"LeftBack"] forState:UIControlStateHighlighted];
    [BackBtn sizeToFit];
    BackBtn.frame = CGRectMake(15, YYStatusHeight + 11, 10, 17);
    [BackBtn addTarget:self action:@selector(LimitLeftBackClick) forControlEvents:UIControlEventTouchUpInside];

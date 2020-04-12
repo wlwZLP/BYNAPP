@@ -48,7 +48,7 @@
 #import "UIColor+Hex.h"
 #import "UISearchBar+Text.h"
 #import "UIImageView+YY.h"
-
+#import "UILabel+YY.h"
 
 
 #endif /* PrefixHeader_pch */

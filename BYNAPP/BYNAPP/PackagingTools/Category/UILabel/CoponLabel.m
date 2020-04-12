@@ -14,10 +14,13 @@
 
 
 - (id)initWithFrame:(CGRect)frame {
- if (self = [super initWithFrame:frame]) {
- self.verticalAlignment = VerticalAlignmentMiddle;
- }
- return self;
+    
+  if (self = [super initWithFrame:frame]) {
+     
+     self.verticalAlignment = VerticalAlignmentMiddle;
+     
+   }
+   return self;
 }
 
 - (void)setVerticalAlignment:(VerticalAlignment)verticalAlignment {
@@ -41,22 +44,22 @@
         default:
         textRect.origin.y = bounds.origin.y + (bounds.size.height - textRect.size.height) / 2.0;
     }
-    return textRect;
     
+    return textRect;
     
 }
 
 
 
 -(void)drawTextInRect:(CGRect)requestedRect {
-    
-    
+        
     CGRect actualRect = [self textRectForBounds:requestedRect limitedToNumberOfLines:self.numberOfLines];
     
     [super drawTextInRect:actualRect];
-    
-    
+        
 }
+
+
 
 
 

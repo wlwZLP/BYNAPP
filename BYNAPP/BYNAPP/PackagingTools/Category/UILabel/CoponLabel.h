@@ -19,13 +19,6 @@ typedef enum
 @interface CoponLabel : UILabel
 
 
-{
-@private
-VerticalAlignment _verticalAlignment;
-}
-
-
-
 @property (nonatomic) VerticalAlignment verticalAlignment;
 
 

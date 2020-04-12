@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YYReportHeadView : UIView
 
+@property (nonatomic,copy) void(^WithdrawBtnBlockClick)(void);
+
+
 @end
 
 NS_ASSUME_NONNULL_END

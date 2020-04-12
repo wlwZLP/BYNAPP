@@ -38,6 +38,8 @@
 - (void)awakeFromNib
 {
     self.edgeInsets = UIEdgeInsetsMake(25, 0, 25, 0);
+    
+    [super awakeFromNib];
 }
 
 + (UIEdgeInsets)edgeInsets
@@ -77,6 +79,7 @@
 {
 
     [super drawTextInRect:UIEdgeInsetsInsetRect(rect, self.edgeInsets)];
+    
 }
 
 @end

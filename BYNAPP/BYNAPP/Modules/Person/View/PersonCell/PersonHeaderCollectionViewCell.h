@@ -12,7 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PersonHeaderCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic,copy) void(^TopMoneyBtnBlockClick)(void);
+
 @property (nonatomic,copy) void(^TopSetBtnBlockClick)(void);
+
+@property (nonatomic,copy) void(^TopWithdrawBtnBlockClick)(void);
 
 
 @end

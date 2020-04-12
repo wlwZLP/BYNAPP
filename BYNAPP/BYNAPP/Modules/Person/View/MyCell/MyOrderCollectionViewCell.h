@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MyOrderCollectionViewCell : UICollectionViewCell
 
+@property(nonatomic,copy)void(^MyOrderBtnBlockClick)(NSInteger Index);
+
 @end
 
 NS_ASSUME_NONNULL_END

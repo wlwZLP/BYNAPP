@@ -33,7 +33,7 @@
     Mainimage.backgroundColor = [UIColor clearColor];
     Mainimage.image = [UIImage imageNamed:@"Jingdong"];
     [self addSubview:Mainimage];
-   
+    [Mainimage addTarget:self action:@selector(GridBtnClick)];
     
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"京东";
@@ -64,6 +64,14 @@
 
 
 
+}
+
+
+
+-(void)GridBtnClick{
+    
+    self.GridBtnBlockClick();
+    
 }
 
 

@@ -120,6 +120,7 @@
     AllMoney.frame = CGRectMake(30 , self.ZLP_height - 108, 150 , 28);
     AllMoney.font = [UIFont systemFontOfSize:18 weight:0];
     [self addSubview:AllMoney];
+    [AllMoney addTarget:self action:@selector(MoneybtnClick)];
     
     UILabel * TodayPredictLabel = [[UILabel alloc]init];
     TodayPredictLabel.text = @"今日预估(元)";
@@ -136,7 +137,7 @@
     TodayPredict.frame = CGRectMake(30 , self.ZLP_height - 55, 150 , 28);
     TodayPredict.font = [UIFont systemFontOfSize:18 weight:0];
     [self addSubview:TodayPredict];
-    
+    [TodayPredict addTarget:self action:@selector(MoneybtnClick)];
     
     UILabel * MonthPredictLabel = [[UILabel alloc]init];
     MonthPredictLabel.text = @"本月预估(元)";
@@ -153,6 +154,8 @@
     MonthPredict.frame = CGRectMake(self.ZLP_centerX - 75 , self.ZLP_height - 55, 150 , 28);
     MonthPredict.font = [UIFont systemFontOfSize:18 weight:0];
     [self addSubview:MonthPredict];
+    [MonthPredict addTarget:self action:@selector(MoneybtnClick)];
+    
     
     UILabel * AllPredictLabel = [[UILabel alloc]init];
     AllPredictLabel.text = @"累计收益(元)";
@@ -169,7 +172,7 @@
     AllPredict.frame = CGRectMake(self.ZLP_width - 105 , self.ZLP_height - 55, 72 , 28);
     AllPredict.font = [UIFont systemFontOfSize:18 weight:0];
     [self addSubview:AllPredict];
-    
+    [AllPredict addTarget:self action:@selector(MoneybtnClick)];
     
     UIButton * WdrawBtn = [[UIButton alloc]init];
     [WdrawBtn setTitleColor:YY22Color forState:UIControlStateNormal];
@@ -179,7 +182,7 @@
     WdrawBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
     [WdrawBtn setTitle:@"去提现" forState:UIControlStateNormal];
     WdrawBtn.titleLabel.font = [UIFont systemFontOfSize: 14.0];
-    [WdrawBtn addTarget:self action:@selector(RightButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [WdrawBtn addTarget:self action:@selector(WdrawButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:WdrawBtn];
     [YYTools ChangeView:WdrawBtn RadiusSize:10 BorderColor:[UIColor clearColor]];
     
@@ -200,9 +203,15 @@
     
 }
 
--(void)RightButtonClick{
+-(void)WdrawButtonClick{
     
+    self.TopWithdrawBtnBlockClick();
     
+}
+
+-(void)MoneybtnClick{
+    
+    self.TopMoneyBtnBlockClick();
     
 }
 

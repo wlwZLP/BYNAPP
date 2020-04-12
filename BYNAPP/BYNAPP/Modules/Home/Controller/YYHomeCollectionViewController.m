@@ -10,6 +10,9 @@
 #import "HomePlistModel.h"
 #import "HomeMainCollectionViewController.h"
 #import "HomeLikeCollectionViewController.h"
+#import "HomeSearchCollectionViewController.h"
+#import "MessageCollectionViewController.h"
+
 
 static int const HomelabelWith = 90;
 
@@ -130,12 +133,32 @@ static int const HomelabelWith = 90;
     UIButton * HomeRightBtn = [[UIButton alloc]init];
     [HomeRightBtn setBackgroundImage:[UIImage imageNamed:@"HomeMes"] forState:UIControlStateNormal];
     HomeRightBtn.frame = CGRectMake(YYScreenWidth - 40 , YYStatusHeight + 10, 26, 24);
+    [HomeRightBtn addTarget:self action:@selector(RightMessBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [TopBarView addSubview:HomeRightBtn];
     
     
     
     
 }
+
+#pragma mark 点击头部搜索 消息按钮
+-(void)SearchButtonClick{
+    
+    HomeSearchCollectionViewController * SearchVC = [[HomeSearchCollectionViewController alloc]init];
+    SearchVC.title = @"消息";
+    [self.navigationController pushViewController:SearchVC animated:YES];
+    
+}
+
+-(void)RightMessBtnClick{
+    
+    MessageCollectionViewController * MesVC = [[MessageCollectionViewController alloc]init];
+    MesVC.title = @"消息";
+    [self.navigationController pushViewController:MesVC animated:YES];
+    
+}
+
+
 
 
 /**
