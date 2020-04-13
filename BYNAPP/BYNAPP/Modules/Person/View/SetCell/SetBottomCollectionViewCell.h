@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SetBottomCollectionViewCell : UICollectionViewCell
 
+
+@property(nonatomic,strong)NSString * TitString;
+
 @end
 
 NS_ASSUME_NONNULL_END

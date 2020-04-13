@@ -10,4 +10,12 @@
 
 @implementation UserModel
 
+
++ (NSDictionary *)modelCustomPropertyMapper {
+    
+    return @{@"User_id":@"id"};
+    
+}
+
+
 @end

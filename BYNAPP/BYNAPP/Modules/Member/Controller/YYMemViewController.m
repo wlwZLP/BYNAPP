@@ -10,6 +10,8 @@
 #import "LeftTableViewCell.h"
 #import "RightCollectionViewCell.h"
 #import "MenListCollectionViewController.h"
+#import "MenModel.h"
+
 
 static float kLeftTableViewWidth = 95.f;
 
@@ -24,7 +26,7 @@ UICollectionViewDataSource>
 
 @property (nonatomic,strong)UICollectionView * RightCollectionView;
 
-@property (nonatomic,strong)NSMutableArray * dataSource;
+@property (nonatomic,strong)NSMutableArray<MenModel*> * dataSource;
 
 @property (nonatomic,strong)NSMutableArray * collectionDatas;
 
@@ -81,15 +83,52 @@ UICollectionViewDataSource>
   
     [super viewWillDisappear:animated];
     
-    
 }
 
 
 
 -(void)GetMenberNetworkData{
     
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsCategories];
     
-    
+    NSDictionary * dict = @{@"mall_id":@"1",@"mode":@"2",@"parent_id":@"1522"};
+       
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+        
+        YYNSLog(@"类目商品接口数据----%@",responseObject);
+        
+        NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
+           
+        for (NSDictionary * dict in DataArray)
+        {
+           MenModel * Model = [MenModel modelWithDictionary:dict];
+           
+           [self.dataSource addObject:Model];
+           
+           NSMutableArray *datas = [NSMutableArray array];
+           
+           for (ChildrenModel * sModel in Model.children)
+           {
+               YYNSLog(@"分类类目数据----%@",sModel);
+               [datas addObject:sModel];
+           }
+           
+           [self.collectionDatas addObject:datas];
+           
+        }
+        
+        [self.LeftTableView reloadData];
+        
+        
+           
+    } failure:^(NSError *error, id responseCache) {
+       
+       
+        
+        
+        
+           
+    }];
     
     
     
@@ -163,13 +202,15 @@ UICollectionViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-      return 10;
+      return self.dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     LeftTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LeftTableViewCell" forIndexPath:indexPath];
+    
+    cell.name.text = self.dataSource[indexPath.item].name;
 
     return cell;
     

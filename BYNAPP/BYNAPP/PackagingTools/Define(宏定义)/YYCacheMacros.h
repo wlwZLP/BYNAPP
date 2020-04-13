@@ -17,7 +17,7 @@
 
 #define CacheAPPSecret  @"app_secret"
 
-
+#define YYToken  @"token"
 
 
 

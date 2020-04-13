@@ -29,7 +29,6 @@
         self.name = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, 95 , 25)];
         self.name.numberOfLines = 1;
         self.name.textColor = YY33Color;
-        self.name.text = @"首页";
         self.name.textAlignment = NSTextAlignmentCenter;
         self.name.highlightedTextColor = YY33Color;
         [self.contentView addSubview:self.name];

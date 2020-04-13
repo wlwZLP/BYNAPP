@@ -137,7 +137,7 @@
 
 -(void)PersonNameButtonClick{
     
-    self.TopNameBtnBlockClick();
+     self.TopNameBtnBlockClick();
     
 }
 

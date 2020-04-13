@@ -72,7 +72,8 @@ static AFHTTPSessionManager *_sessionManager;
     _isOpenLog = NO;
 }
 
-+ (void)cancelAllRequest {
+
++(void)cancelAllRequest {
     // 锁操作
     @synchronized(self) {
         [[self allSessionTask] enumerateObjectsUsingBlock:^(NSURLSessionTask  *_Nonnull task, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -82,7 +83,8 @@ static AFHTTPSessionManager *_sessionManager;
     }
 }
 
-+ (void)cancelRequestWithURL:(NSString *)URL {
+
++(void)cancelRequestWithURL:(NSString *)URL {
     if (!URL) { return; }
     @synchronized (self) {
         [[self allSessionTask] enumerateObjectsUsingBlock:^(NSURLSessionTask  *_Nonnull task, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -101,6 +103,27 @@ static AFHTTPSessionManager *_sessionManager;
                parameters:(id)parameters
                   success:(PPHttpRequestSuccess)success
                   failure:(PPHttpRequestFailed)failure {
+    
+    NSDate * datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+
+    NSString * timeSp = [NSString stringWithFormat:@"%ld", (long)([datenow timeIntervalSince1970])];
+       
+    NSString * appsecret = [YYSaveTool GetCacheForKey:CacheAPPSecret];
+       
+    NSString * appkey = [YYSaveTool GetCacheForKey:CacheAPPkey];
+    
+    NSString * appVersion = [YYSaveTool GetCacheForKey:CacheAPPVersion];
+    
+    NSString * yyToken = [YYSaveTool GetCacheForKey:YYToken];
+       
+    NSString * Md5String = [NSString stringWithFormat:@"%@appkey=%@tm=%@%@",appsecret,appkey,timeSp,appsecret];
+       
+    NSString * AppSign = [XMGFileTool BYNMd5:Md5String];
+    [_sessionManager.requestSerializer setValue:yyToken forHTTPHeaderField:@"authorization"];
+    [_sessionManager.requestSerializer setValue:appkey forHTTPHeaderField:@"app-key"];
+    [_sessionManager.requestSerializer setValue:AppSign forHTTPHeaderField:@"sign"];
+    [_sessionManager.requestSerializer setValue:timeSp forHTTPHeaderField:@"t"];
+    [_sessionManager.requestSerializer setValue:appVersion forHTTPHeaderField:@"v"];
    
     NSURLSessionTask *sessionTask = [_sessionManager GET:URL parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -134,6 +157,27 @@ static AFHTTPSessionManager *_sessionManager;
                    success:(PPHttpRequestSuccess)success
                    failure:(PPHttpRequestFailed)failure {
  
+    NSDate * datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+
+    NSString * timeSp = [NSString stringWithFormat:@"%ld", (long)([datenow timeIntervalSince1970])];
+       
+    NSString * appsecret = [YYSaveTool GetCacheForKey:CacheAPPSecret];
+       
+    NSString * appkey = [YYSaveTool GetCacheForKey:CacheAPPkey];
+    
+    NSString * appVersion = [YYSaveTool GetCacheForKey:CacheAPPVersion];
+    
+    NSString * yyToken = [YYSaveTool GetCacheForKey:YYToken];
+       
+    NSString * Md5String = [NSString stringWithFormat:@"%@appkey=%@tm=%@%@",appsecret,appkey,timeSp,appsecret];
+       
+    NSString * AppSign = [XMGFileTool BYNMd5:Md5String];
+    [_sessionManager.requestSerializer setValue:yyToken forHTTPHeaderField:@"authorization"];
+    [_sessionManager.requestSerializer setValue:appkey forHTTPHeaderField:@"app-key"];
+    [_sessionManager.requestSerializer setValue:AppSign forHTTPHeaderField:@"sign"];
+    [_sessionManager.requestSerializer setValue:timeSp forHTTPHeaderField:@"t"];
+    [_sessionManager.requestSerializer setValue:appVersion forHTTPHeaderField:@"v"];
+    
     NSURLSessionTask *sessionTask = [_sessionManager POST:URL parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -224,31 +268,15 @@ static AFHTTPSessionManager *_sessionManager;
  *  所有的HTTP请求共享一个AFHTTPSessionManager
  *  原理参考地址:http://www.jianshu.com/p/5969bbb4af9f
  */
-+ (void)initialize {
++(void)initialize {
     
     _sessionManager = [AFHTTPSessionManager manager];
     _sessionManager.requestSerializer.timeoutInterval = 30.f;
     _sessionManager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/html", @"text/json", @"text/plain", @"text/javascript", @"text/xml", @"image/*", nil];
-    NSDate * datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
-
-    NSString * timeSp = [NSString stringWithFormat:@"%ld", (long)([datenow timeIntervalSince1970])];
-       
-    NSString * appsecret = [YYSaveTool GetCacheForKey:CacheAPPSecret];
-       
-    NSString * appkey = [YYSaveTool GetCacheForKey:CacheAPPkey];
-    
-    NSString * appVersion = [YYSaveTool GetCacheForKey:CacheAPPVersion];
-       
-    NSString * Md5String = [NSString stringWithFormat:@"%@appkey=%@tm=%@%@",appsecret,appkey,timeSp,appsecret];
-       
-    NSString * AppSign = [XMGFileTool BYNMd5:Md5String];
-    [_sessionManager.requestSerializer setValue:appkey forHTTPHeaderField:@"app-key"];
-    [_sessionManager.requestSerializer setValue:AppSign forHTTPHeaderField:@"sign"];
-    [_sessionManager.requestSerializer setValue:timeSp forHTTPHeaderField:@"t"];
-    [_sessionManager.requestSerializer setValue:appVersion forHTTPHeaderField:@"v"];
     
     // 打开状态栏的等待菊花
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
+    
     
 }
 

@@ -30,6 +30,7 @@
 #import <SDAutoLayout.h>
 #import <UIScrollView+EmptyDataSet.h>
 
+
 //常用自定义
 #import "AppDelegate.h"
 #import "YYBaseViewController.h"
@@ -42,6 +43,9 @@
 #import "YYTools.h"
 #import "DefineConstant.h"
 #import "HomeMainModel.h"
+#import "UserModel.h"
+
+
 
 //常用分类
 #import "UIView+AnimationExtend.h"
@@ -49,6 +53,6 @@
 #import "UISearchBar+Text.h"
 #import "UIImageView+YY.h"
 #import "UILabel+YY.h"
-
+#import "UITextField+Placeholder.h"
 
 #endif /* PrefixHeader_pch */

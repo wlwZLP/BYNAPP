@@ -30,6 +30,13 @@ NS_ASSUME_NONNULL_BEGIN
 */
 -(void)YYSetRightNavTitle:(NSString *)title target:(id)target action:(SEL)action;
 
+/**
+*  展示一个文字，用点击事件判断,类似JS  Alert;
+*/
+-(void)YYBaseLeftBackRightClick;
+
+
+
 @end
 
 NS_ASSUME_NONNULL_END

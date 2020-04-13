@@ -1,14 +1,15 @@
 //
-//  WithdrawCollectionViewCell.m
+//  MyWithTopCollectionViewCell.m
 //  BYNAPP
 //
-//  Created by apple on 2020/4/10.
+//  Created by apple on 2020/4/13.
 //  Copyright © 2020 xidian. All rights reserved.
 //
 
-#import "WithdrawCollectionViewCell.h"
+#import "MyWithTopCollectionViewCell.h"
 
-@implementation WithdrawCollectionViewCell
+@implementation MyWithTopCollectionViewCell
+
 
 - (instancetype)initWithFrame:(CGRect)frame{
     
@@ -31,37 +32,21 @@
     
     UIView * MainView = [[UIView alloc] init];
     MainView.backgroundColor = UIColor.whiteColor;
-    MainView.frame = CGRectMake(12 , 0, YYScreenWidth - 24, 220);
+    MainView.frame = CGRectMake(12 , 0, YYScreenWidth - 24, self.ZLP_height);
     [self addSubview:MainView];
     [YYTools ChangeView:MainView  RadiusSize:10 BorderColor:[UIColor clearColor]];
     
     UIView * FLineView = UIView.new;
     FLineView.backgroundColor = YYE5Color;
-    FLineView.frame = CGRectMake(16, 137, MainView.ZLP_width -32, 0.5);
+    FLineView.frame = CGRectMake(22, 94 , MainView.ZLP_width -44, 0.5);
     [MainView addSubview:FLineView];
     
     
-    UIView * SLineView = UIView.new;
-    SLineView.backgroundColor = YYE5Color;
-    SLineView.frame = CGRectMake(16, 192, MainView.ZLP_width -32, 0.5);
-    [MainView addSubview:SLineView];
-    
-  
-    
+   
 
-    
     
 }
 
-
--(void)WithdrawButtonClick{
-    
-    
-    
-    
-    
-    
-}
 
 
 @end

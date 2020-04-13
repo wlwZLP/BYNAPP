@@ -6,15 +6,21 @@
 //  Copyright © 2020 xidian. All rights reserved.
 //
 
-#import "WithdrawCollectionViewController.h"
+#import "MyWithdrawCollectionViewController.h"
 #import "WithdrawCollectionViewCell.h"
+#import "MyWithTopCollectionViewCell.h"
+#import "SetBottomCollectionViewCell.h"
 #import "WithRecordCollectionViewController.h"
+#import "YYWithdrawHeadView.h"
 
-@interface WithdrawCollectionViewController ()
+@interface MyWithdrawCollectionViewController ()
+
+
+@property(nonatomic,strong)YYWithdrawHeadView * WithHeadView;
 
 @end
 
-@implementation WithdrawCollectionViewController
+@implementation MyWithdrawCollectionViewController
 
 
 
@@ -22,13 +28,13 @@
     
     [super viewDidLoad];
     
-    [self YYSetRightNavTitle:@"提现记录" target:self action:@selector(WithdrwaightbuttonClick)];
-    
-    
     self.collectionView.backgroundColor = YYBGColor;
     
-
+    [self.collectionView registerClass:[MyWithTopCollectionViewCell class] forCellWithReuseIdentifier:@"MyWithTopCollectionViewCell"];
+    
     [self.collectionView registerClass:[WithdrawCollectionViewCell class] forCellWithReuseIdentifier:@"WithdrawCollectionViewCell"];
+    
+    [self.collectionView registerClass:[SetBottomCollectionViewCell class] forCellWithReuseIdentifier:@"SetBottomCollectionViewCell"];
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
@@ -45,35 +51,53 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-     return 1;
+      return 3;
     
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-      WithdrawCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"WithdrawCollectionViewCell" forIndexPath:indexPath];
+    if (indexPath.item == 0) {
+        
+        MyWithTopCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyWithTopCollectionViewCell" forIndexPath:indexPath];
+           
+        return cell;
+        
+    }else if (indexPath.item == 1){
+        
+        WithdrawCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"WithdrawCollectionViewCell" forIndexPath:indexPath];
+           
+        return cell;
+        
+    }else{
+        
+       SetBottomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SetBottomCollectionViewCell" forIndexPath:indexPath];
+        
+        cell.TitString = @"提现";
+           
+        return cell;
+        
+    }
     
-      return cell;
-    
-}
-
-#pragma mark 提现记录
-
-
--(void)WithdrwaightbuttonClick{
-    
-    WithRecordCollectionViewController * RecordVc = [[WithRecordCollectionViewController alloc]init];
-    RecordVc.title =@"提现记录";
-    [self.navigationController pushViewController:RecordVc animated:YES];
-    
+     
     
 }
 
 #pragma mark <UICollectionViewDelegate>
 
+
+#pragma mark <UICollectionViewDelegate>
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
- 
-     return CGSizeMake(YYScreenWidth , 500);
+    
+    if (indexPath.item == 0) {
+       return CGSizeMake(YYScreenWidth , 150);
+    }else if (indexPath.item == 1){
+       return CGSizeMake(YYScreenWidth , 260);
+    }else{
+       return CGSizeMake(YYScreenWidth , 45);
+    }
+     
    
 }
 
@@ -81,7 +105,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     
-       return (CGSize){YYScreenWidth,0};
+       return (CGSize){YYScreenWidth, 45};
     
 }
 
@@ -106,6 +130,9 @@
         }
         
         headerView.backgroundColor = YYBGColor;
+        
+        [headerView addSubview:self.WithHeadView];
+        
      
         return headerView;
     
@@ -115,20 +142,40 @@
     
 }
 
+/**
+ *  懒加载UISearchBar
+ *
+ *  @return SalesSearchBar
+ */
+-(YYWithdrawHeadView *)WithHeadView
+{
+    
+    if (_WithHeadView == nil) {
+        
+       _WithHeadView = [[YYWithdrawHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 45)];
+        
+     }
+    
+    return _WithHeadView;
+    
+}
+
+
 #pragma mark ---- UICollectionViewDelegateFlowLayout
 
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     
-      return UIEdgeInsetsMake(0, 0, 0, 0);//上左下右
+      return UIEdgeInsetsMake(10, 0, 0, 0);//上左下右
    
 }
 
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-      return 0;
+      return 10;
+    
 }
 
 

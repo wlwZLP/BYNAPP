@@ -1,28 +1,22 @@
 //
-//  PersonHeaderCollectionViewCell.m
+//  PersonVipHeadCollectionViewCell.m
 //  BYNAPP
 //
-//  Created by apple on 2020/4/3.
+//  Created by apple on 2020/4/13.
 //  Copyright © 2020 xidian. All rights reserved.
 //
 
-#import "PersonHeaderCollectionViewCell.h"
+#import "PersonVipHeadCollectionViewCell.h"
 
-@interface PersonHeaderCollectionViewCell ()
+@implementation PersonVipHeadCollectionViewCell
 
-
-
-
-@end
-
-@implementation PersonHeaderCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
     
     if (self = [super initWithFrame:frame]) {
         
         self.backgroundColor = [UIColor whiteColor];
-       
+    
         [self setup];
         
     }
@@ -32,23 +26,33 @@
 }
 
 
-
-- (void)setup
-{
+- (void)setup{
     
     
     UIView * TopBGView = [[UIView alloc] init];
     TopBGView.frame = CGRectMake(0, 0, YYScreenWidth, YYScreenWidth * 0.52);
     [self addSubview:TopBGView];
     [TopBGView.layer addSublayer:[YYTools SetGradLayerView:TopBGView FromColor:@"#FFDD39" ToColor:@"#FFD117"]];
+    
+    UIImageView * BGimage = [[UIImageView alloc] init];
+    BGimage.image = [UIImage imageNamed:@"blackBg"];
+    [self addSubview:BGimage];
+    [BGimage mas_makeConstraints:^(MASConstraintMaker *make) {
 
+        make.left.equalTo(self.mas_left).with.offset(10);
+        make.right.equalTo(self.mas_right).with.offset(-10);
+        make.bottom.equalTo(self.mas_bottom).with.offset(-10);
+        make.height.offset(145);
+    
+    }];
     
     UIImageView * HeadImage = [[UIImageView alloc] init];
     HeadImage.image = [UIImage imageNamed:@"Jingdong"];
     HeadImage.frame = CGRectMake(20, YYStatusHeight + 20, 55, 55);
     [self addSubview:HeadImage];
     [YYTools ChangeView:HeadImage RadiusSize:22 BorderColor:[UIColor clearColor]];
-    
+     
+   
     UILabel * NameLabel = [[UILabel alloc]init];
     NameLabel.text = @"我是昵称";
     NameLabel.textAlignment = NSTextAlignmentLeft;
@@ -75,7 +79,7 @@
         make.width.offset(67);
         
     }];
-    [VipImage addTarget:self action:@selector(VIPImgClick)];
+  
     
     UILabel * InvitCodeLabel = [[UILabel alloc]init];
     InvitCodeLabel.text = @"邀请码：543575477";
@@ -88,20 +92,6 @@
         make.left.equalTo(HeadImage.mas_right).with.offset(10);
         make.bottom.equalTo(HeadImage.mas_bottom).with.offset(-2);
         make.height.offset(20);
-    
-    }];
-    
-    
-    
-    UIImageView * BGimage = [[UIImageView alloc] init];
-    BGimage.image = [UIImage imageNamed:@"blackBg"];
-    [self addSubview:BGimage];
-    [BGimage mas_makeConstraints:^(MASConstraintMaker *make) {
-
-        make.left.equalTo(self.mas_left).with.offset(10);
-        make.right.equalTo(self.mas_right).with.offset(-10);
-        make.bottom.equalTo(self.mas_bottom).with.offset(-10);
-        make.height.offset(145);
     
     }];
     
@@ -120,7 +110,7 @@
     AllMoney.frame = CGRectMake(30 , self.ZLP_height - 108, 150 , 28);
     AllMoney.font = [UIFont systemFontOfSize:18 weight:0];
     [self addSubview:AllMoney];
-    [AllMoney addTarget:self action:@selector(MoneybtnClick)];
+    [AllMoney addLabelTarget:self action:@selector(MoneybtnClick)];
     
     UILabel * TodayPredictLabel = [[UILabel alloc]init];
     TodayPredictLabel.text = @"今日预估(元)";
@@ -137,7 +127,7 @@
     TodayPredict.frame = CGRectMake(30 , self.ZLP_height - 55, 150 , 28);
     TodayPredict.font = [UIFont systemFontOfSize:18 weight:0];
     [self addSubview:TodayPredict];
-    [TodayPredict addTarget:self action:@selector(MoneybtnClick)];
+    [TodayPredict addLabelTarget:self action:@selector(MoneybtnClick)];
     
     UILabel * MonthPredictLabel = [[UILabel alloc]init];
     MonthPredictLabel.text = @"本月预估(元)";
@@ -154,7 +144,7 @@
     MonthPredict.frame = CGRectMake(self.ZLP_centerX - 75 , self.ZLP_height - 55, 150 , 28);
     MonthPredict.font = [UIFont systemFontOfSize:18 weight:0];
     [self addSubview:MonthPredict];
-    [MonthPredict addTarget:self action:@selector(MoneybtnClick)];
+    [MonthPredict addLabelTarget:self action:@selector(MoneybtnClick)];
     
     
     UILabel * AllPredictLabel = [[UILabel alloc]init];
@@ -172,7 +162,7 @@
     AllPredict.frame = CGRectMake(self.ZLP_width - 105 , self.ZLP_height - 55, 72 , 28);
     AllPredict.font = [UIFont systemFontOfSize:18 weight:0];
     [self addSubview:AllPredict];
-    [AllPredict addTarget:self action:@selector(MoneybtnClick)];
+    [AllPredict addLabelTarget:self action:@selector(MoneybtnClick)];
     
     UIButton * WdrawBtn = [[UIButton alloc]init];
     [WdrawBtn setTitleColor:YY22Color forState:UIControlStateNormal];
@@ -193,38 +183,27 @@
     [TopBGView addSubview:SetImage];
     [SetImage addTarget:self action:@selector(SetImgButtonClick)];
     
-    
 }
 
-
--(void)VIPImgClick{
-    
-    
-    
-}
 
 -(void)WdrawButtonClick{
     
-    self.TopWithdrawBtnBlockClick();
+    self.PersonVipheadBtnBlockClick(@"提现");
     
 }
 
 -(void)MoneybtnClick{
     
-    self.TopMoneyBtnBlockClick();
+    self.PersonVipheadBtnBlockClick(@"报表");
     
 }
 
 
 -(void)SetImgButtonClick{
     
-    
-    self.TopSetBtnBlockClick();
+    self.PersonVipheadBtnBlockClick(@"设置");
     
 }
-
-
-
 
 
 

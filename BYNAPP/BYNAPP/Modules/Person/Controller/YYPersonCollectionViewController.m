@@ -7,7 +7,9 @@
 //
 
 #import "YYPersonCollectionViewController.h"
-#import "PersonHeaderCollectionViewCell.h"
+#import "PersonNoLoginCollectionViewCell.h"
+#import "PersonVipHeadCollectionViewCell.h"
+#import "PersonNoVipheadCollectionViewCell.h"
 #import "PersonTeamCollectionViewCell.h"
 #import "PersonToolsCollectionViewCell.h"
 #import "PersonMainCollectionViewCell.h"
@@ -22,13 +24,16 @@
 #import "MyVipCollectionViewController.h"
 #import "MyCustomCollectionViewController.h"
 #import "MyReportCollectionViewController.h"
-#import "WithdrawCollectionViewController.h"
+#import "MyWithdrawCollectionViewController.h"
+#import "LoginCollectionViewController.h"
 
 @interface YYPersonCollectionViewController ()
 
 @property(nonatomic,strong)NSArray * ImgArray;
 
 @property(nonatomic,strong)NSArray * TitleArray;
+
+@property(nonatomic,strong)UserModel * Usermodel;
 
 @end
 
@@ -38,32 +43,34 @@
 
 - (void)viewDidLoad {
     
-    
     [super viewDidLoad];
 
-    
     self.collectionView.frame = CGRectMake(0, -YYStatusHeight, YYScreenWidth, YYScreenHeight + YYStatusHeight);
     
     self.collectionView.backgroundColor = YYBGColor;
     
     [self.navigationController setNavigationBarHidden:YES animated:nil];
-      
-    [self.collectionView registerClass:[PersonHeaderCollectionViewCell class] forCellWithReuseIdentifier:@"PersonHeaderCollectionViewCell"];
+     
+    [self.collectionView registerClass:[PersonNoVipheadCollectionViewCell class] forCellWithReuseIdentifier:@"PersonNoVipheadCollectionViewCell"];
+    
+    [self.collectionView registerClass:[PersonNoLoginCollectionViewCell class] forCellWithReuseIdentifier:@"PersonNoLoginCollectionViewCell"];
+    
+    [self.collectionView registerClass:[PersonVipHeadCollectionViewCell class] forCellWithReuseIdentifier:@"PersonVipHeadCollectionViewCell"];
     
     [self.collectionView registerClass:[PersonTeamCollectionViewCell class] forCellWithReuseIdentifier:@"PersonTeamCollectionViewCell"];
     
     [self.collectionView registerClass:[PersonToolsCollectionViewCell class] forCellWithReuseIdentifier:@"PersonToolsCollectionViewCell"];
     
-    [self.collectionView registerClass:[PersonMainCollectionViewCell class] forCellWithReuseIdentifier:@"PersonMainCollectionViewCell"];
+     [self.collectionView registerClass:[PersonMainCollectionViewCell class] forCellWithReuseIdentifier:@"PersonMainCollectionViewCell"];
      
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
+     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
   
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    [self GetHomeLikeNetworkData];
+    [self GetPersonUserNetworkData];
     
     [self.navigationController setNavigationBarHidden:YES animated:nil];
     
@@ -72,13 +79,42 @@
 }
 
 
--(void)GetHomeLikeNetworkData{
+-(void)GetPersonUserNetworkData{
     
      
-    [self.collectionView reloadData];
+   NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVUserInfo];
+   
+   [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+       
+        NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+       
+        self.Usermodel = [UserModel modelWithDictionary:Data];
+    
+        [self.collectionView reloadData];
+       
+   } failure:^(NSError *error, id responseCache) {
+   
+        NSDictionary * Data = EncodeDicFromDic(responseCache, @"data");
+          
+        self.Usermodel = [UserModel modelWithDictionary:Data];
+       
+        [self.collectionView reloadData];
+
+   }];
           
     
-    
+}
+
+
+#pragma mark ===============懒加载=============
+
+- (UserModel *)Usermodel
+{
+    if (!_Usermodel)
+    {
+        _Usermodel = [[UserModel alloc]init];
+    }
+    return _Usermodel;
 }
 
 
@@ -104,34 +140,40 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 0) {
-        
-        PersonHeaderCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonHeaderCollectionViewCell" forIndexPath:indexPath];
-        
-         cell.TopMoneyBtnBlockClick = ^{
+
+        if (self.Usermodel.User_id > 0) {
             
-            MyReportCollectionViewController * SetVc = [[MyReportCollectionViewController alloc]init];
-            SetVc.title = @"我的报表";
-            [self.navigationController pushViewController:SetVc animated:YES];
-             
-         };
-         
-         cell.TopSetBtnBlockClick = ^{
+            PersonVipHeadCollectionViewCell  * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonVipHeadCollectionViewCell" forIndexPath:indexPath];
             
-             SetCollectionViewController * SetVc = [[SetCollectionViewController alloc]init];
-             SetVc.title = @"个人信息";
-             [self.navigationController pushViewController:SetVc animated:YES];
-         
-         };
+            cell.PersonVipheadBtnBlockClick = ^(NSString * _Nonnull ClickString) {
+                
+                [self PersonPushNextController:ClickString];
+                
+            };
         
-        cell.TopWithdrawBtnBlockClick = ^{
-            WithdrawCollectionViewController * SetVc = [[WithdrawCollectionViewController alloc]init];
-            SetVc.title = @"提现";
-            [self.navigationController pushViewController:SetVc animated:YES];
-        };
+    
+            return cell;
+            
+        }else{
+            
+            
+            PersonNoLoginCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonNoLoginCollectionViewCell" forIndexPath:indexPath];
+            
+            cell.TopLoginBtnBlockClick = ^{
+                      
+                LoginCollectionViewController * LoginVc = [[LoginCollectionViewController alloc]init];
+                LoginVc.title = @"";
+                [self.navigationController pushViewController:LoginVc animated:YES];
+                        
+            };
+                   
+            return cell;
+            
+        }
         
-         return cell;
         
     }else if (indexPath.section ==1){
+        
         
         PersonTeamCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonTeamCollectionViewCell" forIndexPath:indexPath];
         
@@ -233,8 +275,38 @@
         
     }
      
-
 }
+
+
+#pragma mark ===============页面跳转第三界面=============
+
+-(void)PersonPushNextController:(NSString*)PushTitleString{
+    
+    if ([PushTitleString isEqualToString:@"报表"]) {
+        
+        MyReportCollectionViewController * SetVc = [[MyReportCollectionViewController alloc]init];
+        SetVc.title = @"我的报表";
+        [self.navigationController pushViewController:SetVc animated:YES];
+    }else if ([PushTitleString isEqualToString:@"设置"]){
+        
+        SetCollectionViewController * SetVc = [[SetCollectionViewController alloc]init];
+        SetVc.title = @"个人信息";
+        [self.navigationController pushViewController:SetVc animated:YES];
+            
+    }else if ([PushTitleString isEqualToString:@"提现"]){
+        
+        MyWithdrawCollectionViewController * SetVc = [[MyWithdrawCollectionViewController alloc]init];
+        SetVc.title = @"提现";
+        [self.navigationController pushViewController:SetVc animated:YES];
+        
+    }
+    
+    
+                 
+    
+}
+
+
 #pragma mark 最后一区间点击事件
 -(void)PersonPushToViewController:(NSInteger)rowIndex{
     

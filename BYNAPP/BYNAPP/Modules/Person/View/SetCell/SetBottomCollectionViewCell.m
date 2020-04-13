@@ -8,6 +8,13 @@
 
 #import "SetBottomCollectionViewCell.h"
 
+@interface SetBottomCollectionViewCell ()
+
+
+@property(nonatomic,strong)UIButton *  BottomBtn;
+
+@end
+
 @implementation SetBottomCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -24,17 +31,23 @@
     
 }
 
+-(void)setTitString:(NSString *)TitString{
+    
+   [self.BottomBtn setTitle:TitString forState:UIControlStateNormal];
+}
+
+
 - (void)setup{
     
     UIButton * ExitBtn = [[UIButton alloc] initWithFrame:CGRectMake(12, 20 , self.ZLP_width - 24 , 45)];
     [ExitBtn addTarget:self action:@selector(ExitButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    ExitBtn.backgroundColor = YYHexColor(@"#FFD409");
+    ExitBtn.backgroundColor = YYMMColor;
     [ExitBtn setTitleColor:YY22Color forState:UIControlStateNormal];
     [ExitBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     [ExitBtn.titleLabel setFont :[UIFont fontWithName:@"Helvetica-Bold" size:16]];
     [self addSubview:ExitBtn];
-    [YYTools ChangeView:ExitBtn RadiusSize:16 BorderColor:YYHexColor(@"#FFD409")];
-    
+    [YYTools ChangeView:ExitBtn RadiusSize:16 BorderColor:[UIColor clearColor]];
+    self.BottomBtn = ExitBtn;
 
     
 }

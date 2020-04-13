@@ -10,7 +10,7 @@
 #import "ReportCollectionViewCell.h"
 #import "YYReportHeadView.h"
 #import "MyIncomeCollectionViewController.h"
-#import "WithdrawCollectionViewController.h"
+#import "MyWithdrawCollectionViewController.h"
 
 
 @interface MyReportCollectionViewController ()
@@ -116,7 +116,7 @@
         
         self.ReportHeadView.WithdrawBtnBlockClick = ^{
            
-            WithdrawCollectionViewController * RecordVc = [[WithdrawCollectionViewController alloc]init];
+            MyWithdrawCollectionViewController * RecordVc = [[MyWithdrawCollectionViewController alloc]init];
             RecordVc.title =@"提现";
             [self.navigationController pushViewController:RecordVc animated:YES];
             

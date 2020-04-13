@@ -47,6 +47,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
       self.collectionView.emptyDataSetDelegate = self;
     
+    
 }
 
 
@@ -59,7 +60,7 @@ static NSString * const reuseIdentifier = @"Cell";
     //下面判断的意义是 当VC所在的导航控制器中的VC个数大于1 或者 是present出来的VC时，才展示返回按钮，其他情况不展示
     if (isShowLiftBack && ( VCCount > 1 || self.navigationController.presentingViewController != nil)){
        
-      self.navigationItem.leftBarButtonItem = [self itemWithimage:[UIImage imageNamed:@"LeftBack"] highImage:[UIImage imageNamed:@"LeftBack"] target:self action:@selector(LeftBackItemAction)];
+      self.navigationItem.leftBarButtonItem = [self itemWithimage:[UIImage imageNamed:@"LeftBack"] highImage:[UIImage imageNamed:@"LeftBack"] target:self action:@selector(YYBaseLeftBackRightClick)];
       
     } else {
         
@@ -70,7 +71,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
 }
 
-- (void)LeftBackItemAction {
+- (void)YYBaseLeftBackRightClick {
     
     if (self.presentingViewController) {
         [self dismissViewControllerAnimated:YES completion:nil];
