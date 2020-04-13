@@ -95,11 +95,29 @@
         
         SetBottomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SetBottomCollectionViewCell" forIndexPath:indexPath];
                 
+        cell.BottomMainBtnBlockClick = ^{
+          
+             [self YYShowAlertViewTitle:@"退出登录"];
+            
+        };
+        
         return cell;
         
-        
     }
+    
 }
+
+#pragma mark 退出登录
+
+-(void)YYShowAlertTitleClick{
+    
+    [YYSaveTool RemoveCacheForKey:YYToken];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+}
+
+
 
 #pragma mark <UICollectionViewDelegate>
 

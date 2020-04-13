@@ -57,7 +57,7 @@ static int const HomelabelWith = 90;
                  
                  HomeLikeCollectionViewController * OneVC = [[HomeLikeCollectionViewController alloc]init];
                   
-                 OneVC.HomeID = HomePlistArray[idx].parent_id;
+                 OneVC.HomeID = HomePlistArray[idx].Home_id;
     
                  [self addChildViewController:OneVC];
                 
@@ -91,15 +91,29 @@ static int const HomelabelWith = 90;
     
     [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
         
+//        YYNSLog(@"获取首页头部---%@",responseObject);
+        NSDictionary * dict1 = @{@"id":@"000",@"name":@"首页"};
+        
+        NSDictionary * dict2 = @{@"id":@"888",@"name":@"猜你喜欢"};
+        
         NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
         
-        CompleteData([NSArray modelArrayWithClass:[HomePlistModel class] json:DataArray]);
+        NSMutableArray * TitleArray = [NSMutableArray array];
+        
+        [TitleArray addObject:dict1];
+        
+        [TitleArray addObject:dict2];
+        
+        [TitleArray addObjectsFromArray:DataArray];
+        
+        CompleteData([NSArray modelArrayWithClass:[HomePlistModel class] json:TitleArray]);
+        
         
     } failure:^(NSError *error, id responseCache) {
     
          NSArray * DataArray = EncodeArrayFromDic(responseCache, @"data");
               
-        CompleteData([NSArray modelArrayWithClass:[HomePlistModel class] json:DataArray]);
+         CompleteData([NSArray modelArrayWithClass:[HomePlistModel class] json:DataArray]);
         
     }];
     
@@ -144,11 +158,16 @@ static int const HomelabelWith = 90;
 #pragma mark 点击头部搜索 消息按钮
 -(void)SearchButtonClick{
     
-    HomeSearchCollectionViewController * SearchVC = [[HomeSearchCollectionViewController alloc]init];
-    SearchVC.title = @"消息";
-    [self.navigationController pushViewController:SearchVC animated:YES];
+//    HomeSearchCollectionViewController * SearchVC = [[HomeSearchCollectionViewController alloc]init];
+//    SearchVC.title = @"消息";
+//    [self.navigationController pushViewController:SearchVC animated:YES];
+    
+    
+    
     
 }
+
+
 
 -(void)RightMessBtnClick{
     

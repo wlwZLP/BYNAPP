@@ -132,6 +132,8 @@
 		DC7E5FEB2441AEBA00A50185 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DC7E5FEA2441AEBA00A50185 /* UserModel.m */; };
 		DC9794222442D10900322F00 /* MessageCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9794212442D10900322F00 /* MessageCollectionViewController.m */; };
 		DC9794252442D11B00322F00 /* HomeSearchCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9794242442D11B00322F00 /* HomeSearchCollectionViewController.m */; };
+		DCE664BC2444CD9300C7BE3B /* HomeBannerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE664BB2444CD9300C7BE3B /* HomeBannerModel.m */; };
+		DCE664C52444CE7100C7BE3B /* HomeTimeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = DCE664C42444CE7100C7BE3B /* HomeTimeModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -388,6 +390,10 @@
 		DC9794212442D10900322F00 /* MessageCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MessageCollectionViewController.m; sourceTree = "<group>"; };
 		DC9794232442D11B00322F00 /* HomeSearchCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeSearchCollectionViewController.h; sourceTree = "<group>"; };
 		DC9794242442D11B00322F00 /* HomeSearchCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeSearchCollectionViewController.m; sourceTree = "<group>"; };
+		DCE664BA2444CD9200C7BE3B /* HomeBannerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeBannerModel.h; sourceTree = "<group>"; };
+		DCE664BB2444CD9300C7BE3B /* HomeBannerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeBannerModel.m; sourceTree = "<group>"; };
+		DCE664C32444CE7100C7BE3B /* HomeTimeModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeTimeModel.h; sourceTree = "<group>"; };
+		DCE664C42444CE7100C7BE3B /* HomeTimeModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeTimeModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -593,6 +599,10 @@
 				1880F397243C881E003EECB9 /* HomePlistModel.m */,
 				18999037243494AC00B5D1D6 /* HomeMainModel.h */,
 				18999038243494AC00B5D1D6 /* HomeMainModel.m */,
+				DCE664BA2444CD9200C7BE3B /* HomeBannerModel.h */,
+				DCE664BB2444CD9300C7BE3B /* HomeBannerModel.m */,
+				DCE664C32444CE7100C7BE3B /* HomeTimeModel.h */,
+				DCE664C42444CE7100C7BE3B /* HomeTimeModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1374,6 +1384,7 @@
 				18A216072433459400DC0FF8 /* YYMemViewController.m in Sources */,
 				1899D8272435F19A00809BFD /* BrandOtherCollectionViewController.m in Sources */,
 				1899D8242435F18000809BFD /* BrandAllCollectionViewController.m in Sources */,
+				DCE664C52444CE7100C7BE3B /* HomeTimeModel.m in Sources */,
 				1836AFC82431E28300EA8F30 /* XMGFileTool.m in Sources */,
 				1836ACD52431D18100EA8F30 /* YYNetHTTPTool.m in Sources */,
 				18DC38F2243EC1710030DE97 /* DetailsNotesCollectionViewCell.m in Sources */,
@@ -1384,6 +1395,7 @@
 				18DC38F9243EF4DC0030DE97 /* LimitBuyCollectionViewCell.m in Sources */,
 				1836AFC42431E28300EA8F30 /* LPRefreshGifHeader.m in Sources */,
 				187F555424400F66005205E1 /* CouponCollectionViewCell.m in Sources */,
+				DCE664BC2444CD9300C7BE3B /* HomeBannerModel.m in Sources */,
 				187D0681244075E8005DAA0C /* MyIncomeCollectionViewController.m in Sources */,
 				18DC38EF243EC1420030DE97 /* DetailsNumCollectionViewCell.m in Sources */,
 				18633B8B2432D79100CE3E60 /* UIView+AnimationExtend.m in Sources */,

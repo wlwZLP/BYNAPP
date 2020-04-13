@@ -86,6 +86,8 @@
    
    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
        
+        YYNSLog(@"个人中心数据---%@",responseObject);
+       
         NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
        
         self.Usermodel = [UserModel modelWithDictionary:Data];

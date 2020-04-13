@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,strong)NSString * TitString;
 
+@property (nonatomic,copy) void(^BottomMainBtnBlockClick)(void);
+
+
 @end
 
 NS_ASSUME_NONNULL_END

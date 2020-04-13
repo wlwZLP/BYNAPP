@@ -14,12 +14,19 @@
 #import "HomeMainCollectionViewCell.h"
 #import "HomeDetailsCollectionViewController.h"
 #import "LimitBuyCollectionViewController.h"
-
+#import "HomeBannerModel.h"
 
 @interface HomeMainCollectionViewController ()
 
-@property(nonatomic,strong)NSArray * LocalImgArray;
+@property(nonatomic,strong)NSArray<HomeBannerModel*> * BannerArray;
 
+@property(nonatomic,strong)NSMutableArray * BannerImgArray;
+
+@property(nonatomic,strong)NSArray<HomeBannerModel*> * ChannlesArray;
+
+@property(nonatomic,strong)NSArray<HomeBannerModel*> * TimesArray;
+
+@property(nonatomic,strong)NSArray<HomeMainModel*> * GoodsItemsArray;
 
 @end
 
@@ -31,7 +38,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
      [super viewDidLoad];
     
-     self.LocalImgArray = [[NSArray alloc]initWithObjects:@"banner01",@"banner02",@"banner03",nil ];
+     self.BannerImgArray = [NSMutableArray array];
    
      [self.collectionView registerClass:[HomeBannerCollectionViewCell class] forCellWithReuseIdentifier:@"HomeBannerCollectionViewCell"];
     
@@ -52,11 +59,76 @@ static NSString * const reuseIdentifier = @"Cell";
 -(void)viewWillAppear:(BOOL)animated{
     
     [self.navigationController setNavigationBarHidden:YES animated:nil];
+   
+    //网络请求1
+    RACSignal * signal1 = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+     
+        NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsHome];
+                    
+        [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+                        
+             [subscriber sendNext:responseObject];
+            
+        } failure:^(NSError *error, id responseCache) {
+                       
+             [subscriber sendNext:responseCache];
+                           
+        }];
+        
+        return  nil;
+        
+    }];
+        
+   //网络请求2
+    RACSignal * signal2 = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+       
+        NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsTaobaoHot];
+                    
+        [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+            
+             [subscriber sendNext:responseObject];
+            
+        } failure:^(NSError *error, id responseCache) {
+                       
+             [subscriber sendNext:responseCache];
+                           
+        }];
+        return  nil;
+    }];
     
-    [self.collectionView reloadData];
+   
+    [self rac_liftSelector:@selector(updateUIPic:pic2:) withSignalsFromArray:@[signal1,signal2]];
+
+      
     
 }
 
+#pragma mark  多个网络请求结束后在这里处理数据
+
+- (void)updateUIPic:(id)pic1 pic2:(id)pic2{
+  
+    NSDictionary * NetData1 = (NSDictionary*)pic1;
+    
+    NSDictionary * Data1 = EncodeDicFromDic(NetData1, @"data");
+    
+    self.BannerArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"banners")];
+    
+    for (HomeBannerModel * Model in self.BannerArray) {
+        [self.BannerImgArray addObject:Model.cover];
+    }
+    
+    self.ChannlesArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"channels")];
+    
+    NSDictionary * NetData2 = (NSDictionary*)pic2;
+    
+    NSDictionary * Data2 = EncodeDicFromDic(NetData2, @"data");
+    
+    self.GoodsItemsArray =  [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data2, @"items")];
+    
+    [self.collectionView reloadData];
+    
+    
+}
 
 
 
@@ -73,7 +145,7 @@ static NSString * const reuseIdentifier = @"Cell";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     if (section == 4) {
-        return 10;
+        return self.GoodsItemsArray.count;
     }
     return 1;
     
@@ -86,9 +158,9 @@ static NSString * const reuseIdentifier = @"Cell";
         
          HomeBannerCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeBannerCollectionViewCell" forIndexPath:indexPath];
         
-         cell.ImgListArray = self.LocalImgArray;
+         cell.ImgListArray = self.BannerImgArray;
         
-        cell.SdClyImgBlockClick = ^(NSInteger ImgIndex) {
+         cell.SdClyImgBlockClick = ^(NSInteger ImgIndex) {
             
             HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
             
@@ -110,7 +182,7 @@ static NSString * const reuseIdentifier = @"Cell";
         
         cell.backgroundColor = [UIColor whiteColor];
         
-        cell.ImgListArray = self.LocalImgArray;
+//        cell.ImgListArray = self.LocalImgArray;
     
         return cell;
         
@@ -132,6 +204,8 @@ static NSString * const reuseIdentifier = @"Cell";
     }else{
         
         HomeMainCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeMainCollectionViewCell" forIndexPath:indexPath];
+        
+        cell.Model = self.GoodsItemsArray[indexPath.item];
         
          return cell;
            
@@ -170,10 +244,10 @@ static NSString * const reuseIdentifier = @"Cell";
         
     }else if (indexPath.section == 2){
         
-        if (self.LocalImgArray.count == 1) {
+        if (self.BannerImgArray.count == 1) {
             return CGSizeMake(YYScreenWidth - 24 , 105);
         }else{
-            return CGSizeMake(YYScreenWidth - 24 , 105 + (self.LocalImgArray.count / 2 ) * 90);
+            return CGSizeMake(YYScreenWidth - 24 , 105 + (self.BannerImgArray.count / 2 ) * 90);
         }
     }else if (indexPath.section == 3){
         

@@ -78,7 +78,7 @@
 
 #pragma mark 一个信息提示跟新
 
--(void)YYShowAlertViewTitle:(NSString *)title{
+-(void)YYShowAlertViewTitle:(NSString *)title {
     
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
     
@@ -86,8 +86,9 @@
         
     }];
     
-    UIAlertAction *sure = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
+        [self YYShowAlertTitleClick];
         
     }];
     [alertVC addAction:cancel];
@@ -95,6 +96,15 @@
     [YYRootViewController presentViewController:alertVC animated:YES completion:nil];
     
 }
+
+#pragma mark UIAlertController
+
+-(void)YYShowAlertTitleClick{
+    
+    
+    
+}
+
 
 #pragma mark 设置右边导航栏
 

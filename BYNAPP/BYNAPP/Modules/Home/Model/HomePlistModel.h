@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HomePlistModel : NSObject
 
+@property (nonatomic, copy) NSString * Home_id;
 @property (nonatomic, readwrite, strong) NSArray * children;
 @property (nonatomic, readwrite, copy) NSString * sname;
 @property (nonatomic, readwrite, copy) NSString * level;

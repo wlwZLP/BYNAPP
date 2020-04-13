@@ -56,7 +56,7 @@
 
 -(void)ExitButtonClick{
     
-    
+    self.BottomMainBtnBlockClick();
     
     
 }

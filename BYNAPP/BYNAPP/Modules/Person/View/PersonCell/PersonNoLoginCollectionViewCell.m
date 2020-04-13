@@ -94,7 +94,7 @@
     [self addSubview:AllMoneyLabel];
     
     UILabel * AllMoney = [[UILabel alloc]init];
-    AllMoney.text = @"12222.32";
+    AllMoney.text = @"0.00";
     AllMoney.textAlignment = NSTextAlignmentLeft;
     AllMoney.textColor = YYHexColor(@"#FFF6CA");
     AllMoney.frame = CGRectMake(30 , self.ZLP_height - 108, 150 , 28);
@@ -110,7 +110,7 @@
     [self addSubview:TodayPredictLabel];
     
     UILabel * TodayPredict = [[UILabel alloc]init];
-    TodayPredict.text = @"6666";
+    TodayPredict.text = @"0.00";
     TodayPredict.textAlignment = NSTextAlignmentLeft;
     TodayPredict.textColor = YYHexColor(@"#FFF6CA");
     TodayPredict.frame = CGRectMake(30 , self.ZLP_height - 55, 150 , 28);
@@ -127,7 +127,7 @@
     [self addSubview:MonthPredictLabel];
     
     UILabel * MonthPredict = [[UILabel alloc]init];
-    MonthPredict.text = @"8888";
+    MonthPredict.text = @"0.00";
     MonthPredict.textAlignment = NSTextAlignmentCenter;
     MonthPredict.textColor = YYHexColor(@"#FFF6CA");
     MonthPredict.frame = CGRectMake(self.ZLP_centerX - 75 , self.ZLP_height - 55, 150 , 28);
@@ -144,32 +144,19 @@
     [self addSubview:AllPredictLabel];
     
     UILabel * AllPredict = [[UILabel alloc]init];
-    AllPredict.text = @"99999";
+    AllPredict.text = @"0.00";
     AllPredict.textAlignment = NSTextAlignmentLeft;
     AllPredict.textColor = YYHexColor(@"#FFF6CA");
     AllPredict.frame = CGRectMake(self.ZLP_width - 105 , self.ZLP_height - 55, 72 , 28);
     AllPredict.font = [UIFont systemFontOfSize:18 weight:0];
     [self addSubview:AllPredict];
     
- 
-    UIButton * WdrawBtn = [[UIButton alloc]init];
-    [WdrawBtn setTitleColor:YY22Color forState:UIControlStateNormal];
-    WdrawBtn.frame = CGRectMake(self.ZLP_width - 105 , self.ZLP_height - 128, 70 , 28);
-    [WdrawBtn setAdjustsImageWhenHighlighted:NO];
-    [WdrawBtn setBackgroundColor:YYHexColor(@"#FFD409")];
-    WdrawBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [WdrawBtn setTitle:@"去提现" forState:UIControlStateNormal];
-    WdrawBtn.titleLabel.font = [UIFont systemFontOfSize: 14.0];
-    [WdrawBtn addTarget:self action:@selector(WdrawButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:WdrawBtn];
-    [YYTools ChangeView:WdrawBtn RadiusSize:10 BorderColor:[UIColor clearColor]];
-    
     
     UIImageView * SetImage = [[UIImageView alloc] init];
     SetImage.frame = CGRectMake(YYScreenWidth - 46, YYStatusHeight + 10, 24, 22);
     SetImage.image = [UIImage imageNamed:@"Setting"];
     [TopBGView addSubview:SetImage];
-    [SetImage addTarget:self action:@selector(SetImgButtonClick)];
+//    [SetImage addTarget:self action:@selector(SetImgButtonClick)];
     
 }
 

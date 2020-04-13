@@ -24,6 +24,10 @@ NS_ASSUME_NONNULL_BEGIN
 */
 -(void)YYShowAlertViewTitle:(NSString *)title;
 
+
+-(void)YYShowAlertTitleClick;
+
+
 /**
 *  展示一个文字，用点击事件判断,类似JS  Alert;
 */

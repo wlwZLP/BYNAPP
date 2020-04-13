@@ -12,8 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeBannerCollectionViewCell : UICollectionViewCell
 
-
-@property(nonatomic,strong)NSArray * ImgListArray;
+@property(nonatomic,strong)NSMutableArray * ImgListArray;
 
 @property (nonatomic,copy) void(^SdClyImgBlockClick)(NSInteger ImgIndex);
 

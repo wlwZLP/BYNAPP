@@ -95,7 +95,7 @@ UICollectionViewDataSource>
        
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
         
-        YYNSLog(@"类目商品接口数据----%@",responseObject);
+//        YYNSLog(@"类目商品接口数据----%@",responseObject);
         
         NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
            
@@ -109,7 +109,6 @@ UICollectionViewDataSource>
            
            for (ChildrenModel * sModel in Model.children)
            {
-               YYNSLog(@"分类类目数据----%@",sModel);
                [datas addObject:sModel];
            }
            

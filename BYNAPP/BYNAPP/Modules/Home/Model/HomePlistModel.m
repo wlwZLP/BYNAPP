@@ -10,4 +10,10 @@
 
 @implementation HomePlistModel
 
++ (NSDictionary *)modelCustomPropertyMapper {
+    
+    return @{@"Home_id":@"id"};
+    
+}
+
 @end

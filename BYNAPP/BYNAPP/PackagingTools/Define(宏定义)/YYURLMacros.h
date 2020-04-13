@@ -16,8 +16,10 @@
 #define Common_URL @"http://test.wef2.top/"
 
 #pragma mark - ——————— 详细接口地址 ————————
-//1.获取首页商品数据
+//1.获取首页广告
 #define URL_APIGoodsHome @"api/goods/home"
+//1.获取首页商品
+#define URL_APIGoodsTaobaoHot @"api/goods/taobao/hot"
 //2.首页分类 商品类目
 #define URL_APIGoodsCategories @"api/goods/categories"
 //3.根据商品类目搜索

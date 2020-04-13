@@ -10,6 +10,24 @@
 
 @interface HomeMainCollectionViewCell ()
 
+@property (nonatomic, strong) UIImageView * Mainimage;
+
+@property (nonatomic, strong) UIImageView * Logoimage;
+
+@property (nonatomic, strong) UILabel * TitleLabel;
+
+@property (nonatomic, strong) UILabel * StoreNameLabel;
+
+@property (nonatomic, strong) UILabel * CouponLabel;
+
+@property (nonatomic, strong) UILabel * GainMoneyLabel;
+
+@property (nonatomic, strong) UILabel * CouponPriceLabel;
+
+@property (nonatomic, strong) UILabel * OldPriceLabel;
+
+@property (nonatomic, strong) UILabel * SaleNumLabel;
+
 @end
 
 
@@ -43,11 +61,13 @@
     Mainimage.backgroundColor = [UIColor clearColor];
     Mainimage.image = [UIImage imageNamed:@"BYNLogo"];
     [self addSubview:Mainimage];
+    self.Mainimage = Mainimage;
     
     UIImageView * Iconimage = [[UIImageView alloc] init];
     Iconimage.backgroundColor = [UIColor clearColor];
     Iconimage.image = [UIImage imageNamed:@"HomeIcon"];
     [self addSubview:Iconimage];
+    self.Logoimage = Iconimage;
     
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"实时热卖";
@@ -55,6 +75,7 @@
     TitleLabel.textAlignment = NSTextAlignmentLeft;
     TitleLabel.font = [UIFont systemFontOfSize:20 weight:2];
     [self addSubview:TitleLabel];
+    self.TitleLabel = TitleLabel;
     
     UILabel * StoreNameLabel = [[UILabel alloc]init];
     StoreNameLabel.text = @"神犬旗舰店";
@@ -62,6 +83,7 @@
     StoreNameLabel.textAlignment = NSTextAlignmentLeft;
     StoreNameLabel.font = [UIFont systemFontOfSize:12 weight:0];
     [self addSubview:StoreNameLabel];
+    self.StoreNameLabel = StoreNameLabel;
     
     UILabel * CouponLabel = [[UILabel alloc]init];
     CouponLabel.text = @"10元券";
@@ -72,6 +94,7 @@
     CouponLabel.layer.borderWidth = 2;
     CouponLabel.font = [UIFont systemFontOfSize:12 weight:0];
     [self addSubview:CouponLabel];
+    self.CouponLabel = CouponLabel;
     
     UILabel * GainMoneyLabel = [[UILabel alloc]init];
     GainMoneyLabel.text = @"最多赚一元";
@@ -80,6 +103,7 @@
     GainMoneyLabel.backgroundColor = YYRGBColor(247, 60, 40);
     GainMoneyLabel.font = [UIFont systemFontOfSize:12 weight:2];
     [self addSubview:GainMoneyLabel];
+    self.GainMoneyLabel = GainMoneyLabel;
     
     UILabel * CouponPriceLabel = [[UILabel alloc]init];
     CouponPriceLabel.text = @"￥15券后价";
@@ -87,6 +111,7 @@
     CouponPriceLabel.textAlignment = NSTextAlignmentLeft;
     CouponPriceLabel.font = [UIFont systemFontOfSize:13 weight:0];
     [self addSubview:CouponPriceLabel];
+    self.CouponPriceLabel = CouponPriceLabel;
     
     UILabel * OldPriceLabel = [[UILabel alloc]init];
     OldPriceLabel.text = @"原价￥32.5";
@@ -94,6 +119,7 @@
     OldPriceLabel.textAlignment = NSTextAlignmentLeft;
     OldPriceLabel.font = [UIFont systemFontOfSize:12 weight:0];
     [self addSubview:OldPriceLabel];
+    self.OldPriceLabel = OldPriceLabel;
     
     UILabel * SaleNumLabel = [[UILabel alloc]init];
     SaleNumLabel.text = @"已售3201件";
@@ -101,6 +127,7 @@
     SaleNumLabel.textAlignment = NSTextAlignmentLeft;
     SaleNumLabel.font = [UIFont systemFontOfSize:12 weight:0];
     [self addSubview:SaleNumLabel];
+    self.SaleNumLabel = SaleNumLabel;
     
     [MainBGView mas_makeConstraints:^(MASConstraintMaker *make) {
       
@@ -193,6 +220,20 @@
 
 
 }
+
+
+-(void)setModel:(HomeMainModel *)Model{
+    
+    _Model = Model;
+    
+    [self.Mainimage sd_setImageWithURL:[NSURL URLWithString:Model.cover_image] placeholderImage:[UIImage imageNamed:@"Jingdong"]];
+    
+    
+    
+    
+}
+
+
 
 
 

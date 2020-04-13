@@ -37,11 +37,11 @@
 
 
 
--(void)setImgListArray:(NSArray *)ImgListArray{
+-(void)setImgListArray:(NSMutableArray *)ImgListArray{
     
      _ImgListArray = ImgListArray;
     
-     self.TopCycleScrollView.localizationImageNamesGroup = self.ImgListArray;
+    self.TopCycleScrollView.imageURLStringsGroup = ImgListArray;
     
 }
 

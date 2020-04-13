@@ -133,7 +133,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 #pragma mark 一个信息提示跟新
 
--(void)YYShowAlertViewTitle:(NSString *)title{
+-(void)YYShowAlertViewTitle:(NSString *)title {
     
     UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:UIAlertControllerStyleAlert];
     
@@ -141,13 +141,22 @@ static NSString * const reuseIdentifier = @"Cell";
         
     }];
     
-    UIAlertAction *sure = [UIAlertAction actionWithTitle:@"更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
+        [self YYShowAlertTitleClick];
         
     }];
     [alertVC addAction:cancel];
     [alertVC addAction:sure];
     [YYRootViewController presentViewController:alertVC animated:YES completion:nil];
+    
+}
+
+#pragma mark UIAlertController
+
+-(void)YYShowAlertTitleClick{
+    
+    
     
 }
 
