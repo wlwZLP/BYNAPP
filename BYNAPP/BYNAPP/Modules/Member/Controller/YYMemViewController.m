@@ -11,7 +11,7 @@
 #import "RightCollectionViewCell.h"
 #import "MenListCollectionViewController.h"
 #import "MenModel.h"
-
+#import "SubChildrenModel.h"
 
 static float kLeftTableViewWidth = 95.f;
 
@@ -28,7 +28,7 @@ UICollectionViewDataSource>
 
 @property (nonatomic,strong)NSArray<MenModel*> * MenListArray;
 
-@property (nonatomic,strong)NSMutableArray * collectionDatas;
+@property (nonatomic,strong)UILabel * MenTitleLabel;
 
 @property (nonatomic,assign)NSInteger  selectIndex;
 
@@ -49,7 +49,7 @@ UICollectionViewDataSource>
        
     [self.navigationController setNavigationBarHidden:YES animated:nil];
     
-    _selectIndex = 0;
+    self.selectIndex = 0;
     
     _isScrollDown = YES;
 
@@ -99,18 +99,19 @@ UICollectionViewDataSource>
            
         self.MenListArray = [NSArray modelArrayWithClass:[MenModel class] json:DataArray];
         
-        YYNSLog(@"类目商品接口数据----%@",self.MenListArray);
-        
         [self.LeftTableView reloadData];
         
         [self.RightCollectionView reloadData];
            
     } failure:^(NSError *error, id responseCache) {
        
-       
+        NSArray * DataArray = EncodeArrayFromDic(responseCache, @"data");
+           
+        self.MenListArray = [NSArray modelArrayWithClass:[MenModel class] json:DataArray];
         
+        [self.LeftTableView reloadData];
         
-        
+        [self.RightCollectionView reloadData];
            
     }];
     
@@ -169,7 +170,9 @@ UICollectionViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    
       return self.MenListArray.count;
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -192,6 +195,7 @@ UICollectionViewDataSource>
     
     [self.LeftTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_selectIndex inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     
+    [self.RightCollectionView reloadData];
     
 }
 
@@ -215,20 +219,22 @@ UICollectionViewDataSource>
 
 #pragma mark - UICollectionView DataSource Delegate
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-     return self.MenListArray[0].children.count;
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+    
+     return self.MenListArray[self.selectIndex].children.count;
 }
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-     return 10;
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    
+     return self.MenListArray[self.selectIndex].children[section].children.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    RightCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RightCollectionViewCell" forIndexPath:indexPath];
+     RightCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"RightCollectionViewCell" forIndexPath:indexPath];
+    
+    cell.model = self.MenListArray[self.selectIndex].children[indexPath.section].children[indexPath.item];
       
      return cell;
     
@@ -238,7 +244,7 @@ UICollectionViewDataSource>
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-//    SubCategoryModel * model = self.collectionDatas[indexPath.section][indexPath.row];
+    SubChildrenModel * model = self.MenListArray[self.selectIndex].children[indexPath.section].children[indexPath.item];
     
     MenListCollectionViewController * ListVc = [[MenListCollectionViewController alloc]init];
     
@@ -253,12 +259,14 @@ UICollectionViewDataSource>
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-     return CGSizeMake((YYScreenWidth - kLeftTableViewWidth)/3, (YYScreenWidth - kLeftTableViewWidth) / 3 + 18);
+      return CGSizeMake((YYScreenWidth - kLeftTableViewWidth)/3, (YYScreenWidth - kLeftTableViewWidth) / 3 + 18);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
+    
      return CGSizeMake(YYScreenWidth - kLeftTableViewWidth, 50);
+    
 }
 
 
@@ -271,18 +279,24 @@ UICollectionViewDataSource>
         UICollectionReusableView *headerView = [self.RightCollectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"headerId" forIndexPath:indexPath];
         
         if(headerView == nil){
+            
             headerView = [[UICollectionReusableView alloc] init];
         }
         
+        for (UIView *view in headerView.subviews) {
+            [view removeFromSuperview];
+        }
         headerView.backgroundColor = UIColor.whiteColor;
         
         UILabel * TitleLabel = [[UILabel alloc]init];
-        TitleLabel.text = @"为你推荐";
         TitleLabel.textColor = YY22Color;
-        TitleLabel.frame = CGRectMake(20, 20, 100, 20);
+        TitleLabel.frame = CGRectMake(20 , 10 , 180, 20);
         TitleLabel.textAlignment = NSTextAlignmentLeft;
-        TitleLabel.font = [UIFont systemFontOfSize:14 weight:1];
+        TitleLabel.font = [UIFont systemFontOfSize:14 weight:0];
         [headerView addSubview:TitleLabel];
+        
+        TitleLabel.text = self.MenListArray[self.selectIndex].children[indexPath.section].name;
+        
      
         return headerView;
     
@@ -292,16 +306,36 @@ UICollectionViewDataSource>
     
 }
 
+#pragma mark - 懒加载
+- (UILabel *)MenTitleLabel
+{
+    if (!_MenTitleLabel) {
+        _MenTitleLabel = [[UILabel alloc] init];
+        _MenTitleLabel.backgroundColor = UIColor.redColor;
+        _MenTitleLabel.textColor = YY22Color;
+//        _MenTitleLabel.text = @"区头";
+        _MenTitleLabel.frame = CGRectMake(20, 10, 100, 20);
+        _MenTitleLabel.textAlignment = NSTextAlignmentLeft;
+        _MenTitleLabel.font = [UIFont systemFontOfSize:14 weight:1];
+    }
+    return _MenTitleLabel;
+}
+
+
+
+
 
 
 // CollectionView分区标题即将展示
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
 {
-    // 当前CollectionView滚动的方向向上，CollectionView是用户拖拽而产生滚动的（主要是判断CollectionView是用户拖拽而滚动的，还是点击TableView而滚动的）
+    //当前CollectionView滚动的方向向上，CollectionView是用户拖拽而产生滚动的（主要是判断CollectionView是用户拖拽而滚动的，还是点击TableView而滚动的）
     if (!_isScrollDown && (collectionView.dragging || collectionView.decelerating))
     {
         [self selectRowAtIndexPath:indexPath.section];
     }
+    
+    
 }
 
 // CollectionView分区标题展示结束
@@ -317,7 +351,8 @@ UICollectionViewDataSource>
 // 当拖动CollectionView的时候，处理TableView
 - (void)selectRowAtIndexPath:(NSInteger)index
 {
-    [self.LeftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+    
+//    [self.LeftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
     
 }
 

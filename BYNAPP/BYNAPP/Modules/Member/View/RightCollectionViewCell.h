@@ -7,13 +7,11 @@
 //  代码下载地址https://github.com/leejayID/Linkage
 
 #import <UIKit/UIKit.h>
+#import "SubChildrenModel.h"
 
-#define kCellIdentifier_CollectionView @"CollectionViewCell"
-
-@class SubCategoryModel;
 
 @interface RightCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, strong) SubCategoryModel * model;
+@property (nonatomic, strong) SubChildrenModel * model;
 
 @end

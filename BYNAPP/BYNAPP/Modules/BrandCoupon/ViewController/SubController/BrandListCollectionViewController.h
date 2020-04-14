@@ -2,7 +2,7 @@
 //  BrandListCollectionViewController.h
 //  BYNAPP
 //
-//  Created by apple on 2020/4/14.
+//  Created by zhulp on 2020/4/14.
 //  Copyright © 2020 xidian. All rights reserved.
 //
 

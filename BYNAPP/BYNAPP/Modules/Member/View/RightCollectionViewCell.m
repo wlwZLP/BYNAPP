@@ -42,11 +42,14 @@
     return self;
 }
 
-//- (void)setModel:(SubCategoryModel *)model
-//{
-//    [self.imageV sd_setImageWithURL:[NSURL URLWithString:model.logo]];
-//     self.name.text = model.name;
-//}
+- (void)setModel:(SubChildrenModel *)model
+{
+    
+    [self.imageV sd_setImageWithURL:[NSURL URLWithString:model.logo] placeholderImage:[UIImage imageNamed:@"kafei"]];
+    
+     self.name.text = model.name;
+    
+}
 
 
 @end
