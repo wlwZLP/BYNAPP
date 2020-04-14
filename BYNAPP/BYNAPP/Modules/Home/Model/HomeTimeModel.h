@@ -12,6 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeTimeModel : NSObject
 
+@property (nonatomic, readwrite, strong) NSString * desc;
+@property (nonatomic, readwrite, strong) NSString * status;
+@property (nonatomic, readwrite, strong) NSArray * data;
+
+
+
 @end
 
 NS_ASSUME_NONNULL_END

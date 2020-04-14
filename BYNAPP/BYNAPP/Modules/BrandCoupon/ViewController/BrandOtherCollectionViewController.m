@@ -7,10 +7,12 @@
 //
 
 #import "BrandOtherCollectionViewController.h"
-
 #import "BrandRecomdCollectionViewCell.h"
+#import "BrandModel.h"
 
 @interface BrandOtherCollectionViewController ()
+
+@property(nonatomic,strong)NSArray<BrandMainModel*> *  BrandArray;
 
 @end
 
@@ -19,6 +21,7 @@
 static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
  
     [self.collectionView registerClass:[BrandRecomdCollectionViewCell class] forCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell"];
@@ -30,6 +33,37 @@ static NSString * const reuseIdentifier = @"Cell";
     
     [self.navigationController setNavigationBarHidden:YES animated:nil];
     
+    [self GetBrandOtherNetData];
+    
+}
+
+#pragma mark <UICollectionViewDataSource>
+
+-(void)GetBrandOtherNetData{
+   
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVCategoryProducts];
+    
+    NSDictionary * dict = @{@"cid":self.Brand_id,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+                  
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+        
+        YYNSLog(@"品牌馆数据---------%@",responseObject);
+        
+        NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+        
+        NSArray * DataArray = EncodeArrayFromDic(DataDic, @"data");
+    
+        self.BrandArray = [[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray] mutableCopy];
+        
+        [self.collectionView reloadData];
+        
+    } failure:^(NSError *error, id responseCache) {
+     
+       
+        
+       
+    }];
+    
 }
 
 
@@ -37,18 +71,22 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 
-    return 1;
+     return 1;
+    
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return 10;
+    return self.BrandArray.count;
+    
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     BrandRecomdCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell" forIndexPath:indexPath];
+    
+    cell.Model = self.BrandArray[indexPath.item];
 
     return cell;
     

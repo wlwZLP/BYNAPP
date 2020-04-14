@@ -142,7 +142,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-     return 10;
+     return self.TimeListArray[0].data.count;
     
 }
 
@@ -154,10 +154,22 @@
     
      SaleCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SaleCollectionViewCell" forIndexPath:indexPath];
     
+     cell.Model = self.TimeListArray[0].data[indexPath.item];
+    
      return cell;
     
         
 }
+
+
+#pragma mark -选中某item进行跳转
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+     self.PushLGoodDetailsBlockClick(self.TimeListArray[0].data[indexPath.item]);
+
+}
+
+
 
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{

@@ -71,7 +71,7 @@
         UICollectionViewFlowLayout * flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         _GridCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.ZLP_width , 160 ) collectionViewLayout:flowLayout];
-        _GridCollectionView.backgroundColor= YYBGColor;
+        _GridCollectionView.backgroundColor= UIColor.whiteColor;
         _GridCollectionView.scrollsToTop = YES;
         _GridCollectionView.showsHorizontalScrollIndicator = NO;
         _GridCollectionView.showsVerticalScrollIndicator = NO;
@@ -139,17 +139,17 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-     return 10;
+     return self.ChannelListArray.count;
     
 }
 
 
--(void)setListArray:(NSMutableArray *)ListArray{
+-(void)setChannelListArray:(NSArray *)ChannelListArray{
     
-    
+    _ChannelListArray = ChannelListArray;
+
     [self.GridCollectionView reloadData];
 
-    
 }
 
 
@@ -159,10 +159,19 @@
     
     GridCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"GridCollectionViewCell" forIndexPath:indexPath];
     
-//    cell.backgroundColor = YYRandomColor;
-    
+    cell.Model = self.ChannelListArray[indexPath.item];
+
     return cell;
         
+}
+
+#pragma mark -选中某item进行跳转
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    self.GridBtnBlockClick(indexPath.item);
+    
+    
 }
 
 

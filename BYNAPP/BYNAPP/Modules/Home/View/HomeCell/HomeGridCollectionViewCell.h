@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HomeBannerModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeGridCollectionViewCell : UICollectionViewCell
+
+@property(nonatomic,strong)NSArray<HomeBannerModel*> * ChannelListArray;
+
+
+@property(nonatomic,copy)void(^GridBtnBlockClick)(NSInteger index);
+
 
 @end
 

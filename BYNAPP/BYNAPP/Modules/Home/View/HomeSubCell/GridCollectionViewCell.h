@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HomeBannerModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GridCollectionViewCell : UICollectionViewCell
 
-
-@property(nonatomic,copy)void(^GridBtnBlockClick)(void);
+@property(nonatomic,strong)HomeBannerModel * Model;
 
 @end
 

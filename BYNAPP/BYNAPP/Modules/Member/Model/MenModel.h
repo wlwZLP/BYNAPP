@@ -24,12 +24,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString * name;
 
-@property (nonatomic, copy) NSString * logo;
-
 
 @end
 
 @interface ChildrenModel : NSObject
+
+@property (nonatomic, copy) NSString * Child_id;
+
+@property (nonatomic, copy) NSArray * children;
+
+@property (nonatomic, copy) NSString * sname;
+
+@property (nonatomic, copy) NSString * level;
+
+@property (nonatomic, copy) NSString * parent_id;
+
+@property (nonatomic, copy) NSString * name;
+
+
+@end
+
+@interface SubChildrenModel : NSObject
 
 @property (nonatomic, copy) NSString * Child_id;
 
@@ -44,7 +59,5 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString * logo;
 
 @end
-
-
 
 NS_ASSUME_NONNULL_END

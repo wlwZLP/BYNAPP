@@ -8,6 +8,14 @@
 
 #import "GridCollectionViewCell.h"
 
+@interface GridCollectionViewCell ()
+
+@property (nonatomic, strong) UIImageView * Logoimage;
+
+@property (nonatomic, strong) UILabel * TitleLabel;
+
+@end
+
 @implementation GridCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -33,7 +41,8 @@
     Mainimage.backgroundColor = [UIColor clearColor];
     Mainimage.image = [UIImage imageNamed:@"Jingdong"];
     [self addSubview:Mainimage];
-    [Mainimage addTarget:self action:@selector(GridBtnClick)];
+//    [Mainimage addTarget:self action:@selector(GridBtnClick)];
+    self.Logoimage =Mainimage;
     
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"京东";
@@ -41,7 +50,7 @@
     TitleLabel.textAlignment = NSTextAlignmentCenter;
     TitleLabel.font = [UIFont systemFontOfSize:13 weight:0];
     [self addSubview:TitleLabel];
-    
+    self.TitleLabel = TitleLabel;
     
     [Mainimage mas_makeConstraints:^(MASConstraintMaker *make) {
       
@@ -51,8 +60,7 @@
         
     }];
     
-  
-
+    
     [TitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.top.equalTo(Mainimage.mas_bottom).with.offset(8);
@@ -62,15 +70,25 @@
     }];
     
 
-
-
 }
 
 
 
+-(void)setModel:(HomeBannerModel *)Model{
+    
+     _Model = Model;
+    
+    [self.Logoimage sd_setImageWithURL:[NSURL URLWithString:Model.cover] placeholderImage:[UIImage imageNamed:@"Jingdong"]];
+    
+    self.TitleLabel.text = Model.title;
+    
+}
+
+
 -(void)GridBtnClick{
     
-    self.GridBtnBlockClick();
+   
+    
     
 }
 

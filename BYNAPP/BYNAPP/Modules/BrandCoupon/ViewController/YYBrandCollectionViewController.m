@@ -55,7 +55,7 @@ static int const HomelabelWith = 90;
           }else{
                      
             BrandOtherCollectionViewController * OneVC = [[BrandOtherCollectionViewController alloc]init];
-                               
+            OneVC.Brand_id = ModelArray[idx].Brand_id;
             [self addChildViewController:OneVC];
                     
           }
@@ -82,19 +82,33 @@ static int const HomelabelWith = 90;
 -(void)GetBrandPlistDataCompleteData:(nullable void(^)(NSArray<BrandPlistModel*> * ModelArray))CompleteData{
     
 
-    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMpvCategories];
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVHome];
                   
     [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
-              
-         NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
-     
-         CompleteData([NSArray modelArrayWithClass:[BrandPlistModel class] json:DataArray]);
+        
+         NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+        
+         NSDictionary * categories = EncodeDicFromDic(DataDic, @"categories");
+        
+         NSArray * DataArray = EncodeArrayFromDic(categories, @"contents");
+        
+         NSDictionary * dict1 = @{@"id":@"000",@"name":@"全部"};
+               
+         NSMutableArray * TitleArray = [NSMutableArray array];
+               
+         [TitleArray addObject:dict1];
+               
+         [TitleArray addObjectsFromArray:DataArray];
+        
+         CompleteData([NSArray modelArrayWithClass:[BrandPlistModel class] json:TitleArray]);
 
     } failure:^(NSError *error, id responseCache) {
      
-          NSArray * DataArray = EncodeArrayFromDic(responseCache, @"data");
-              
-          CompleteData([NSArray modelArrayWithClass:[BrandPlistModel class] json:DataArray]);
+          NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
+          
+          NSDictionary * categories = EncodeDicFromDic(DataDic, @"categories");
+          
+          CompleteData([NSArray modelArrayWithClass:[BrandPlistModel class] json:EncodeArrayFromDic(categories, @"contents")]);
        
     }];
     

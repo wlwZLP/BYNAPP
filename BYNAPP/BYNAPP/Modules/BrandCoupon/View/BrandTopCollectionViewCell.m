@@ -13,9 +13,6 @@
 
 @property(nonatomic,strong)UICollectionView * GridCollectionView;
 
-@property(nonatomic,strong)UIPageControl * GridPageControl;
-
-
 
 @end
 
@@ -36,8 +33,6 @@
         self.GridCollectionView.dataSource = self;
         
         [self.GridCollectionView registerClass:[BrandGridCollectionViewCell class] forCellWithReuseIdentifier:@"BrandGridCollectionViewCell"];
-        
-//        [self addSubview:self.GridPageControl];
        
     }
     
@@ -47,24 +42,12 @@
 
 
 
--(void)layoutSubviews{
 
-   
+-(void)setBrandListArray:(NSArray<BrandModel *> *)BrandListArray{
     
-   
-     self.GridPageControl.numberOfPages = 1;
-    
-   
-}
-
-
-
--(void)setListArray:(NSArray *)ListArray{
-    
-    _ListArray = ListArray;
+    _BrandListArray = BrandListArray;
     
     [self.GridCollectionView reloadData];
-    
     
 }
 
@@ -93,47 +76,6 @@
 }
 
 
-/**
- *  懒加载collectionView
- *
- *  @return collectionView
- */
-- (UIPageControl *)GridPageControl
-{
-    if (_GridPageControl == nil) {
-        
-        _GridPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(self.ZLP_width - 200, 160 , 200 , 10)];
-        
-        _GridPageControl.tag = 100;
-        //设置选中的页数
-        _GridPageControl.hidesForSinglePage = YES;
-        //设置未选中点的颜色
- 
-    }
-    
-    return _GridPageControl;
-}
-
-#pragma mark ---- UIScrollViewDelegate
-
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
-
-    if (scrollView.contentOffset.x == 0) {
-        
-        self.GridPageControl.currentPage = 0;
-        
-    }else{
-        
-        self.GridPageControl.currentPage = 1;
-        
-    }
-    
-}
-
-
-
 #pragma mark ---- UICollectionViewDataSource
 
 //相当tableview的几个区，
@@ -149,24 +91,36 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-      return self.ListArray.count;
+      return self.BrandListArray.count;
     
 }
-
-
-
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
     
-    BrandGridCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandGridCollectionViewCell" forIndexPath:indexPath];
+     BrandGridCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandGridCollectionViewCell" forIndexPath:indexPath];
     
-//     cell.backgroundColor = YYRandomColor;
+     cell.Model = self.BrandListArray[indexPath.item];
     
      return cell;
         
 }
+
+
+
+#pragma mark -选中某item进行跳转
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    self.BrandGridBtnBlockClick(indexPath.item);
+    
+    
+}
+
+
+
+
 
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{

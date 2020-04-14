@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "BrandModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BrandTopCollectionViewCell : UICollectionViewCell
 
-@property(nonatomic,strong)NSArray * ListArray;
+@property(nonatomic,strong)NSArray<BrandModel*> * BrandListArray;
+
+@property (nonatomic,copy) void(^BrandGridBtnBlockClick)(NSInteger GridIndex);
 
 @end
 

@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HomeBannerModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeTopicCollectionViewCell : UICollectionViewCell
 
+@property(nonatomic,strong)NSArray<HomeBannerModel*> * ZonesListArray;
 
-@property(nonatomic,strong)NSArray * ImgListArray;
+@property(nonatomic,copy)void(^TopicBtnBlockClick)(NSInteger index);
 
 @end
 

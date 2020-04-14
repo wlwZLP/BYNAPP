@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeLikeCollectionViewController : YYBaseCollectionViewController
 
-@property(nonatomic,strong)NSString * HomeID;
+@property(nonatomic,strong)NSString * category_id;
 
 
 @end

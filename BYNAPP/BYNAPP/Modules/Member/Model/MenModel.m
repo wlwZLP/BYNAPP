@@ -27,6 +27,23 @@
     
 }
 
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    
+    return @{@"children":[SubChildrenModel class]};
+    
+}
+
 @end
 
+@implementation SubChildrenModel
 
+
++ (NSDictionary *)modelCustomPropertyMapper {
+    
+    return @{@"Child_id":@"id"};
+    
+}
+
+
+
+@end

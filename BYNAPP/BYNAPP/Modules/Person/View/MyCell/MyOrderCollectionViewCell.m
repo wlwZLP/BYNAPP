@@ -112,11 +112,11 @@
      
       cell.backgroundColor = [UIColor clearColor];
     
-      cell.GridBtnBlockClick = ^{
-        
-          self.MyOrderBtnBlockClick(indexPath.item);
-          
-      };
+//      cell.GridBtnBlockClick = ^{
+//        
+//          self.MyOrderBtnBlockClick(indexPath.item);
+//          
+//      };
     
       return cell;
         

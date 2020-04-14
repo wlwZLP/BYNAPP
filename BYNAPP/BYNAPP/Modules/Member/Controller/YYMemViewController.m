@@ -26,7 +26,7 @@ UICollectionViewDataSource>
 
 @property (nonatomic,strong)UICollectionView * RightCollectionView;
 
-@property (nonatomic,strong)NSMutableArray<MenModel*> * dataSource;
+@property (nonatomic,strong)NSArray<MenModel*> * MenListArray;
 
 @property (nonatomic,strong)NSMutableArray * collectionDatas;
 
@@ -91,34 +91,19 @@ UICollectionViewDataSource>
     
     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsCategories];
     
-    NSDictionary * dict = @{@"mall_id":@"1",@"mode":@"2",@"parent_id":@"1522"};
+    NSDictionary * dict = @{@"mall_id":@"1",@"mode":@"2"};
        
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
         
-//        YYNSLog(@"类目商品接口数据----%@",responseObject);
-        
         NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
            
-        for (NSDictionary * dict in DataArray)
-        {
-           MenModel * Model = [MenModel modelWithDictionary:dict];
-           
-           [self.dataSource addObject:Model];
-           
-           NSMutableArray *datas = [NSMutableArray array];
-           
-           for (ChildrenModel * sModel in Model.children)
-           {
-               [datas addObject:sModel];
-           }
-           
-           [self.collectionDatas addObject:datas];
-           
-        }
+        self.MenListArray = [NSArray modelArrayWithClass:[MenModel class] json:DataArray];
+        
+        YYNSLog(@"类目商品接口数据----%@",self.MenListArray);
         
         [self.LeftTableView reloadData];
         
-        
+        [self.RightCollectionView reloadData];
            
     } failure:^(NSError *error, id responseCache) {
        
@@ -135,23 +120,6 @@ UICollectionViewDataSource>
 
 #pragma mark - Getters
 
-- (NSMutableArray *)dataSource
-{
-    if (!_dataSource)
-    {
-        _dataSource = [NSMutableArray array];
-    }
-    return _dataSource;
-}
-
-- (NSMutableArray *)collectionDatas
-{
-    if (!_collectionDatas)
-    {
-        _collectionDatas = [NSMutableArray array];
-    }
-    return _collectionDatas;
-}
 
 - (UITableView *)LeftTableView
 {
@@ -201,7 +169,7 @@ UICollectionViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-      return self.dataSource.count;
+      return self.MenListArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -209,7 +177,7 @@ UICollectionViewDataSource>
     
     LeftTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LeftTableViewCell" forIndexPath:indexPath];
     
-    cell.name.text = self.dataSource[indexPath.item].name;
+    cell.name.text = self.MenListArray[indexPath.item].name;
 
     return cell;
     
@@ -249,12 +217,12 @@ UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 1;
+     return self.MenListArray[0].children.count;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-     return 18;
+     return 10;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath

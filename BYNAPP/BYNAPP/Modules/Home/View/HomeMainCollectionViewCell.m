@@ -73,12 +73,12 @@
     TitleLabel.text = @"实时热卖";
     TitleLabel.textColor = YY33Color;
     TitleLabel.textAlignment = NSTextAlignmentLeft;
-    TitleLabel.font = [UIFont systemFontOfSize:20 weight:2];
+    TitleLabel.font = [UIFont systemFontOfSize:16 weight:1];
     [self addSubview:TitleLabel];
     self.TitleLabel = TitleLabel;
     
     UILabel * StoreNameLabel = [[UILabel alloc]init];
-    StoreNameLabel.text = @"神犬旗舰店";
+//    StoreNameLabel.text = @"神犬旗舰店";
     StoreNameLabel.textColor = YY99Color;
     StoreNameLabel.textAlignment = NSTextAlignmentLeft;
     StoreNameLabel.font = [UIFont systemFontOfSize:12 weight:0];
@@ -86,7 +86,7 @@
     self.StoreNameLabel = StoreNameLabel;
     
     UILabel * CouponLabel = [[UILabel alloc]init];
-    CouponLabel.text = @"10元券";
+//    CouponLabel.text = @"10元券";
     CouponLabel.textAlignment = NSTextAlignmentCenter;
     CouponLabel.textColor = YYHexColor(@"#FB5434");
     CouponLabel.backgroundColor = [UIColor colorWithRed:255/255.0 green:236/255.0 blue:232/255.0 alpha:1.0];
@@ -94,27 +94,30 @@
     CouponLabel.layer.borderWidth = 2;
     CouponLabel.font = [UIFont systemFontOfSize:12 weight:0];
     [self addSubview:CouponLabel];
+    [YYTools ChangeView:CouponLabel RadiusSize:3 BorderColor:YYHexColor(@"#FB5434")];
     self.CouponLabel = CouponLabel;
     
+    
     UILabel * GainMoneyLabel = [[UILabel alloc]init];
-    GainMoneyLabel.text = @"最多赚一元";
+//    GainMoneyLabel.text = @"最多赚一元";
     GainMoneyLabel.textAlignment = NSTextAlignmentCenter;
     GainMoneyLabel.textColor = UIColor.whiteColor;
     GainMoneyLabel.backgroundColor = YYRGBColor(247, 60, 40);
-    GainMoneyLabel.font = [UIFont systemFontOfSize:12 weight:2];
+    GainMoneyLabel.font = [UIFont systemFontOfSize:12 weight:0];
     [self addSubview:GainMoneyLabel];
+    [YYTools ChangeView:GainMoneyLabel RadiusSize:3 BorderColor:[UIColor clearColor]];
     self.GainMoneyLabel = GainMoneyLabel;
     
     UILabel * CouponPriceLabel = [[UILabel alloc]init];
-    CouponPriceLabel.text = @"￥15券后价";
-    CouponPriceLabel.textColor = YY33Color;
+//    CouponPriceLabel.text = @"￥15券后价";
+    CouponPriceLabel.textColor = YYHexColor(@"#FB5434");
     CouponPriceLabel.textAlignment = NSTextAlignmentLeft;
-    CouponPriceLabel.font = [UIFont systemFontOfSize:13 weight:0];
+    CouponPriceLabel.font = [UIFont systemFontOfSize:17 weight:2];
     [self addSubview:CouponPriceLabel];
     self.CouponPriceLabel = CouponPriceLabel;
     
     UILabel * OldPriceLabel = [[UILabel alloc]init];
-    OldPriceLabel.text = @"原价￥32.5";
+//    OldPriceLabel.text = @"原价￥32.5";
     OldPriceLabel.textColor = YY99Color;
     OldPriceLabel.textAlignment = NSTextAlignmentLeft;
     OldPriceLabel.font = [UIFont systemFontOfSize:12 weight:0];
@@ -122,7 +125,7 @@
     self.OldPriceLabel = OldPriceLabel;
     
     UILabel * SaleNumLabel = [[UILabel alloc]init];
-    SaleNumLabel.text = @"已售3201件";
+//    SaleNumLabel.text = @"已售3201件";
     SaleNumLabel.textColor = YY99Color;
     SaleNumLabel.textAlignment = NSTextAlignmentLeft;
     SaleNumLabel.font = [UIFont systemFontOfSize:12 weight:0];
@@ -171,7 +174,7 @@
        make.left.equalTo(Mainimage.mas_right).with.offset(20);
        make.top.equalTo(MainBGView.mas_top).with.offset(35);
        make.height.offset(20);
-       make.right.equalTo(MainBGView.mas_right).with.offset(-5);
+//       make.right.equalTo(MainBGView.mas_right).with.offset(-5);
 
     }];
 
@@ -179,7 +182,7 @@
 
        make.left.equalTo(Mainimage.mas_right).with.offset(20);
        make.top.equalTo(MainBGView.mas_top).with.offset(58);
-       make.width.offset(50);
+//       make.width.offset(50);
        make.height.offset(18);
 
     }];
@@ -188,7 +191,7 @@
 
        make.left.equalTo(CouponLabel.mas_right).with.offset(8);
        make.top.equalTo(MainBGView.mas_top).with.offset(58);
-       make.width.offset(70);
+//       make.width.offset(70);
        make.height.offset(18);
         
     }];
@@ -228,6 +231,32 @@
     
     [self.Mainimage sd_setImageWithURL:[NSURL URLWithString:Model.cover_image] placeholderImage:[UIImage imageNamed:@"Jingdong"]];
     
+    [self.Logoimage sd_setImageWithURL:[NSURL URLWithString:Model.mall_icon] placeholderImage:[UIImage imageNamed:@"Jingdong"]];
+    
+    self.TitleLabel.text = Model.title;
+    
+    self.StoreNameLabel.text = Model.shop_name;
+    
+    self.CouponLabel.text = [NSString stringWithFormat:@" %@元券 ",Model.coupon_money];
+    
+    self.GainMoneyLabel.text = [NSString stringWithFormat:@" %@ ",Model.fl_commission];
+    
+    self.CouponPriceLabel.text = [NSString stringWithFormat:@"￥%@ 券后价",Model.discount_price];
+    
+    NSMutableAttributedString * CouponString = [[NSMutableAttributedString alloc] initWithString:self.CouponPriceLabel.text];
+    NSRange Range1 = NSMakeRange(0, 1);
+    NSRange Range2 = NSMakeRange(self.CouponPriceLabel.text.length - 3, 3);
+    [CouponString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13] range:Range1];
+    [CouponString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:Range2];
+    [self.CouponPriceLabel setAttributedText:CouponString];
+    
+    
+    self.OldPriceLabel.text = [NSString stringWithFormat:@"原价￥%@ ", Model.price];
+    NSMutableAttributedString *  abs = [[NSMutableAttributedString alloc]initWithString:self.OldPriceLabel.text];
+    [abs addAttribute:NSStrikethroughStyleAttributeName value:@(2) range:NSMakeRange(0, self.OldPriceLabel.text.length)];
+    self.OldPriceLabel.attributedText = abs;
+    
+    self.SaleNumLabel.text = [NSString stringWithFormat:@"已售%@件",Model.month_sales];
     
     
     

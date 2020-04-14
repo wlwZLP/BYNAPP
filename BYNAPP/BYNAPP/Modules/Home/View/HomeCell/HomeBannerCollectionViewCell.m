@@ -29,6 +29,8 @@
         
         [self addSubview:self.TopCycleScrollView];
         
+        [YYTools ChangeView:self.TopCycleScrollView RadiusSize:5 BorderColor:[UIColor clearColor]];
+        
     }
     
     return self;

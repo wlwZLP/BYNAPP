@@ -108,7 +108,7 @@
 }
 
 
-- (CGFloat)YYGetHeightForWidth:(CGFloat)width{
+- (void)YYUpdateConstraints{
     
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc]initWithString:self.text];
     
@@ -151,11 +151,6 @@
 
     self.attributedText = attributedString;
     
-    CGRect rect = [attributedString boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
-
-    CGFloat height = ceil(rect.size.height);
-    
-    return height;
 
 }
 

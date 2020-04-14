@@ -8,6 +8,12 @@
 
 #import "ImgCollectionViewCell.h"
 
+@interface ImgCollectionViewCell ()
+
+
+
+@end
+
 @implementation ImgCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -35,6 +41,7 @@
     Mainimage.image = [UIImage imageNamed:@"banner01"];
     [self addSubview:Mainimage];
     
+    
     [Mainimage mas_makeConstraints:^(MASConstraintMaker *make) {
          
        make.top.equalTo(self.mas_top).with.offset(0);
@@ -43,7 +50,7 @@
        make.right.equalTo(self.mas_right).with.offset(0);
        
     }];
-
+    self.MainImgView = Mainimage;
   
     
 }

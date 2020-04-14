@@ -8,6 +8,23 @@
 
 #import "BrandRecomdCollectionViewCell.h"
 
+@interface BrandRecomdCollectionViewCell ()
+
+@property (nonatomic, strong) UIImageView * Mainimage;
+
+@property (nonatomic, strong) UIImageView * Logoimage;
+
+@property (nonatomic, strong) UILabel * TitleLabel;
+
+@property (nonatomic, strong) UILabel * PriceLabel;
+
+@property (nonatomic, strong) UILabel * CouponLabel;
+
+@property (nonatomic, strong) UILabel * OldPriceLabel;
+
+
+@end
+
 @implementation BrandRecomdCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -32,12 +49,13 @@
     [YYTools ChangeView:MainBGView RadiusSize:5 BorderColor:[UIColor clearColor]];
     [self addSubview:MainBGView];
     
+    
     UIImageView * Mainimage = [[UIImageView alloc] init];
     Mainimage.backgroundColor = [UIColor clearColor];
     Mainimage.frame = CGRectMake(8, 8, 132.5, 82);
     Mainimage.image = [UIImage imageNamed:@"banner01"];
     [MainBGView addSubview:Mainimage];
-    
+    self.Mainimage = Mainimage;
 
     UIImageView * XuImage = [[UIImageView alloc] init];
     XuImage.backgroundColor = [UIColor clearColor];
@@ -50,7 +68,9 @@
     IconImage.frame = CGRectMake(165, 13, 18, 18);
     IconImage.image = [UIImage imageNamed:@"Jingdong"];
     [MainBGView addSubview:IconImage];
-   
+    self.Logoimage = IconImage;
+    
+    
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"瑞雪黑森林摩卡中杯";
     TitleLabel.textColor = YYHexColor(@"#111111");
@@ -58,15 +78,44 @@
     TitleLabel.textAlignment = NSTextAlignmentLeft;
     TitleLabel.font = [UIFont systemFontOfSize:15 weight:0];
     [MainBGView addSubview:TitleLabel];
+    self.TitleLabel = TitleLabel;
+    
     
     UILabel * PriceLabel = [[UILabel alloc]init];
     PriceLabel.text = @"¥15.5";
     PriceLabel.textColor = YYHexColor(@"#FB5434");
-    PriceLabel.frame = CGRectMake(165, 40, 50, 20);
     PriceLabel.textAlignment = NSTextAlignmentLeft;
     PriceLabel.font = [UIFont systemFontOfSize:15 weight:1];
     [MainBGView addSubview:PriceLabel];
+    self.PriceLabel = PriceLabel;
+    [PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(MainBGView.mas_left).with.offset(165);
+        make.top.equalTo(MainBGView.mas_top).with.offset(40);
+        make.height.offset(20);
+    }];
     
+    UIImageView * CouponImage = [[UIImageView alloc] init];
+    CouponImage.backgroundColor = [UIColor clearColor];
+    CouponImage.image = [UIImage imageNamed:@"biaoqian"];
+    [MainBGView addSubview:CouponImage];
+    [CouponImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(PriceLabel.mas_right).with.offset(10);
+        make.top.equalTo(MainBGView.mas_top).with.offset(40);
+        make.height.offset(20);
+    }];
+    
+    UILabel * CouponLabel = [[UILabel alloc]init];
+    CouponLabel.text = @"¥15.5";
+    CouponLabel.textColor = UIColor.whiteColor;
+    CouponLabel.textAlignment = NSTextAlignmentLeft;
+    CouponLabel.font = [UIFont systemFontOfSize:10 weight:0];
+    [MainBGView addSubview:CouponLabel];
+    self.CouponLabel = CouponLabel;
+    [CouponLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(PriceLabel.mas_right).with.offset(13);
+        make.top.equalTo(MainBGView.mas_top).with.offset(40);
+        make.height.offset(20);
+    }];
     
     UILabel * OldPriceLabel = [[UILabel alloc]init];
     OldPriceLabel.text = @"官方价¥32.5";
@@ -75,9 +124,58 @@
     OldPriceLabel.textAlignment = NSTextAlignmentLeft;
     OldPriceLabel.font = [UIFont systemFontOfSize:13 weight:0];
     [MainBGView addSubview:OldPriceLabel];
+    self.OldPriceLabel = OldPriceLabel;
+    
 
 }
 
+
+-(void)setModel:(BrandMainModel *)Model{
+    
+    _Model = Model;
+       
+    [self.Mainimage sd_setImageWithURL:[NSURL URLWithString:Model.coupon_cover] placeholderImage:[UIImage imageNamed:@"banner01"]];
+       
+    [self.Logoimage sd_setImageWithURL:[NSURL URLWithString:Model.brand_cover] placeholderImage:[UIImage imageNamed:@"Jingdong"]];
+       
+    self.TitleLabel.text = Model.coupon_name;
+    
+    self.PriceLabel.text = [NSString stringWithFormat:@" ￥%@ ",Model.member_price];
+       
+    self.CouponLabel.text = [NSString stringWithFormat:@" ￥%@ ",Model.fl_commission];
+       
+    self.OldPriceLabel.text = [NSString stringWithFormat:@"官方价￥%@ ",Model.face_price];
+    
+    NSMutableAttributedString *  abs = [[NSMutableAttributedString alloc]initWithString:self.OldPriceLabel.text];
+    [abs addAttribute:NSStrikethroughStyleAttributeName value:@(2) range:NSMakeRange(0, self.OldPriceLabel.text.length)];
+    self.OldPriceLabel.attributedText = abs;
+    
+    
+}
+
+-(CGFloat)addreeBackMoneyWithAmount:(CGFloat)amount ToMoney:(CGFloat)toMoney{
+
+    NSString*amountStr = [NSString stringWithFormat:@"%.08lf",amount];
+
+    NSString*toMoneyStr = [NSString stringWithFormat:@"%.08lf",toMoney];
+ 
+    NSDecimalNumber*amountNum = [NSDecimalNumber decimalNumberWithString:amountStr];
+
+    NSDecimalNumber*toMoneyNum = [NSDecimalNumber decimalNumberWithString:toMoneyStr];
+
+    double xiaofee = 0.001210000;
+ 
+    NSDecimalNumber*feeNum = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.8lf",xiaofee]];
+
+   
+    NSDecimalNumber*resultNum = [amountNum decimalNumberBySubtracting:toMoneyNum];
+ 
+    NSDecimalNumber*subTracFeeNum = [resultNum decimalNumberBySubtracting:feeNum];
+
+    
+    return [subTracFeeNum doubleValue];;
+
+}
 
 
 

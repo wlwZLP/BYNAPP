@@ -10,4 +10,12 @@
 
 @implementation HomeTimeModel
 
+
++ (NSDictionary *)modelContainerPropertyGenericClass {
+    
+    return @{@"data":[HomeMainModel class]};
+    
+}
+
+
 @end

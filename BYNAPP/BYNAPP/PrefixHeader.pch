@@ -36,6 +36,7 @@
 #import "YYBaseViewController.h"
 #import "YYBaseCollectionViewController.h"
 #import "WeakWKScriptMessageDelegate.h"
+#import "YYWebViewController.h"
 #import "RootNavigationController.h"
 #import "PPNetworkTools.h"
 #import "XMGFileTool.h"
@@ -44,8 +45,8 @@
 #import "DefineConstant.h"
 #import "HomeMainModel.h"
 #import "UserModel.h"
-
-
+#import "LPRefreshFooter.h"
+#import "LPRefreshGifHeader.h"
 
 //常用分类
 #import "UIView+AnimationExtend.h"

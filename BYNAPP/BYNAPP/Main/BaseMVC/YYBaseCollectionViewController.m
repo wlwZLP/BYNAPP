@@ -35,6 +35,8 @@ static NSString * const reuseIdentifier = @"Cell";
       //是否显示返回按钮
       self.isShowLiftBack = YES;
     
+      self.RefreshCount = 1;
+    
       [self.navigationController setNavigationBarHidden:NO animated:nil];
     
       self.collectionView.backgroundColor = [UIColor whiteColor];

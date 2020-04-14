@@ -11,7 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YYWebViewController : UIViewController
+@interface YYWebViewController : YYBaseCollectionViewController
+
+@property(nonatomic,strong)NSString * WebUrlString;
 
 @end
 

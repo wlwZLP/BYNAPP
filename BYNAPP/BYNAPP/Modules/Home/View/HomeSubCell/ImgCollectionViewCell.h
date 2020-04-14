@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ImgCollectionViewCell : UICollectionViewCell
 
+@property(nonatomic,strong)UIImageView * MainImgView;
 
 @end
 

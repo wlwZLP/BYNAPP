@@ -12,6 +12,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GoodsTitleCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic, strong) UIImageView * Logoimage;
+
+@property (nonatomic, strong) UILabel * TitleLabel;
+
+@property (nonatomic, strong) UILabel * GainMoneyLabel;
+
+@property (nonatomic, strong) UILabel * CouponPriceLabel;
+
+@property (nonatomic, strong) UILabel * OldPriceLabel;
+
+@property (nonatomic, strong) UILabel * SaleNumLabel;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic,assign)float TopImgBottomint;
 
+@property(nonatomic,strong)NSArray * ImgListArray;
+
 @end
 
 NS_ASSUME_NONNULL_END

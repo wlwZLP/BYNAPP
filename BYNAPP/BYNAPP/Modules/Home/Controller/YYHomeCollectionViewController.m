@@ -57,7 +57,7 @@ static int const HomelabelWith = 90;
                  
                  HomeLikeCollectionViewController * OneVC = [[HomeLikeCollectionViewController alloc]init];
                   
-                 OneVC.HomeID = HomePlistArray[idx].Home_id;
+                 OneVC.category_id = HomePlistArray[idx].Home_id;
     
                  [self addChildViewController:OneVC];
                 
@@ -91,10 +91,9 @@ static int const HomelabelWith = 90;
     
     [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
         
-//        YYNSLog(@"获取首页头部---%@",responseObject);
         NSDictionary * dict1 = @{@"id":@"000",@"name":@"首页"};
         
-        NSDictionary * dict2 = @{@"id":@"888",@"name":@"猜你喜欢"};
+        NSDictionary * dict2 = @{@"id":@"8888",@"name":@"猜你喜欢"};
         
         NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
         
@@ -111,9 +110,21 @@ static int const HomelabelWith = 90;
         
     } failure:^(NSError *error, id responseCache) {
     
-         NSArray * DataArray = EncodeArrayFromDic(responseCache, @"data");
+        NSDictionary * dict1 = @{@"id":@"000",@"name":@"首页"};
+                
+        NSDictionary * dict2 = @{@"id":@"8888",@"name":@"猜你喜欢"};
+        
+        NSArray * DataArray = EncodeArrayFromDic(responseCache, @"data");
+        
+        NSMutableArray * TitleArray = [NSMutableArray array];
+        
+        [TitleArray addObject:dict1];
+        
+        [TitleArray addObject:dict2];
+        
+        [TitleArray addObjectsFromArray:DataArray];
               
-         CompleteData([NSArray modelArrayWithClass:[HomePlistModel class] json:DataArray]);
+        CompleteData([NSArray modelArrayWithClass:[HomePlistModel class] json:DataArray]);
         
     }];
     

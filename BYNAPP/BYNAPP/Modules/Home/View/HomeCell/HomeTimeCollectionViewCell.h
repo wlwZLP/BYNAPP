@@ -7,12 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HomeTimeModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeTimeCollectionViewCell : UICollectionViewCell
 
+
+@property(nonatomic,strong)NSArray<HomeTimeModel*> * TimeListArray;
+
 @property (nonatomic,copy) void(^PushLimtbuyBlockClick)(void);
+
+@property (nonatomic,copy) void(^PushLGoodDetailsBlockClick)(HomeMainModel * Model);
 
 
 @end

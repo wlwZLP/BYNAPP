@@ -44,10 +44,12 @@ NS_ASSUME_NONNULL_BEGIN
 */
 @property (nonatomic,strong)UIColor * YYUnderlineWordColor;
 
+
 /**
 *  下划线高度
 */
-- (CGFloat)YYGetHeightForWidth:(CGFloat)width;
+- (void)YYUpdateConstraints;
+
 
 /**
 *  给Label添加点击方法

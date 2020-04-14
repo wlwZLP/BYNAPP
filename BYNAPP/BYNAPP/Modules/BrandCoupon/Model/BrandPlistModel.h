@@ -12,9 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BrandPlistModel : NSObject
 
-@property (nonatomic, readwrite, copy) NSString * Type;
-
 @property (nonatomic, readwrite, copy) NSString * Brand_id;
+
+@property (nonatomic, readwrite, copy) NSString * type;
 
 @property (nonatomic, readwrite, copy) NSString * name;
 

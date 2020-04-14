@@ -22,7 +22,7 @@
 #define URL_APIGoodsTaobaoHot @"api/goods/taobao/hot"
 //2.首页分类 商品类目
 #define URL_APIGoodsCategories @"api/goods/categories"
-//3.根据商品类目搜索
+//3. 获取商品列表
 #define URL_APIGoodsItems @"api/goods/items"
 //4.检测用户是否存在
 #define URL_APIUserExist @"api/user/exist"
@@ -32,13 +32,22 @@
 #define URL_APIGetValidateCode @"api/user/get_validate_code"
 //7.根据商品类目搜索
 #define URL_APIGoodsItems @"api/goods/items"
-//8.品牌券类目列表
-#define URL_APIMpvCategories @"api/mpv2/categories"
-
+//8.商品详情
+#define URL_APIGoodsDetail @"api/goods/detail"
 //9.个人中心数据
 #define URL_APIMPVUserInfo @"api/mpv2/user/info"
-
-
+//10.猜你喜欢数据
+#define URL_APIGoodsGuessLike @"api/goods/guess_like"
+//11.相似商品
+#define URL_APIGoodsSimlarItems @"api/goods/similar_items"
+//12.品牌券分类
+#define URL_APIMPVHome @"api/mpv2/home"
+//13.品牌券热门推荐
+#define URL_APIMPVRecommends @"api/mpv2/recommends"
+//14.品牌券类目商品
+#define URL_APIMPVCategoryProducts @"api/mpv2/category-products"
+//15.根据品牌商品列表
+#define URL_APIMPVBrandProducts @"api/mpv2/brand-products"
 
 
 #endif /* URLMacros_h */

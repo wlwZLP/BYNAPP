@@ -8,6 +8,14 @@
 
 #import "BrandGridCollectionViewCell.h"
 
+@interface BrandGridCollectionViewCell ()
+
+@property (nonatomic, strong) UIImageView * Logoimage;
+
+@property (nonatomic, strong) UILabel * TitleLabel;
+
+@end
+
 @implementation BrandGridCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -33,7 +41,7 @@
     Mainimage.backgroundColor = [UIColor clearColor];
     Mainimage.image = [UIImage imageNamed:@"gridImg"];
     [self addSubview:Mainimage];
-   
+    self.Logoimage = Mainimage;
     
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"饿了么";
@@ -41,7 +49,7 @@
     TitleLabel.textAlignment = NSTextAlignmentCenter;
     TitleLabel.font = [UIFont systemFontOfSize:13 weight:0];
     [self addSubview:TitleLabel];
-    
+    self.TitleLabel = TitleLabel;
     
     [Mainimage mas_makeConstraints:^(MASConstraintMaker *make) {
       
@@ -64,7 +72,16 @@
 }
 
 
-
+-(void)setModel:(BrandModel *)Model{
+    
+    _Model = Model;
+    
+    [self.Logoimage sd_setImageWithURL:[NSURL URLWithString:Model.logo] placeholderImage:[UIImage imageNamed:@"Jingdong"]];
+    
+    self.TitleLabel.text = Model.name;
+    
+    
+}
 
 
 @end

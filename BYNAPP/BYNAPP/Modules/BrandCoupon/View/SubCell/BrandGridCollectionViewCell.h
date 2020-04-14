@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "BrandModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BrandGridCollectionViewCell : UICollectionViewCell
+
+@property(nonatomic,strong)BrandModel * Model;
 
 @end
 

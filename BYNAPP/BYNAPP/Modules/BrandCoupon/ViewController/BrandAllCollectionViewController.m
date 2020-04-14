@@ -10,25 +10,31 @@
 #import "BrandTopCollectionViewCell.h"
 #import "BrandRecomdCollectionViewCell.h"
 #import "BrandDetailsCollectionViewController.h"
-
+#import "BrandMainModel.h"
+#import "BrandModel.h"
+#import "BrandTopTwoCollectionViewCell.h"
+#import "BrandListCollectionViewController.h"
 
 @interface BrandAllCollectionViewController ()
 
-@property(nonatomic,strong)NSArray * IconImgArray;
+@property(nonatomic,strong)NSArray<BrandModel*> *  BrandArray;
+
+@property(nonatomic,strong)NSMutableArray<BrandMainModel*> *  RecommendsArray;
 
 @end
 
 @implementation BrandAllCollectionViewController
 
-static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     
-    self.IconImgArray = [[NSArray alloc]initWithObjects:@"banner01",@"banner02",@"banner03",@"banner01",@"banner02",@"banner01",@"banner03",@"banner01",@"banner02",@"banner01",nil ];
+    self.RecommendsArray = [NSMutableArray array];
 
     [self.collectionView registerClass:[BrandTopCollectionViewCell class] forCellWithReuseIdentifier:@"BrandTopCollectionViewCell"];
+    
+    [self.collectionView registerClass:[BrandTopTwoCollectionViewCell class] forCellWithReuseIdentifier:@"BrandTopTwoCollectionViewCell"];
     
     [self.collectionView registerClass:[BrandRecomdCollectionViewCell class] forCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell"];
     
@@ -41,23 +47,102 @@ static NSString * const reuseIdentifier = @"Cell";
     
     [self.navigationController setNavigationBarHidden:YES animated:nil];
     
+    [self GetHomeGoodsDetailsNetData];
+    
 }
 
+-(void)GetHomeGoodsDetailsNetData{
+    
+    dispatch_group_t group = dispatch_group_create();
+    
+    [self loadPartOne:group];
+    
+    [self loadPartTwo:group];
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        
+        [self.collectionView reloadData];
+      
+    });
+    
+    
+}
+
+-(void)loadPartOne:(dispatch_group_t)group{
+    
+     dispatch_group_enter(group);
+    
+     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVHome];
+                   
+     [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+         
+          NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+        
+          NSDictionary * brands = EncodeDicFromDic(DataDic, @"brands");
+         
+          NSArray * DataArray = EncodeArrayFromDic(brands, @"contents");
+         
+          YYNSLog(@"品牌馆数据---------%@",DataArray);
+         
+          self.BrandArray = [NSArray modelArrayWithClass:[BrandModel class] json:DataArray];
+
+          dispatch_group_leave(group);
+         
+     } failure:^(NSError *error, id responseCache) {
+      
+           dispatch_group_leave(group);
+        
+     }];
+         
+
+}
+
+
+-(void)loadPartTwo:(dispatch_group_t)group{
+    
+     dispatch_group_enter(group);
+    
+     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVRecommends];
+                   
+      NSDictionary * dict = @{@"is_coupon":@"1"};
+    
+     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+      
+          NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
+                
+          self.RecommendsArray = [[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray] mutableCopy];
+     
+          dispatch_group_leave(group);
+         
+     } failure:^(NSError *error, id responseCache) {
+      
+          dispatch_group_leave(group);
+        
+     }];
+    
+    
+}
 
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 
-    return 2;
+     return 2;
+    
 }
-
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
     if (section == 0) {
-        return 1;
+       if (self.BrandArray.count == 0) {
+            return 0;
+        }else{
+            return 1;
+        }
+    }else{
+        return self.RecommendsArray.count;
     }
-    return 6;
+    
     
 }
 
@@ -65,17 +150,48 @@ static NSString * const reuseIdentifier = @"Cell";
     
     if (indexPath.section == 0) {
         
-        BrandTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandTopCollectionViewCell" forIndexPath:indexPath];
-        
-        cell.ListArray = self.IconImgArray;
-
-        return cell;
-        
+        if (self.BrandArray.count > 15) {
+            
+            BrandTopTwoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandTopTwoCollectionViewCell" forIndexPath:indexPath];
+                 
+            cell.BrandListArray = self.BrandArray;
+            
+            cell.BrandGridBtnBlockClick = ^(NSInteger GridIndex) {
+                
+                BrandListCollectionViewController * ListVc = [[BrandListCollectionViewController alloc]init];
+                ListVc.Bid_id = self.BrandArray[GridIndex].brand_id;
+                ListVc.title =self.BrandArray[GridIndex].name;
+                [self.navigationController pushViewController:ListVc animated:YES];
+                
+            };
+                 
+            return cell;
+            
+        }else{
+            
+            BrandTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandTopCollectionViewCell" forIndexPath:indexPath];
+                 
+            cell.BrandListArray = self.BrandArray;
+            
+            cell.BrandGridBtnBlockClick = ^(NSInteger GridIndex) {
+                
+                BrandListCollectionViewController * ListVc = [[BrandListCollectionViewController alloc]init];
+                ListVc.Bid_id = self.BrandArray[GridIndex].brand_id;
+                ListVc.title =self.BrandArray[GridIndex].name;
+                [self.navigationController pushViewController:ListVc animated:YES];
+                
+            };
+                 
+            return cell;
+            
+        }
         
     }else{
         
         BrandRecomdCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell" forIndexPath:indexPath];
                
+        cell.Model = self.RecommendsArray[indexPath.item];
+        
         return cell;
         
     }
@@ -103,9 +219,9 @@ static NSString * const reuseIdentifier = @"Cell";
     
     if (indexPath.section == 0) {
         
-        if (self.IconImgArray.count <=5) {
+        if (self.BrandArray.count <=5) {
              return CGSizeMake(YYScreenWidth , 100);
-        }else if ( self.IconImgArray.count >5 && self.IconImgArray.count <= 10){
+        }else if ( self.BrandArray.count >5 && self.BrandArray.count <= 10){
              return CGSizeMake(YYScreenWidth , 200);
         }else{
             return CGSizeMake(YYScreenWidth , 320);

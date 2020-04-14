@@ -8,6 +8,16 @@
 
 #import "SaleCollectionViewCell.h"
 
+@interface SaleCollectionViewCell ()
+
+@property (nonatomic, strong) UIImageView * Mainimage;
+
+@property (nonatomic, strong) UILabel * TitleLabel;
+
+@property (nonatomic, strong) UILabel * GainMoneyLabel;
+
+@end
+
 @implementation SaleCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -34,7 +44,7 @@
     Mainimage.frame = CGRectMake(4, 2, 104, 104);
     Mainimage.image = [UIImage imageNamed:@"sale"];
     [self addSubview:Mainimage];
-    
+    self.Mainimage = Mainimage;
    
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"实时热卖";
@@ -43,7 +53,7 @@
     TitleLabel.textAlignment = NSTextAlignmentLeft;
     TitleLabel.font = [UIFont systemFontOfSize:14 weight:0];
     [self addSubview:TitleLabel];
-    
+    self.TitleLabel = TitleLabel;
 
     
     UILabel * GainMoneyLabel = [[UILabel alloc]init];
@@ -53,10 +63,23 @@
     GainMoneyLabel.frame = CGRectMake(5, 133, 102, 15);
     GainMoneyLabel.font = [UIFont systemFontOfSize:11 weight:0];
     [self addSubview:GainMoneyLabel];
+    self.GainMoneyLabel = GainMoneyLabel;
   
-    
- 
 }
+
+
+-(void)setModel:(HomeMainModel *)Model{
+    
+    _Model = Model;
+    
+    [self.Mainimage sd_setImageWithURL:[NSURL URLWithString:Model.cover_image] placeholderImage:[UIImage imageNamed:@"Jingdong"]];
+    
+    self.TitleLabel.text = Model.title;
+    
+    
+    
+}
+
 
 
 @end

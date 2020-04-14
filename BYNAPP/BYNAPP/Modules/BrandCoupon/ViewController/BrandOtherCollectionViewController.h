@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BrandOtherCollectionViewController : YYBaseCollectionViewController
 
-@property(nonatomic,strong)NSString * LiveID;
+@property(nonatomic,strong)NSString * Brand_id;
 
 
 @end

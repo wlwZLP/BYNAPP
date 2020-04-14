@@ -85,6 +85,14 @@
 }
 
 
+-(void)setZonesListArray:(NSArray<HomeBannerModel *> *)ZonesListArray{
+    
+    _ZonesListArray = ZonesListArray;
+    
+    [self.ImgCollectionView reloadData];
+    
+}
+
 
 #pragma mark ---- UICollectionViewDataSource
 
@@ -101,7 +109,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-     return self.ImgListArray.count;
+     return self.ZonesListArray.count;
     
 }
 
@@ -113,9 +121,17 @@
     
      ImgCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ImgCollectionViewCell" forIndexPath:indexPath];
     
+      [cell.MainImgView setImageURL:[NSURL URLWithString: self.ZonesListArray[indexPath.item].cover]];
     
-     return cell;
+      return cell;
         
+}
+
+#pragma mark -选中某item进行跳转
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+     self.TopicBtnBlockClick(indexPath.item);
+
 }
 
 

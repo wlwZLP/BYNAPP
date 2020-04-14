@@ -24,11 +24,14 @@
 
 @property(nonatomic,assign)BOOL  ISHideGoodsDetails;
 
+@property(nonatomic,strong)NSDictionary * DetailsDic;
+
+
 @end
 
 @implementation HomeDetailsCollectionViewController
 
-static NSString * const reuseIdentifier = @"Cell";
+
 
 - (void)viewDidLoad {
     
@@ -71,11 +74,82 @@ static NSString * const reuseIdentifier = @"Cell";
     [barImageView addSubview:self.GoodsSearchBar];
     
     barImageView.alpha = 0.0;
+    
+    [self getHomeGoodsDetailsNetData];
         
 }
 
 
--(void)viewDidAppear:(BOOL)animated{
+-(void)getHomeGoodsDetailsNetData{
+    
+    dispatch_group_t group = dispatch_group_create();
+    
+    [self loadPartOne:group];
+    
+    [self loadPartTwo:group];
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        
+        [self.collectionView reloadData];
+      
+    });
+    
+    
+}
+
+-(void)loadPartOne:(dispatch_group_t)group{
+    
+    dispatch_group_enter(group);
+    
+     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsDetail];
+    
+     NSDictionary * dict ;
+     
+     if (self.activity_id.length == 0) {
+         dict = @{@"item_id":self.item_id,@"mall_id":self.Goods_Type};
+     }else{
+         dict = @{@"item_id":self.item_id,@"mall_id":self.Goods_Type,@"activity_id":self.activity_id};
+     }
+     
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+        
+//         YYNSLog(@"商品详情数据-----%@",responseObject);
+        self.DetailsDic = EncodeDicFromDic(responseObject, @"data");
+        
+         dispatch_group_leave(group);
+        
+    } failure:^(NSError *error, id responseCache) {
+        
+        
+        dispatch_group_leave(group);
+        
+    }];
+         
+
+}
+
+
+-(void)loadPartTwo:(dispatch_group_t)group{
+    
+    dispatch_group_enter(group);
+
+    NSDictionary * dict = @{@"id":self.item_id,@"page":@"1"};
+               
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsSimlarItems];
+
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+        
+//        YYNSLog(@"相似商品-----%@",responseObject);
+        
+         dispatch_group_leave(group);
+        
+    } failure:^(NSError *error, id responseCache) {
+        
+        
+        dispatch_group_leave(group);
+        
+        
+    }];
     
     
 }
@@ -121,11 +195,9 @@ static NSString * const reuseIdentifier = @"Cell";
     if (indexPath.section == 0) {
         
         GoodsTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"GoodsTopCollectionViewCell" forIndexPath:indexPath];
-        if (self.ISHideVipRule == YES) {
-            cell.TopImgBottomint = 0 ;
-        }else{
-            cell.TopImgBottomint = -36 ;
-        }
+        
+        cell.ImgListArray = EncodeArrayFromDic(self.DetailsDic, @"images");
+        
         return cell;
         
     }else if (indexPath.section == 1){
@@ -187,7 +259,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
     if (indexPath.section == 0) {
         
-       return CGSizeMake(YYScreenWidth , YYScreenWidth);
+       return CGSizeMake(YYScreenWidth , YYScreenWidth * 0.9);
         
     }else if (indexPath.section == 1){
         

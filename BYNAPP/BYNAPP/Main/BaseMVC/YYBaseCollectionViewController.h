@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HomeMainModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface YYBaseCollectionViewController : UICollectionViewController
 
 
-@property(nonatomic,strong)NSArray * ListDataArray;
+@property(nonatomic,strong)NSArray<HomeMainModel*> * ListDataArray;
 
 /**
  *  是否显示返回按钮,默认情况是YES
@@ -36,7 +36,14 @@ NS_ASSUME_NONNULL_BEGIN
 */
 -(void)YYBaseLeftBackRightClick;
 
-
+/**
+ 下拉刷新多少条
+ */
+@property(nonatomic,assign)NSInteger RefreshCount;
+/**
+ 下拉刷新一共多少页
+ */
+@property(nonatomic,assign)NSInteger TotalPageCount;
 
 @end
 

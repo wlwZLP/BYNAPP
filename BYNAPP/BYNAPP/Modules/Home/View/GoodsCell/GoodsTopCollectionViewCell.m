@@ -8,7 +8,9 @@
 
 #import "GoodsTopCollectionViewCell.h"
 
-@interface GoodsTopCollectionViewCell ()
+@interface GoodsTopCollectionViewCell ()<SDCycleScrollViewDelegate>
+
+@property(nonatomic,strong)SDCycleScrollView * DetailsCycleScrollView;
 
 @property(nonatomic,strong)UIImageView * TopImageView;
 
@@ -25,7 +27,7 @@
         
         self.backgroundColor = YYRandomColor;
         
-        [self setup];
+        [self addSubview:self.DetailsCycleScrollView];
         
     }
     
@@ -33,77 +35,35 @@
     
 }
 
-
--(void)setTopImgBottomint:(float)TopImgBottomint{
+-(void)setImgListArray:(NSMutableArray *)ImgListArray{
     
-    _TopImgBottomint = TopImgBottomint;
+     _ImgListArray = ImgListArray;
     
-    [self.TopImageView mas_updateConstraints:^(MASConstraintMaker *make) {
-           
-        make.bottom.equalTo(self.mas_bottom).with.offset(_TopImgBottomint);
-           
-    }];
-    
-    [self.TopView mas_updateConstraints:^(MASConstraintMaker *make) {
-              
-        make.top.equalTo(self.TopImageView.mas_bottom).with.offset(0);
-        make.left.equalTo(self.mas_left).with.offset(0);
-        make.right.equalTo(self.mas_right).with.offset(0);
-        make.bottom.equalTo(self.mas_bottom).with.offset(0);
-              
-    }];
-    
+    self.DetailsCycleScrollView.imageURLStringsGroup = ImgListArray;
     
 }
 
 
 
-
-
-- (void)setup{
+-(SDCycleScrollView*)DetailsCycleScrollView{
     
-    
-    UIImageView * Mainimage = [[UIImageView alloc] init];
-    Mainimage.backgroundColor = [UIColor clearColor];
-    Mainimage.image = [UIImage imageNamed:@"sale"];
-    [self addSubview:Mainimage];
-    self.TopImageView = Mainimage;
-   
-    UIView * VipView = [[UIView alloc] init];
-    VipView.backgroundColor = UIColor.blackColor;
-    [self addSubview:VipView];
-    self.TopView = VipView;
-    
-    UILabel * TitleLabel = [[UILabel alloc]init];
-    TitleLabel.text = @"京东";
-    TitleLabel.frame = CGRectMake(20, 8, 120, 20);
-    TitleLabel.textColor = UIColor.whiteColor;
-    TitleLabel.textAlignment = NSTextAlignmentCenter;
-    TitleLabel.font = [UIFont systemFontOfSize:13 weight:0];
-    [VipView addSubview:TitleLabel];
-    
-    
-    [self.TopImageView  mas_makeConstraints:^(MASConstraintMaker *make) {
-      
-        make.top.equalTo(self.mas_top).with.offset(0);
-        make.left.equalTo(self.mas_left).with.offset(0);
-        make.right.equalTo(self.mas_right).with.offset(0);
-        make.bottom.equalTo(self.mas_bottom).with.offset(_TopImgBottomint);
+    if (_DetailsCycleScrollView == nil) {
         
-    }];
-    
-    [VipView mas_makeConstraints:^(MASConstraintMaker *make) {
-      
-        make.top.equalTo(Mainimage.mas_bottom).with.offset(0);
-        make.left.equalTo(self.mas_left).with.offset(0);
-        make.right.equalTo(self.mas_right).with.offset(0);
-        make.bottom.equalTo(self.mas_bottom).with.offset(0);
+        _DetailsCycleScrollView= [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.ZLP_width , self.ZLP_height) delegate:self placeholderImage:[UIImage imageNamed:@"banner01"]];
+        _DetailsCycleScrollView.backgroundColor = [UIColor redColor];
+        _DetailsCycleScrollView.backgroundColor = [UIColor clearColor];
+        _DetailsCycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated;
+        _DetailsCycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
+        _DetailsCycleScrollView.pageDotImage = [UIImage imageNamed:@"yqwhite"];
+        _DetailsCycleScrollView.currentPageDotImage = [UIImage imageNamed:@"yqyellow"];
         
-    }];
+     }
     
+    return _DetailsCycleScrollView;
     
-
 }
+
+
 
 
 
