@@ -1,8 +1,8 @@
 //
-//  PDDCollectionViewController.h
+//  JiuJiuCollectionViewController.h
 //  BYNAPP
 //
-//  Created by apple on 2020/4/14.
+//  Created by apple on 2020/4/15.
 //  Copyright © 2020 xidian. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PDDCollectionViewController : YYBaseCollectionViewController
+@interface JiuJiuCollectionViewController : YYBaseCollectionViewController
 
 @end
 

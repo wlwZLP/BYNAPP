@@ -48,6 +48,21 @@
 #define URL_APIMPVCategoryProducts @"api/mpv2/category-products"
 //15.根据品牌商品列表
 #define URL_APIMPVBrandProducts @"api/mpv2/brand-products"
+//16.根据品牌商品详情
+#define URL_APIMPVProductDetail @"api/mpv2/product-detail"
+//17.收藏商品
+#define URL_APIUserCollect @"api/user/collect"
+
+
+
+
+
+
+
+
+
+
+
 
 
 #endif /* URLMacros_h */

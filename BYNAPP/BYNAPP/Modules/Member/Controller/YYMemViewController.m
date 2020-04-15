@@ -9,7 +9,7 @@
 #import "YYMemViewController.h"
 #import "LeftTableViewCell.h"
 #import "RightCollectionViewCell.h"
-#import "MenListCollectionViewController.h"
+#import "PDDCollectionViewController.h"
 #import "MenModel.h"
 #import "SubChildrenModel.h"
 
@@ -94,6 +94,8 @@ UICollectionViewDataSource>
     NSDictionary * dict = @{@"mall_id":@"1",@"mode":@"2"};
        
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+        
+        YYNSLog(@"分类数据-----%@",responseObject);
         
         NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
            
@@ -245,9 +247,9 @@ UICollectionViewDataSource>
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     SubChildrenModel * model = self.MenListArray[self.selectIndex].children[indexPath.section].children[indexPath.item];
-    
-    MenListCollectionViewController * ListVc = [[MenListCollectionViewController alloc]init];
-    
+    PDDCollectionViewController * ListVc = [[PDDCollectionViewController alloc]init];
+    ListVc.category_id = model.Child_id;
+    ListVc.title = model.name;
     [self.navigationController pushViewController:ListVc animated:YES];
     
     

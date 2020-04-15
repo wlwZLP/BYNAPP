@@ -165,7 +165,7 @@
 
     double xiaofee = 0.001210000;
  
-    NSDecimalNumber*feeNum = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.8lf",xiaofee]];
+    NSDecimalNumber*feeNum = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.8lf",xiaofee]];
 
    
     NSDecimalNumber*resultNum = [amountNum decimalNumberBySubtracting:toMoneyNum];

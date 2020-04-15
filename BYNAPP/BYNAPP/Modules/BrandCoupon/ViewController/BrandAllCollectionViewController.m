@@ -104,7 +104,7 @@
     
      NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVRecommends];
                    
-      NSDictionary * dict = @{@"is_coupon":@"1"};
+     NSDictionary * dict = @{@"is_coupon":@"1"};
     
      [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
       
@@ -204,12 +204,15 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
 
+    BrandMainModel * Model = self.RecommendsArray[indexPath.item];
     BrandDetailsCollectionViewController * BrandVc = [[BrandDetailsCollectionViewController alloc]init];
     BrandVc.title = @"商品详情";
+    BrandVc.Details_id = Model.brand_id;
+    BrandVc.mall_id = Model.mall_id;
     [self.navigationController pushViewController:BrandVc animated:YES];
-    
-    
+   
 }
+
 
 
 #pragma mark <UICollectionViewDelegate>

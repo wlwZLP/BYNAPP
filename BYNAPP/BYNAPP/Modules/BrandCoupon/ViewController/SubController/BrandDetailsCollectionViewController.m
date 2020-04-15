@@ -13,6 +13,8 @@
 
 @interface BrandDetailsCollectionViewController ()
 
+@property(nonatomic,strong)NSDictionary * DetaisDic;
+
 @end
 
 @implementation BrandDetailsCollectionViewController
@@ -38,6 +40,34 @@
     
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    
+     [self GetHomeGoodsDetailsNetData];
+    
+}
+
+-(void)GetHomeGoodsDetailsNetData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVProductDetail];
+                 
+    NSDictionary * dict = @{@"id":self.Details_id,@"mall_id":self.mall_id};
+   
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+        
+        self.DetaisDic = EncodeDicFromDic(responseObject, @"data");
+         YYNSLog(@"品牌馆详情---------%@",responseObject);
+        [self.collectionView reloadData];
+    
+    } failure:^(NSError *error, id responseCache) {
+        
+        
+        
+     
+    }];
+    
+    
+}
+
 
 
 #pragma mark <UICollectionViewDataSource>
@@ -59,6 +89,7 @@
     if (indexPath.item == 0) {
         
         DetailsTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DetailsTopCollectionViewCell" forIndexPath:indexPath];
+        [cell.MainBgImgView sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(self.DetaisDic, @"coupon_cover")] placeholderImage:[UIImage imageNamed:@"BrandDbg"]];
         
         return cell;
         
@@ -179,13 +210,13 @@
     
     UIImageView * HomeImage = [[UIImageView alloc] init];
     HomeImage.backgroundColor = [UIColor clearColor];
-    HomeImage.frame = CGRectMake(24, 18, 20, 20);
+    HomeImage.frame = CGRectMake(24, 10, 20, 20);
     HomeImage.image = [UIImage imageNamed:@"icon_tabbar_homepage"];
     [BottomView addSubview:HomeImage];
     
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"首页";
-    TitleLabel.frame = CGRectMake(22, 42, 24, 15);
+    TitleLabel.frame = CGRectMake(22, 35 , 24, 15);
     TitleLabel.textColor = YY33Color;
     TitleLabel.textAlignment = NSTextAlignmentCenter;
     TitleLabel.font = [UIFont systemFontOfSize:10 weight:0];

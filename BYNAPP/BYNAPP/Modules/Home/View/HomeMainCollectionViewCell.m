@@ -133,12 +133,10 @@
     self.SaleNumLabel = SaleNumLabel;
     
     [MainBGView mas_makeConstraints:^(MASConstraintMaker *make) {
-      
         make.top.equalTo(self.mas_top).with.offset(4);
         make.left.equalTo(self.mas_left).with.offset(12);
         make.right.equalTo(self.mas_right).with.offset(-12);
         make.bottom.equalTo(self.mas_bottom).with.offset(-4);
-    
     }];
     
     [Mainimage mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -172,7 +170,7 @@
     [StoreNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 
        make.left.equalTo(Mainimage.mas_right).with.offset(20);
-       make.top.equalTo(MainBGView.mas_top).with.offset(35);
+       make.top.equalTo(MainBGView.mas_top).with.offset(30);
        make.height.offset(20);
 //       make.right.equalTo(MainBGView.mas_right).with.offset(-5);
 
@@ -199,7 +197,7 @@
     [CouponPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 
        make.left.equalTo(Mainimage.mas_right).with.offset(20);
-       make.top.equalTo(MainBGView.mas_top).with.offset(85);
+       make.top.equalTo(MainBGView.mas_top).with.offset(82);
        make.height.offset(20);
 
     }];
@@ -208,7 +206,7 @@
     [OldPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 
         make.left.equalTo(Mainimage.mas_right).with.offset(20);
-        make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-10);
+        make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-5);
         make.height.offset(15);
 
     }];
@@ -216,7 +214,7 @@
     [SaleNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
 
         make.right.equalTo(MainBGView.mas_right).with.offset(-10);
-        make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-10);
+        make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-5);
         make.height.offset(15);
     
     }];
@@ -229,7 +227,7 @@
     
     _Model = Model;
     
-    [self.Mainimage sd_setImageWithURL:[NSURL URLWithString:Model.cover_image] placeholderImage:[UIImage imageNamed:@"Jingdong"]];
+    [self.Mainimage sd_setImageWithURL:[NSURL URLWithString:Model.cover_image] placeholderImage:[UIImage imageNamed:@"bmht"]];
     
     [self.Logoimage sd_setImageWithURL:[NSURL URLWithString:Model.mall_icon] placeholderImage:[UIImage imageNamed:@"Jingdong"]];
     
@@ -253,7 +251,7 @@
     
     self.OldPriceLabel.text = [NSString stringWithFormat:@"原价￥%@ ", Model.price];
     NSMutableAttributedString *  abs = [[NSMutableAttributedString alloc]initWithString:self.OldPriceLabel.text];
-    [abs addAttribute:NSStrikethroughStyleAttributeName value:@(2) range:NSMakeRange(0, self.OldPriceLabel.text.length)];
+    [abs addAttribute:NSStrikethroughStyleAttributeName value:@(1) range:NSMakeRange(0, self.OldPriceLabel.text.length)];
     self.OldPriceLabel.attributedText = abs;
     
     self.SaleNumLabel.text = [NSString stringWithFormat:@"已售%@件",Model.month_sales];

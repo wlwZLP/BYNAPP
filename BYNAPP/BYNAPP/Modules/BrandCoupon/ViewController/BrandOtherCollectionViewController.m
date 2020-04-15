@@ -8,7 +8,9 @@
 
 #import "BrandOtherCollectionViewController.h"
 #import "BrandRecomdCollectionViewCell.h"
+#import "BrandCardCollectionViewCell.h"
 #import "BrandModel.h"
+#import "BrandDetailsCollectionViewController.h"
 
 @interface BrandOtherCollectionViewController ()
 
@@ -18,7 +20,6 @@
 
 @implementation BrandOtherCollectionViewController
 
-static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     
@@ -26,7 +27,9 @@ static NSString * const reuseIdentifier = @"Cell";
  
     [self.collectionView registerClass:[BrandRecomdCollectionViewCell class] forCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell"];
     
-
+    [self.collectionView registerClass:[BrandCardCollectionViewCell class] forCellWithReuseIdentifier:@"BrandCardCollectionViewCell"];
+    
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -46,9 +49,7 @@ static NSString * const reuseIdentifier = @"Cell";
     NSDictionary * dict = @{@"cid":self.Brand_id,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
                   
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
-        
-        YYNSLog(@"品牌馆数据---------%@",responseObject);
-        
+    
         NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
         
         NSArray * DataArray = EncodeArrayFromDic(DataDic, @"data");
@@ -84,21 +85,53 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    BrandRecomdCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell" forIndexPath:indexPath];
-    
-    cell.Model = self.BrandArray[indexPath.item];
+    if ([self.BrandArray[indexPath.item].coupon_type isEqualToString:@"1"] ||[self.BrandArray[indexPath.item].coupon_type isEqualToString:@"3"]) {
+        
+        BrandCardCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandCardCollectionViewCell" forIndexPath:indexPath];
+           
+        cell.Model = self.BrandArray[indexPath.item];
 
-    return cell;
+        return cell;
+    
+    }else{
+        
+        BrandRecomdCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell" forIndexPath:indexPath];
+           
+        cell.Model = self.BrandArray[indexPath.item];
+
+        return cell;
+        
+    }
     
     
 }
+
+#pragma mark -选中某item进行跳转
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    BrandMainModel * Model = self.BrandArray[indexPath.item];
+    BrandDetailsCollectionViewController * DetailsVc = [[BrandDetailsCollectionViewController alloc]init];
+    DetailsVc.Details_id = Model.brand_id;
+    DetailsVc.mall_id = Model.mall_id;
+    [self.navigationController pushViewController:DetailsVc animated:YES];
+    
+    
+}
+
+
+
 
 #pragma mark <UICollectionViewDelegate>
 
 
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
   
-        return CGSizeMake(YYScreenWidth , 108);
+    if ([self.BrandArray[indexPath.item].coupon_type isEqualToString:@"1"] ||[self.BrandArray[indexPath.item].coupon_type isEqualToString:@"3"]) {
+        return CGSizeMake(YYScreenWidth , 92);
+    }else{
+        return CGSizeMake(YYScreenWidth , 112);
+    }
    
 }
 
@@ -106,14 +139,14 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     
-       return (CGSize){YYScreenWidth,0};
+       return (CGSize){0,0};
   
 }
 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
     
-       return (CGSize){YYScreenWidth,0};
+       return (CGSize){0,0};
     
 }
 

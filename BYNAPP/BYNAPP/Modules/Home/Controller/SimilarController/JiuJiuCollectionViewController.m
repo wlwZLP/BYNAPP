@@ -1,22 +1,24 @@
 //
-//  PDDCollectionViewController.m
+//  JiuJiuCollectionViewController.m
 //  BYNAPP
 //
-//  Created by apple on 2020/4/14.
+//  Created by apple on 2020/4/15.
 //  Copyright © 2020 xidian. All rights reserved.
 //
 
-#import "PDDCollectionViewController.h"
+#import "JiuJiuCollectionViewController.h"
 #import "YYPDDHeadView.h"
 #import "HomeMainCollectionViewCell.h"
+#import "HomeDetailsCollectionViewController.h"
 
-@interface PDDCollectionViewController ()
+
+@interface JiuJiuCollectionViewController ()
 
 @property(nonatomic,strong)YYPDDHeadView * PDDHeadView;
 
 @end
 
-@implementation PDDCollectionViewController
+@implementation JiuJiuCollectionViewController
 
 
 - (void)viewDidLoad {
@@ -32,6 +34,45 @@
 }
 
 
+-(void)viewWillAppear:(BOOL)animated{
+    
+    [self GetSelfViewControllerNetworkData];
+    
+}
+
+#pragma mark 网络请求数据
+
+-(void)GetSelfViewControllerNetworkData{
+    
+                  
+     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsItems];
+         
+     NSDictionary * dict = @{@"mall_id":@"1",@"activity_type":@"4",@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+                        
+       [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+                
+           NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+           
+           YYNSLog(@"聚划算----%@",responseObject);
+           
+           self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+                   
+            [self.collectionView reloadData];
+        
+          
+       } failure:^(NSError *error, id responseCache) {
+              
+            NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
+           
+            self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+                   
+            [self.collectionView reloadData];
+           
+
+       }];
+
+    
+}
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -42,7 +83,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-      return 22;
+      return self.ListDataArray.count;
     
 }
 
@@ -50,14 +91,29 @@
     
       HomeMainCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeMainCollectionViewCell" forIndexPath:indexPath];
     
+      cell.Model = self.ListDataArray[indexPath.item];
+    
       return cell;
+    
+}
+
+
+
+#pragma mark -选中某item进行跳转
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
+    HomeVc.Goods_Type = self.ListDataArray[indexPath.item].mall_id;
+    HomeVc.item_id = self.ListDataArray[indexPath.item].item_id;
+    HomeVc.activity_id = self.ListDataArray[indexPath.item].activity_id;
+    [self.navigationController pushViewController:HomeVc animated:YES];
+    
     
 }
 
 #pragma mark <UICollectionViewDelegate>
 
-
-#pragma mark <UICollectionViewDelegate>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
  
@@ -141,7 +197,5 @@
       return 0.5;
     
 }
-
-
 
 @end

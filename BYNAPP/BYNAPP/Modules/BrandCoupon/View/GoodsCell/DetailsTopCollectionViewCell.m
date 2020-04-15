@@ -46,7 +46,7 @@
     Mainimage.image = [UIImage imageNamed:@"sale"];
     Mainimage.frame = CGRectMake(0, 0, YYScreenWidth,YYScreenWidth * 0.62);
     [self addSubview:Mainimage];
- 
+    self.MainBgImgView = Mainimage;
    
     UIView * VipView = [[UIView alloc] init];
     VipView.backgroundColor = UIColor.whiteColor;
@@ -60,6 +60,8 @@
        
     }];
     [YYTools ChangeView:VipView RadiusSize:8 BorderColor:[UIColor clearColor]];
+    
+    
     
 
 }

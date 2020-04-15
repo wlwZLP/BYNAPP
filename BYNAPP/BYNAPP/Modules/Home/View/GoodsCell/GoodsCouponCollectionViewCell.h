@@ -12,6 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GoodsCouponCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic, strong) UILabel * CouponLabel;
+
+@property (nonatomic, strong) UILabel * TimeLabel;
+
+@property (nonatomic,copy) void(^DrawLabelBlockClick)(void);
+
 @end
 
 NS_ASSUME_NONNULL_END

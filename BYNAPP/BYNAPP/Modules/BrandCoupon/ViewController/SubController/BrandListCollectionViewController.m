@@ -1,93 +1,176 @@
-//
-//  BrandListCollectionViewController.m
-//  BYNAPP
-//
-//  Created by zhulp on 2020/4/14.
-//  Copyright © 2020 xidian. All rights reserved.
-//
-
 #import "BrandListCollectionViewController.h"
+#import "BrandRecomdCollectionViewCell.h"
+#import "BrandCardCollectionViewCell.h"
+#import "BrandModel.h"
 
 @interface BrandListCollectionViewController ()
+
+@property(nonatomic,strong)NSArray<BrandMainModel*> *  BrandArray;
 
 @end
 
 @implementation BrandListCollectionViewController
 
-static NSString * const reuseIdentifier = @"Cell";
+
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.collectionView.backgroundColor = YYBGColor;
+ 
+    [self.collectionView registerClass:[BrandRecomdCollectionViewCell class] forCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell"];
     
-    // Register cell classes
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [self.collectionView registerClass:[BrandCardCollectionViewCell class] forCellWithReuseIdentifier:@"BrandCardCollectionViewCell"];
     
-    // Do any additional setup after loading the view.
+    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)viewWillAppear:(BOOL)animated{
+    
+     [self GetBrandOtherNetData];
+    
+    
 }
-*/
+
+#pragma mark <UICollectionViewDataSource>
+
+-(void)GetBrandOtherNetData{
+   
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVBrandProducts];
+    
+    NSDictionary * dict = @{@"bid":self.Bid_id,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+                  
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+        
+        YYNSLog(@"品牌列表-------%@",responseObject);
+        
+        NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+        
+        NSArray * DataArray = EncodeArrayFromDic(DataDic, @"data");
+    
+        self.BrandArray = [[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray] mutableCopy];
+        
+        [self.collectionView reloadData];
+        
+    } failure:^(NSError *error, id responseCache) {
+     
+        NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
+            
+        NSArray * DataArray = EncodeArrayFromDic(DataDic, @"data");
+        
+        self.BrandArray = [[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray] mutableCopy];
+            
+        [self.collectionView reloadData];
+        
+    }];
+    
+}
+
 
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+
+     return 1;
+    
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of items
-    return 0;
+
+    return self.BrandArray.count;
+    
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
-    // Configure the cell
+    if ([self.BrandArray[indexPath.item].coupon_type isEqualToString:@"1"] ||[self.BrandArray[indexPath.item].coupon_type isEqualToString:@"3"]) {
+        
+        BrandCardCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandCardCollectionViewCell" forIndexPath:indexPath];
+           
+        cell.Model = self.BrandArray[indexPath.item];
+
+        return cell;
     
-    return cell;
+    }else{
+        
+        BrandRecomdCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell" forIndexPath:indexPath];
+           
+        cell.Model = self.BrandArray[indexPath.item];
+
+        return cell;
+        
+    }
+    
 }
 
 #pragma mark <UICollectionViewDelegate>
 
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
 
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
-
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
+-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+  
+     if ([self.BrandArray[indexPath.item].coupon_type isEqualToString:@"1"] ||[self.BrandArray[indexPath.item].coupon_type isEqualToString:@"3"]) {
+         return CGSizeMake(YYScreenWidth , 92);
+     }else{
+         return CGSizeMake(YYScreenWidth , 112);
+     }
+        
+   
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
+#pragma mark 设置区头区尾
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    
+       return (CGSize){YYScreenWidth,0};
+  
 }
 
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
+    
+       return (CGSize){YYScreenWidth,0};
+    
 }
-*/
+
+
+// 和UITableView类似，UICollectionView也可设置段头段尾
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if([kind isEqualToString:UICollectionElementKindSectionHeader])
+    {
+        UICollectionReusableView *headerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"headerId" forIndexPath:indexPath];
+        
+        if(headerView == nil){
+            headerView = [[UICollectionReusableView alloc] init];
+        }
+        
+        headerView.backgroundColor = YYBGColor;
+        
+     
+        return headerView;
+    
+    }
+    
+     return nil;
+    
+}
+
+#pragma mark ---- UICollectionViewDelegateFlowLayout
+
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+      return UIEdgeInsetsMake(0, 0, 0, 0);//上左下右
+}
+
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+       return 0;
+    
+}
 
 @end

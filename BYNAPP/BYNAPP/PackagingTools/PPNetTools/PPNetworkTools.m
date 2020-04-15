@@ -104,6 +104,8 @@ static AFHTTPSessionManager *_sessionManager;
                   success:(PPHttpRequestSuccess)success
                   failure:(PPHttpRequestFailed)failure {
     
+    NSString * NewURL = [URL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"#%^{}\"[]|\\<> "].invertedSet];
+    
     NSDate * datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
 
     NSString * timeSp = [NSString stringWithFormat:@"%ld", (long)([datenow timeIntervalSince1970])];
@@ -125,7 +127,7 @@ static AFHTTPSessionManager *_sessionManager;
     [_sessionManager.requestSerializer setValue:timeSp forHTTPHeaderField:@"t"];
     [_sessionManager.requestSerializer setValue:appVersion forHTTPHeaderField:@"v"];
    
-    NSURLSessionTask *sessionTask = [_sessionManager GET:URL parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+    NSURLSessionTask *sessionTask = [_sessionManager GET:NewURL parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -156,6 +158,8 @@ static AFHTTPSessionManager *_sessionManager;
                 parameters:(id)parameters
                    success:(PPHttpRequestSuccess)success
                    failure:(PPHttpRequestFailed)failure {
+    
+    NSString * NewURL = [URL stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet characterSetWithCharactersInString:@"#%^{}\"[]|\\<> "].invertedSet];
  
     NSDate * datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
 
@@ -178,7 +182,7 @@ static AFHTTPSessionManager *_sessionManager;
     [_sessionManager.requestSerializer setValue:timeSp forHTTPHeaderField:@"t"];
     [_sessionManager.requestSerializer setValue:appVersion forHTTPHeaderField:@"v"];
     
-    NSURLSessionTask *sessionTask = [_sessionManager POST:URL parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
+    NSURLSessionTask *sessionTask = [_sessionManager POST:NewURL parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         

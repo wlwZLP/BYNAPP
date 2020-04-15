@@ -49,9 +49,8 @@
     
     if (_DetailsCycleScrollView == nil) {
         
-        _DetailsCycleScrollView= [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.ZLP_width , self.ZLP_height) delegate:self placeholderImage:[UIImage imageNamed:@"banner01"]];
-        _DetailsCycleScrollView.backgroundColor = [UIColor redColor];
-        _DetailsCycleScrollView.backgroundColor = [UIColor clearColor];
+        _DetailsCycleScrollView= [SDCycleScrollView cycleScrollViewWithFrame:CGRectMake(0, 0, self.ZLP_width , self.ZLP_height) delegate:self placeholderImage:[UIImage imageNamed:@"SDBG"]];
+        _DetailsCycleScrollView.backgroundColor = UIColor.whiteColor;
         _DetailsCycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleAnimated;
         _DetailsCycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentCenter;
         _DetailsCycleScrollView.pageDotImage = [UIImage imageNamed:@"yqwhite"];

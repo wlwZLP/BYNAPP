@@ -12,7 +12,7 @@
 #import "HomeLikeCollectionViewController.h"
 #import "HomeSearchCollectionViewController.h"
 #import "MessageCollectionViewController.h"
-
+#import "HomeSearchCollectionViewController.h"
 
 static int const HomelabelWith = 90;
 
@@ -31,6 +31,10 @@ static int const HomelabelWith = 90;
 
 /** 首页搜索空间 */
 @property (nonatomic, strong) UISearchBar * HomeSearchBar;
+
+/** 首页搜索背景UIView */
+@property (nonatomic, strong) UIView * TopBarView;
+
 
 @end
 
@@ -77,9 +81,14 @@ static int const HomelabelWith = 90;
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    
     [self.navigationController setNavigationBarHidden:YES animated:nil];
+     [self.TopBarView setHidden:NO];
+}
 
+
+-(void)viewWillDisappear:(BOOL)animated{
+    
+    [self.TopBarView setHidden:YES];
     
 }
 
@@ -141,7 +150,7 @@ static int const HomelabelWith = 90;
     UIView * TopBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, YYScreenWidth, YYBarHeight)];
     TopBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:TopBarView];
-    
+    self.TopBarView = TopBarView;
     //添加搜索控价
     [TopBarView addSubview:self.HomeSearchBar];
     
@@ -168,11 +177,7 @@ static int const HomelabelWith = 90;
 
 #pragma mark 点击头部搜索 消息按钮
 -(void)SearchButtonClick{
-    
-//    HomeSearchCollectionViewController * SearchVC = [[HomeSearchCollectionViewController alloc]init];
-//    SearchVC.title = @"消息";
-//    [self.navigationController pushViewController:SearchVC animated:YES];
-    
+     
     
     
     
@@ -225,6 +230,14 @@ static int const HomelabelWith = 90;
     
 }
 
+#pragma mark - UISearchBardelegete
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+    
+    HomeSearchCollectionViewController * Search = [[HomeSearchCollectionViewController alloc]init];
+    [self.navigationController pushViewController:Search animated:YES];
+    return NO;
+    
+}
 
 
 

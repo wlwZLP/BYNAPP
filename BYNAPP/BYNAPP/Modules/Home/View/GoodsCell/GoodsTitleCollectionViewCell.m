@@ -57,12 +57,7 @@
      CouponPriceLabel.font = [UIFont systemFontOfSize:20 weight:1];
      [self addSubview:CouponPriceLabel];
      self.CouponPriceLabel = CouponPriceLabel;
-     NSMutableAttributedString * CouponString = [[NSMutableAttributedString alloc] initWithString:self.CouponPriceLabel.text];
-     NSRange Range1 = NSMakeRange(0, 1);
-     NSRange Range2 = NSMakeRange(self.CouponPriceLabel.text.length - 3, 3);
-     [CouponString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13] range:Range1];
-     [CouponString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:Range2];
-     [self.CouponPriceLabel setAttributedText:CouponString];
+    
   
      UILabel * GainMoneyLabel = [[UILabel alloc]init];
      GainMoneyLabel.text = @"最多赚一元";
@@ -83,9 +78,7 @@
      OldPriceLabel.font = [UIFont systemFontOfSize:12 weight:0];
      [self addSubview:OldPriceLabel];
      self.OldPriceLabel = OldPriceLabel;
-     NSMutableAttributedString *  abs = [[NSMutableAttributedString alloc]initWithString:self.OldPriceLabel.text];
-     [abs addAttribute:NSStrikethroughStyleAttributeName value:@(2) range:NSMakeRange(0, self.OldPriceLabel.text.length)];
-     self.OldPriceLabel.attributedText = abs;
+     
     
      UILabel * SaleNumLabel = [[UILabel alloc]init];
      SaleNumLabel.text = @"已售3201件";

@@ -9,6 +9,7 @@
 #import "HomeMainCollectionViewController.h"
 #import "HomeBannerCollectionViewCell.h"
 #import "HomeGridCollectionViewCell.h"
+#import "ImgCollectionViewCell.h"
 #import "HomeTopicCollectionViewCell.h"
 #import "HomeTimeCollectionViewCell.h"
 #import "HomeMainCollectionViewCell.h"
@@ -16,7 +17,13 @@
 #import "LimitBuyCollectionViewController.h"
 #import "HomeBannerModel.h"
 #import "HomeTimeModel.h"
+
+#import "TBHotCollectionViewController.h"
+#import "JiuJiuCollectionViewController.h"
 #import "PDDCollectionViewController.h"
+#import "JingDCollectionViewController.h"
+#import "TBMatterCollectionViewController.h"
+#import "AblumCollectionViewController.h"
 
 @interface HomeMainCollectionViewController ()
 
@@ -25,6 +32,8 @@
 @property(nonatomic,strong)NSMutableArray * BannerImgArray;
 
 @property(nonatomic,strong)NSArray<HomeBannerModel*> * ChannlesArray;
+
+@property(nonatomic,strong)NSArray<HomeBannerModel*> * MiddlesArray;
 
 @property(nonatomic,strong)NSArray<HomeBannerModel*> * ZonesArray;
 
@@ -46,6 +55,8 @@
      [self.collectionView registerClass:[HomeBannerCollectionViewCell class] forCellWithReuseIdentifier:@"HomeBannerCollectionViewCell"];
     
      [self.collectionView registerClass:[HomeGridCollectionViewCell class] forCellWithReuseIdentifier:@"HomeGridCollectionViewCell"];
+    
+     [self.collectionView registerClass:[ImgCollectionViewCell class] forCellWithReuseIdentifier:@"ImgCollectionViewCell"];
     
      [self.collectionView registerClass:[HomeTopicCollectionViewCell class] forCellWithReuseIdentifier:@"HomeTopicCollectionViewCell"];
     
@@ -130,7 +141,7 @@
     
     NSDictionary * NetData2 = (NSDictionary*)pic2;
     
-//    YYNSLog(@"首页广告位数据------%@",NetData2);
+//    YYNSLog(@"首页广告位数据------%@",NetData1);
     
     NSDictionary * Data1 = EncodeDicFromDic(NetData1, @"data");
     
@@ -138,12 +149,14 @@
     
     self.BannerArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"banners")];
     
-     for (HomeBannerModel * Model in self.BannerArray) {
+    for (HomeBannerModel * Model in self.BannerArray) {
         [self.BannerImgArray addObject:Model.cover];
-     }
+    }
     
     self.ChannlesArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"channels")];
     
+    self.MiddlesArray =  [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data1, @"middles")];
+
     self.ZonesArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"zones")];
     
     self.TimesArray =  [NSArray modelArrayWithClass:[HomeTimeModel class] json:EncodeArrayFromDic(Data1, @"flash_sales")];
@@ -167,9 +180,10 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     
-      return 5;
+      return 6;
   
 }
+
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
@@ -186,18 +200,23 @@
             return 1;
         }
     }else if (section == 2){
-        if (self.ZonesArray.count == 0) {
+        if (self.MiddlesArray.count == 0) {
             return 0;
         }else{
             return 1;
         }
     }else if (section == 3){
-       if (self.TimesArray.count == 0) {
+        if (self.ZonesArray.count == 0) {
+            return 0;
+        }else{
+            return 1;
+        }
+    }else if (section == 4){
+       if (self.TimesArray[0].data.count == 0) {
            return 0;
        }else{
            return 1;
        }
-        
     }else{
        return self.GoodsItemsArray.count;
     }
@@ -237,6 +256,12 @@
         
     }else if (indexPath.section == 2){
         
+        ImgCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ImgCollectionViewCell" forIndexPath:indexPath];
+
+        return cell;
+        
+    }else if (indexPath.section == 3){
+        
         HomeTopicCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeTopicCollectionViewCell" forIndexPath:indexPath];
         
         cell.ZonesListArray = self.ZonesArray;
@@ -249,7 +274,7 @@
 
         return cell;
         
-    }else if (indexPath.section == 3){
+    }else if (indexPath.section == 4){
         
          HomeTimeCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeTimeCollectionViewCell" forIndexPath:indexPath];
         
@@ -260,6 +285,7 @@
              LimitBuyCollectionViewController * LimitVc = [[LimitBuyCollectionViewController alloc]init];
              LimitVc.title = @"限时抢购";
              [self.navigationController pushViewController:LimitVc animated:YES];
+             
              
          };
         
@@ -289,12 +315,14 @@
      
 
 }
+
+
 #pragma mark -选中某item进行跳转
 //1-web；2-商品详情；3-聚划算；4-9块9包邮；5-拼多多；6-京东；
 //7-专辑详情；10-淘宝物料 11-拼多多官方活动 12-京东官方活动 13-自定义
 -(void)HomeMainPushNextController:(HomeBannerModel *)HomeModel{
     
-    YYNSLog(@"跳转的类型-----%@",HomeModel.target_type);
+     YYNSLog(@"跳转的类型-----%@",HomeModel.target_type);
     
     if ([HomeModel.target_type isEqualToString:@"1"]) {
         
@@ -313,14 +341,44 @@
         
     }else if ([HomeModel.target_type isEqualToString:@"3"]){
         
-        PDDCollectionViewController * PDDVc = [[PDDCollectionViewController alloc]init];
-        PDDVc.title = HomeModel.target_title;
-        [self.navigationController pushViewController:PDDVc animated:YES];
+        TBHotCollectionViewController * HotVc = [[TBHotCollectionViewController alloc]init];
+        HotVc.title = @"聚划算";
+        [self.navigationController pushViewController:HotVc animated:YES];
         
     }else if ([HomeModel.target_type isEqualToString:@"4"]){
         
+        JiuJiuCollectionViewController * HotVc = [[JiuJiuCollectionViewController alloc]init];
+        HotVc.title = @"9.9包邮";
+        [self.navigationController pushViewController:HotVc animated:YES];
         
     }else if ([HomeModel.target_type isEqualToString:@"5"]){
+       
+        PDDCollectionViewController * PDDVc = [[PDDCollectionViewController alloc]init];
+        PDDVc.title = @"拼多多";
+        [self.navigationController pushViewController:PDDVc animated:YES];
+        
+    }else if ([HomeModel.target_type isEqualToString:@"6"]){
+       
+        JingDCollectionViewController * JDVc = [[JingDCollectionViewController alloc]init];
+        JDVc.title = @"京东商城";
+        [self.navigationController pushViewController:JDVc animated:YES];
+        
+    }else if ([HomeModel.target_type isEqualToString:@"7"]){
+       
+        AblumCollectionViewController * AblumVc = [[AblumCollectionViewController alloc]init];
+        AblumVc.title = @"专辑列表";
+        [self.navigationController pushViewController:AblumVc animated:YES];
+        
+        
+    }else if ([HomeModel.target_type isEqualToString:@"10"]){
+       
+        TBMatterCollectionViewController * TBVc = [[TBMatterCollectionViewController alloc]init];
+        TBVc.title = @"淘宝物料";
+        TBVc.material_id = HomeModel.banner_id;
+        [self.navigationController pushViewController:TBVc animated:YES];
+        
+    }else if ([HomeModel.target_type isEqualToString:@"11"]){
+       
         
         
     }
@@ -357,15 +415,16 @@
         return CGSizeMake(YYScreenWidth - 24 , 170);
         
     }else if (indexPath.section == 2){
+       
+        return CGSizeMake(YYScreenWidth - 24 , 100);
         
-        if(self.ZonesArray.count == 1){
-            return CGSizeMake(YYScreenWidth - 24 , 105);
-        }else{
-            return CGSizeMake(YYScreenWidth - 24 , 105 + (self.ZonesArray.count / 2 ) * 90);
-        }
     }else if (indexPath.section == 3){
         
-        return CGSizeMake(YYScreenWidth , 220);
+        return CGSizeMake(YYScreenWidth - 24 ,  (self.ZonesArray.count / 2  + 1) * 90 + 15);
+    
+    }else if (indexPath.section == 4){
+        
+         return CGSizeMake(YYScreenWidth , 220);
         
     }else{
         
@@ -379,7 +438,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     
-     if (section == 4) {
+     if (section == 5) {
         return (CGSize){YYScreenWidth,50};
      }else{
         return (CGSize){YYScreenWidth,0};

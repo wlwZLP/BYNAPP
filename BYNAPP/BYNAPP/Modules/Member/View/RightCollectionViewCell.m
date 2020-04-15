@@ -45,7 +45,7 @@
 - (void)setModel:(SubChildrenModel *)model
 {
     
-    [self.imageV sd_setImageWithURL:[NSURL URLWithString:model.logo] placeholderImage:[UIImage imageNamed:@"kafei"]];
+    [self.imageV sd_setImageWithURL:[NSURL URLWithString:model.logo] placeholderImage:[UIImage imageNamed:@"menBg"]];
     
      self.name.text = model.name;
     

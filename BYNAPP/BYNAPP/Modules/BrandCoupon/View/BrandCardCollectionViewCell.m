@@ -63,9 +63,9 @@
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"爱奇艺";
     TitleLabel.textColor = YYHexColor(@"#111111");
-    TitleLabel.frame = CGRectMake(188,11, MainBGView.ZLP_width -200, 20);
+    TitleLabel.frame = CGRectMake(165,20, MainBGView.ZLP_width -180, 20);
     TitleLabel.textAlignment = NSTextAlignmentLeft;
-    TitleLabel.font = [UIFont systemFontOfSize:15 weight:0];
+    TitleLabel.font = [UIFont systemFontOfSize:16 weight:2];
     [MainBGView addSubview:TitleLabel];
     self.TitleLabel = TitleLabel;
     
@@ -73,10 +73,10 @@
     
     UILabel * OldPriceLabel = [[UILabel alloc]init];
     OldPriceLabel.text = @"尊享6折起";
-    OldPriceLabel.textColor = YYHexColor(@"#888888");
-    OldPriceLabel.frame = CGRectMake(165, 68, 180, 20);
+    OldPriceLabel.textColor = UIColor.redColor;
+    OldPriceLabel.frame = CGRectMake(165, 55 , 180, 20);
     OldPriceLabel.textAlignment = NSTextAlignmentLeft;
-    OldPriceLabel.font = [UIFont systemFontOfSize:13 weight:0];
+    OldPriceLabel.font = [UIFont systemFontOfSize:18 weight:2];
     [MainBGView addSubview:OldPriceLabel];
     self.CouponLabel = OldPriceLabel;
 
@@ -87,9 +87,9 @@
     
     _Model = Model;
        
-    [self.Mainimage sd_setImageWithURL:[NSURL URLWithString:Model.coupon_cover] placeholderImage:[UIImage imageNamed:@"banner01"]];
+    [self.Mainimage sd_setImageWithURL:[NSURL URLWithString:Model.brand_cover] placeholderImage:[UIImage imageNamed:@"banner01"]];
     
-    self.TitleLabel.text = Model.short_title;
+    self.TitleLabel.text = Model.coupon_name;
        
     self.CouponLabel.text = [NSString stringWithFormat:@" ￥%@ ",Model.sale_price];
        
