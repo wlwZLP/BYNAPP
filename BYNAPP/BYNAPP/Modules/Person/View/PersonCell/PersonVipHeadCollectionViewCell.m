@@ -8,6 +8,24 @@
 
 #import "PersonVipHeadCollectionViewCell.h"
 
+@interface PersonVipHeadCollectionViewCell ()
+
+@property (nonatomic, strong) UIImageView * Logoimage;
+
+@property (nonatomic, strong) UILabel * NameLabel;
+
+@property (nonatomic, strong) UILabel * CodeLabel;
+
+@property (nonatomic, strong) UILabel * MoneyLabel;
+
+@property (nonatomic, strong) UILabel * TodayLabel;
+
+@property (nonatomic, strong) UILabel * MonthLabel;
+
+@property (nonatomic, strong) UILabel * YearLabel;
+
+@end
+
 @implementation PersonVipHeadCollectionViewCell
 
 
@@ -51,7 +69,7 @@
     HeadImage.frame = CGRectMake(20, YYStatusHeight + 20, 55, 55);
     [self addSubview:HeadImage];
     [YYTools ChangeView:HeadImage RadiusSize:22 BorderColor:[UIColor clearColor]];
-     
+    self.Logoimage = HeadImage;
    
     UILabel * NameLabel = [[UILabel alloc]init];
     NameLabel.text = @"我是昵称";
@@ -66,7 +84,7 @@
         make.height.offset(24);
     
     }];
-    
+    self.NameLabel = NameLabel;
     
     UIImageView * VipImage = [[UIImageView alloc] init];
     VipImage.image = [UIImage imageNamed:@"headVip"];
@@ -94,6 +112,8 @@
         make.height.offset(20);
     
     }];
+    self.CodeLabel = InvitCodeLabel;
+    
     
     UILabel * AllMoneyLabel = [[UILabel alloc]init];
     AllMoneyLabel.text = @"账户余额(元)";
@@ -103,6 +123,7 @@
     AllMoneyLabel.font = [UIFont systemFontOfSize:12 weight:0];
     [self addSubview:AllMoneyLabel];
     
+    
     UILabel * AllMoney = [[UILabel alloc]init];
     AllMoney.text = @"12222.32";
     AllMoney.textAlignment = NSTextAlignmentLeft;
@@ -111,6 +132,8 @@
     AllMoney.font = [UIFont systemFontOfSize:18 weight:0];
     [self addSubview:AllMoney];
     [AllMoney addLabelTarget:self action:@selector(MoneybtnClick)];
+    self.MoneyLabel = AllMoney;
+    
     
     UILabel * TodayPredictLabel = [[UILabel alloc]init];
     TodayPredictLabel.text = @"今日预估(元)";
@@ -128,6 +151,8 @@
     TodayPredict.font = [UIFont systemFontOfSize:18 weight:0];
     [self addSubview:TodayPredict];
     [TodayPredict addLabelTarget:self action:@selector(MoneybtnClick)];
+    self.TodayLabel = TodayPredict;
+    
     
     UILabel * MonthPredictLabel = [[UILabel alloc]init];
     MonthPredictLabel.text = @"本月预估(元)";
@@ -145,7 +170,7 @@
     MonthPredict.font = [UIFont systemFontOfSize:18 weight:0];
     [self addSubview:MonthPredict];
     [MonthPredict addLabelTarget:self action:@selector(MoneybtnClick)];
-    
+    self.MonthLabel = MonthPredict;
     
     UILabel * AllPredictLabel = [[UILabel alloc]init];
     AllPredictLabel.text = @"累计收益(元)";
@@ -163,6 +188,8 @@
     AllPredict.font = [UIFont systemFontOfSize:18 weight:0];
     [self addSubview:AllPredict];
     [AllPredict addLabelTarget:self action:@selector(MoneybtnClick)];
+    self.YearLabel = AllPredict;
+    
     
     UIButton * WdrawBtn = [[UIButton alloc]init];
     [WdrawBtn setTitleColor:YY22Color forState:UIControlStateNormal];
@@ -205,7 +232,26 @@
     
 }
 
+#pragma mark
 
+-(void)setModel:(UserModel *)Model{
+    
+     _Model = Model;
+    
+    [self.Logoimage sd_setImageWithURL:[NSURL URLWithString:Model.avatar] placeholderImage:[UIImage imageNamed:@"Jingdong"]];
+    
+    self.NameLabel.text = Model.name;
+    
+    self.CodeLabel.text = [NSString stringWithFormat:@"邀请码：%@",Model.recommend_code];
+    
+    self.MoneyLabel.text = [NSString stringWithFormat:@"%@",Model.withdraw_amount];
+    
+    self.TodayLabel.text = [NSString stringWithFormat:@"%@",Model.today_plus_amount];
+    
+    self.MonthLabel.text = [NSString stringWithFormat:@"%@",Model.this_month_plus_amount];
+    
+    self.YearLabel.text = [NSString stringWithFormat:@"%@",Model.total_plus_amount];
+}
 
 
 @end

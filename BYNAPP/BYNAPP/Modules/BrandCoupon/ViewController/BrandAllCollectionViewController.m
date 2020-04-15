@@ -206,7 +206,7 @@
 
     BrandMainModel * Model = self.RecommendsArray[indexPath.item];
     BrandDetailsCollectionViewController * BrandVc = [[BrandDetailsCollectionViewController alloc]init];
-    BrandVc.title = @"商品详情";
+    BrandVc.title = Model.coupon_name;
     BrandVc.Details_id = Model.brand_id;
     BrandVc.mall_id = Model.mall_id;
     [self.navigationController pushViewController:BrandVc animated:YES];

@@ -114,6 +114,7 @@
     BrandDetailsCollectionViewController * DetailsVc = [[BrandDetailsCollectionViewController alloc]init];
     DetailsVc.Details_id = Model.brand_id;
     DetailsVc.mall_id = Model.mall_id;
+    DetailsVc.title = Model.coupon_name;
     [self.navigationController pushViewController:DetailsVc animated:YES];
     
     

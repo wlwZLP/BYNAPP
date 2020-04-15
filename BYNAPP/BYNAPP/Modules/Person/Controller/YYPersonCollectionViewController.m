@@ -86,9 +86,9 @@
    
    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
        
-        YYNSLog(@"个人中心数据---%@",responseObject);
-       
         NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+       
+        YYNSLog(@"个人中心数据----%@",Data);
        
         self.Usermodel = [UserModel modelWithDictionary:Data];
     
@@ -152,7 +152,8 @@
                 [self PersonPushNextController:ClickString];
                 
             };
-        
+            
+            cell.Model = self.Usermodel;
     
             return cell;
             
@@ -291,9 +292,12 @@
         [self.navigationController pushViewController:SetVc animated:YES];
     }else if ([PushTitleString isEqualToString:@"设置"]){
         
-        SetCollectionViewController * SetVc = [[SetCollectionViewController alloc]init];
-        SetVc.title = @"个人信息";
-        [self.navigationController pushViewController:SetVc animated:YES];
+        
+        YYNSLog(@"-------%@",self.Usermodel);
+        
+//        SetCollectionViewController * SetVc = [[SetCollectionViewController alloc]init];
+//        SetVc.title = @"个人信息";
+//        [self.navigationController pushViewController:SetVc animated:YES];
             
     }else if ([PushTitleString isEqualToString:@"提现"]){
         

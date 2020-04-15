@@ -31,14 +31,25 @@
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
+     [self GetSelfViewControllerNetworkData];
+    
 }
 
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    [self GetSelfViewControllerNetworkData];
+   
     
 }
+
+#pragma mark <DZNEmptyDataSetSource>
+
+-(UIImage *)imageForEmptyDataSet:(UIScrollView *)scrollView {
+    
+     return nil;
+
+}
+
 
 #pragma mark 网络请求数据
 

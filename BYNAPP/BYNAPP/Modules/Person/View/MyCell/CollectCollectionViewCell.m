@@ -67,10 +67,17 @@
     PriceLabel.textAlignment = NSTextAlignmentLeft;
     PriceLabel.font = [UIFont systemFontOfSize:15 weight:1];
     [MainBGView addSubview:PriceLabel];
-    
-    
 
 
+}
+
+
+-(void)setModel:(HomeMainModel *)Model{
+    
+     _Model = Model;
+    
+    
+    
 }
 
 

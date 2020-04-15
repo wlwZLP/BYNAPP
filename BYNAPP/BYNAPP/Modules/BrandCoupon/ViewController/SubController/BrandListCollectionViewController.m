@@ -2,6 +2,7 @@
 #import "BrandRecomdCollectionViewCell.h"
 #import "BrandCardCollectionViewCell.h"
 #import "BrandModel.h"
+#import "BrandDetailsCollectionViewController.h"
 
 @interface BrandListCollectionViewController ()
 
@@ -42,8 +43,6 @@
     NSDictionary * dict = @{@"bid":self.Bid_id,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
                   
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
-        
-        YYNSLog(@"品牌列表-------%@",responseObject);
         
         NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
         
@@ -102,6 +101,20 @@
         return cell;
         
     }
+    
+}
+
+#pragma mark -选中某item进行跳转
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    BrandMainModel * Model = self.BrandArray[indexPath.item];
+    BrandDetailsCollectionViewController * DetailsVc = [[BrandDetailsCollectionViewController alloc]init];
+    DetailsVc.Details_id = Model.brand_id;
+    DetailsVc.mall_id = Model.mall_id;
+    DetailsVc.title = Model.coupon_name;
+    [self.navigationController pushViewController:DetailsVc animated:YES];
+    
     
 }
 
@@ -172,5 +185,8 @@
        return 0;
     
 }
+
+
+
 
 @end

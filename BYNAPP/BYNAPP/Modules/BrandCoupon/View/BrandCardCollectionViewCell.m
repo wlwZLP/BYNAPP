@@ -66,6 +66,7 @@
     TitleLabel.frame = CGRectMake(165,20, MainBGView.ZLP_width -180, 20);
     TitleLabel.textAlignment = NSTextAlignmentLeft;
     TitleLabel.font = [UIFont systemFontOfSize:16 weight:2];
+    TitleLabel.adjustsFontSizeToFitWidth = YES;
     [MainBGView addSubview:TitleLabel];
     self.TitleLabel = TitleLabel;
     

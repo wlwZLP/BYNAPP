@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MYCollectCollectionViewController : YYBaseCollectionViewController
 
+
+
+
 @end
 
 NS_ASSUME_NONNULL_END

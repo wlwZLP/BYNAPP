@@ -12,8 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DetailsTopCollectionViewCell : UICollectionViewCell
 
-
 @property(nonatomic,strong)UIImageView * MainBgImgView;
+
+@property (nonatomic, strong) UIImageView * Logoimage;
+
+@property (nonatomic, strong) UILabel * TitleLabel;
+
+@property (nonatomic, strong) UILabel * PriceLabel;
+
+@property (nonatomic, strong) UILabel * OldPriceLabel;
 
 @end
 

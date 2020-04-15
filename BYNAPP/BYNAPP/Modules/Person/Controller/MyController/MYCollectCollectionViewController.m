@@ -29,8 +29,38 @@
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
+    [self GetMyCollectNetworkData];
+    
+    
 }
 
+#pragma mark 获取其他类目数据
+
+-(void)GetMyCollectNetworkData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserCollects];
+         
+                        
+    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+                
+        NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+        
+        self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"data")];
+            
+        [self.collectionView reloadData];
+          
+    } failure:^(NSError *error, id responseCache) {
+              
+         NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
+           
+         self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"data")];
+               
+          [self.collectionView reloadData];
+
+     }];
+    
+    
+}
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -42,12 +72,15 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-     return 20;
+    return self.ListDataArray.count;
+    
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
       CollectCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectCollectionViewCell" forIndexPath:indexPath];
+    
+     cell.Model = self.ListDataArray[indexPath.item];
     
       return cell;
     
@@ -55,8 +88,6 @@
 
 #pragma mark <UICollectionViewDelegate>
 
-
-#pragma mark <UICollectionViewDelegate>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
  

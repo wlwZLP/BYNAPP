@@ -62,6 +62,72 @@
     [YYTools ChangeView:VipView RadiusSize:8 BorderColor:[UIColor clearColor]];
     
     
+     UILabel * TitleLabel = [[UILabel alloc]init];
+     TitleLabel.text = @"瑞雪黑森林摩卡中杯";
+     TitleLabel.textColor = YYHexColor(@"#111111");
+     TitleLabel.textAlignment = NSTextAlignmentLeft;
+     TitleLabel.font = [UIFont systemFontOfSize:18 weight:1];
+     [VipView addSubview:TitleLabel];
+     self.TitleLabel = TitleLabel;
+     [TitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(VipView.mas_centerX).with.offset(0);
+        make.top.equalTo(VipView.mas_top).with.offset(21);
+        make.height.offset(25);
+     }];
+     
+    UIImageView * IconImage = [[UIImageView alloc] init];
+    IconImage.backgroundColor = [UIColor clearColor];
+    IconImage.image = [UIImage imageNamed:@"Jingdong"];
+    [VipView addSubview:IconImage];
+    self.Logoimage = IconImage;
+    [IconImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(TitleLabel.mas_left).with.offset(-5);
+        make.top.equalTo(VipView.mas_top).with.offset(22);
+        make.height.offset(22);
+        make.width.offset(22);
+    }];
+     
+     UILabel * PriceLabel = [[UILabel alloc]init];
+     PriceLabel.text = @"¥15.5";
+     PriceLabel.textColor = YYHexColor(@"#FB5434");
+     PriceLabel.textAlignment = NSTextAlignmentLeft;
+     PriceLabel.font = [UIFont systemFontOfSize:20 weight:0];
+     [VipView addSubview:PriceLabel];
+     self.PriceLabel = PriceLabel;
+     [PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+         make.right.equalTo(VipView.mas_centerX).with.offset(-5);
+         make.top.equalTo(VipView.mas_top).with.offset(54);
+         make.height.offset(28);
+     }];
+     
+     UIImageView * CouponImage = [[UIImageView alloc] init];
+     CouponImage.backgroundColor = [UIColor clearColor];
+     CouponImage.image = [UIImage imageNamed:@"biaoqian"];
+     [VipView addSubview:CouponImage];
+     [CouponImage mas_makeConstraints:^(MASConstraintMaker *make) {
+         make.left.equalTo(VipView.mas_centerX).with.offset(5);
+         make.top.equalTo(VipView.mas_top).with.offset(57);
+         make.height.offset(60);
+         make.height.offset(20);
+     }];
+    
+    UILabel * OldPriceLabel = [[UILabel alloc]init];
+    OldPriceLabel.text = @"官方价¥32.5";
+    OldPriceLabel.textColor = YYHexColor(@"#888888");
+    OldPriceLabel.textAlignment = NSTextAlignmentLeft;
+    OldPriceLabel.font = [UIFont systemFontOfSize:13 weight:0];
+    [VipView addSubview:OldPriceLabel];
+    self.OldPriceLabel = PriceLabel;
+    [OldPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(VipView.mas_centerX).with.offset(0);
+        make.top.equalTo(VipView.mas_top).with.offset(88);
+        make.height.offset(21);
+    }];
+    
+    
+    
+    
+    
     
 
 }

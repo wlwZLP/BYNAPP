@@ -52,7 +52,10 @@
 #define URL_APIMPVProductDetail @"api/mpv2/product-detail"
 //17.收藏商品
 #define URL_APIUserCollect @"api/user/collect"
-
+//18.收藏商品列表
+#define URL_APIUserCollects @"api/user/collects"
+//18.足迹
+#define URL_APIUserBrowsers @"api/user/browsers"
 
 
 

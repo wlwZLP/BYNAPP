@@ -15,6 +15,8 @@
 
 @property(nonatomic,strong)NSDictionary * DetaisDic;
 
+@property (nonatomic, assign)CGFloat StrViewHeight;
+
 @end
 
 @implementation BrandDetailsCollectionViewController
@@ -54,15 +56,18 @@
    
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
         
+        YYNSLog(@"品牌馆详情---------%@",responseObject);
+        
         self.DetaisDic = EncodeDicFromDic(responseObject, @"data");
-         YYNSLog(@"品牌馆详情---------%@",responseObject);
+        
         [self.collectionView reloadData];
     
     } failure:^(NSError *error, id responseCache) {
         
+         self.DetaisDic = EncodeDicFromDic(responseCache, @"data");
+       
+         [self.collectionView reloadData];
         
-        
-     
     }];
     
     
@@ -82,13 +87,17 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
     return 3;
+    
 }
+
+
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.item == 0) {
         
         DetailsTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DetailsTopCollectionViewCell" forIndexPath:indexPath];
+        
         [cell.MainBgImgView sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(self.DetaisDic, @"coupon_cover")] placeholderImage:[UIImage imageNamed:@"BrandDbg"]];
         
         return cell;
@@ -210,13 +219,21 @@
     
     UIImageView * HomeImage = [[UIImageView alloc] init];
     HomeImage.backgroundColor = [UIColor clearColor];
-    HomeImage.frame = CGRectMake(24, 10, 20, 20);
+    if (YYTabBarHeight < 50) {
+        HomeImage.frame = CGRectMake(24, 15 , 20, 20);
+    } else {
+        HomeImage.frame = CGRectMake(24, 15 , 20, 20);
+    }
     HomeImage.image = [UIImage imageNamed:@"icon_tabbar_homepage"];
     [BottomView addSubview:HomeImage];
     
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"首页";
-    TitleLabel.frame = CGRectMake(22, 35 , 24, 15);
+    if (YYTabBarHeight < 50) {
+      TitleLabel.frame = CGRectMake(22, 40 , 24, 15);
+    } else {
+      TitleLabel.frame = CGRectMake(22, 40 , 24, 15);
+    }
     TitleLabel.textColor = YY33Color;
     TitleLabel.textAlignment = NSTextAlignmentCenter;
     TitleLabel.font = [UIFont systemFontOfSize:10 weight:0];
@@ -235,9 +252,34 @@
     [BottomView addSubview:BuyButton];
     [YYTools ChangeView:BuyButton RadiusSize:10 BorderColor:[UIColor clearColor]];
     
- 
 }
 
+
+#pragma mark 获取字符串高度
+
+- (CGFloat)getStringHeightWithText:(NSString *)text font:(UIFont *)font viewWidth:(CGFloat)width {
+    // 设置文字属性 要和label的一致
+    NSDictionary *attrs = @{NSFontAttributeName :font};
+    CGSize maxSize = CGSizeMake(width, MAXFLOAT);
+
+    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+
+    // 计算文字占据的宽高
+    CGSize size = [text boundingRectWithSize:maxSize options:options attributes:attrs context:nil].size;
+
+   // 当你是把获得的高度来布局控件的View的高度的时候.size转化为ceilf(size.height)。
+    return  ceilf(size.height);
+    
+}
+
+- (CGFloat)getString:(NSString *)string lineSpacing:(CGFloat)lineSpacing font:(UIFont*)font width:(CGFloat)width {
+    
+    NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle alloc] init];
+    paraStyle.lineSpacing = lineSpacing;
+    NSDictionary *dic = @{ NSFontAttributeName:font, NSParagraphStyleAttributeName:paraStyle };
+    CGSize size = [string boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options: NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:dic context:nil].size;
+    return  ceilf(size.height);
+}
 
 #pragma mark 立即购买商品
 

@@ -93,13 +93,15 @@
     barImageView.alpha = 0.0;
     
     [barImageView addSubview:self.GoodsSearchBar];
-    
-    [barImageView addSubview:self.TopSearchBtn];
-    
    
-    
     [self getHomeGoodsDetailsNetData];
         
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+    
+    [self.GoodsSearchBar removeFromSuperview];
+    
 }
 
 
@@ -138,22 +140,14 @@
     
     UIImageView * HomeImage = [[UIImageView alloc] init];
     HomeImage.backgroundColor = [UIColor clearColor];
-    if (YYTabBarHeight > 50) {
-       HomeImage.frame = CGRectMake(24, 16, 20, 20);
-    }else{
-       HomeImage.frame = CGRectMake(24, 10, 20, 20);
-    }
+    HomeImage.frame = CGRectMake(24, 10, 20, 20);
     HomeImage.image = [UIImage imageNamed:@"icon_tabbar_homepage"];
     [BottomView addSubview:HomeImage];
     [HomeImage addTarget:self action:@selector(HomeImgClick)];
     
     UILabel * HomeLabel = [[UILabel alloc]init];
     HomeLabel.text = @"首页";
-    if (YYTabBarHeight > 50) {
-       HomeLabel.frame = CGRectMake(22, 35 , 24, 15);
-    }else{
-       HomeLabel.frame = CGRectMake(22, 35 , 24, 15);
-    }
+    HomeLabel.frame = CGRectMake(22, 35 , 24, 15);
     HomeLabel.textColor = YY33Color;
     HomeLabel.textAlignment = NSTextAlignmentCenter;
     HomeLabel.font = [UIFont systemFontOfSize:10 weight:0];
@@ -162,11 +156,7 @@
     
     UIButton * CollectImage = [[UIButton alloc] init];
     CollectImage.backgroundColor = [UIColor clearColor];
-    if (YYTabBarHeight > 50) {
-       CollectImage.frame = CGRectMake(68, 16, 21, 19);
-    }else{
-       CollectImage.frame = CGRectMake(68, 10, 21, 19);
-    }
+    CollectImage.frame = CGRectMake(68, 10, 21, 19);
     [CollectImage setImage:[UIImage imageNamed:@"collect"] forState:UIControlStateNormal];
     [CollectImage setImage:[UIImage imageNamed:@"redax"] forState:UIControlStateSelected];
     [BottomView addSubview:CollectImage];
@@ -175,11 +165,7 @@
     
     UILabel * CollectLabel = [[UILabel alloc]init];
     CollectLabel.text = @"收藏";
-    if (YYTabBarHeight > 50) {
-       CollectLabel.frame = CGRectMake(67, 35 , 24, 15);
-    }else{
-       CollectLabel.frame = CGRectMake(67, 35 , 24, 15);
-    }
+    CollectLabel.frame = CGRectMake(67, 35 , 24, 15);
     CollectLabel.textColor = YY33Color;
     CollectLabel.textAlignment = NSTextAlignmentCenter;
     CollectLabel.font = [UIFont systemFontOfSize:10 weight:0];
@@ -189,11 +175,7 @@
 #pragma mark ===============分享商品按钮=============
     UIButton * ShareButton = [[UIButton alloc]init];
     ShareButton.backgroundColor = YYHexColor(@"#FFEC91");
-    if (YYTabBarHeight > 50) {
-       ShareButton.frame = CGRectMake( YYScreenWidth - 260 , 18 , 124, 40);
-    }else{
-       ShareButton.frame = CGRectMake(YYScreenWidth - 260 , 7 , 124, 40);
-    }
+    ShareButton.frame = CGRectMake(YYScreenWidth - 260 , 7 , 124, 40);
     [ShareButton setTitle:@"分享商品" forState:UIControlStateNormal];
     [ShareButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     [ShareButton addTarget:self action:@selector(ShareButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -208,11 +190,7 @@
 #pragma mark ===============立即购买商品按钮=============
     UIButton * BuyButton = [[UIButton alloc]init];
     BuyButton.backgroundColor = YYHexColor(@"#FFD409");
-    if (YYTabBarHeight > 50) {
-       BuyButton.frame = CGRectMake( YYScreenWidth - 136 , 18 , 124, 40);
-    }else{
-       BuyButton.frame = CGRectMake(YYScreenWidth - 136 , 7 , 124, 40);
-    }
+    BuyButton.frame = CGRectMake(YYScreenWidth - 136 , 7 , 124, 40);
     [BuyButton setTitle:@"立即购买" forState:UIControlStateNormal];
     [BuyButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     BuyButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:0];
