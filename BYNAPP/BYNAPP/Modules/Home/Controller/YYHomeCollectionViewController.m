@@ -241,8 +241,6 @@ static int const HomelabelWith = 90;
 
 
 
-
-
 #pragma mark 创建头部滑动视图
 
 -(void)CreateHomeBaseViewController{

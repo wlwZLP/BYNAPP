@@ -13,7 +13,7 @@
 #import "HomeTopicCollectionViewCell.h"
 #import "HomeTimeCollectionViewCell.h"
 #import "HomeMainCollectionViewCell.h"
-#import "HomeDetailsCollectionViewController.h"
+
 #import "LimitBuyCollectionViewController.h"
 #import "HomeBannerModel.h"
 #import "HomeTimeModel.h"

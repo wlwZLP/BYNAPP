@@ -8,9 +8,11 @@
 
 #import "MYCollectCollectionViewController.h"
 #import "CollectCollectionViewCell.h"
-
+#import "MyCollectModel.h"
 
 @interface MYCollectCollectionViewController ()
+
+@property(nonatomic,strong)NSArray<MyCollectModel*> * ListArray;
 
 @end
 
@@ -40,12 +42,13 @@
     
     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserCollects];
          
-                        
     [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
                 
         NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
         
-        self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"data")];
+        YYNSLog(@"我的收藏数据-------%@",responseObject);
+        
+        self.ListArray = [NSArray modelArrayWithClass:[MyCollectModel class] json:EncodeArrayFromDic(DataDic, @"data")];
             
         [self.collectionView reloadData];
           
@@ -53,7 +56,7 @@
               
          NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
            
-         self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"data")];
+         self.ListArray = [NSArray modelArrayWithClass:[MyCollectModel class] json:EncodeArrayFromDic(DataDic, @"data")];
                
           [self.collectionView reloadData];
 
@@ -72,7 +75,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return self.ListDataArray.count;
+    return self.ListArray.count;
     
 }
 
@@ -80,11 +83,25 @@
     
       CollectCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectCollectionViewCell" forIndexPath:indexPath];
     
-     cell.Model = self.ListDataArray[indexPath.item];
+     cell.Model = self.ListArray[indexPath.item];
     
       return cell;
     
 }
+
+
+#pragma mark -选中某item进行跳转
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
+    HomeVc.Goods_Type = self.ListArray[indexPath.item].mall_id;
+    HomeVc.item_id = self.ListArray[indexPath.item].item_id;
+    HomeVc.activity_id = self.ListArray[indexPath.item].collect_id;
+    [self.navigationController pushViewController:HomeVc animated:YES];
+    
+}
+
 
 #pragma mark <UICollectionViewDelegate>
 

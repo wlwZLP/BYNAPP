@@ -9,7 +9,6 @@
 #import "TBHotCollectionViewController.h"
 #import "YYPDDHeadView.h"
 #import "HomeMainCollectionViewCell.h"
-#import "HomeDetailsCollectionViewController.h"
 
 
 @interface TBHotCollectionViewController ()

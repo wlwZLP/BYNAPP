@@ -37,165 +37,125 @@
     
     UIView * MainBGView = UIView.new;
     MainBGView.backgroundColor = UIColor.whiteColor;
+    MainBGView.frame = CGRectMake(12, 10, self.ZLP_width - 24, self.ZLP_height -10);
     [YYTools ChangeView:MainBGView RadiusSize:5 BorderColor:[UIColor clearColor]];
     [self addSubview:MainBGView];
-    [MainBGView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.equalTo(self.mas_top).with.offset(10);
-        make.left.equalTo(self.mas_left).with.offset(12);
-        make.right.equalTo(self.mas_right).with.offset(-12);
-        make.bottom.equalTo(self.mas_bottom).with.offset(0);
-       
-    }];
+  
+    UIView * LeftView = [[UIView alloc] init];
+    LeftView.backgroundColor = YYHexColor(@"#FFD117");
+    LeftView.frame = CGRectMake(0, 0, 122 , MainBGView.ZLP_height);
+    [MainBGView addSubview:LeftView];
     
-    UIImageView * Mainimage = [[UIImageView alloc] init];
-    Mainimage.backgroundColor = [UIColor clearColor];
-    Mainimage.image = [UIImage imageNamed:@"BYNLogo"];
-    [self addSubview:Mainimage];
+    UILabel * PriceLabel = [[UILabel alloc]init];
+    PriceLabel.text = @"&256.22";
+    PriceLabel.textColor = YYHexColor(@"#372300");;
+    PriceLabel.frame = CGRectMake(0, 30 , LeftView.ZLP_width , 35);
+    PriceLabel.textAlignment = NSTextAlignmentCenter;
+    PriceLabel.font = [UIFont systemFontOfSize:20 weight:2];
+    [LeftView addSubview:PriceLabel];
+    
+    UILabel * TimeNameLabel = [[UILabel alloc]init];
+    TimeNameLabel.text = @"保质期至";
+    TimeNameLabel.frame = CGRectMake(0, 65, LeftView.ZLP_width, 20);
+    TimeNameLabel.textColor = YYHexColor(@"#372300");;
+    TimeNameLabel.textAlignment = NSTextAlignmentCenter;
+    TimeNameLabel.font = [UIFont systemFontOfSize:12 weight:0];
+    [LeftView addSubview:TimeNameLabel];
+    
+    UILabel * TimeLabel = [[UILabel alloc]init];
+    TimeLabel.text = @"2020-01-01 15:32:23";
+    TimeLabel.frame = CGRectMake(0, 85 , LeftView.ZLP_width, 20);
+    TimeLabel.textColor = YYHexColor(@"#372300");
+    TimeLabel.textAlignment = NSTextAlignmentCenter;
+    TimeLabel.font = [UIFont systemFontOfSize:10 weight:0];
+    [LeftView addSubview:TimeLabel];
+    
+    UIImageView * RightImage = [[UIImageView alloc] init];
+    RightImage.frame = CGRectMake(MainBGView.ZLP_width - 48 , 0  , 48 , 41);
+    RightImage.image = [UIImage imageNamed:@"cardwait"];
+    [MainBGView addSubview:RightImage];
+    
     
     UIImageView * Iconimage = [[UIImageView alloc] init];
-    Iconimage.backgroundColor = [UIColor clearColor];
-    Iconimage.image = [UIImage imageNamed:@"HomeIcon"];
-    [self addSubview:Iconimage];
+    Iconimage.frame = CGRectMake(132 , 10  , 25, 25);
+    Iconimage.image = [UIImage imageNamed:@"iqiyi"];
+    [MainBGView addSubview:Iconimage];
     
     UILabel * TitleLabel = [[UILabel alloc]init];
-    TitleLabel.text = @"实时热卖";
-    TitleLabel.textColor = YY33Color;
-    TitleLabel.textAlignment = NSTextAlignmentLeft;
-    TitleLabel.font = [UIFont systemFontOfSize:20 weight:2];
-    [self addSubview:TitleLabel];
+    TitleLabel.text = @"瑞雪黑森林摩卡中杯";
+    TitleLabel.frame = CGRectMake(160, 12, 126, 20);
+    TitleLabel.textAlignment = NSTextAlignmentCenter;
+    TitleLabel.textColor = YY22Color;
+    TitleLabel.font = [UIFont systemFontOfSize:12 weight:0];
+    [MainBGView addSubview:TitleLabel];
     
-    UILabel * StoreNameLabel = [[UILabel alloc]init];
-    StoreNameLabel.text = @"神犬旗舰店";
-    StoreNameLabel.textColor = YY99Color;
-    StoreNameLabel.textAlignment = NSTextAlignmentLeft;
-    StoreNameLabel.font = [UIFont systemFontOfSize:12 weight:0];
-    [self addSubview:StoreNameLabel];
     
-    UILabel * CouponLabel = [[UILabel alloc]init];
-    CouponLabel.text = @"10元券";
-    CouponLabel.textAlignment = NSTextAlignmentCenter;
-    CouponLabel.textColor = YYHexColor(@"#FB5434");
-    CouponLabel.backgroundColor = [UIColor colorWithRed:255/255.0 green:236/255.0 blue:232/255.0 alpha:1.0];
-    CouponLabel.layer.borderColor = [UIColor colorWithRed:255/255.0 green:236/255.0 blue:232/255.0 alpha:1.0].CGColor;
-    CouponLabel.layer.borderWidth = 2;
-    CouponLabel.font = [UIFont systemFontOfSize:12 weight:0];
-    [self addSubview:CouponLabel];
+    UILabel * BuyTimeLabel = [[UILabel alloc]init];
+    BuyTimeLabel.text = @"购买时间 2019-23-12 12:34:32";
+    BuyTimeLabel.frame = CGRectMake(130 , 43 , MainBGView.ZLP_width - 140, 20);
+    BuyTimeLabel.textAlignment = NSTextAlignmentLeft;
+    BuyTimeLabel.textColor = YY66Color;
+    BuyTimeLabel.font = [UIFont systemFontOfSize:12 weight:0];
+    [MainBGView addSubview:BuyTimeLabel];
     
-    UILabel * GainMoneyLabel = [[UILabel alloc]init];
-    GainMoneyLabel.text = @"最多赚一元";
-    GainMoneyLabel.textAlignment = NSTextAlignmentCenter;
-    GainMoneyLabel.textColor = UIColor.whiteColor;
-    GainMoneyLabel.backgroundColor = YYRGBColor(247, 60, 40);
-    GainMoneyLabel.font = [UIFont systemFontOfSize:12 weight:2];
-    [self addSubview:GainMoneyLabel];
     
-    UILabel * CouponPriceLabel = [[UILabel alloc]init];
-    CouponPriceLabel.text = @"￥15券后价";
-    CouponPriceLabel.textColor = YY33Color;
-    CouponPriceLabel.textAlignment = NSTextAlignmentLeft;
-    CouponPriceLabel.font = [UIFont systemFontOfSize:13 weight:0];
-    [self addSubview:CouponPriceLabel];
+    UILabel * OrderLabel = [[UILabel alloc]init];
+    OrderLabel.text = @"流水号 SEELEJGJ83928j342";
+    OrderLabel.frame = CGRectMake(130, 65 , MainBGView.ZLP_width - 140, 20);
+    OrderLabel.textAlignment = NSTextAlignmentLeft;
+    OrderLabel.textColor = YY66Color;
+    OrderLabel.font = [UIFont systemFontOfSize:12 weight:0];
+    [MainBGView addSubview:OrderLabel];
     
-    UILabel * OldPriceLabel = [[UILabel alloc]init];
-    OldPriceLabel.text = @"原价￥32.5";
-    OldPriceLabel.textColor = YY99Color;
-    OldPriceLabel.textAlignment = NSTextAlignmentLeft;
-    OldPriceLabel.font = [UIFont systemFontOfSize:12 weight:0];
-    [self addSubview:OldPriceLabel];
-    
-    UILabel * SaleNumLabel = [[UILabel alloc]init];
-    SaleNumLabel.text = @"已售3201件";
-    SaleNumLabel.textColor = YY99Color;
-    SaleNumLabel.textAlignment = NSTextAlignmentLeft;
-    SaleNumLabel.font = [UIFont systemFontOfSize:12 weight:0];
-    [self addSubview:SaleNumLabel];
+    UIView * LineView = [[UILabel alloc]init];
+    LineView.backgroundColor = YYE5Color;
+    LineView.frame = CGRectMake(140, 92, MainBGView.ZLP_width - 160, 0.5);
+    [MainBGView addSubview:LineView];
     
    
+    UIButton * RightBtn = [[UIButton alloc]init];
+    RightBtn.frame = CGRectMake(MainBGView.ZLP_width -86, 102, 70, 24);
+    [RightBtn setTitle:@"立即支付" forState:UIControlStateNormal];
+    [RightBtn setTitleColor:YY22Color forState:UIControlStateNormal];
+    [YYTools ChangeView:RightBtn RadiusSize:10 BorderColor:YY22Color];
+    RightBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    [RightBtn addTarget:self action:@selector(PayBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [MainBGView addSubview:RightBtn];
     
-    [Mainimage mas_makeConstraints:^(MASConstraintMaker *make) {
-         
-       make.top.equalTo(MainBGView.mas_top).with.offset(8);
-       make.left.equalTo(MainBGView.mas_left).with.offset(8);
-       make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-8);
-       make.width.equalTo(Mainimage.mas_height);
-       
-    }];
-
-    [Iconimage mas_makeConstraints:^(MASConstraintMaker *make) {
-
-        make.left.equalTo(Mainimage.mas_right).with.offset(20);
-        make.top.equalTo(MainBGView.mas_top).with.offset(10);
-        make.height.offset(16);
-        make.width.offset(16);
-
-    }];
-
-    [TitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(Mainimage.mas_right).with.offset(45);
-        make.top.equalTo(MainBGView.mas_top).with.offset(10);
-        make.right.equalTo(MainBGView.mas_right).with.offset(-5);
-        make.height.offset(16);
-        
-    }];
     
-
-    [StoreNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-
-       make.left.equalTo(Mainimage.mas_right).with.offset(20);
-       make.top.equalTo(MainBGView.mas_top).with.offset(35);
-       make.height.offset(20);
-       make.right.equalTo(MainBGView.mas_right).with.offset(-5);
-
-    }];
-
-    [CouponLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-
-       make.left.equalTo(Mainimage.mas_right).with.offset(20);
-       make.top.equalTo(MainBGView.mas_top).with.offset(58);
-       make.width.offset(50);
-       make.height.offset(18);
-
-    }];
-
-    [GainMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-
-       make.left.equalTo(CouponLabel.mas_right).with.offset(8);
-       make.top.equalTo(MainBGView.mas_top).with.offset(58);
-       make.width.offset(70);
-       make.height.offset(18);
-        
-    }];
-
-    [CouponPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-
-       make.left.equalTo(Mainimage.mas_right).with.offset(20);
-       make.top.equalTo(MainBGView.mas_top).with.offset(85);
-       make.height.offset(20);
-
-    }];
-
-
-    [OldPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-
-        make.left.equalTo(Mainimage.mas_right).with.offset(20);
-        make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-10);
-        make.height.offset(15);
-
-    }];
-
-    [SaleNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-
-        make.right.equalTo(MainBGView.mas_right).with.offset(-10);
-        make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-10);
-        make.height.offset(15);
+    UIButton * CanceBtn = [[UIButton alloc]init];
+    CanceBtn.frame = CGRectMake(MainBGView.ZLP_width - 168, 102, 70, 24);
+    [CanceBtn setTitle:@"取消订单" forState:UIControlStateNormal];
+    [CanceBtn setTitleColor:YYHexColor(@"#B2B2B2") forState:UIControlStateNormal];
+    [YYTools ChangeView:CanceBtn RadiusSize:10 BorderColor:YYHexColor(@"#B2B2B2")];
+    CanceBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    [CanceBtn addTarget:self action:@selector(CancelBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [MainBGView addSubview:CanceBtn];
     
-    }];
+    
+}
+  
 
 
+
+
+
+-(void)PayBtnClick{
+    
+    
+    
+    
+    
 }
 
+
+
+-(void)CancelBtnClick{
+    
+    
+    
+    
+}
 
 
 @end

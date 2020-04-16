@@ -26,6 +26,7 @@
 #import "MyReportCollectionViewController.h"
 #import "MyWithdrawCollectionViewController.h"
 #import "LoginCollectionViewController.h"
+#import "MyNoVipCollectionViewController.h"
 
 @interface YYPersonCollectionViewController ()
 
@@ -184,6 +185,7 @@
            
               MyOrderCollectionViewController * MyVc = [[MyOrderCollectionViewController alloc]init];
               MyVc.title = @"我的订单";
+              MyVc.UserType = @"1";
               [self.navigationController pushViewController:MyVc animated:YES];
              
           };
@@ -192,6 +194,7 @@
             
                MyOrderCollectionViewController * SetVc = [[MyOrderCollectionViewController alloc]init];
                SetVc.title = @"团队订单";
+               SetVc.UserType = @"2";
                [self.navigationController pushViewController:SetVc animated:YES];
               
           };
@@ -318,9 +321,9 @@
     
     if (rowIndex == 0) {
        
-        MyVipCollectionViewController * SetVc = [[MyVipCollectionViewController alloc]init];
-        SetVc.title = @"会员中心";
-        [self.navigationController pushViewController:SetVc animated:YES];
+        MyNoVipCollectionViewController * VipVc = [[MyNoVipCollectionViewController alloc]init];
+        VipVc.title = @"会员中心";
+        [self.navigationController pushViewController:VipVc animated:YES];
         
     }else if (rowIndex == 1){
         

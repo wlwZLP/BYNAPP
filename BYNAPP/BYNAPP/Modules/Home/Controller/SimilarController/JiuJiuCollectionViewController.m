@@ -9,8 +9,6 @@
 #import "JiuJiuCollectionViewController.h"
 #import "YYPDDHeadView.h"
 #import "HomeMainCollectionViewCell.h"
-#import "HomeDetailsCollectionViewController.h"
-
 
 @interface JiuJiuCollectionViewController ()
 

@@ -8,6 +8,19 @@
 
 #import "TraceCollectionViewCell.h"
 
+@interface TraceCollectionViewCell ()
+
+@property (nonatomic, strong) UIImageView * Mainimage;
+
+@property (nonatomic, strong) UILabel * TitleLabel;
+
+@property (nonatomic, strong) UILabel * PriceLabel;
+
+@property (nonatomic, strong) UILabel * OldPriceLabel;
+
+
+@end
+
 @implementation TraceCollectionViewCell
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -36,15 +49,16 @@
     Mainimage.frame = CGRectMake(0, 0, self.ZLP_width, self.ZLP_width);
     Mainimage.image = [UIImage imageNamed:@"sale"];
     [self addSubview:Mainimage];
-    
+    self.Mainimage = Mainimage;
    
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"实时热卖";
     TitleLabel.textColor = YY33Color;
-    TitleLabel.frame = CGRectMake(5, self.ZLP_width + 5 , 102, 20);
+    TitleLabel.frame = CGRectMake(5, self.ZLP_width + 5 , self.ZLP_width - 10 , 20);
     TitleLabel.textAlignment = NSTextAlignmentLeft;
     TitleLabel.font = [UIFont systemFontOfSize:14 weight:0];
     [self addSubview:TitleLabel];
+    self.TitleLabel = TitleLabel;
     
 
     
@@ -53,13 +67,37 @@
     GainMoneyLabel.textAlignment = NSTextAlignmentLeft;
     GainMoneyLabel.textColor = YYHexColor(@"#F53C25");
     GainMoneyLabel.frame = CGRectMake(5, self.ZLP_width + 25, 102, 20);
-    GainMoneyLabel.font = [UIFont systemFontOfSize:11 weight:0];
+    GainMoneyLabel.font = [UIFont systemFontOfSize:15 weight:0];
     [self addSubview:GainMoneyLabel];
-  
+    self.PriceLabel = GainMoneyLabel;
     
- 
+    
+    
+//    UILabel * OldPriceLabel = [[UILabel alloc]init];
+//    OldPriceLabel.text = @"最多赚一元";
+//    OldPriceLabel.textAlignment = NSTextAlignmentLeft;
+//    OldPriceLabel.textColor = YYHexColor(@"#F53C25");
+//    OldPriceLabel.frame = CGRectMake(5, self.ZLP_width + 25, 102, 20);
+//    OldPriceLabel.font = [UIFont systemFontOfSize:11 weight:0];
+//    [self addSubview:OldPriceLabel];
+//    self.OldPriceLabel = OldPriceLabel;
+    
+    
 }
 
+
+-(void)setModel:(MyCollectModel *)Model{
+   
+    _Model = Model;
+    
+    [self.Mainimage sd_setImageWithURL:[NSURL URLWithString:Model.item_info_cover_image] placeholderImage:[UIImage imageNamed:@"bmht"]];
+       
+    self.TitleLabel.text = [NSString stringWithFormat:@"%@",Model.item_info_title];
+    
+    self.PriceLabel.text = [NSString stringWithFormat:@"￥%@",Model.item_info_price];
+    
+    
+}
 
 
 

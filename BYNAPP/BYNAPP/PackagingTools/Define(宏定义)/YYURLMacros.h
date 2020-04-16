@@ -54,15 +54,18 @@
 #define URL_APIUserCollect @"api/user/collect"
 //18.收藏商品列表
 #define URL_APIUserCollects @"api/user/collects"
-//18.足迹
+//19.足迹
 #define URL_APIUserBrowsers @"api/user/browsers"
-
-
-
-
-
-
-
+//20.订单列表
+#define URL_APIUserOrders @"api/user/orders"
+//21.卡券列表
+#define URL_APIMPVOerders @"api/mpv2/orders"
+//22.新手教程
+#define URL_APIUserArticleCategories @"api/user/article_categories"
+//23.新手教程m内容和文章
+#define URL_APIUserArticles @"api/user/articles"
+//24.会员中心数据
+#define URL_APIMPVCommon @"api/mpv2/common"
 
 
 

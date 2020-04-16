@@ -7,16 +7,13 @@
 //
 
 #import "MyVipCollectionViewController.h"
-#import "ReportCollectionViewCell.h"
-#import "YYReportHeadView.h"
-#import "MyIncomeCollectionViewController.h"
-#import "MyWithdrawCollectionViewController.h"
-
+#import "MyVipImgCollectionViewCell.h"
+#import "MyVipGridCollectionViewCell.h"
 
 @interface MyVipCollectionViewController ()
 
 
-@property(nonatomic,strong)YYReportHeadView * ReportHeadView;
+
 
 
 @end
@@ -27,54 +24,67 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+       
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor blackColor]]  forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     
-    [self CreateVIPTopNavView];
-    //导航栏主题 title文字属性
-    self.collectionView.frame = CGRectMake(0, YYBarHeight + 56, YYScreenWidth, YYScreenHeight - YYBarHeight - 56);
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor whiteColor], NSFontAttributeName : [UIFont systemFontOfSize:18]}];
+
+    [self.collectionView registerClass:[MyVipImgCollectionViewCell class] forCellWithReuseIdentifier:@"MyVipImgCollectionViewCell"];
     
-    [self.collectionView registerClass:[ReportCollectionViewCell class] forCellWithReuseIdentifier:@"ReportCollectionViewCell"];
+    [self.collectionView registerClass:[MyVipGridCollectionViewCell class] forCellWithReuseIdentifier:@"MyVipGridCollectionViewCell"];
     
     self.collectionView.backgroundColor = YYBGColor;
     
+    
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
+    
+    [self GetMyVipControllerNetData];
+    
+}
+
+
+
+
+-(void)viewWillDisappear:(BOOL)animated{
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageWithColor:[UIColor whiteColor]]  forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :YY33Color, NSFontAttributeName : [UIFont systemFontOfSize:18]}];
     
 }
 
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    self.navigationController.navigationBar.hidden = YES;
+
     
 }
 
-#pragma mark 创建头部控件
--(void)CreateVIPTopNavView{
+#pragma mark 获取当前界面网络数据
+
+-(void)GetMyVipControllerNetData{
     
-   UIView * TopNavView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, YYScreenWidth, YYBarHeight )];
-    TopNavView.backgroundColor = UIColor.blackColor;
-   [self.view addSubview:TopNavView];
-//   [TopNavView.layer addSublayer:[YYTools SetGradLayerView:TopNavView FromColor:@"#303030" ToColor:@"#303030"]];
-   
-   UIButton * BackBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-   [BackBtn setImage:[UIImage imageNamed:@"LeftBack"] forState:UIControlStateNormal];
-   [BackBtn setImage:[UIImage imageNamed:@"LeftBack"] forState:UIControlStateHighlighted];
-   [BackBtn sizeToFit];
-   BackBtn.frame = CGRectMake(15, YYStatusHeight + 11, 10, 17);
-   [BackBtn addTarget:self action:@selector(VipLeftBackClick) forControlEvents:UIControlEventTouchUpInside];
-   [TopNavView addSubview:BackBtn];
-   
-   UILabel * Titlelabel = [[UILabel alloc] init];
-   Titlelabel.frame = CGRectMake((YYScreenWidth -200)/2,YYStatusHeight + 10 ,200,24);
-   Titlelabel.numberOfLines = 0;
-   Titlelabel.text= @"会员中心";
-   Titlelabel.font = [UIFont fontWithName:@"PangMenZhengDao" size:22.f];
-   Titlelabel.textAlignment = NSTextAlignmentCenter;
-   Titlelabel.textColor = UIColor.whiteColor;
-   [TopNavView addSubview:Titlelabel];
+   NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVCommon];
+        
+   [PPNetworkTools POST:url parameters:nil success:^(id responseObject) {
+               
+       NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+       
+       YYNSLog(@"会员中心数据------%@",responseObject);
+       
+ 
+         
+   } failure:^(NSError *error, id responseCache) {
+             
+     
+
+    }];
     
     
-    
+
 }
+
+
 
 #pragma mark 收益明细
 -(void)VipLeftBackClick{
@@ -89,21 +99,34 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 
-     return 1;
+     return 2;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-     return 2;
+     return 1;
     
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    ReportCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ReportCollectionViewCell" forIndexPath:indexPath];
-    
-    return cell;
+    if (indexPath.section == 0) {
+        
+        MyVipImgCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyVipImgCollectionViewCell" forIndexPath:indexPath];
+        
+        [cell.MainImgView setImage:[UIImage imageNamed:@"NoVipBg"]];
+           
+        return cell;
+        
+    }else{
+       
+        MyVipGridCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyVipGridCollectionViewCell" forIndexPath:indexPath];
+           
+        return cell;
+        
+    }
+   
     
 }
 
@@ -112,8 +135,10 @@
 #pragma mark <UICollectionViewDelegate>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    
  
-     return CGSizeMake(YYScreenWidth , 210);
+     return CGSizeMake(YYScreenWidth , YYScreenWidth);
+    
    
 }
 
@@ -121,7 +146,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     
-     return (CGSize){YYScreenWidth,225};
+     return (CGSize){YYScreenWidth, 0};
     
 }
 
@@ -147,16 +172,7 @@
         
         headerView.backgroundColor = YYBGColor;
         
-        [headerView addSubview:self.ReportHeadView];
-        
-        self.ReportHeadView.WithdrawBtnBlockClick = ^{
-           
-            MyWithdrawCollectionViewController * RecordVc = [[MyWithdrawCollectionViewController alloc]init];
-            RecordVc.title =@"提现";
-            [self.navigationController pushViewController:RecordVc animated:YES];
-            
-        };
-     
+    
         return headerView;
     
     }
@@ -165,22 +181,6 @@
     
 }
 
-/**
- *  @return ReportHeadView
- */
--(YYReportHeadView *)ReportHeadView
-{
-    
-    if (_ReportHeadView == nil) {
-        
-       _ReportHeadView = [[YYReportHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 225)];
-        
-        
-     }
-    
-    return _ReportHeadView;
-    
-}
 
 #pragma mark ---- UICollectionViewDelegateFlowLayout
 
@@ -188,7 +188,7 @@
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     
-      return UIEdgeInsetsMake(10, 0, 0, 0);//上左下右
+      return UIEdgeInsetsMake(0, 0, 0, 0);//上左下右
    
 }
 
@@ -196,13 +196,9 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     
-      return 10;
+      return 0;
     
 }
-
-
-
-
 
 
 @end

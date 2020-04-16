@@ -36,162 +36,139 @@
     
     UIView * MainBGView = UIView.new;
     MainBGView.backgroundColor = UIColor.whiteColor;
+    MainBGView.frame = CGRectMake(12, 10, self.ZLP_width - 24, self.ZLP_height -10);
     [YYTools ChangeView:MainBGView RadiusSize:5 BorderColor:[UIColor clearColor]];
     [self addSubview:MainBGView];
-    [MainBGView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.top.equalTo(self.mas_top).with.offset(10);
-        make.left.equalTo(self.mas_left).with.offset(12);
-        make.right.equalTo(self.mas_right).with.offset(-12);
-        make.bottom.equalTo(self.mas_bottom).with.offset(0);
-       
+//    [MainBGView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self.mas_top).with.offset(10);
+//        make.left.equalTo(self.mas_left).with.offset(12);
+//        make.right.equalTo(self.mas_right).with.offset(-12);
+//        make.bottom.equalTo(self.mas_bottom).with.offset(0);
+//    }];
+    
+    UILabel * OrderLabel = [[UILabel alloc]init];
+    OrderLabel.text = @"订单编号：234323787645678";
+    OrderLabel.textColor = YY66Color;
+    OrderLabel.textAlignment = NSTextAlignmentLeft;
+    OrderLabel.font = [UIFont systemFontOfSize:12 weight:0];
+    [MainBGView addSubview:OrderLabel];
+    [OrderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(MainBGView.mas_top).with.offset(11);
+        make.left.equalTo(MainBGView.mas_left).with.offset(12);
+        make.height.offset(17);
+    }];
+    
+    UIButton * CopyBtn = [[UIButton alloc]init];
+    [CopyBtn setTitle:@"复制" forState:UIControlStateNormal];
+    [CopyBtn addTarget:self action:@selector(titleButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [MainBGView addSubview:CopyBtn];
+    [CopyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(MainBGView.mas_top).with.offset(11);
+        make.left.equalTo(OrderLabel.mas_right).with.offset(7);
+        make.height.offset(17);
+        make.width.offset(24);
+    }];
+    
+    UILabel * RightLabel = [[UILabel alloc]init];
+    RightLabel.text = @"已结算";
+    RightLabel.textColor = YY33Color;
+    RightLabel.textAlignment = NSTextAlignmentRight;
+    RightLabel.font = [UIFont systemFontOfSize:12 weight:0];
+    [MainBGView addSubview:RightLabel];
+    [RightLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(MainBGView.mas_top).with.offset(10);
+        make.right.equalTo(MainBGView.mas_right).with.offset(-12);
+        make.height.offset(17);
+        make.width.offset(46);
+    }];
+    
+    UIView * LineView = UIView.new;
+    LineView.backgroundColor = YYE5Color;
+    LineView.frame = CGRectMake(0, 35, MainBGView.ZLP_width, 0.5);
+    [MainBGView addSubview:LineView];
+    [LineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(MainBGView.mas_top).with.offset(35);
+        make.right.equalTo(MainBGView.mas_right).with.offset(0);
+        make.left.equalTo(MainBGView.mas_left).with.offset(0);
+        make.height.offset(0.5);
     }];
     
     UIImageView * Mainimage = [[UIImageView alloc] init];
     Mainimage.backgroundColor = [UIColor clearColor];
-    Mainimage.image = [UIImage imageNamed:@"BYNLogo"];
-    [self addSubview:Mainimage];
-    
-    UIImageView * Iconimage = [[UIImageView alloc] init];
-    Iconimage.backgroundColor = [UIColor clearColor];
-    Iconimage.image = [UIImage imageNamed:@"HomeIcon"];
-    [self addSubview:Iconimage];
+    Mainimage.image = [UIImage imageNamed:@"MyWX"];
+    [MainBGView addSubview:Mainimage];
+    [Mainimage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(MainBGView.mas_top).with.offset(48);
+        make.left.equalTo(MainBGView.mas_left).with.offset(12);
+        make.width.offset(87.5);
+        make.height.offset(87.5);
+    }];
+   
     
     UILabel * TitleLabel = [[UILabel alloc]init];
-    TitleLabel.text = @"实时热卖";
-    TitleLabel.textColor = YY33Color;
+    TitleLabel.text = @"夏季情侣浴室拖鞋男女柔…";
     TitleLabel.textAlignment = NSTextAlignmentLeft;
-    TitleLabel.font = [UIFont systemFontOfSize:20 weight:2];
-    [self addSubview:TitleLabel];
+    TitleLabel.textColor = YY33Color;
+    TitleLabel.adjustsFontSizeToFitWidth = YES;
+    TitleLabel.frame = CGRectMake(110, 51, self.ZLP_width - 180, 15);
+    TitleLabel.font = [UIFont systemFontOfSize:12 weight:2];
+    [MainBGView addSubview:TitleLabel];
     
-    UILabel * StoreNameLabel = [[UILabel alloc]init];
-    StoreNameLabel.text = @"神犬旗舰店";
-    StoreNameLabel.textColor = YY99Color;
-    StoreNameLabel.textAlignment = NSTextAlignmentLeft;
-    StoreNameLabel.font = [UIFont systemFontOfSize:12 weight:0];
-    [self addSubview:StoreNameLabel];
-    
-    UILabel * CouponLabel = [[UILabel alloc]init];
-    CouponLabel.text = @"10元券";
-    CouponLabel.textAlignment = NSTextAlignmentCenter;
-    CouponLabel.textColor = YYHexColor(@"#FB5434");
-    CouponLabel.backgroundColor = [UIColor colorWithRed:255/255.0 green:236/255.0 blue:232/255.0 alpha:1.0];
-    CouponLabel.layer.borderColor = [UIColor colorWithRed:255/255.0 green:236/255.0 blue:232/255.0 alpha:1.0].CGColor;
-    CouponLabel.layer.borderWidth = 2;
-    CouponLabel.font = [UIFont systemFontOfSize:12 weight:0];
-    [self addSubview:CouponLabel];
-    
-    UILabel * GainMoneyLabel = [[UILabel alloc]init];
-    GainMoneyLabel.text = @"最多赚一元";
-    GainMoneyLabel.textAlignment = NSTextAlignmentCenter;
-    GainMoneyLabel.textColor = UIColor.whiteColor;
-    GainMoneyLabel.backgroundColor = YYRGBColor(247, 60, 40);
-    GainMoneyLabel.font = [UIFont systemFontOfSize:12 weight:2];
-    [self addSubview:GainMoneyLabel];
-    
-    UILabel * CouponPriceLabel = [[UILabel alloc]init];
-    CouponPriceLabel.text = @"￥15券后价";
-    CouponPriceLabel.textColor = YY33Color;
-    CouponPriceLabel.textAlignment = NSTextAlignmentLeft;
-    CouponPriceLabel.font = [UIFont systemFontOfSize:13 weight:0];
-    [self addSubview:CouponPriceLabel];
-    
-    UILabel * OldPriceLabel = [[UILabel alloc]init];
-    OldPriceLabel.text = @"原价￥32.5";
-    OldPriceLabel.textColor = YY99Color;
-    OldPriceLabel.textAlignment = NSTextAlignmentLeft;
-    OldPriceLabel.font = [UIFont systemFontOfSize:12 weight:0];
-    [self addSubview:OldPriceLabel];
-    
-    UILabel * SaleNumLabel = [[UILabel alloc]init];
-    SaleNumLabel.text = @"已售3201件";
-    SaleNumLabel.textColor = YY99Color;
-    SaleNumLabel.textAlignment = NSTextAlignmentLeft;
-    SaleNumLabel.font = [UIFont systemFontOfSize:12 weight:0];
-    [self addSubview:SaleNumLabel];
+    UILabel * PriceLabel = [[UILabel alloc]init];
+    PriceLabel.text = @"¥128.00";
+    PriceLabel.textColor = YY33Color;
+    PriceLabel.textAlignment = NSTextAlignmentRight;
+    PriceLabel.adjustsFontSizeToFitWidth = YES;
+    PriceLabel.font = [UIFont systemFontOfSize:12 weight:0];
+    [MainBGView addSubview:PriceLabel];
+    [PriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(MainBGView.mas_top).with.offset(51);
+        make.right.equalTo(MainBGView.mas_right).with.offset(-10);
+        make.height.offset(13);
+        make.width.offset(60);
+    }];
+
+    UILabel * BuyTimeLabel = [[UILabel alloc]init];
+    BuyTimeLabel.text = @"下单时间：2019-12-12 13:34:18";
+    BuyTimeLabel.frame = CGRectMake(110, 73, self.ZLP_width - 120, 15);
+    BuyTimeLabel.textColor = YY66Color;
+    BuyTimeLabel.textAlignment = NSTextAlignmentLeft;
+    BuyTimeLabel.font = [UIFont systemFontOfSize:12 weight:0];
+    [MainBGView addSubview:BuyTimeLabel];
+
+    UILabel * GetTimeLabel = [[UILabel alloc]init];
+    GetTimeLabel.text = @"收货时间：2019-12-12 13:34:18";
+    GetTimeLabel.textColor = YY66Color;
+    GetTimeLabel.frame = CGRectMake(110, 92 , self.ZLP_width - 120, 15);
+    GetTimeLabel.textAlignment = NSTextAlignmentLeft;
+    GetTimeLabel.font = [UIFont systemFontOfSize:12 weight:0];
+    [MainBGView addSubview:GetTimeLabel];
+
+    UILabel * GetMoneyLabel = [[UILabel alloc]init];
+    GetMoneyLabel.text = @"奖励¥48.00";
+    GetMoneyLabel.adjustsFontSizeToFitWidth = YES;
+    GetMoneyLabel.frame = CGRectMake(110, 115, 70 , 20);
+    GetMoneyLabel.backgroundColor = YYHexColor(@"#FFEEAA");
+    GetMoneyLabel.textColor = YYHexColor(@"#DF9600");
+    GetMoneyLabel.textAlignment = NSTextAlignmentCenter;
+    GetMoneyLabel.font = [UIFont systemFontOfSize:11 weight:0];
+    [MainBGView addSubview:GetMoneyLabel];
+    [YYTools ChangeView:GetMoneyLabel RadiusSize:5 BorderColor:[UIColor clearColor]];
     
    
     
-    [Mainimage mas_makeConstraints:^(MASConstraintMaker *make) {
-         
-       make.top.equalTo(MainBGView.mas_top).with.offset(8);
-       make.left.equalTo(MainBGView.mas_left).with.offset(8);
-       make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-8);
-       make.width.equalTo(Mainimage.mas_height);
-       
-    }];
-
-    [Iconimage mas_makeConstraints:^(MASConstraintMaker *make) {
-
-        make.left.equalTo(Mainimage.mas_right).with.offset(20);
-        make.top.equalTo(MainBGView.mas_top).with.offset(10);
-        make.height.offset(16);
-        make.width.offset(16);
-
-    }];
-
-    [TitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.equalTo(Mainimage.mas_right).with.offset(45);
-        make.top.equalTo(MainBGView.mas_top).with.offset(10);
-        make.right.equalTo(MainBGView.mas_right).with.offset(-5);
-        make.height.offset(16);
-        
-    }];
     
 
-    [StoreNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-
-       make.left.equalTo(Mainimage.mas_right).with.offset(20);
-       make.top.equalTo(MainBGView.mas_top).with.offset(35);
-       make.height.offset(20);
-       make.right.equalTo(MainBGView.mas_right).with.offset(-5);
-
-    }];
-
-    [CouponLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-
-       make.left.equalTo(Mainimage.mas_right).with.offset(20);
-       make.top.equalTo(MainBGView.mas_top).with.offset(58);
-       make.width.offset(50);
-       make.height.offset(18);
-
-    }];
-
-    [GainMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-
-       make.left.equalTo(CouponLabel.mas_right).with.offset(8);
-       make.top.equalTo(MainBGView.mas_top).with.offset(58);
-       make.width.offset(70);
-       make.height.offset(18);
-        
-    }];
-
-    [CouponPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-
-       make.left.equalTo(Mainimage.mas_right).with.offset(20);
-       make.top.equalTo(MainBGView.mas_top).with.offset(85);
-       make.height.offset(20);
-
-    }];
-
-
-    [OldPriceLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-
-        make.left.equalTo(Mainimage.mas_right).with.offset(20);
-        make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-10);
-        make.height.offset(15);
-
-    }];
-
-    [SaleNumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-
-        make.right.equalTo(MainBGView.mas_right).with.offset(-10);
-        make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-10);
-        make.height.offset(15);
+   
     
-    }];
-
+    
+    
+    
+    
+    
+    
+    
+    
 
 }
 

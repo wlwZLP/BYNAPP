@@ -8,8 +8,15 @@
 
 #import "MyTraceCollectionViewController.h"
 #import "TraceCollectionViewCell.h"
+#import "MyCollectModel.h"
 
 @interface MyTraceCollectionViewController ()
+
+@property(nonatomic,strong)NSDictionary * TraceData;
+
+@property(nonatomic,strong)NSArray<MyCollectModel*> * TraceListArray;
+
+@property(nonatomic,strong)NSArray   * TitleArray;
 
 @end
 
@@ -23,7 +30,6 @@
     
     self.collectionView.backgroundColor = YYBGColor;
     
-
     [self.collectionView registerClass:[TraceCollectionViewCell class] forCellWithReuseIdentifier:@"TraceCollectionViewCell"];
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
@@ -44,9 +50,13 @@
                 
         NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
         
-        NSDictionary * Data = EncodeDicFromDic(DataDic, @"data");
+        self.TraceData = EncodeDicFromDic(DataDic, @"data");
+        
+        YYNSLog(@"我的足迹-----%@",self.TraceData);
+        
+        self.TitleArray = self.TraceData.allKeys;
        
-        self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data, Data.allKeys[0])];
+//        self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(self.TraceData, self.TraceData.allKeys[0])];
             
         [self.collectionView reloadData];
           
@@ -67,27 +77,30 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 
-     return 1;
+     return self.TitleArray.count;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return self.ListDataArray.count;
+    return [NSArray modelArrayWithClass:[MyCollectModel class] json:EncodeArrayFromDic(self.TraceData, self.TraceData.allKeys[section])].count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
       TraceCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TraceCollectionViewCell" forIndexPath:indexPath];
     
-      return cell;
+     cell.Model = [NSArray modelArrayWithClass:[MyCollectModel class] json:EncodeArrayFromDic(self.TraceData, self.TraceData.allKeys[indexPath.section])][indexPath.item];
     
+      return cell;
+
 }
 
-#pragma mark <UICollectionViewDelegate>
 
 
+
 #pragma mark <UICollectionViewDelegate>
+
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
  
@@ -99,7 +112,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     
-       return (CGSize){YYScreenWidth,0};
+       return (CGSize){YYScreenWidth,40};
     
 }
 
@@ -124,6 +137,14 @@
         }
         
         headerView.backgroundColor = YYBGColor;
+        
+        UILabel * TitleLabel = [[UILabel alloc]init];
+        TitleLabel.text = self.TraceData.allKeys[indexPath.section];
+        TitleLabel.textColor = YY66Color;
+        TitleLabel.frame = CGRectMake(10 , 15, YYScreenWidth - 20, 20);
+        TitleLabel.textAlignment = NSTextAlignmentCenter;
+        TitleLabel.font = [UIFont systemFontOfSize:16 weight:0];
+        [headerView addSubview:TitleLabel];
      
         return headerView;
     

@@ -8,13 +8,13 @@
 
 #import "MyCouponCollectionViewController.h"
 #import "CouponCollectionViewCell.h"
-#import "YYCouponHeadView.h"
+#import "YYOrderHeadView.h"
 
 
 @interface MyCouponCollectionViewController ()
 
 
-@property(nonatomic,strong)YYCouponHeadView * HeadView;
+@property(nonatomic,strong)YYOrderHeadView * HeadView;
 
 @end
 
@@ -32,6 +32,32 @@
     [self.collectionView registerClass:[CouponCollectionViewCell class] forCellWithReuseIdentifier:@"CouponCollectionViewCell"];
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
+    
+    [self GetMyCollectNetworkData];
+    
+}
+
+
+
+#pragma mark 获取当前界面网络数据
+
+-(void)GetMyCollectNetworkData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVOerders];
+        
+    
+    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+                
+
+        YYNSLog(@"我的卡券数据-------%@",responseObject);
+        
+          
+     } failure:^(NSError *error, id responseCache) {
+              
+      
+
+     }];
+    
     
 }
 
@@ -114,14 +140,16 @@
  *
  *  @return SalesSearchBar
  */
-- (YYCouponHeadView *)HeadView
+- (YYOrderHeadView *)HeadView
 {
     
     if (_HeadView== nil) {
         
-       _HeadView = [[YYCouponHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 40)];
+       _HeadView = [[YYOrderHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 40)];
         
-       _HeadView.backgroundColor = UIColor.whiteColor;
+        _HeadView.backgroundColor = UIColor.whiteColor;
+        
+        _HeadView.TitleArray = [[NSArray alloc]initWithObjects:@"全部",@"待支付",@"发货中",@"已成功",@"已失败",nil ];
         
         _HeadView.TitleBtnBlockClick = ^(NSInteger TagIndex) {
             

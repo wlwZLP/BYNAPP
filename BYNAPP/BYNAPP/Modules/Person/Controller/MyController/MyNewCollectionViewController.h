@@ -8,9 +8,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MyNewCollectionViewController : YYBaseViewController
+@interface MyNewCollectionViewController : YYBaseCollectionViewController
 
-@property(nonatomic,strong)NSString * WebUrlString;
+
 
 
 @end

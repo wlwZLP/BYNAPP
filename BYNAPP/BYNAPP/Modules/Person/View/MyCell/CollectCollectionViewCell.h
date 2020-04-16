@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MyCollectModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CollectCollectionViewCell : UICollectionViewCell
 
-@property(nonatomic,strong)HomeMainModel * Model;
+@property(nonatomic,strong)MyCollectModel * Model;
 
 
 @end

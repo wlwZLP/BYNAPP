@@ -7,261 +7,265 @@
 //
 
 #import "MyNewCollectionViewController.h"
+#import "CouponCollectionViewCell.h"
+#import "YYOrderHeadView.h"
+#import "NewsModel.h"
+#import "NewArticlesModel.h"
+#import "MyNewImgCollectionViewCell.h"
 
-@interface MyNewCollectionViewController ()<WKScriptMessageHandler, WKUIDelegate, WKNavigationDelegate>
+@interface MyNewCollectionViewController ()
 
-@property (nonatomic, strong)WKWebView *  YYWKWebView;
+@property(nonatomic,strong)YYOrderHeadView * HeadView;
 
+@property(nonatomic,strong)NSArray * NewsListArray;
+
+@property(nonatomic,strong)NSArray<NewArticlesModel*> * ArticlesListArray;
+
+@property(nonatomic,strong)NSMutableArray * TitleArray;
+
+
+@property(nonatomic,strong)NSString * news_cid;
 
 @end
 
 @implementation MyNewCollectionViewController
 
-#pragma mark - Override
+
 
 - (void)viewDidLoad {
     
-     [super viewDidLoad];
+    [super viewDidLoad];
     
-     [self.view addSubview:self.YYWKWebView];
+    self.TitleArray = [NSMutableArray array];
+    
+    self.news_cid = @"5";
+    
+    self.collectionView.backgroundColor = YYBGColor;
+    
+    [self.collectionView registerClass:[MyNewImgCollectionViewCell class] forCellWithReuseIdentifier:@"MyNewImgCollectionViewCell"];
+    
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
+    
+    [self GetNewControllersNetData];
+    
+    
+}
+
+
+#pragma mark  多个网络请求结束后在这里处理数据
+
+
+-(void)GetNewControllersNetData{
+    
+    //网络请求1
+     RACSignal * signal1 = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+      
+         NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserArticleCategories];
+         
+         [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+                  
+              NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
+             
+              self.news_cid = EncodeStringFromDic(DataArray[0], @"id");
+             
+              [subscriber sendNext:DataArray];
+             
+          } failure:^(NSError *error, id responseCache) {
+                   
+              [subscriber sendNext:responseCache];
+
+          }];
+         
+         return  nil;
+         
+     }];
+         
+    //网络请求2
+     RACSignal * signal2 = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        
+        NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserArticles];
+         
+        NSDictionary * dict = @{@"cid":self.news_cid};
+         
+        [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+                
+             NSDictionary * Datadic = EncodeDicFromDic(responseObject, @"data");
+            
+             NSArray * DataArray = EncodeArrayFromDic(Datadic, @"data");
+            
+             [subscriber sendNext:DataArray];
+            
+         } failure:^(NSError *error, id responseCache) {
+                   
+              [subscriber sendNext:responseCache];
+           
+         }];
+         
+          return  nil;
+         
+     }];
+     
+    
+     [self rac_liftSelector:@selector(updateUIPic:pic2:) withSignalsFromArray:@[signal1,signal2]];
+    
+}
+
+- (void)updateUIPic:(id)pic1 pic2:(id)pic2{
   
-     if (self.WebUrlString.length == 0) {
-        self.WebUrlString = @"https://www.jianshu.com/p/d884f3040fda";
-      }
+    NSArray * NetData1 = (NSArray*)pic1;
     
-     NSMutableURLRequest * request= [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.WebUrlString]];
-
-     [self.YYWKWebView loadRequest:request];
+    NSArray * NetData2 = (NSArray*)pic2;
     
-
-}
-
-
-
-
--(WKWebView *)YYWKWebView{
+    self.NewsListArray =  [NSArray modelArrayWithClass:[NewsModel class] json:NetData1];
     
-    
-    if(_YYWKWebView == nil){
-        
-        //创建网页配置对象
-        WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
-        // 创建设置对象
-        WKPreferences * preference = [[WKPreferences alloc]init];
-        //最小字体大小 当将javaScriptEnabled属性设置为NO时，可以看到明显的效果
-        preference.minimumFontSize = 0;
-        //设置是否支持javaScript 默认是支持的
-        preference.javaScriptEnabled = YES;
-        // 在iOS上默认为NO，表示是否允许不经过用户交互由javaScript自动打开窗口
-        preference.javaScriptCanOpenWindowsAutomatically = YES;
-        
-        config.preferences = preference;
-        
-        // 是使用h5的视频播放器在线播放, 还是使用原生播放器全屏播放
-        config.allowsInlineMediaPlayback = YES;
-        //设置视频是否需要用户手动播放  设置为NO则会允许自动播放
-        config.mediaTypesRequiringUserActionForPlayback = YES;
-        //设置是否允许画中画技术 在特定设备上有效
-        config.allowsPictureInPictureMediaPlayback = YES;
-        
-        //自定义的WKScriptMessageHandler 是为了解决内存不释放的问题
-        WeakWKScriptMessageDelegate * weakScriptMessageDelegate = [[WeakWKScriptMessageDelegate alloc] initWithDelegate:self];
-        
-        //这个类主要用来做native与JavaScript的交互管理
-        WKUserContentController * wkUController = [[WKUserContentController alloc] init];
-        //注册一个name为jsToOcNoPrams的js方法 设置处理接收JS方法的对象
-        [wkUController addScriptMessageHandler:weakScriptMessageDelegate  name:@"setReferer"];
-        
-        config.userContentController = wkUController;
-        
-        _YYWKWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, YYScreenWidth, YYScreenHeight) configuration:config];
-        // UI代理
-        _YYWKWebView.UIDelegate = self;
-        // 导航代理
-        _YYWKWebView.navigationDelegate = self;
-        // 是否允许手势左滑返回上一级, 类似导航控制的左滑返回
-        _YYWKWebView.allowsBackForwardNavigationGestures = YES;
-        //可返回的页面列表, 存储已打开过的网页
-
+    self.ArticlesListArray =  [NSArray modelArrayWithClass:[NewArticlesModel class] json:NetData2];
+               
+    for (NewsModel * Model in self.NewsListArray) {
+                   
+        [self.TitleArray addObject:Model.name];
+                   
     }
+ 
     
-    return _YYWKWebView;
+    [self.collectionView reloadData];
+    
     
 }
 
-/**
- *  JS 调用 OC 时 webview 会调用此方法
- *
- *  @param userContentController  webview中配置的userContentController 信息
- *  @param message                JS执行传递的消息
- */
 
-- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
+
+#pragma mark <UICollectionViewDataSource>
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+
+     return 1;
+}
+
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    
+      return self.ArticlesListArray.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+      MyNewImgCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyNewImgCollectionViewCell" forIndexPath:indexPath];
+    
+      [cell.MainImgView setImageURL:[NSURL URLWithString: self.ArticlesListArray[indexPath.item].cover]];
+    
+       return cell;
+    
+}
+
+#pragma mark -选中某item进行跳转
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    YYWebViewController * WebVc = [[YYWebViewController alloc]init];
+    WebVc.title = self.ArticlesListArray[indexPath.item].title;
+    WebVc.WebUrlString = self.ArticlesListArray[indexPath.item].page_url;
+    [self.navigationController pushViewController:WebVc animated:YES];
+    
+}
+
+
+#pragma mark <UICollectionViewDelegate>
+
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+ 
+     return CGSizeMake(YYScreenWidth , 128 );
+   
+}
+
+#pragma mark 设置区头区尾
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    
+       return (CGSize){YYScreenWidth,40};
+    
+}
+
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
+    
+       return (CGSize){YYScreenWidth,0};
+    
+}
+
+
+// 和UITableView类似，UICollectionView也可设置段头段尾
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     
-    if ([message.name isEqualToString:@"setReferer"]) {
+    if([kind isEqualToString:UICollectionElementKindSectionHeader])
+    {
+        UICollectionReusableView *headerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"headerId" forIndexPath:indexPath];
         
-         NSDictionary *  Dict = message.body;
-
+        if(headerView == nil){
+            headerView = [[UICollectionReusableView alloc] init];
+        }
         
+        headerView.backgroundColor = YYBGColor;
         
-        
+        if (self.TitleArray.count> 0) {
+            
+            [headerView addSubview:self.HeadView];
+            
+            self.HeadView.TitleArray = self.TitleArray;
+        }
+     
+        return headerView;
+    
     }
     
-    
-    
-}
-
-#pragma mark - WKNavigationDelegate
-/*
- WKNavigationDelegate主要处理一些跳转、加载处理操作，WKUIDelegate主要处理JS脚本，确认框，警告框等
- */
-
-// 页面开始加载时调用
-- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
-    
-  
-    
+    return nil;
     
 }
-
-// 页面加载失败时调用
-- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error {
-    
-    
-}
-
-// 当内容开始返回时调用
-- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation {
-   
-    
-}
-
-// 页面加载完成之后调用
-- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-  
-    
-    
-}
-
-//提交发生错误时调用
-- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-  
-    
-    
-}
-
-// 接收到服务器跳转请求即服务重定向时之后调用
-- (void)webView:(WKWebView *)webView didReceiveServerRedirectForProvisionalNavigation:(WKNavigation *)navigation {
-    
-}
-
-
-
-// 根据WebView对于即将跳转的HTTP请求头信息和相关信息来决定是否跳转
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
-    
-    if(webView != _YYWKWebView) {return;}
-
-     decisionHandler(WKNavigationActionPolicyAllow);//允许跳转
-
-}
-
-
-
-// 根据客户端受到的服务器响应头以及response相关信息来决定是否可以跳转
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler{
-    //允许跳转
-    decisionHandler(WKNavigationResponsePolicyAllow);
-   
-}
-
-
-
-//需要响应身份验证时调用 同样在block中需要传入用户身份凭证
-- (void)webView:(WKWebView *)webView didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * _Nullable credential))completionHandler{
-      
-    if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
-        
-        NSURLCredential * card = [[NSURLCredential alloc] initWithTrust:challenge.protectionSpace.serverTrust];
-        
-        completionHandler(NSURLSessionAuthChallengeUseCredential,card);
-    }
-    
-}
-
-
-
-//进程被终止时调用
-- (void)webViewWebContentProcessDidTerminate:(WKWebView *)webView{
-  
-    
-    
-}
-
-#pragma mark - WKUIDelegate
 
 /**
- *  web界面中有弹出警告框时调用
+ *  懒加载UISearchBar
  *
- *  @param webView           实现该代理的webview
- *  @param message           警告框中的内容
- *  @param completionHandler 警告框消失调用
+ *  @return SalesSearchBar
  */
-- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(void))completionHandler {
+- (YYOrderHeadView *)HeadView
+{
     
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"HTML的弹出框" message:message?:@"" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:([UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        completionHandler();
-    }])];
-    [self presentViewController:alertController animated:YES completion:nil];
+    if (_HeadView== nil) {
+        
+        _HeadView = [[YYOrderHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 40)];
+        
+        _HeadView.backgroundColor = UIColor.whiteColor;
+        
+        _HeadView.TitleBtnBlockClick = ^(NSInteger TagIndex) {
+            
+           
+            
+            
+        };
+     
+     }
     
-}
-
-// 确认框
-//JavaScript调用confirm方法后回调的方法 confirm是js中的确定框，需要在block中把用户选择的情况传递进去
-- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL))completionHandler{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:message?:@"" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addAction:([UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        completionHandler(NO);
-    }])];
-    [alertController addAction:([UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        completionHandler(YES);
-    }])];
-    [self presentViewController:alertController animated:YES completion:nil];
-}
-
-// 输入框
-//JavaScript调用prompt方法后回调的方法 prompt是js中的输入框 需要在block中把用户输入的信息传入
-- (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString * _Nullable))completionHandler{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:prompt message:@"" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.text = defaultText;
-    }];
-    [alertController addAction:([UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        completionHandler(alertController.textFields[0].text?:@"");
-    }])];
-    [self presentViewController:alertController animated:YES completion:nil];
-}
-
-// 页面是弹出窗口 _blank 处理
-- (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures {
-    if (!navigationAction.targetFrame.isMainFrame) {
-        [webView loadRequest:navigationAction.request];
-    }
-    return nil;
-}
-
-
-- (void)didReceiveMemoryWarning {
-    
-    [super didReceiveMemoryWarning];
-    
-    
+    return _HeadView;
     
 }
 
 
+#pragma mark ---- UICollectionViewDelegateFlowLayout
 
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    
+      return UIEdgeInsetsMake(10, 0, 0, 0);//上左下右
+   
+}
+
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+      return 10;
+    
+}
 
 @end

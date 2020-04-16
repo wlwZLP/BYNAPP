@@ -41,7 +41,6 @@
     Mainimage.backgroundColor = [UIColor clearColor];
     Mainimage.image = [UIImage imageNamed:@"Jingdong"];
     [self addSubview:Mainimage];
-//    [Mainimage addTarget:self action:@selector(GridBtnClick)];
     self.Logoimage =Mainimage;
     
     UILabel * TitleLabel = [[UILabel alloc]init];

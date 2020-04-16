@@ -7,8 +7,9 @@
 //
 
 #import "MyOrderCollectionViewController.h"
-#import "MyOrderCollectionViewCell.h"
-#import "OrderDetailsCollectionViewController.h"
+#import "MyOrderTopCollectionViewCell.h"
+#import "MyOrderXiaCollectionViewCell.h"
+#import "OrderListCollectionViewController.h"
 
 @interface MyOrderCollectionViewController ()
 
@@ -25,7 +26,9 @@
     self.collectionView.backgroundColor = YYBGColor;
     
 
-    [self.collectionView registerClass:[MyOrderCollectionViewCell class] forCellWithReuseIdentifier:@"MyOrderCollectionViewCell"];
+    [self.collectionView registerClass:[MyOrderTopCollectionViewCell class] forCellWithReuseIdentifier:@"MyOrderTopCollectionViewCell"];
+    
+    [self.collectionView registerClass:[MyOrderXiaCollectionViewCell class] forCellWithReuseIdentifier:@"MyOrderXiaCollectionViewCell"];
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
@@ -47,28 +50,46 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-      MyOrderCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyOrderCollectionViewCell" forIndexPath:indexPath];
-    
-     cell.MyOrderBtnBlockClick = ^(NSInteger Index) {
-      
-         OrderDetailsCollectionViewController * OrderVc = [[OrderDetailsCollectionViewController alloc]init];
-         OrderVc.title  = @"淘宝订单" ;
-         [self.navigationController pushViewController:OrderVc animated:YES];
-         
-     };
-    
-      return cell;
+    if (indexPath.item == 0) {
+        
+         MyOrderTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyOrderTopCollectionViewCell" forIndexPath:indexPath];
+        
+        cell.MyOrderBtnBlockClick = ^(NSInteger TagIndex) {
+        
+            OrderListCollectionViewController * listVc = [[OrderListCollectionViewController alloc]init];
+            listVc.title =@"订单列表";
+            listVc.OrderType = [NSString stringWithFormat:@"%ld",TagIndex];
+            listVc.mode = self.UserType;
+            [self.navigationController pushViewController:listVc animated:YES];
+            
+        };
+           
+        return cell;
+        
+    } else {
+        
+         MyOrderXiaCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyOrderXiaCollectionViewCell" forIndexPath:indexPath];
+        
+        cell.MyOrderBtnBlockClick = ^(NSInteger TagIndex) {
+            
+            OrderListCollectionViewController * listVc = [[OrderListCollectionViewController alloc]init];
+            listVc.title =@"订单列表";
+            listVc.OrderType = [NSString stringWithFormat:@"%ld",TagIndex];
+            listVc.mode = self.UserType;
+            [self.navigationController pushViewController:listVc animated:YES];
+            
+        };
+           
+         return cell;
+    }
     
 }
 
 #pragma mark <UICollectionViewDelegate>
 
-
-#pragma mark <UICollectionViewDelegate>
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
  
-     return CGSizeMake(YYScreenWidth , 125);
+     return CGSizeMake(YYScreenWidth , 117);
    
 }
 
@@ -125,6 +146,8 @@
 {
       return 0;
 }
+
+
 
 
 @end

@@ -9,7 +9,6 @@
 #import "MenListCollectionViewController.h"
 #import "YYPDDHeadView.h"
 #import "HomeMainCollectionViewCell.h"
-#import "HomeDetailsCollectionViewController.h"
 
 
 @interface MenListCollectionViewController ()

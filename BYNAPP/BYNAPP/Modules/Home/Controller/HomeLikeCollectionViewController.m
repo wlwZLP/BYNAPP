@@ -9,7 +9,6 @@
 #import "HomeLikeCollectionViewController.h"
 #import "HomeMainCollectionViewCell.h"
 #import "HomeMainViewModel.h"
-#import "HomeDetailsCollectionViewController.h"
 #import <AdSupport/AdSupport.h>
 
 @interface HomeLikeCollectionViewController ()
