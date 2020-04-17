@@ -20,6 +20,9 @@
         
         [self setup];
         
+        
+       // @"本地项目添加到github"
+        
     }
     
     return self;
