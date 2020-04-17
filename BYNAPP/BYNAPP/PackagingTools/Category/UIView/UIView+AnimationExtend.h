@@ -24,4 +24,11 @@
 @property CGFloat ZLP_centerX;
 @property CGFloat ZLP_centerY;
 
+
+/**
+*  给UiView添加点击方法
+*/
+-(void)addViewTarget:(id _Nullable )target action:(nonnull SEL)action;
+
+
 @end

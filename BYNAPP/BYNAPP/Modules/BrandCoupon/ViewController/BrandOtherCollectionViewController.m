@@ -10,7 +10,7 @@
 #import "BrandRecomdCollectionViewCell.h"
 #import "BrandCardCollectionViewCell.h"
 #import "BrandModel.h"
-#import "BrandDetailsCollectionViewController.h"
+#import "BrandVipDetailsCollectionViewController.h"
 
 @interface BrandOtherCollectionViewController ()
 
@@ -111,7 +111,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     BrandMainModel * Model = self.BrandArray[indexPath.item];
-    BrandDetailsCollectionViewController * DetailsVc = [[BrandDetailsCollectionViewController alloc]init];
+    BrandVipDetailsCollectionViewController * DetailsVc = [[BrandVipDetailsCollectionViewController alloc]init];
     DetailsVc.Details_id = Model.brand_id;
     DetailsVc.mall_id = Model.mall_id;
     DetailsVc.title = Model.coupon_name;

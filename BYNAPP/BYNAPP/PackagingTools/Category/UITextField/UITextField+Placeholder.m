@@ -39,7 +39,7 @@
 }
 
 
-- (UIColor *)placeholderColor
+-(UIColor *)placeholderColor
 {
     return objc_getAssociatedObject(self, @"placeholderColor");
 }

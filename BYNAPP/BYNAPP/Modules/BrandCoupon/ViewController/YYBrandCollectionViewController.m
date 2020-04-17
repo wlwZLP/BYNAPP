@@ -40,8 +40,7 @@ static int const HomelabelWith = 90;
     
     [self CreateHomeNavTopSearch];
     
-    
-   
+
     [self GetBrandPlistDataCompleteData:^(NSArray<BrandPlistModel *> *ModelArray) {
        
        [ModelArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

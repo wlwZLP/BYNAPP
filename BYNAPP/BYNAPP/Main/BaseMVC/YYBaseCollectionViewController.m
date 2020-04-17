@@ -49,6 +49,10 @@ static NSString * const reuseIdentifier = @"Cell";
     
       self.collectionView.emptyDataSetDelegate = self;
     
+      self.collectionView.showsHorizontalScrollIndicator = NO;
+    
+      self.collectionView.showsVerticalScrollIndicator = NO;
+    
     
 }
 

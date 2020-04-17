@@ -9,11 +9,12 @@
 #import "BrandAllCollectionViewController.h"
 #import "BrandTopCollectionViewCell.h"
 #import "BrandRecomdCollectionViewCell.h"
-#import "BrandDetailsCollectionViewController.h"
+#import "BrandVipDetailsCollectionViewController.h"
 #import "BrandMainModel.h"
 #import "BrandModel.h"
 #import "BrandTopTwoCollectionViewCell.h"
 #import "BrandListCollectionViewController.h"
+#import "BrandCouponCollectionViewController.h"
 
 @interface BrandAllCollectionViewController ()
 
@@ -81,16 +82,22 @@
           NSDictionary * brands = EncodeDicFromDic(DataDic, @"brands");
          
           NSArray * DataArray = EncodeArrayFromDic(brands, @"contents");
-         
-          YYNSLog(@"品牌馆数据---------%@",DataArray);
-         
+            
           self.BrandArray = [NSArray modelArrayWithClass:[BrandModel class] json:DataArray];
 
           dispatch_group_leave(group);
          
      } failure:^(NSError *error, id responseCache) {
       
-           dispatch_group_leave(group);
+          NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
+         
+          NSDictionary * brands = EncodeDicFromDic(DataDic, @"brands");
+          
+          NSArray * DataArray = EncodeArrayFromDic(brands, @"contents");
+         
+          self.BrandArray = [NSArray modelArrayWithClass:[BrandModel class] json:DataArray];
+         
+          dispatch_group_leave(group);
         
      }];
          
@@ -115,7 +122,11 @@
           dispatch_group_leave(group);
          
      } failure:^(NSError *error, id responseCache) {
-      
+       
+         NSArray * DataArray = EncodeArrayFromDic(responseCache, @"data");
+         
+         self.RecommendsArray = [[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray] mutableCopy];
+         
           dispatch_group_leave(group);
         
      }];
@@ -203,13 +214,27 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-
     BrandMainModel * Model = self.RecommendsArray[indexPath.item];
-    BrandDetailsCollectionViewController * BrandVc = [[BrandDetailsCollectionViewController alloc]init];
-    BrandVc.title = Model.coupon_name;
-    BrandVc.Details_id = Model.brand_id;
-    BrandVc.mall_id = Model.mall_id;
-    [self.navigationController pushViewController:BrandVc animated:YES];
+    if ([Model.coupon_type isEqualToString:@"2"]) {
+        
+        BrandCouponCollectionViewController * BrandVc = [[BrandCouponCollectionViewController alloc]init];
+        BrandVc.title = Model.coupon_name;
+        BrandVc.Details_id = Model.brand_id;
+        BrandVc.mall_id = Model.mall_id;
+        [self.navigationController pushViewController:BrandVc animated:YES];
+        
+    } else {
+        
+        BrandVipDetailsCollectionViewController * BrandVc = [[BrandVipDetailsCollectionViewController alloc]init];
+        BrandVc.title = Model.coupon_name;
+        BrandVc.Details_id = Model.brand_id;
+        BrandVc.mall_id = Model.mall_id;
+        [self.navigationController pushViewController:BrandVc animated:YES];
+        
+    }
+    
+   
+    
    
 }
 

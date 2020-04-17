@@ -6,20 +6,31 @@
 //  Copyright © 2020 xidian. All rights reserved.
 //
 
-#import "BrandDetailsCollectionViewController.h"
-#import "DetailsTopCollectionViewCell.h"
-#import "DetailsNumCollectionViewCell.h"
+#import "BrandVipDetailsCollectionViewController.h"
+#import "BDetailsTopCollectionViewCell.h"
+#import "BDetailsCenCollectionViewCell.h"
+#import "BDetailsShuoCollectionViewCell.h"
 #import "DetailsNotesCollectionViewCell.h"
+#import "BrandDetailsModel.h"
 
-@interface BrandDetailsCollectionViewController ()
+@interface BrandVipDetailsCollectionViewController ()
 
 @property(nonatomic,strong)NSDictionary * DetaisDic;
 
-@property (nonatomic, assign)CGFloat StrViewHeight;
+@property(nonatomic,strong)NSArray * TitleArray;
+
+@property(nonatomic,strong)NSArray<BrandDetailsModel*> * TitleListArray;
+
+@property (nonatomic, assign)CGFloat ContengHeight;
+
+@property (nonatomic, assign)NSInteger TopIndex;
+
+@property (nonatomic, assign)NSInteger bottomIndex;
+
 
 @end
 
-@implementation BrandDetailsCollectionViewController
+@implementation BrandVipDetailsCollectionViewController
 
 ;
 
@@ -31,20 +42,30 @@
     
     self.collectionView.backgroundColor = YYBGColor;
  
-    [self.collectionView registerClass:[DetailsTopCollectionViewCell class] forCellWithReuseIdentifier:@"DetailsTopCollectionViewCell"];
+    [self.collectionView registerClass:[BDetailsTopCollectionViewCell class] forCellWithReuseIdentifier:@"BDetailsTopCollectionViewCell"];
     
-    [self.collectionView registerClass:[DetailsNumCollectionViewCell class] forCellWithReuseIdentifier:@"DetailsNumCollectionViewCell"];
+    [self.collectionView registerClass:[BDetailsCenCollectionViewCell class] forCellWithReuseIdentifier:@"BDetailsCenCollectionViewCell"];
+    
+    [self.collectionView registerClass:[BDetailsShuoCollectionViewCell class] forCellWithReuseIdentifier:@"BDetailsShuoCollectionViewCell"];
     
     [self.collectionView registerClass:[DetailsNotesCollectionViewCell class] forCellWithReuseIdentifier:@"DetailsNotesCollectionViewCell"];
     
+    self.TopIndex = 0;
+    
+    self.bottomIndex = 0;
+    
+    self.ContengHeight = 0;
+    
     [self CreateBrandDetailsBottomView];
+    
+    [self GetHomeGoodsDetailsNetData];
     
     
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     
-     [self GetHomeGoodsDetailsNetData];
+  
     
 }
 
@@ -56,9 +77,15 @@
    
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
         
-        YYNSLog(@"品牌馆详情---------%@",responseObject);
-        
         self.DetaisDic = EncodeDicFromDic(responseObject, @"data");
+        
+        YYNSLog(@"直冲卡详情数据-----------%@",self.DetaisDic);
+        
+        self.TitleArray = self.DetaisDic.allKeys;
+        
+        self.TitleListArray = [NSArray modelArrayWithClass:[BrandDetailsModel class] json:EncodeArrayFromDic(self.DetaisDic, self.TitleArray[0])];
+        
+        self.ContengHeight = [self getStringHeightWithText:self.TitleListArray[0].help font:[UIFont systemFontOfSize:14] viewWidth:YYScreenWidth -48] + 30;
         
         [self.collectionView reloadData];
     
@@ -67,6 +94,7 @@
          self.DetaisDic = EncodeDicFromDic(responseCache, @"data");
        
          [self.collectionView reloadData];
+        
         
     }];
     
@@ -86,7 +114,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return 3;
+    return 4;
     
 }
 
@@ -96,23 +124,61 @@
     
     if (indexPath.item == 0) {
         
-        DetailsTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DetailsTopCollectionViewCell" forIndexPath:indexPath];
+        BDetailsTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BDetailsTopCollectionViewCell" forIndexPath:indexPath];
         
-        [cell.MainBgImgView sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(self.DetaisDic, @"coupon_cover")] placeholderImage:[UIImage imageNamed:@"BrandDbg"]];
         
         return cell;
         
         
     }else if (indexPath.item == 1){
         
-        DetailsNumCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DetailsNumCollectionViewCell" forIndexPath:indexPath];
+        BDetailsCenCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BDetailsCenCollectionViewCell" forIndexPath:indexPath];
         
-       return cell;
+        cell.TitleArray = self.TitleArray;
+        
+        cell.TitleListArray = self.TitleListArray;
+        
+        cell.TopBtnBlockClick = ^(NSInteger TagIndex) {
+          
+            self.TopIndex = TagIndex;
+            
+            self.TitleListArray = [NSArray modelArrayWithClass:[BrandDetailsModel class] json:EncodeArrayFromDic(self.DetaisDic, self.TitleArray[self.TopIndex])];
+            
+            self.ContengHeight = [self getStringHeightWithText:self.TitleListArray[self.bottomIndex].help font:[UIFont systemFontOfSize:14] viewWidth:YYScreenWidth -48] + 30;
+            
+            [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:3 inSection:0], nil]];
+            
+            
+            
+        };
+        
+        cell.BottomBtnBlockClick = ^(NSInteger TagIndex) {
+          
+            self.bottomIndex = TagIndex;
+            
+            self.TitleListArray = [NSArray modelArrayWithClass:[BrandDetailsModel class] json:EncodeArrayFromDic(self.DetaisDic, self.TitleArray[self.TopIndex])];
+            
+            self.ContengHeight = [self getStringHeightWithText:self.TitleListArray[self.bottomIndex].help font:[UIFont systemFontOfSize:14] viewWidth:YYScreenWidth -48] + 30;
+            
+            [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:3 inSection:0], nil]];
+            
+        };
+        
+        return cell;
+        
+        
+    }else if (indexPath.item == 2){
+        
+        BDetailsShuoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BDetailsShuoCollectionViewCell" forIndexPath:indexPath];
+        
+        return cell;
         
         
     }else{
         
         DetailsNotesCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"DetailsNotesCollectionViewCell" forIndexPath:indexPath];
+        
+        cell.ContentLabelString = self.TitleListArray[self.bottomIndex].help;
         
         return cell;
         
@@ -131,15 +197,19 @@
   
     if (indexPath.item == 0) {
         
-        return CGSizeMake(YYScreenWidth , YYScreenWidth * 0.62 +100);
+        return CGSizeMake(YYScreenWidth , YYScreenWidth * 0.46);
         
     }else if (indexPath.item == 1){
+       
+        return CGSizeMake(YYScreenWidth , 300);
+        
+    }else if (indexPath.item == 2){
        
         return CGSizeMake(YYScreenWidth , 112);
         
     }else{
        
-        return CGSizeMake(YYScreenWidth , 152);
+        return CGSizeMake(YYScreenWidth , self.ContengHeight + 50);
         
     }
         
@@ -149,14 +219,14 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     
-        return (CGSize){YYScreenWidth,0};
+       return (CGSize){YYScreenWidth,0};
   
 }
 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
     
-       return (CGSize){YYScreenWidth,0};
+      return (CGSize){YYScreenWidth,0};
     
 }
 
@@ -220,7 +290,7 @@
     UIImageView * HomeImage = [[UIImageView alloc] init];
     HomeImage.backgroundColor = [UIColor clearColor];
     if (YYTabBarHeight < 50) {
-        HomeImage.frame = CGRectMake(24, 15 , 20, 20);
+        HomeImage.frame = CGRectMake(24, 7 , 20, 20);
     } else {
         HomeImage.frame = CGRectMake(24, 15 , 20, 20);
     }
@@ -230,7 +300,7 @@
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"首页";
     if (YYTabBarHeight < 50) {
-      TitleLabel.frame = CGRectMake(22, 40 , 24, 15);
+      TitleLabel.frame = CGRectMake(22, 33 , 24, 15);
     } else {
       TitleLabel.frame = CGRectMake(22, 40 , 24, 15);
     }
@@ -238,6 +308,7 @@
     TitleLabel.textAlignment = NSTextAlignmentCenter;
     TitleLabel.font = [UIFont systemFontOfSize:10 weight:0];
     [BottomView addSubview:TitleLabel];
+    [HomeImage addTarget:self action:@selector(homeImgBtnClick)];
     
     UIButton * BuyButton = [[UIButton alloc]init];
     BuyButton.backgroundColor = YYHexColor(@"#FFD409");
@@ -254,6 +325,14 @@
     
 }
 
+
+#pragma mark ===============网络请求=============
+
+-(void)homeImgBtnClick{
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+}
 
 #pragma mark 获取字符串高度
 
@@ -279,6 +358,7 @@
     NSDictionary *dic = @{ NSFontAttributeName:font, NSParagraphStyleAttributeName:paraStyle };
     CGSize size = [string boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options: NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:dic context:nil].size;
     return  ceilf(size.height);
+    
 }
 
 #pragma mark 立即购买商品

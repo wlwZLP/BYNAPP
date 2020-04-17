@@ -108,4 +108,20 @@
     
 }
 
+/**
+*  给UiView添加点击方法
+*/
+-(void)addViewTarget:(id _Nullable )target action:(nonnull SEL)action{
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                      initWithTarget:target action:action];
+       
+    self.userInteractionEnabled = YES;
+       
+    [self addGestureRecognizer:tap];
+    
+}
+
+
+
 @end

@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DetailsNotesCollectionViewCell : UICollectionViewCell
 
+
+@property(nonatomic,strong)NSString * ContentLabelString;
+
+
 @end
 
 NS_ASSUME_NONNULL_END
