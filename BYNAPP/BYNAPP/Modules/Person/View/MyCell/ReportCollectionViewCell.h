@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ReportModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ReportCollectionViewCell : UICollectionViewCell
+
+@property(nonatomic,strong)NSArray<ReportModel*> * DataArray;
+
+@property (nonatomic, strong) UILabel * TitleLabel;
+
 
 @end
 

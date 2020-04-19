@@ -32,6 +32,7 @@
     [YYTools ChangeView:MainBGView RadiusSize:5 BorderColor:[UIColor clearColor]];
     [self addSubview:MainBGView];
     
+    
     UILabel * headLabel = [[UILabel alloc]init];
     headLabel.text = @"头像";
     headLabel.frame = CGRectMake(12, 27 ,40 , 21);
@@ -46,6 +47,7 @@
     Iconimage.frame = CGRectMake(MainBGView.ZLP_width - 87, 10 ,55, 55);
     [MainBGView addSubview:Iconimage];
     [YYTools ChangeView:Iconimage RadiusSize:22.5 BorderColor:[UIColor clearColor]];
+    self.Logoimage = Iconimage;
     
     UIImageView * RightImage1 = [[UIImageView alloc] init];
     RightImage1.backgroundColor = [UIColor clearColor];
@@ -72,6 +74,16 @@
     NameLabel.font = [UIFont systemFontOfSize:15 weight:0];
     [MainBGView addSubview:NameLabel];
     
+    
+    UILabel * NameContentLabel = [[UILabel alloc]init];
+    NameContentLabel.text = @"朱陆平";
+    NameContentLabel.frame = CGRectMake(MainBGView.ZLP_width - 222, 95 , 196 , 21);
+    NameContentLabel.textColor = YY22Color;
+    NameContentLabel.textAlignment = NSTextAlignmentRight;
+    NameContentLabel.font = [UIFont systemFontOfSize:15 weight:0];
+    [MainBGView addSubview:NameContentLabel];
+    self.NameLabel = NameContentLabel;
+    
     UIImageView * RightImage2 = [[UIImageView alloc] init];
     RightImage2.backgroundColor = [UIColor clearColor];
     RightImage2.frame = CGRectMake(MainBGView.ZLP_width - 22, 99 ,8, 13);
@@ -96,7 +108,15 @@
     IDLabel.textAlignment = NSTextAlignmentLeft;
     IDLabel.font = [UIFont systemFontOfSize:15 weight:0];
     [MainBGView addSubview:IDLabel];
-    
+   
+    UILabel * IDContentLabel = [[UILabel alloc]init];
+    IDContentLabel.text = @"朱陆平";
+    IDContentLabel.frame = CGRectMake(MainBGView.ZLP_width - 222, 156 , 196 , 21);
+    IDContentLabel.textColor = YY99Color;
+    IDContentLabel.textAlignment = NSTextAlignmentRight;
+    IDContentLabel.font = [UIFont systemFontOfSize:15 weight:0];
+    [MainBGView addSubview:IDContentLabel];
+    self.PersonIDLabel = IDContentLabel;
     
     
     UIView * LLineView = UIView.new;
@@ -111,6 +131,15 @@
     PhoneLabel.textAlignment = NSTextAlignmentLeft;
     PhoneLabel.font = [UIFont systemFontOfSize:15 weight:0];
     [MainBGView addSubview:PhoneLabel];
+    
+    UILabel * PhoneContentLabel = [[UILabel alloc]init];
+    PhoneContentLabel.text = @"18757172799";
+    PhoneContentLabel.frame = CGRectMake(MainBGView.ZLP_width - 222, 216 , 196 , 21);
+    PhoneContentLabel.textColor = YY22Color;
+    PhoneContentLabel.textAlignment = NSTextAlignmentRight;
+    PhoneContentLabel.font = [UIFont systemFontOfSize:15 weight:0];
+    [MainBGView addSubview:PhoneContentLabel];
+    self.PhoneLabel = PhoneContentLabel;
     
     UIImageView * RightImage3 = [[UIImageView alloc] init];
     RightImage3.backgroundColor = [UIColor clearColor];
@@ -131,20 +160,20 @@
 
 -(void)HeadImgButtonClick{
     
-    self.TopHeadImgBtnBlockClick();
+//    self.TopHeadImgBtnBlockClick();
     
 }
 
 -(void)PersonNameButtonClick{
     
-     self.TopNameBtnBlockClick();
+//     self.TopNameBtnBlockClick();
     
 }
 
 
 -(void)PhoneButtonClick{
     
-    self.TopPhoneBtnBlockClick();
+//    self.TopPhoneBtnBlockClick();
     
 }
 

@@ -14,7 +14,7 @@
     
     if (self = [super initWithFrame:frame]) {
         
-        self.backgroundColor = YYBGColor;
+        self.backgroundColor = UIColor.whiteColor;
         
         [self setup];
         
@@ -29,7 +29,6 @@
 - (void)setup{
     
    
-    
     UIImageView * Mainimage = [[UIImageView alloc] init];
     Mainimage.backgroundColor = [UIColor clearColor];
     Mainimage.image = [UIImage imageNamed:@"banner01"];

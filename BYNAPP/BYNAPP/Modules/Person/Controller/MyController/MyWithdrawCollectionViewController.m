@@ -11,12 +11,12 @@
 #import "MyWithTopCollectionViewCell.h"
 #import "SetBottomCollectionViewCell.h"
 #import "WithRecordCollectionViewController.h"
-#import "YYWithdrawHeadView.h"
+#import "YYOrderHeadView.h"
 
 @interface MyWithdrawCollectionViewController ()
 
 
-@property(nonatomic,strong)YYWithdrawHeadView * WithHeadView;
+@property(nonatomic,strong)YYOrderHeadView * WithHeadView;
 
 @end
 
@@ -38,8 +38,18 @@
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
+    [self YYSetRightNavTitle:@"提现记录" target:self action:@selector(RightWithdrawClick)];
+    
 }
 
+
+-(void)RightWithdrawClick{
+    
+    WithRecordCollectionViewController * ListVc = [[WithRecordCollectionViewController alloc]init];
+    ListVc.title = @"提现记录";
+    [self.navigationController pushViewController:ListVc animated:YES];
+    
+}
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -74,6 +84,12 @@
        SetBottomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SetBottomCollectionViewCell" forIndexPath:indexPath];
         
         cell.TitString = @"提现";
+        
+        cell.BottomMainBtnBlockClick = ^{
+            
+            [self YYShowAlertViewTitle:@"提现"];
+            
+        };
            
         return cell;
         
@@ -147,12 +163,22 @@
  *
  *  @return SalesSearchBar
  */
--(YYWithdrawHeadView *)WithHeadView
+-(YYOrderHeadView *)WithHeadView
 {
     
     if (_WithHeadView == nil) {
         
-       _WithHeadView = [[YYWithdrawHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 45)];
+        _WithHeadView = [[YYOrderHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 45)];
+        
+        _WithHeadView.backgroundColor = UIColor.whiteColor;
+        
+        _WithHeadView.TitleArray = [[NSArray alloc]initWithObjects:@"佣金",@"会员费",nil ];
+        
+        _WithHeadView.TitleBtnBlockClick = ^(NSInteger TagIndex) {
+            
+
+            
+        };
         
      }
     

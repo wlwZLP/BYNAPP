@@ -94,13 +94,15 @@
     
      sender.selected = YES;
     
-    self.previousClickedTitleButton = sender;
+     self.previousClickedTitleButton = sender;
      
      self.titleUnderline.ZLP_centerX = sender.ZLP_centerX;
     
      self.TitleBtnBlockClick(sender.tag);
     
 }
+
+
 
 
 

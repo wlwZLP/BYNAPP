@@ -58,8 +58,8 @@ static NSString * const reuseIdentifier = @"Cell";
 
 
 
-- (void)setIsShowLiftBack:(BOOL)isShowLiftBack
-{
+- (void)setIsShowLiftBack:(BOOL)isShowLiftBack{
+    
     _isShowLiftBack = isShowLiftBack;
     
     NSInteger VCCount = self.navigationController.viewControllers.count;

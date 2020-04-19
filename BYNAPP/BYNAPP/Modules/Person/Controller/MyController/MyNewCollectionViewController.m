@@ -17,14 +17,15 @@
 
 @property(nonatomic,strong)YYOrderHeadView * HeadView;
 
-@property(nonatomic,strong)NSArray * NewsListArray;
+@property(nonatomic,strong)NSArray<NewsModel*> * NewsListArray;
 
 @property(nonatomic,strong)NSArray<NewArticlesModel*> * ArticlesListArray;
 
 @property(nonatomic,strong)NSMutableArray * TitleArray;
 
-
 @property(nonatomic,strong)NSString * news_cid;
+
+@property(nonatomic,assign)NSInteger  headReoldCount;
 
 @end
 
@@ -40,67 +41,89 @@
     
     self.news_cid = @"5";
     
-    self.collectionView.backgroundColor = YYBGColor;
+    self.headReoldCount = 0;
+    
+    self.collectionView.backgroundColor = UIColor.whiteColor;
     
     [self.collectionView registerClass:[MyNewImgCollectionViewCell class] forCellWithReuseIdentifier:@"MyNewImgCollectionViewCell"];
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
-    [self GetNewControllersNetData];
+    [self GetNewTopHeaderNetData];
     
     
 }
 
 
 #pragma mark  多个网络请求结束后在这里处理数据
+-(void)GetNewTopHeaderNetData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserArticleCategories];
+    
+    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+             
+         NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
+        
+         self.NewsListArray =  [NSArray modelArrayWithClass:[NewsModel class] json:DataArray];
+        
+        [self GetNewBotomImgNetData:self.NewsListArray[0].news_id];
+        
+        for (NewsModel * Model in self.NewsListArray) {
+                       
+            [self.TitleArray addObject:Model.name];
+                       
+        }
+        
+     } failure:^(NSError *error, id responseCache) {
+              
+          [self GetNewBotomImgNetData:@"0"];
+         
+     }];
+    
+    
+}
 
 
--(void)GetNewControllersNetData{
+-(void)GetNewBotomImgNetData:(NSString*)NewCid{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserArticles];
+     
+    NSDictionary * dict = @{@"cid":NewCid};
+     
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+            
+         NSDictionary * Datadic = EncodeDicFromDic(responseObject, @"data");
+        
+         NSArray * DataArray = EncodeArrayFromDic(Datadic, @"data");
+        
+         self.ArticlesListArray =  [NSArray modelArrayWithClass:[NewArticlesModel class] json:DataArray];
+                   
+//        for (int i = 0; i < self.ArticlesListArray.count ; i ++ ) {
+//            [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:i inSection:0], nil]];
+//        }
+         [self.collectionView reloadData];
+        
+     } failure:^(NSError *error, id responseCache) {
+                
+       
+     }];
+    
+    
+}
+
+
+-(void)GetNewData{
     
     //网络请求1
      RACSignal * signal1 = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
       
-         NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserArticleCategories];
-         
-         [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
-                  
-              NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
-             
-              self.news_cid = EncodeStringFromDic(DataArray[0], @"id");
-             
-              [subscriber sendNext:DataArray];
-             
-          } failure:^(NSError *error, id responseCache) {
-                   
-              [subscriber sendNext:responseCache];
-
-          }];
-         
-         return  nil;
+           return  nil;
          
      }];
          
     //网络请求2
      RACSignal * signal2 = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         
-        NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserArticles];
-         
-        NSDictionary * dict = @{@"cid":self.news_cid};
-         
-        [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
-                
-             NSDictionary * Datadic = EncodeDicFromDic(responseObject, @"data");
-            
-             NSArray * DataArray = EncodeArrayFromDic(Datadic, @"data");
-            
-             [subscriber sendNext:DataArray];
-            
-         } failure:^(NSError *error, id responseCache) {
-                   
-              [subscriber sendNext:responseCache];
-           
-         }];
-         
           return  nil;
          
      }];
@@ -110,27 +133,6 @@
     
 }
 
-- (void)updateUIPic:(id)pic1 pic2:(id)pic2{
-  
-    NSArray * NetData1 = (NSArray*)pic1;
-    
-    NSArray * NetData2 = (NSArray*)pic2;
-    
-    self.NewsListArray =  [NSArray modelArrayWithClass:[NewsModel class] json:NetData1];
-    
-    self.ArticlesListArray =  [NSArray modelArrayWithClass:[NewArticlesModel class] json:NetData2];
-               
-    for (NewsModel * Model in self.NewsListArray) {
-                   
-        [self.TitleArray addObject:Model.name];
-                   
-    }
- 
-    
-    [self.collectionView reloadData];
-    
-    
-}
 
 
 
@@ -153,7 +155,7 @@
     
       [cell.MainImgView setImageURL:[NSURL URLWithString: self.ArticlesListArray[indexPath.item].cover]];
     
-       return cell;
+    return cell;
     
 }
 
@@ -208,11 +210,14 @@
         
         headerView.backgroundColor = YYBGColor;
         
-        if (self.TitleArray.count> 0) {
+        if (self.TitleArray.count> 0 && self.headReoldCount == 0) {
             
             [headerView addSubview:self.HeadView];
             
             self.HeadView.TitleArray = self.TitleArray;
+            
+            self.headReoldCount ++;
+            
         }
      
         return headerView;
@@ -228,8 +233,7 @@
  *
  *  @return SalesSearchBar
  */
-- (YYOrderHeadView *)HeadView
-{
+- (YYOrderHeadView *)HeadView{
     
     if (_HeadView== nil) {
         
@@ -239,7 +243,7 @@
         
         _HeadView.TitleBtnBlockClick = ^(NSInteger TagIndex) {
             
-           
+           [self GetNewBotomImgNetData:self.NewsListArray[TagIndex].news_id];
             
             
         };
@@ -267,5 +271,7 @@
       return 10;
     
 }
+
+
 
 @end

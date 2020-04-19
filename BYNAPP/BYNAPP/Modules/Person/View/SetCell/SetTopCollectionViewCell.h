@@ -12,6 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SetTopCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic, strong) UIImageView * Logoimage;
+
+@property (nonatomic, strong) UILabel * NameLabel;
+
+@property (nonatomic, strong) UILabel * PersonIDLabel;
+
+@property (nonatomic, strong) UILabel * PhoneLabel;
+
+
 @property (nonatomic,copy) void(^TopHeadImgBtnBlockClick)(void);
 
 

@@ -14,6 +14,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) void(^WithdrawBtnBlockClick)(void);
 
+@property(nonatomic,strong)UILabel * TopLabel;
+
+@property(nonatomic,strong)UILabel * LeftLabel;
+
+@property(nonatomic,strong)UILabel * CenterLabel;
+
+@property(nonatomic,strong)UILabel * RightLabel;
+
 
 @end
 

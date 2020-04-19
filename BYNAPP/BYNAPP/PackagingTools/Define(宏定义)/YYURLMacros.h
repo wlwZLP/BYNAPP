@@ -66,8 +66,10 @@
 #define URL_APIUserArticles @"api/user/articles"
 //24.会员中心数据
 #define URL_APIMPVCommon @"api/mpv2/common"
-
-
+//25.我的团队
+#define URL_APIMPVUserTeam @"api/mpv2/user/team"
+//26.我的数据报表
+#define URL_APIMPVUserReport @"api/mpv2/user/report"
 
 
 

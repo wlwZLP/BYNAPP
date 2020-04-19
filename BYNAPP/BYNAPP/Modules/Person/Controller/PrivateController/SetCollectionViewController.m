@@ -10,7 +10,8 @@
 #import "SetTopCollectionViewCell.h"
 #import "SetMidCollectionViewCell.h"
 #import "SetBottomCollectionViewCell.h"
-
+#import "WChatCollectionViewController.h"
+#import "TaobaoCollectionViewController.h"
 
 @interface SetCollectionViewController ()
 
@@ -32,7 +33,9 @@
     
     [self.collectionView registerClass:[SetBottomCollectionViewCell class] forCellWithReuseIdentifier:@"SetBottomCollectionViewCell"];
   
+    [self.collectionView reloadData];
     
+   
 }
 
 
@@ -57,17 +60,13 @@
         
         SetTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SetTopCollectionViewCell" forIndexPath:indexPath];
         
-        cell.TopHeadImgBtnBlockClick = ^{
-            [self YYShowAlertViewTitle:@"1"];
-        };
+        [cell.Logoimage sd_setImageWithURL:[NSURL URLWithString:self.Model.avatar] placeholderImage:[UIImage imageNamed:@"MainBG"]];
         
-        cell.TopNameBtnBlockClick  = ^{
-           [self YYShowAlertViewTitle:@"2"];
-        };
+        cell.NameLabel.text = self.Model.name;
         
-        cell.TopPhoneBtnBlockClick  = ^{
-            [self YYShowAlertViewTitle:@"3"];
-        };
+        cell.PersonIDLabel.text = self.Model.User_id;
+        
+        cell.PhoneLabel.text = self.Model.phone;
          
         return cell;
         
@@ -75,12 +74,20 @@
        
        SetMidCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SetMidCollectionViewCell" forIndexPath:indexPath];
         
+        cell.WChatLabel.text = self.Model.wx_account;
+        
+        cell.TBaoLabel.text = self.Model.phone;
+        
         cell.WeiChatImgBtnBlockClick  = ^{
-            [self YYShowAlertViewTitle:@"1"];
+            WChatCollectionViewController * WChatVc = [[WChatCollectionViewController alloc]init];
+            WChatVc.title = @"绑定微信";
+            [self.navigationController pushViewController:WChatVc animated:YES];
         };
         
         cell.TaoBaoBtnBlockClick   = ^{
-           [self YYShowAlertViewTitle:@"2"];
+           TaobaoCollectionViewController * WChatVc = [[TaobaoCollectionViewController alloc]init];
+           WChatVc.title = @"绑定支付宝";
+           [self.navigationController pushViewController:WChatVc animated:YES];
         };
         
         cell.AutuBtnBlockClick   = ^{
@@ -116,6 +123,7 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
+
 
 
 

@@ -20,6 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) void(^AutuBtnBlockClick)(void);
 
+@property (nonatomic, strong) UILabel * WChatLabel;
+
+@property (nonatomic, strong) UILabel * TBaoLabel;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -9,7 +9,7 @@
 #import "MyCouponCollectionViewController.h"
 #import "CouponCollectionViewCell.h"
 #import "YYOrderHeadView.h"
-
+#import "CouponDetailsCollectionViewController.h"
 
 @interface MyCouponCollectionViewController ()
 
@@ -83,7 +83,18 @@
     
 }
 
-#pragma mark <UICollectionViewDelegate>
+#pragma mark -选中某item进行跳转
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+
+    CouponDetailsCollectionViewController * CouponVc = [[CouponDetailsCollectionViewController alloc]init];
+    CouponVc.CouponType = @"1";
+    CouponVc.title = @"查看卡券";
+    [self.navigationController pushViewController:CouponVc animated:YES];
+    
+    
+}
 
 
 #pragma mark <UICollectionViewDelegate>

@@ -78,7 +78,6 @@
     self.TitleLabel = TitleLabel;
     
     UILabel * StoreNameLabel = [[UILabel alloc]init];
-//    StoreNameLabel.text = @"神犬旗舰店";
     StoreNameLabel.textColor = YY99Color;
     StoreNameLabel.textAlignment = NSTextAlignmentLeft;
     StoreNameLabel.font = [UIFont systemFontOfSize:12 weight:0];
@@ -86,7 +85,6 @@
     self.StoreNameLabel = StoreNameLabel;
     
     UILabel * CouponLabel = [[UILabel alloc]init];
-//    CouponLabel.text = @"10元券";
     CouponLabel.textAlignment = NSTextAlignmentCenter;
     CouponLabel.textColor = YYHexColor(@"#FB5434");
     CouponLabel.backgroundColor = [UIColor colorWithRed:255/255.0 green:236/255.0 blue:232/255.0 alpha:1.0];

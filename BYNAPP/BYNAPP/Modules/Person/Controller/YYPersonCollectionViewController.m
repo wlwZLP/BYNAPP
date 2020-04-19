@@ -50,7 +50,7 @@
     
     self.collectionView.backgroundColor = YYBGColor;
     
-    [self.navigationController setNavigationBarHidden:YES animated:nil];
+//    [self.navigationController setNavigationBarHidden:YES animated:nil];
      
     [self.collectionView registerClass:[PersonNoVipheadCollectionViewCell class] forCellWithReuseIdentifier:@"PersonNoVipheadCollectionViewCell"];
     
@@ -79,6 +79,12 @@
     
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    
+    [self.navigationController setNavigationBarHidden:NO animated:nil];
+    
+}
+
 
 -(void)GetPersonUserNetworkData{
     
@@ -89,7 +95,7 @@
        
         NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
        
-        YYNSLog(@"个人中心数据----%@",Data);
+//        YYNSLog(@"个人中心数据----%@",Data);
        
         self.Usermodel = [UserModel modelWithDictionary:Data];
     
@@ -293,14 +299,13 @@
         MyReportCollectionViewController * SetVc = [[MyReportCollectionViewController alloc]init];
         SetVc.title = @"我的报表";
         [self.navigationController pushViewController:SetVc animated:YES];
+        
     }else if ([PushTitleString isEqualToString:@"设置"]){
         
-        
-        YYNSLog(@"-------%@",self.Usermodel);
-        
-//        SetCollectionViewController * SetVc = [[SetCollectionViewController alloc]init];
-//        SetVc.title = @"个人信息";
-//        [self.navigationController pushViewController:SetVc animated:YES];
+        SetCollectionViewController * SetVc = [[SetCollectionViewController alloc]init];
+        SetVc.title = @"个人信息";
+        SetVc.Model = self.Usermodel;
+        [self.navigationController pushViewController:SetVc animated:YES];
             
     }else if ([PushTitleString isEqualToString:@"提现"]){
         

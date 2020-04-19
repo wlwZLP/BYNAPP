@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MyTeamModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TeamCollectionViewCell : UICollectionViewCell
+
+@property(nonatomic,strong)MyTeamModel * Model;
 
 @end
 

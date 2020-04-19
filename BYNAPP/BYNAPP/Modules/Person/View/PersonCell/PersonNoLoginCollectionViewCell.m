@@ -66,7 +66,7 @@
     }];
     
     UIImageView * HeadImage = [[UIImageView alloc] init];
-    HeadImage.image = [UIImage imageNamed:@"Jingdong"];
+    HeadImage.image = [UIImage imageNamed:@"MainBG"];
     HeadImage.frame = CGRectMake(20, YYStatusHeight + 20, 55, 55);
     [self addSubview:HeadImage];
     [YYTools ChangeView:HeadImage RadiusSize:22 BorderColor:[UIColor clearColor]];

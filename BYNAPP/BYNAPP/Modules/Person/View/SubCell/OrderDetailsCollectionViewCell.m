@@ -39,12 +39,6 @@
     MainBGView.frame = CGRectMake(12, 10, self.ZLP_width - 24, self.ZLP_height -10);
     [YYTools ChangeView:MainBGView RadiusSize:5 BorderColor:[UIColor clearColor]];
     [self addSubview:MainBGView];
-//    [MainBGView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(self.mas_top).with.offset(10);
-//        make.left.equalTo(self.mas_left).with.offset(12);
-//        make.right.equalTo(self.mas_right).with.offset(-12);
-//        make.bottom.equalTo(self.mas_bottom).with.offset(0);
-//    }];
     
     UILabel * OrderLabel = [[UILabel alloc]init];
     OrderLabel.text = @"订单编号：234323787645678";
@@ -154,20 +148,6 @@
     GetMoneyLabel.font = [UIFont systemFontOfSize:11 weight:0];
     [MainBGView addSubview:GetMoneyLabel];
     [YYTools ChangeView:GetMoneyLabel RadiusSize:5 BorderColor:[UIColor clearColor]];
-    
-   
-    
-    
-
-   
-    
-    
-    
-    
-    
-    
-    
-    
     
 
 }

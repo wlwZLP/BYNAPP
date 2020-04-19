@@ -40,17 +40,28 @@
     WeixinLabel.font = [UIFont systemFontOfSize:15 weight:0];
     [MainBGView addSubview:WeixinLabel];
     
+    UILabel * WXContentLabel = [[UILabel alloc]init];
+    WXContentLabel.text = @"朱陆平";
+    WXContentLabel.frame = CGRectMake(MainBGView.ZLP_width - 222, 20 , 196 , 21);
+    WXContentLabel.textColor = YY22Color;
+    WXContentLabel.textAlignment = NSTextAlignmentRight;
+    WXContentLabel.font = [UIFont systemFontOfSize:15 weight:0];
+    [MainBGView addSubview:WXContentLabel];
+    self.WChatLabel = WXContentLabel;
+    
     UIImageView * RightImage1 = [[UIImageView alloc] init];
     RightImage1.backgroundColor = [UIColor clearColor];
     RightImage1.frame = CGRectMake(MainBGView.ZLP_width - 22, 26.5 ,8, 13);
     RightImage1.image = [UIImage imageNamed:@"SetRight"];
     [MainBGView addSubview:RightImage1];
     
+    
     UIButton * WeiChatBtn = [[UIButton alloc]init];
     WeiChatBtn.backgroundColor = UIColor.clearColor;
     WeiChatBtn.frame = CGRectMake(MainBGView.ZLP_width - 50, 0 ,50, 60);
     [WeiChatBtn addTarget:self action:@selector(WeiChatButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [MainBGView addSubview:WeiChatBtn];
+    
     
     UIView * FLineView = UIView.new;
     FLineView.backgroundColor = YYE5Color;
@@ -64,6 +75,15 @@
     TaobaoLabel.textAlignment = NSTextAlignmentLeft;
     TaobaoLabel.font = [UIFont systemFontOfSize:15 weight:0];
     [MainBGView addSubview:TaobaoLabel];
+    
+    UILabel * TBContentLabel = [[UILabel alloc]init];
+    TBContentLabel.text = @"朱陆平";
+    TBContentLabel.frame = CGRectMake(MainBGView.ZLP_width - 222, 80 , 196 , 21);
+    TBContentLabel.textColor = YY22Color;
+    TBContentLabel.textAlignment = NSTextAlignmentRight;
+    TBContentLabel.font = [UIFont systemFontOfSize:15 weight:0];
+    [MainBGView addSubview:TBContentLabel];
+    self.TBaoLabel = TBContentLabel;
     
     UIImageView * RightImage2 = [[UIImageView alloc] init];
     RightImage2.backgroundColor = [UIColor clearColor];

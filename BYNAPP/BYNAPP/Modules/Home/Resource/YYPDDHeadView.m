@@ -14,14 +14,15 @@
 
 @property(nonatomic,strong)UIButton * SaleLeftBtn;
 
-@property(nonatomic,strong)UIButton * SaleRightBtn;
+@property(nonatomic,strong)UIButton * SaleTopBtn;
+
+@property(nonatomic,strong)UIButton * SaleBotBtn;
 
 @property(nonatomic,strong)UIButton * PriceLeftBtn;
 
-@property(nonatomic,strong)UIButton * PriceRightBtn;
+@property(nonatomic,strong)UIButton * PriceTopBtn;
 
-@property(nonatomic,strong)UIButton * TOPYHBtn;
-
+@property(nonatomic,strong)UIButton * PriceBotBtn;
 
 @end
 
@@ -86,14 +87,24 @@
     self.SaleLeftBtn = SaleLeftBtn;
     
     
-    UIButton * SaleRightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    SaleRightBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 35, 18, 10, 6);
-    [SaleRightBtn setBackgroundImage:[UIImage imageNamed:@"blacksha"] forState:UIControlStateNormal];
-    [SaleRightBtn setBackgroundImage:[UIImage imageNamed:@"blackxia"] forState:UIControlStateSelected];
-    SaleRightBtn.backgroundColor = [UIColor clearColor];
-    SaleRightBtn.selected = NO;
-    [SaleView addSubview:SaleRightBtn];
-    self.SaleRightBtn = SaleRightBtn;
+    UIButton * SaleTopBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    SaleTopBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 37.8, 12.5 , 10, 6);
+    [SaleTopBtn setBackgroundImage:[UIImage imageNamed:@"blacksha"] forState:UIControlStateNormal];
+    [SaleTopBtn setBackgroundImage:[UIImage imageNamed:@"YellowSha"] forState:UIControlStateSelected];
+    SaleTopBtn.backgroundColor = [UIColor clearColor];
+    SaleTopBtn.selected = NO;
+    [SaleView addSubview:SaleTopBtn];
+    self.SaleTopBtn = SaleTopBtn;
+    
+    
+    UIButton * SaleBotBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    SaleBotBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 38, 22, 10, 6);
+    [SaleBotBtn setBackgroundImage:[UIImage imageNamed:@"blackxia"] forState:UIControlStateNormal];
+    [SaleBotBtn setBackgroundImage:[UIImage imageNamed:@"YellowXia"] forState:UIControlStateSelected];
+    SaleBotBtn.backgroundColor = [UIColor clearColor];
+    SaleBotBtn.selected = NO;
+    [SaleView addSubview:SaleBotBtn];
+    self.SaleBotBtn = SaleBotBtn;
   
     
     UIButton * SaleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -124,15 +135,24 @@
     [PriceView addSubview:PriceLeftBtn];
     self.PriceLeftBtn = PriceLeftBtn;
     
+    UIButton * PriceTopBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    PriceTopBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 37.8, 12.5, 10, 6);
+    [PriceTopBtn setBackgroundImage:[UIImage imageNamed:@"blacksha"] forState:UIControlStateNormal];
+    [PriceTopBtn setBackgroundImage:[UIImage imageNamed:@"YellowSha"] forState:UIControlStateSelected];
+    PriceTopBtn.backgroundColor = [UIColor clearColor];
+    PriceTopBtn.selected = NO;
+    [PriceView addSubview:PriceTopBtn];
+    self.PriceTopBtn = PriceTopBtn;
     
-    UIButton * PriceRightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    PriceRightBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 35,18,10, 6);
-    [PriceRightBtn setBackgroundImage:[UIImage imageNamed:@"BlackBottom"] forState:UIControlStateNormal];
-    [PriceRightBtn setBackgroundImage:[UIImage imageNamed:@"RedTop"] forState:UIControlStateSelected];
-    PriceRightBtn.backgroundColor = [UIColor clearColor];
-    PriceRightBtn.selected = NO;
-    [PriceView addSubview:PriceRightBtn];
-    self.PriceRightBtn = PriceRightBtn;
+    
+    UIButton * PriceBotBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    PriceBotBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 38, 22, 10, 6);
+    [PriceBotBtn setBackgroundImage:[UIImage imageNamed:@"blackxia"] forState:UIControlStateNormal];
+    [PriceBotBtn setBackgroundImage:[UIImage imageNamed:@"YellowXia"] forState:UIControlStateSelected];
+    PriceBotBtn.backgroundColor = [UIColor clearColor];
+    PriceBotBtn.selected = NO;
+    [PriceView addSubview:PriceBotBtn];
+    self.PriceBotBtn = SaleBotBtn;
     
     
     UIButton * PriceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -199,54 +219,24 @@
 
     if ([HeaderType isEqualToString:@"default"]){
         
-        self.VHDLBtn.selected = YES;
-        self.SaleLeftBtn.selected = NO;
-        self.SaleRightBtn.selected = NO;
-        self.PriceLeftBtn.selected = NO;
-        self.PriceRightBtn.selected = NO;
+    
        
     }else if ([HeaderType isEqualToString:@"price_des"]){
         
-        self.VHDLBtn.selected = NO;
-        
-        self.SaleLeftBtn.selected = NO;
-        self.SaleRightBtn.selected = NO;
-        
-        self.PriceLeftBtn.selected = YES;
-        self.PriceRightBtn.selected = YES;
+       
        
         
     }else if ([HeaderType isEqualToString:@"price_asc"]){
         
-        self.VHDLBtn.selected = NO;
-        
-        self.SaleLeftBtn.selected = NO;
-        self.SaleRightBtn.selected = NO;
-        
-        self.PriceLeftBtn.selected = YES;
-        self.PriceRightBtn.selected = NO;
-      
+       
         
     }else if ([HeaderType isEqualToString:@"total_sales_des"]){
         
-        self.VHDLBtn.selected = NO;
-        
-        self.SaleLeftBtn.selected = YES;
-        self.SaleRightBtn.selected = YES;
-        
-        self.PriceLeftBtn.selected = NO;
-        self.PriceRightBtn.selected = NO;
+      
         
     }else if ([HeaderType isEqualToString:@"total_sales_asc"]){
         
-        self.VHDLBtn.selected = NO;
-        
-        self.SaleLeftBtn.selected = YES;
-        self.SaleRightBtn.selected = NO;
-        
-        self.PriceLeftBtn.selected = NO;
-        self.PriceRightBtn.selected = NO;
-        
+       
     }
     
     
@@ -270,11 +260,10 @@
     
     if ([HeaderCoupon isEqualToString:@"White_Coupon"]){
         
-        self.TOPYHBtn.selected = NO;
-        
+       
     }else{
         
-        self.TOPYHBtn.selected = YES;
+       
         
     }
     

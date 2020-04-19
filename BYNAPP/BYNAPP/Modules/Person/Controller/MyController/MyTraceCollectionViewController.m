@@ -45,7 +45,6 @@
     
     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserBrowsers];
          
-                        
     [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
                 
         NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
@@ -55,8 +54,6 @@
         YYNSLog(@"我的足迹-----%@",self.TraceData);
         
         self.TitleArray = self.TraceData.allKeys;
-       
-//        self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(self.TraceData, self.TraceData.allKeys[0])];
             
         [self.collectionView reloadData];
           

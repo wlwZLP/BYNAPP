@@ -9,12 +9,13 @@
 #import "MyTeamCollectionViewController.h"
 #import "YYTeamHeadView.h"
 #import "TeamCollectionViewCell.h"
-
+#import "MyTeamModel.h"
 
 @interface MyTeamCollectionViewController ()
 
-
 @property(nonatomic,strong)YYTeamHeadView * TeamHeadView;
+
+@property(nonatomic,strong)NSArray <MyTeamModel*> * TeamListArray;
 
 @end
 
@@ -32,6 +33,35 @@
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
+    [self GetMyTeamControllNetworkData];
+    
+}
+
+#pragma mark 获取当前界面网络数据
+
+-(void)GetMyTeamControllNetworkData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVUserTeam];
+         
+    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+                
+        NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+    
+        self.TeamListArray = [NSArray modelArrayWithClass:[MyTeamModel class] json:EncodeArrayFromDic(DataDic, @"data")];
+        
+        [self.collectionView reloadData];
+          
+    } failure:^(NSError *error, id responseCache) {
+              
+         NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
+
+         self.TeamListArray = [NSArray modelArrayWithClass:[MyTeamModel class] json:EncodeArrayFromDic(DataDic, @"data")];
+     
+          [self.collectionView reloadData];
+
+     }];
+    
+    
 }
 
 
@@ -45,13 +75,15 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-      return 22;
+    return self.TeamListArray.count;
     
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-      TeamCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TeamCollectionViewCell" forIndexPath:indexPath];
+     TeamCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TeamCollectionViewCell" forIndexPath:indexPath];
+    
+      cell.Model = self.TeamListArray[indexPath.item];
     
       return cell;
     
