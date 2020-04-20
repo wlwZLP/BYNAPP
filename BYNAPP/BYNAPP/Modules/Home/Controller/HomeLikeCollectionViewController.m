@@ -66,8 +66,6 @@
        [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
                 
            NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
-           
-//           YYNSLog(@"猜你喜欢数据----%@",responseObject);
        
            self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
            

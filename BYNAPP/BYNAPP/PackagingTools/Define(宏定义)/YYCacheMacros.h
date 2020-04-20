@@ -19,6 +19,12 @@
 
 #define YYToken  @"token"
 
+#define YYUser @"User"
+
+//0 表示未登录, 1表示已经登录
+#define YYLogin @"ISLogin"
+
+
 
 
 #endif /* ThirdMacros_h */

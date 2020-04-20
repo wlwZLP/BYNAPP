@@ -30,8 +30,8 @@
     
      [self GetBrandOtherNetData];
     
-    
 }
+
 
 #pragma mark <UICollectionViewDataSource>
 

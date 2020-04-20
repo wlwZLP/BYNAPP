@@ -21,6 +21,14 @@
 //清除所有缓存
 + (void)clearCachefilePath:(NSString*)Dirpath;
 
+///数据持久化保存的key
++ (void)YY_SaveModel:(id)model key:(NSString *)key;
+
+///获取数据持久化保存的Model  - 要传入model的Class - 内部进行yyModel转模型
++ (id) YY_GetSaveModelWithkey:(NSString *)key modelClass:(Class)modelClass;
+
+///获取保存的模型数组
++ (id) YY_GetSaveModelArrayWithkey:(NSString *)key modelClass:(Class)modelClass;
 
 
 @end

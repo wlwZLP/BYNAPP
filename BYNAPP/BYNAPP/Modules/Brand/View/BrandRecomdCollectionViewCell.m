@@ -101,19 +101,21 @@
     [CouponImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(PriceLabel.mas_right).with.offset(10);
         make.top.equalTo(MainBGView.mas_top).with.offset(40);
+        make.width.offset(60);
         make.height.offset(20);
     }];
     
     UILabel * CouponLabel = [[UILabel alloc]init];
     CouponLabel.text = @"¥15.5";
     CouponLabel.textColor = UIColor.whiteColor;
-    CouponLabel.textAlignment = NSTextAlignmentLeft;
-    CouponLabel.font = [UIFont systemFontOfSize:10 weight:0];
+    CouponLabel.textAlignment = NSTextAlignmentCenter;
+    CouponLabel.font = [UIFont systemFontOfSize:13 weight:1];
     [MainBGView addSubview:CouponLabel];
     self.CouponLabel = CouponLabel;
     [CouponLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(PriceLabel.mas_right).with.offset(13);
         make.top.equalTo(MainBGView.mas_top).with.offset(40);
+        make.width.offset(60);
         make.height.offset(20);
     }];
     
@@ -142,7 +144,7 @@
     
     self.PriceLabel.text = [NSString stringWithFormat:@" ￥%@ ",Model.member_price];
        
-    self.CouponLabel.text = [NSString stringWithFormat:@" ￥%@ ",Model.fl_commission];
+//    self.CouponLabel.text = [NSString stringWithFormat:@"省%@元",[self GetTracMoneyWithAmount:Model.face_price ToMoney:Model.member_price]];
        
     self.OldPriceLabel.text = [NSString stringWithFormat:@"官方价￥%@ ",Model.face_price];
     
@@ -153,29 +155,17 @@
     
 }
 
--(CGFloat)addreeBackMoneyWithAmount:(CGFloat)amount ToMoney:(CGFloat)toMoney{
-
-    NSString*amountStr = [NSString stringWithFormat:@"%.08lf",amount];
-
-    NSString*toMoneyStr = [NSString stringWithFormat:@"%.08lf",toMoney];
- 
-    NSDecimalNumber*amountNum = [NSDecimalNumber decimalNumberWithString:amountStr];
-
-    NSDecimalNumber*toMoneyNum = [NSDecimalNumber decimalNumberWithString:toMoneyStr];
-
-    double xiaofee = 0.001210000;
- 
-    NSDecimalNumber*feeNum = [NSDecimalNumber decimalNumberWithString:[NSString stringWithFormat:@"%.8lf",xiaofee]];
-
-   
-    NSDecimalNumber*resultNum = [amountNum decimalNumberBySubtracting:toMoneyNum];
- 
-    NSDecimalNumber*subTracFeeNum = [resultNum decimalNumberBySubtracting:feeNum];
-
-    
-    return [subTracFeeNum doubleValue];;
-
-}
+//-(NSString *)GetTracMoneyWithAmount:(NSString *)amount ToMoney:(NSString*)toMoney{
+//
+//    NSDecimalNumber * number1 = [NSDecimalNumber decimalNumberWithString:amount];
+//
+//    NSDecimalNumber * number2 = [NSDecimalNumber decimalNumberWithString:toMoney];
+//
+//    NSDecimalNumber * subTracFeeNum = [number1 decimalNumberBySubtracting:number2];
+//
+//    return [subTracFeeNum stringValue];
+//
+//}
 
 
 

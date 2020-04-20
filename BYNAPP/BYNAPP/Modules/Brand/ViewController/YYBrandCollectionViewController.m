@@ -10,7 +10,7 @@
 #import "BrandPlistModel.h"
 #import "BrandAllCollectionViewController.h"
 #import "BrandOtherCollectionViewController.h"
-
+#import "BrandSearchCollectionViewController.h"
 
 static int const HomelabelWith = 90;
 
@@ -126,7 +126,6 @@ static int const HomelabelWith = 90;
     [TopBarView addSubview:self.HomeSearchBar];
     
     UIButton * SearchBtn = [[UIButton alloc] initWithFrame:CGRectMake(YYScreenWidth - 125, YYStatusHeight + 6 , 66, 32)];
-    [SearchBtn addTarget:self action:@selector(SearchButtonClick) forControlEvents:UIControlEventTouchUpInside];
     SearchBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
     SearchBtn.backgroundColor = YYHexColor(@"#FFD409");
     [SearchBtn setTitleColor:YY66Color forState:UIControlStateNormal];
@@ -414,6 +413,20 @@ static int const HomelabelWith = 90;
     
     
 }
+
+
+#pragma mark - UISearchBardelegete
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+    
+    BrandSearchCollectionViewController * Search = [[BrandSearchCollectionViewController alloc]init];
+    [self.navigationController pushViewController:Search animated:YES];
+    return NO;
+    
+}
+
+
+
+
 
 
 

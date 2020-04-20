@@ -29,7 +29,8 @@
 #import <SDCycleScrollView.h>
 #import <SDAutoLayout.h>
 #import <UIScrollView+EmptyDataSet.h>
-
+#import <AlipaySDK/AlipaySDK.h>
+#import <UShareUI/UShareUI.h>
 
 //常用自定义
 #import "AppDelegate.h"
@@ -49,6 +50,9 @@
 #import "LPRefreshFooter.h"
 #import "LPRefreshGifHeader.h"
 #import "YYWebViewController.h"
+#import "UserModel.h"
+#import "LPAnimationView.h"
+
 
 //常用分类
 #import "UIView+AnimationExtend.h"

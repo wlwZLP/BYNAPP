@@ -11,8 +11,6 @@
 
 @interface YYOrderHeadView ()
 
-
-
 /** 上一次点击的标题按钮 */
 @property (nonatomic, strong) UIButton * previousClickedTitleButton;
 
@@ -22,7 +20,7 @@
 
 @implementation YYOrderHeadView
 
-- (id)initWithFrame:(CGRect)frame
+-(id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     
@@ -101,7 +99,6 @@
      self.TitleBtnBlockClick(sender.tag);
     
 }
-
 
 
 

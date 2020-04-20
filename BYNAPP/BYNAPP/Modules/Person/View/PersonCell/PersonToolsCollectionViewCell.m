@@ -16,8 +16,6 @@
         
         self.backgroundColor = YYBGColor;
 
-       
-        
         [self setup];
         
     }
@@ -73,7 +71,8 @@
     UIButton * LeftBtn = [[UIButton alloc]init];
     LeftBtn.frame = CGRectMake(0 , 0, YYScreenWidth/4, 72);
     [LeftBtn setBackgroundColor:[UIColor clearColor]];
-    [LeftBtn addTarget:self action:@selector(LeftButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    LeftBtn.tag = 0;
+    [LeftBtn addTarget:self action:@selector(ToolsButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [LeftBGView addSubview:LeftBtn];
 
     UIView * LeftCenterView = [[UIView alloc] init];
@@ -98,7 +97,8 @@
     UIButton * LeftCenterBtn = [[UIButton alloc]init];
     LeftCenterBtn.frame = CGRectMake(0 , 0, YYScreenWidth/4, 72);
     [LeftCenterBtn setBackgroundColor:[UIColor clearColor]];
-    [LeftCenterBtn addTarget:self action:@selector(LeftCenterButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    LeftCenterBtn.tag = 1;
+    [LeftCenterBtn addTarget:self action:@selector(ToolsButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [LeftCenterView addSubview:LeftCenterBtn];
     
     
@@ -124,7 +124,8 @@
     UIButton * RightCenterBtn = [[UIButton alloc]init];
     RightCenterBtn.frame = CGRectMake(0 , 0, YYScreenWidth/4, 72);
     [RightCenterBtn setBackgroundColor:[UIColor clearColor]];
-    [RightCenterBtn addTarget:self action:@selector(RightCenterButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    RightCenterBtn.tag = 2;
+    [RightCenterBtn addTarget:self action:@selector(ToolsButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [RightCenterView addSubview:RightCenterBtn];
     
     UIView * RightBGView = [[UIView alloc] init];
@@ -149,7 +150,8 @@
     UIButton * RightBtn = [[UIButton alloc]init];
     RightBtn.frame = CGRectMake(0 , 0, YYScreenWidth/4, 72);
     [RightBtn setBackgroundColor:[UIColor clearColor]];
-    [RightBtn addTarget:self action:@selector(RightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    RightBtn.tag = 3;
+    [RightBtn addTarget:self action:@selector(ToolsButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [RightBGView addSubview:RightBtn];
     
     
@@ -157,28 +159,20 @@
     
 }
 
--(void)LeftButtonClick:(UIButton*)titleButton{
+-(void)ToolsButtonClick:(UIButton*)titleButton{
     
-    self.LeftBtnBlockClick();
-}
-
--(void)LeftCenterButtonClick:(UIButton*)titleButton{
-    
-    self.LeftCenterBtnBlockClick();
-    
-}
-
--(void)RightCenterButtonClick:(UIButton*)titleButton{
-    
-    self.RightCenterBtnBlockClick();
+   if (titleButton.tag == 0) {
+        self.PersonToolsBtnBlockClick(@"我的收藏");
+    }else if (titleButton.tag == 1){
+        self.PersonToolsBtnBlockClick(@"团队足迹");
+    }else if (titleButton.tag == 2){
+        self.PersonToolsBtnBlockClick(@"新人必看");
+    }else if (titleButton.tag == 3){
+        self.PersonToolsBtnBlockClick(@"邀请好友");
+    }
     
 }
 
--(void)RightButtonClick:(UIButton*)titleButton{
-    
-    self.RightBtnBlockClick();
-    
-}
 
 
 @end

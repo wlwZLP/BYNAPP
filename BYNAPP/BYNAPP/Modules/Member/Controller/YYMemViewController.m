@@ -316,7 +316,6 @@ UICollectionViewDataSource>
         _MenTitleLabel = [[UILabel alloc] init];
         _MenTitleLabel.backgroundColor = UIColor.redColor;
         _MenTitleLabel.textColor = YY22Color;
-//        _MenTitleLabel.text = @"区头";
         _MenTitleLabel.frame = CGRectMake(20, 10, 100, 20);
         _MenTitleLabel.textAlignment = NSTextAlignmentLeft;
         _MenTitleLabel.font = [UIFont systemFontOfSize:14 weight:1];
@@ -332,7 +331,7 @@ UICollectionViewDataSource>
 // CollectionView分区标题即将展示
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
 {
-    //当前CollectionView滚动的方向向上，CollectionView是用户拖拽而产生滚动的（主要是判断CollectionView是用户拖拽而滚动的，还是点击TableView而滚动的）
+ //当前CollectionView滚动的方向向上，CollectionView是用户拖拽而产生滚动的（主要是判断CollectionView是用户拖拽而滚动的，还是点击TableView而滚动的）
     if (!_isScrollDown && (collectionView.dragging || collectionView.decelerating))
     {
         [self selectRowAtIndexPath:indexPath.section];
@@ -349,6 +348,7 @@ UICollectionViewDataSource>
     {
         [self selectRowAtIndexPath:indexPath.section + 1];
     }
+    
 }
 
 // 当拖动CollectionView的时候，处理TableView
@@ -378,6 +378,7 @@ UICollectionViewDataSource>
     
       return 0;
 }
+
 
 #pragma mark - UIScrollView Delegate
 // 标记一下CollectionView的滚动方向，是向上还是向下

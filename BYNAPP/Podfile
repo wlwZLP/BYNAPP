@@ -1,5 +1,7 @@
 
 source 'https://github.com/CocoaPods/Specs.git'
+source 'http://repo.baichuan-ios.taobao.com/baichuanSDK/AliBCSpecs.git'
+
 platform :ios, '9.0'
 target 'BYNAPP' do
 #网络请求数据
@@ -22,5 +24,22 @@ pod 'SDCycleScrollView'
 pod 'SDAutoLayout', '~> 2.1.3'
 #键盘控制
 pod 'IQKeyboardManager'
+#支付宝支付文档
+pod 'AlipaySDK-iOS'
+#控件布局
+pod 'Masonry'
+
+#pod 'FLAnimatedImage'
+
+#pod 'AlibcTradeSDK','4.0.1.1'
+#pod 'AliAuthSDK','1.1.0.39-bc'
+#pod 'mtopSDK','3.0.0.4'
+#pod 'securityGuard','5.4.173'
+#pod 'AliLinkPartnerSDK','4.0.0.24'
+#pod 'BCUserTrack','5.2.0.16-appkeys'
+#pod 'UTDID','1.1.0.16'
+
+
+
 
 end

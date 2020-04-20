@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UserModel : NSObject
 
+@property(nonatomic,strong)NSString * ISLogin;
+
 @property(nonatomic,strong)NSString * Token;
 
 @property (nonatomic, copy) NSString * yesterday_plus_amount;

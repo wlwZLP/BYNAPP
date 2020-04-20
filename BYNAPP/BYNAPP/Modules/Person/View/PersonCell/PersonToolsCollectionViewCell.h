@@ -12,14 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PersonToolsCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic,copy) void(^LeftBtnBlockClick)(void);
-
-@property (nonatomic,copy) void(^LeftCenterBtnBlockClick)(void);
-
-@property (nonatomic,copy) void(^RightCenterBtnBlockClick)(void);
-
-@property (nonatomic,copy) void(^RightBtnBlockClick)(void);
-
+@property (nonatomic,copy) void(^PersonToolsBtnBlockClick)(NSString * Title);
 
 @end
 

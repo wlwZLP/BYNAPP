@@ -33,7 +33,6 @@
     Mainimage.backgroundColor = [UIColor clearColor];
     Mainimage.image = [UIImage imageNamed:@"course"];
     [self addSubview:Mainimage];
-   
     
     [Mainimage mas_makeConstraints:^(MASConstraintMaker *make) {
       
@@ -42,9 +41,17 @@
         make.right.equalTo(self.mas_right).with.offset(-12);
         make.bottom.equalTo(self.mas_bottom).with.offset(-15);
     }];
+    [Mainimage addTarget:self action:@selector(MainImgClick)];
     
   
 
+}
+
+
+-(void)MainImgClick{
+    
+    self.IMgClickBlockClick();
+    
 }
 
 

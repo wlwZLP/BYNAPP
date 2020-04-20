@@ -66,7 +66,34 @@
    
 }
 
+///数据持久化保存的key
++(void)YY_SaveModel:(id)model key:(NSString *)key{
+    
+    //model转json
+    NSData * data = [model modelToJSONObject];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:key];
+    
+}
 
+///获取数据持久化保存的Model  - 要传入model的Class - 内部进行yyModel转模型
++ (id) YY_GetSaveModelWithkey:(NSString *)key modelClass:(Class)modelClass{
+  
+    NSDictionary * data = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+   
+    return [modelClass modelWithJSON:data];
+    
+}
+
+
+///获取保存的模型数组
++ (id) YY_GetSaveModelArrayWithkey:(NSString *)key modelClass:(Class)modelClass{
+   
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    NSArray * array = [NSKeyedUnarchiver unarchivedObjectOfClass:modelClass fromData:data error:nil];
+    return [NSArray modelArrayWithClass:[modelClass class] json:array];
+    
+}
 
 
 @end

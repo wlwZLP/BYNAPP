@@ -54,7 +54,8 @@
     UIButton * LeftBtn = [[UIButton alloc]init];
     LeftBtn.frame = CGRectMake(0 , 0, YYScreenWidth/4, 72);
     [LeftBtn setBackgroundColor:[UIColor clearColor]];
-    [LeftBtn addTarget:self action:@selector(LeftButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    LeftBtn.tag = 0 ;
+    [LeftBtn addTarget:self action:@selector(ALlButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [LeftBGView addSubview:LeftBtn];
 
     UIView * LeftCenterView = [[UIView alloc] init];
@@ -79,7 +80,8 @@
     UIButton * LeftCenterBtn = [[UIButton alloc]init];
     LeftCenterBtn.frame = CGRectMake(0 , 0, YYScreenWidth/4, 72);
     [LeftCenterBtn setBackgroundColor:[UIColor clearColor]];
-    [LeftCenterBtn addTarget:self action:@selector(LeftCenterButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    LeftCenterBtn.tag = 1 ;
+    [LeftCenterBtn addTarget:self action:@selector(ALlButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [LeftCenterView addSubview:LeftCenterBtn];
      
     
@@ -105,7 +107,8 @@
     UIButton * RightCenterBtn = [[UIButton alloc]init];
     RightCenterBtn.frame = CGRectMake(0 , 0, YYScreenWidth/4, 72);
     [RightCenterBtn setBackgroundColor:[UIColor clearColor]];
-    [RightCenterBtn addTarget:self action:@selector(RightCenterButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    RightCenterBtn.tag = 2 ;
+    [RightCenterBtn addTarget:self action:@selector(ALlButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [RightCenterView addSubview:RightCenterBtn];
     
     
@@ -131,35 +134,29 @@
     UIButton * RightBtn = [[UIButton alloc]init];
     RightBtn.frame = CGRectMake(0 , 0, YYScreenWidth/4, 72);
     [RightBtn setBackgroundColor:[UIColor clearColor]];
-    [RightBtn addTarget:self action:@selector(RightButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    RightCenterBtn.tag = 3 ;
+    [RightBtn addTarget:self action:@selector(ALlButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [RightBGView addSubview:RightBtn];
     
     
 }
 
 
--(void)LeftButtonClick:(UIButton*)titleButton{
+-(void)ALlButtonClick:(UIButton*)titleButton{
     
-    self.LeftBtnBlockClick();
-}
-
--(void)LeftCenterButtonClick:(UIButton*)titleButton{
-    
-    self.LeftCenterBtnBlockClick();
-    
-}
-
--(void)RightCenterButtonClick:(UIButton*)titleButton{
-    
-    self.RightCenterBtnBlockClick();
+    if (titleButton.tag == 0) {
+        self.PersonTopBtnBlockClick(@"我的订单");
+    }else if (titleButton.tag == 1){
+        self.PersonTopBtnBlockClick(@"团队订单");
+    }else if (titleButton.tag == 2){
+        self.PersonTopBtnBlockClick(@"我的卡券");
+    }else if (titleButton.tag == 3){
+        self.PersonTopBtnBlockClick(@"我的团队");
+    }
     
 }
 
--(void)RightButtonClick:(UIButton*)titleButton{
-    
-    self.RightBtnBlockClick();
-    
-}
+
 
 
 @end

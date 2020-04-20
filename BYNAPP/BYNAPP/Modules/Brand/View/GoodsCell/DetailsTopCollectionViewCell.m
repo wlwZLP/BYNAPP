@@ -34,10 +34,6 @@
 
 
 
-
-
-
-
 - (void)setup{
     
     
@@ -100,16 +96,31 @@
          make.height.offset(28);
      }];
      
-     UIImageView * CouponImage = [[UIImageView alloc] init];
-     CouponImage.backgroundColor = [UIColor clearColor];
-     CouponImage.image = [UIImage imageNamed:@"biaoqian"];
-     [VipView addSubview:CouponImage];
-     [CouponImage mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIImageView * CouponImage = [[UIImageView alloc] init];
+    CouponImage.backgroundColor = [UIColor clearColor];
+    CouponImage.image = [UIImage imageNamed:@"biaoqian"];
+    [VipView addSubview:CouponImage];
+    [CouponImage mas_makeConstraints:^(MASConstraintMaker *make) {
          make.left.equalTo(VipView.mas_centerX).with.offset(5);
          make.top.equalTo(VipView.mas_top).with.offset(57);
-         make.height.offset(60);
+         make.width.offset(60);
          make.height.offset(20);
-     }];
+    }];
+    
+    UILabel * CouponLabel = [[UILabel alloc]init];
+    CouponLabel.text = @"省5元";
+    CouponLabel.textColor = UIColor.whiteColor;
+    CouponLabel.textAlignment = NSTextAlignmentCenter;
+    CouponLabel.font = [UIFont systemFontOfSize:13 weight:1];
+    [VipView addSubview:CouponLabel];
+    self.CouponLabel = CouponLabel;
+    [CouponLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(VipView.mas_centerX).with.offset(10);
+        make.top.equalTo(VipView.mas_top).with.offset(57);
+        make.width.offset(60);
+        make.height.offset(20);
+    }];
+    
     
     UILabel * OldPriceLabel = [[UILabel alloc]init];
     OldPriceLabel.text = @"官方价¥32.5";

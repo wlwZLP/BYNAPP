@@ -201,8 +201,7 @@ static int const HomelabelWith = 90;
  *
  *  @return SalesSearchBar
  */
-- (UISearchBar *)HomeSearchBar
-{
+- (UISearchBar *)HomeSearchBar{
     
     if (_HomeSearchBar== nil) {
         
@@ -227,6 +226,7 @@ static int const HomelabelWith = 90;
     }
     
     return _HomeSearchBar;
+    
     
 }
 

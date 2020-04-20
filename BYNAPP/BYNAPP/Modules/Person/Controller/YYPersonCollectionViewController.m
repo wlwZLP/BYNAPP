@@ -49,9 +49,7 @@
     self.collectionView.frame = CGRectMake(0, -YYStatusHeight, YYScreenWidth, YYScreenHeight + YYStatusHeight);
     
     self.collectionView.backgroundColor = YYBGColor;
-    
-//    [self.navigationController setNavigationBarHidden:YES animated:nil];
-     
+         
     [self.collectionView registerClass:[PersonNoVipheadCollectionViewCell class] forCellWithReuseIdentifier:@"PersonNoVipheadCollectionViewCell"];
     
     [self.collectionView registerClass:[PersonNoLoginCollectionViewCell class] forCellWithReuseIdentifier:@"PersonNoLoginCollectionViewCell"];
@@ -71,7 +69,14 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    [self GetPersonUserNetworkData];
+    if ([[YYSaveTool GetCacheForKey:YYLogin] isEqualToString:@"0"]) {
+        
+        
+    }else{
+        
+         [self GetPersonUserNetworkData];
+        
+    }
     
     [self.navigationController setNavigationBarHidden:YES animated:nil];
     
@@ -95,9 +100,9 @@
        
         NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
        
-//        YYNSLog(@"个人中心数据----%@",Data);
-       
         self.Usermodel = [UserModel modelWithDictionary:Data];
+       
+        [YYSaveTool YY_SaveModel:self.Usermodel key:YYUser];
     
         [self.collectionView reloadData];
        
@@ -114,17 +119,6 @@
     
 }
 
-
-#pragma mark ===============懒加载=============
-
-- (UserModel *)Usermodel
-{
-    if (!_Usermodel)
-    {
-        _Usermodel = [[UserModel alloc]init];
-    }
-    return _Usermodel;
-}
 
 
 #pragma mark <UICollectionViewDataSource>
@@ -150,117 +144,61 @@
     
     if (indexPath.section == 0) {
 
-        if (self.Usermodel.User_id > 0) {
+        if ([[YYSaveTool GetCacheForKey:YYLogin] isEqualToString:@"0"]) {
             
-            PersonVipHeadCollectionViewCell  * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonVipHeadCollectionViewCell" forIndexPath:indexPath];
-            
-            cell.PersonVipheadBtnBlockClick = ^(NSString * _Nonnull ClickString) {
+            PersonNoLoginCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonNoLoginCollectionViewCell" forIndexPath:indexPath];
+                      
+            cell.TopLoginBtnBlockClick = ^{
                 
-                [self PersonPushNextController:ClickString];
+                LoginCollectionViewController * LoginVc = [[LoginCollectionViewController alloc]init];
+                LoginVc.title = @"";
+                [self.navigationController pushViewController:LoginVc animated:YES];
                 
             };
-            
-            cell.Model = self.Usermodel;
-    
+                            
             return cell;
             
         }else{
             
-            
-            PersonNoLoginCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonNoLoginCollectionViewCell" forIndexPath:indexPath];
-            
-            cell.TopLoginBtnBlockClick = ^{
-                      
-                LoginCollectionViewController * LoginVc = [[LoginCollectionViewController alloc]init];
-                LoginVc.title = @"";
-                [self.navigationController pushViewController:LoginVc animated:YES];
-                        
+            PersonVipHeadCollectionViewCell  * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonVipHeadCollectionViewCell" forIndexPath:indexPath];
+                       
+            cell.PersonVipheadBtnBlockClick = ^(NSString * _Nonnull ClickString) {
+                           
+                [self PersonPushNextController:ClickString];
+                           
             };
-                   
-            return cell;
-            
+                       
+            cell.Model = self.Usermodel;
+               
+             return cell;
+           
         }
         
         
     }else if (indexPath.section ==1){
         
         
-        PersonTeamCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonTeamCollectionViewCell" forIndexPath:indexPath];
+         PersonTeamCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonTeamCollectionViewCell" forIndexPath:indexPath];
         
-          cell.LeftBtnBlockClick = ^{
+         cell.PersonTopBtnBlockClick = ^(NSString * _Nonnull Title) {
+            
+            [self PersonPushNextController:Title];
+            
+         };
            
-              MyOrderCollectionViewController * MyVc = [[MyOrderCollectionViewController alloc]init];
-              MyVc.title = @"我的订单";
-              MyVc.UserType = @"1";
-              [self.navigationController pushViewController:MyVc animated:YES];
-             
-          };
-        
-          cell.LeftCenterBtnBlockClick = ^{
-            
-               MyOrderCollectionViewController * SetVc = [[MyOrderCollectionViewController alloc]init];
-               SetVc.title = @"团队订单";
-               SetVc.UserType = @"2";
-               [self.navigationController pushViewController:SetVc animated:YES];
-              
-          };
-        
-          cell.RightCenterBtnBlockClick = ^{
-            
-               MyCouponCollectionViewController * SetVc = [[MyCouponCollectionViewController alloc]init];
-               SetVc.title = @"我的卡券";
-               [self.navigationController pushViewController:SetVc animated:YES];
-              
-          };
-        
-           cell.RightBtnBlockClick = ^{
-            
-               MyTeamCollectionViewController * SetVc = [[MyTeamCollectionViewController alloc]init];
-               SetVc.title = @"我的团队";
-               [self.navigationController pushViewController:SetVc animated:YES];
-              
-           };
-
-
          return cell;
         
     }else if (indexPath.section ==2){
         
         PersonToolsCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonToolsCollectionViewCell" forIndexPath:indexPath];
-       
-         cell.LeftBtnBlockClick = ^{
+        
+        cell.PersonToolsBtnBlockClick = ^(NSString * _Nonnull Title) {
+         
+           [self PersonPushNextController:Title];
            
-              MYCollectCollectionViewController * SetVc = [[MYCollectCollectionViewController alloc]init];
-              SetVc.title = @"我的收藏";
-              [self.navigationController pushViewController:SetVc animated:YES];
-             
-          };
-        
-          cell.LeftCenterBtnBlockClick = ^{
-            
-               MyTraceCollectionViewController * SetVc = [[MyTraceCollectionViewController alloc]init];
-               SetVc.title = @"我的足迹";
-               [self.navigationController pushViewController:SetVc animated:YES];
-              
-          };
-        
-          cell.RightCenterBtnBlockClick = ^{
-            
-               MyNewCollectionViewController * SetVc = [[MyNewCollectionViewController alloc]init];
-               SetVc.title = @"新人必看";
-               [self.navigationController pushViewController:SetVc animated:YES];
-              
-          };
-        
-           cell.RightBtnBlockClick = ^{
-            
-               MyInvitCollectionViewController * SetVc = [[MyInvitCollectionViewController alloc]init];
-               SetVc.title = @"邀请好友";
-               [self.navigationController pushViewController:SetVc animated:YES];
-              
-           };
-        
-          return cell;
+        };
+       
+        return cell;
         
     }else{
         
@@ -294,6 +232,11 @@
 
 -(void)PersonPushNextController:(NSString*)PushTitleString{
     
+    if ([[YYSaveTool GetCacheForKey:YYLogin] isEqualToString:@"0"]) {
+        [self YYShowMessage:@"请先登录"];
+        return;
+    }
+    
     if ([PushTitleString isEqualToString:@"报表"]) {
         
         MyReportCollectionViewController * SetVc = [[MyReportCollectionViewController alloc]init];
@@ -313,16 +256,68 @@
         SetVc.title = @"提现";
         [self.navigationController pushViewController:SetVc animated:YES];
         
+    }else if ([PushTitleString isEqualToString:@"我的订单"]){
+        
+        MyOrderCollectionViewController * MyVc = [[MyOrderCollectionViewController alloc]init];
+        MyVc.title = @"我的订单";
+        MyVc.UserType = @"1";
+        [self.navigationController pushViewController:MyVc animated:YES];
+            
+    }else if ([PushTitleString isEqualToString:@"团队订单"]){
+        
+        MyOrderCollectionViewController * SetVc = [[MyOrderCollectionViewController alloc]init];
+        SetVc.title = @"团队订单";
+        SetVc.UserType = @"2";
+        [self.navigationController pushViewController:SetVc animated:YES];
+        
+    }else if ([PushTitleString isEqualToString:@"我的卡券"]){
+        
+        MyCouponCollectionViewController * SetVc = [[MyCouponCollectionViewController alloc]init];
+        SetVc.title = @"我的卡券";
+        [self.navigationController pushViewController:SetVc animated:YES];
+            
+    }else if ([PushTitleString isEqualToString:@"我的团队"]){
+        
+         MyTeamCollectionViewController * SetVc = [[MyTeamCollectionViewController alloc]init];
+         SetVc.title = @"我的团队";
+         [self.navigationController pushViewController:SetVc animated:YES];
+        
+    }else if ([PushTitleString isEqualToString:@"我的收藏"]){
+        
+        MYCollectCollectionViewController * SetVc = [[MYCollectCollectionViewController alloc]init];
+        SetVc.title = @"我的收藏";
+        [self.navigationController pushViewController:SetVc animated:YES];
+            
+    }else if ([PushTitleString isEqualToString:@"我的足迹"]){
+        
+        MyTraceCollectionViewController * SetVc = [[MyTraceCollectionViewController alloc]init];
+        SetVc.title = @"我的足迹";
+        [self.navigationController pushViewController:SetVc animated:YES];
+        
+    }else if ([PushTitleString isEqualToString:@"新人必看"]){
+        
+        MyNewCollectionViewController * SetVc = [[MyNewCollectionViewController alloc]init];
+        SetVc.title = @"新人必看";
+        [self.navigationController pushViewController:SetVc animated:YES];
+            
+    }else if ([PushTitleString isEqualToString:@"邀请好友"]){
+        
+         MyInvitCollectionViewController * SetVc = [[MyInvitCollectionViewController alloc]init];
+         SetVc.title = @"邀请好友";
+         [self.navigationController pushViewController:SetVc animated:YES];
+        
     }
-    
-    
-                 
     
 }
 
 
 #pragma mark 最后一区间点击事件
 -(void)PersonPushToViewController:(NSInteger)rowIndex{
+    
+    if ([[YYSaveTool GetCacheForKey:YYLogin] isEqualToString:@"0"]) {
+        [self YYShowMessage:@"请先登录"];
+        return;
+    }
     
     if (rowIndex == 0) {
        

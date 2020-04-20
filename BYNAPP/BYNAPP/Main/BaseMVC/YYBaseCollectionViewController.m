@@ -149,7 +149,6 @@ static NSString * const reuseIdentifier = @"Cell";
     
     UIAlertAction *sure = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        [self YYShowAlertTitleClick];
         
     }];
     [alertVC addAction:cancel];
@@ -158,13 +157,25 @@ static NSString * const reuseIdentifier = @"Cell";
     
 }
 
-#pragma mark UIAlertController
+/**
+ *  根据内容提示
+ */
+-(void)YYShowMessage:(NSString *)message{
+    
+    MBProgressHUD * HUD=[[MBProgressHUD alloc]initWithView:self.view];
+    HUD.contentColor=[UIColor colorWithWhite:0.5f alpha:0.1];
+    HUD.bezelView.color=[UIColor blackColor];
+    HUD.mode= MBProgressHUDModeText;
+    HUD.label.text= message;
+    HUD.label.textColor = YY66Color;
+    HUD.removeFromSuperViewOnHide= YES;
+    [self.view addSubview:HUD];
+    [HUD showAnimated:YES];
+    [HUD hideAnimated:YES afterDelay:2];
 
--(void)YYShowAlertTitleClick{
-    
-    
     
 }
+
 
 #pragma mark 设置右边导航栏
 
@@ -180,6 +191,7 @@ static NSString * const reuseIdentifier = @"Cell";
     [containView addSubview:btn];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:containView];
+    
     
 }
 

@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,strong)NSString * category_id;
 
 
+
 @end
+
 
 NS_ASSUME_NONNULL_END

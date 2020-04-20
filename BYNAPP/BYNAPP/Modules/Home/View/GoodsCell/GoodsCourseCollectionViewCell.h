@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GoodsCourseCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic,copy) void(^IMgClickBlockClick)(void);
+
+
 @end
 
 NS_ASSUME_NONNULL_END

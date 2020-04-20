@@ -70,6 +70,17 @@
 #define URL_APIMPVUserTeam @"api/mpv2/user/team"
 //26.我的数据报表
 #define URL_APIMPVUserReport @"api/mpv2/user/report"
+//27.商品搜索接口
+#define URL_APIGoodsSearch @"api/goods/search"
+//28.品牌搜索接口
+#define URL_APIMPVSearch @"api/mpv2/search"
+//29.卡券和直冲下单接口
+#define URL_APIMPVProductOrder @"api/mpv2/product-order"
+//30.通过订单号获取最新paysign
+//#define URL_APIMPVProductOrder @"api/mpv2/product-order"
+
+
+
 
 
 

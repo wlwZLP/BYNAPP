@@ -19,6 +19,8 @@
 
 @property (nonatomic, assign)NSInteger BuyNum;
 
+@property(nonatomic,strong)UserModel * UserModel;
+
 @end
 
 @implementation BrandCouponCollectionViewController
@@ -34,6 +36,8 @@
     self.StrViewHeight = 0;
     
     self.BuyNum = 1;
+    
+    self.UserModel = [YYSaveTool YY_GetSaveModelWithkey:YYUser modelClass:UserModel.class];
     
     self.collectionView.backgroundColor = YYBGColor;
  
@@ -62,9 +66,9 @@
    
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
         
-        YYNSLog(@"品牌馆详情---------%@",responseObject);
-        
         self.DetaisDic = EncodeDicFromDic(responseObject, @"data");
+        
+        YYNSLog(@"品牌转商品详情-------%@",self.DetaisDic);
         
         self.StrViewHeight = [self getStringHeightWithText:EncodeStringFromDic(self.DetaisDic, @"help") font:[UIFont systemFontOfSize:14] viewWidth:YYScreenWidth - 48];
         
@@ -109,6 +113,8 @@
         [cell.MainBgImgView sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(self.DetaisDic, @"coupon_cover")] placeholderImage:[UIImage imageNamed:@"BrandDbg"]];
         
         [cell.Logoimage sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(self.DetaisDic, @"brand_cover")] placeholderImage:[UIImage imageNamed:@"MainBG"]];
+        
+//        cell.CouponLabel.text = [NSString stringWithFormat:@"省%@元",[self GetTracFaceMoney:EncodeStringFromDic(self.DetaisDic, @"face_price") NumMoney:EncodeStringFromDic(self.DetaisDic, @"member_price")]];
         
         cell.TitleLabel.text = EncodeStringFromDic(self.DetaisDic, @"coupon_name");
         
@@ -285,13 +291,13 @@
     UIButton * BuyButton = [[UIButton alloc]init];
     BuyButton.backgroundColor = YYHexColor(@"#FFD409");
     if (YYTabBarHeight > 50) {
-       BuyButton.frame = CGRectMake(63 , 18 , YYScreenWidth - 75, 40);
+       BuyButton.frame = CGRectMake(63 , 15 , YYScreenWidth - 75, 40);
     }else{
        BuyButton.frame = CGRectMake(63 , 7 , YYScreenWidth - 75, 40);
     }
     [BuyButton setTitle:@"立即购买" forState:UIControlStateNormal];
     [BuyButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
-    [BuyButton addTarget:self action:@selector(BottomBuyButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [BuyButton addTarget:self action:@selector(BrandDetailBuyButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [BottomView addSubview:BuyButton];
     [YYTools ChangeView:BuyButton RadiusSize:10 BorderColor:[UIColor clearColor]];
     
@@ -326,10 +332,123 @@
 
 #pragma mark 立即购买商品
 
--(void)BottomBuyButtonClick{
+-(void)BrandDetailBuyButtonClick{
     
-    [self YYShowAlertViewTitle:@"点击购买"];
+    
+    
+    if ([self.UserModel.plus_level isEqualToString:@"0"]) {
+        
+    
+        
+    }else{
+      
+       NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVProductOrder];
+       
+       NSDictionary * dict = @{@"id":EncodeStringFromDic(self.DetaisDic, @"id"),@"count":@"1",@"type":@"2"};
+                     
+       [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
+         
+           if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+               
+               NSDictionary * data = EncodeDicFromDic(responseObject, @"data");
+               
+                NSString * order_no = EncodeStringFromDic(data, @"order_no");
+               
+                [self GetBarndPaySignNetWork:order_no];
+               
+           }else{
+               
+               [self YYShowMessage:EncodeStringFromDic(responseObject, @"msg")];
+               
+           }
+           
+       } failure:^(NSError *error, id responseCache) {
+        
+            [self YYShowMessage:@"网络请求失败"];
+          
+       }];
+        
+    }
     
 }
+
+
+#pragma mark ===============得到支付订单参数=============
+
+-(void)GetBarndPaySignNetWork:(NSString*)order_no{
+    
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVProductOrder];
+    
+    NSDictionary * dict = @{@"order_no":order_no};
+                  
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+      
+        if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+            
+            NSDictionary * data = EncodeDicFromDic(responseObject, @"data");
+            
+              if (EncodeStringFromDic(data, @"pay_params") != nil) {
+                  
+                 //应用注册scheme,在AliSDKDemo-Info.plist定义URL types
+                 NSString *appScheme = @"BYNAPP";
+                 // NOTE: 调用支付结果开始支付
+                 [[AlipaySDK defaultService] payOrder:EncodeStringFromDic(data, @"pay_params")  fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+
+                      NSLog(@"reslut = %@",resultDic);
+
+                }];
+
+            }
+            
+        }else{
+            
+           [self YYShowMessage:EncodeStringFromDic(responseObject, @"msg")];
+            
+        }
+        
+
+    } failure:^(NSError *error, id responseCache) {
+     
+         [self YYShowMessage:@"网络请求失败"];
+        
+       
+    }];
+    
+    
+    
+    
+}
+
+
+
+-(void)BrandToPay{
+    
+    
+
+
+
+    
+
+    
+    
+}
+
+
+
+-(NSString *)GetTracFaceMoney:(NSString *)facemongey NumMoney:(NSString*)NumMoney{
+
+    NSDecimalNumber * number1 = [NSDecimalNumber decimalNumberWithString:facemongey];
+    
+    NSDecimalNumber * number2 = [NSDecimalNumber decimalNumberWithString:NumMoney];
+
+    NSDecimalNumber * subTracFeeNum = [number1 decimalNumberBySubtracting:number2];
+
+    return [subTracFeeNum stringValue];
+
+}
+
+
+
 
 @end

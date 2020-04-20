@@ -344,6 +344,7 @@
 - (CGFloat)getStringHeightWithText:(NSString *)text font:(UIFont *)font viewWidth:(CGFloat)width {
     // 设置文字属性 要和label的一致
     NSDictionary *attrs = @{NSFontAttributeName :font};
+    
     CGSize maxSize = CGSizeMake(width, MAXFLOAT);
 
     NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
@@ -370,7 +371,7 @@
 
 -(void)BottomBuyButtonClick{
     
-    [self YYShowAlertViewTitle:@"点击购买"];
+  
     
 }
 

@@ -126,6 +126,8 @@ static AFHTTPSessionManager *_sessionManager;
     [_sessionManager.requestSerializer setValue:AppSign forHTTPHeaderField:@"sign"];
     [_sessionManager.requestSerializer setValue:timeSp forHTTPHeaderField:@"t"];
     [_sessionManager.requestSerializer setValue:appVersion forHTTPHeaderField:@"v"];
+    [_sessionManager.requestSerializer setValue:@"ios" forHTTPHeaderField:@"app-type"];
+
    
     NSURLSessionTask *sessionTask = [_sessionManager GET:NewURL parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -181,6 +183,7 @@ static AFHTTPSessionManager *_sessionManager;
     [_sessionManager.requestSerializer setValue:AppSign forHTTPHeaderField:@"sign"];
     [_sessionManager.requestSerializer setValue:timeSp forHTTPHeaderField:@"t"];
     [_sessionManager.requestSerializer setValue:appVersion forHTTPHeaderField:@"v"];
+    [_sessionManager.requestSerializer setValue:@"ios" forHTTPHeaderField:@"app-type"];
     
     NSURLSessionTask *sessionTask = [_sessionManager POST:NewURL parameters:parameters progress:^(NSProgress * _Nonnull uploadProgress) {
         

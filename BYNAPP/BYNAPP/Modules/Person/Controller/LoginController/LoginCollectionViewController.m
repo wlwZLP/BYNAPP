@@ -8,7 +8,8 @@
 
 #import "LoginCollectionViewController.h"
 #import "PhoneCollectionViewController.h"
-
+#import "UILabel+YBAttributeTextTapAction.h"
+#import "YYAgreeView.h"
 
 @interface LoginCollectionViewController ()<UIScrollViewDelegate>
 
@@ -19,6 +20,8 @@
 @property (nonatomic,strong)RACDisposable * disposable;
 
 @property (nonatomic,assign)int time;
+
+@property (nonatomic,strong)YYAgreeView * AgreeView;
 
 /// 判断手机号是否已经注册了，然后判断验证码是登录还是注册
 @property (nonatomic,strong)NSString * GetCodeType;
@@ -126,76 +129,159 @@
     [CodeBtn addTarget:self action:@selector(CodeButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [MainBGView addSubview:CodeBtn];
     [[CodeBtn rac_signalForControlEvents:UIControlEventTouchUpInside] subscribeNext:^(__kindof UIControl * _Nullable x) {
-           if (self.PhoneTextField.text.length < 11) {
-               [self.PhoneTextField shake];
-               return;
+       if (self.PhoneTextField.text.length < 11) {
+           [self.PhoneTextField shake];
+           return;
+       }
+       self.time = 60;
+       CodeBtn.enabled = NO;
+       [CodeBtn setTitle:[NSString stringWithFormat:@"请稍等%d秒",self.time] forState:UIControlStateDisabled];
+       self.disposable = [[RACSignal interval:1.0 onScheduler:[RACScheduler mainThreadScheduler]] subscribeNext:^(NSDate * _Nullable x) {
+           //减去时间
+           self.time --;
+           //设置文本
+           NSString *text = (self.time > 0) ? [NSString stringWithFormat:@"请稍等%d秒",self.time] : @"重新发送";
+           if (self.time > 0) {
+               CodeBtn.enabled = NO;
+               [CodeBtn setTitle:text forState:UIControlStateDisabled];
+           }else{
+               CodeBtn.enabled = YES;
+               [CodeBtn setTitle:text forState:UIControlStateNormal];
+               //关掉信号
+               [self.disposable dispose];
            }
-           self.time = 60;
-           CodeBtn.enabled = NO;
-           [CodeBtn setTitle:[NSString stringWithFormat:@"请稍等%d秒",self.time] forState:UIControlStateDisabled];
-           self.disposable = [[RACSignal interval:1.0 onScheduler:[RACScheduler mainThreadScheduler]] subscribeNext:^(NSDate * _Nullable x) {
-               //减去时间
-               self.time --;
-               //设置文本
-               NSString *text = (self.time > 0) ? [NSString stringWithFormat:@"请稍等%d秒",self.time] : @"重新发送";
-               if (self.time > 0) {
-                   CodeBtn.enabled = NO;
-                   [CodeBtn setTitle:text forState:UIControlStateDisabled];
-               }else{
-                   CodeBtn.enabled = YES;
-                   [CodeBtn setTitle:text forState:UIControlStateNormal];
-                   //关掉信号
-                   [self.disposable dispose];
-               }
-               
-           }];
+           
        }];
+        
+    }];
+    
+    
+    UIView * YLineView = UIView.new;
+    YLineView.backgroundColor = YYE5Color;
+    YLineView.frame = CGRectMake(28, 290 , self.view.ZLP_width - 56, 0.5);
+    [MainBGView addSubview:YLineView];
  
-    UIButton * LoginBtn = [[UIButton alloc]init];
-    LoginBtn.backgroundColor = YYHexColor(@"#FFD409");
-    [LoginBtn setTitle:@"登录" forState:UIControlStateNormal];
-    [LoginBtn setTitleColor:YY22Color forState:UIControlStateNormal];
-    LoginBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    LoginBtn.frame = CGRectMake(28, 290 ,MainBGView.ZLP_width - 56, 44);
-    [LoginBtn addTarget:self action:@selector(LoginButtonClick) forControlEvents:UIControlEventTouchUpInside];
-    [MainBGView addSubview:LoginBtn];
-    [YYTools ChangeView:LoginBtn RadiusSize:10 BorderColor:[UIColor clearColor]];
     
-    UIButton * ChoseBtn = [[UIButton alloc]init];
-    [ChoseBtn setBackgroundImage:[UIImage imageNamed:@"gouxuan"] forState:UIControlStateNormal];
-    [ChoseBtn setBackgroundImage:[UIImage imageNamed:@"Chose"] forState:UIControlStateSelected];
-    ChoseBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    ChoseBtn.frame = CGRectMake(36, 350 ,15 , 15);
-    [ChoseBtn addTarget:self action:@selector(ChoseButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [MainBGView addSubview:ChoseBtn];
-   
-    UILabel * AggreLabel = [[UILabel alloc]init];
-    AggreLabel.text = @"登录即代表同意《服务协议》和《隐私政策》";
-    AggreLabel.frame = CGRectMake(55, 350 , 280 , 15);
-    AggreLabel.textColor = YY99Color;
-    AggreLabel.textAlignment = NSTextAlignmentLeft;
-    AggreLabel.font = [UIFont systemFontOfSize:12 weight:0];
-    [MainBGView addSubview:AggreLabel];
     
-    UILabel * QustLabel = [[UILabel alloc]init];
-    QustLabel.text = @"—— 快捷登录 ——";
-    QustLabel.textColor = YY99Color;
-    QustLabel.frame = CGRectMake((YYScreenWidth -180)/2, 490, 180, 20);
-    QustLabel.textAlignment = NSTextAlignmentCenter;
-    QustLabel.font = [UIFont systemFontOfSize:14 weight:0];
-    [MainBGView addSubview:QustLabel];
+    if (IPhoneSE) {
+        
+         UIButton * LoginBtn = [[UIButton alloc]init];
+         LoginBtn.backgroundColor = YYHexColor(@"#FFD409");
+         [LoginBtn setTitle:@"登录" forState:UIControlStateNormal];
+         [LoginBtn setTitleColor:YY22Color forState:UIControlStateNormal];
+         LoginBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+         LoginBtn.frame = CGRectMake(28, 300 ,MainBGView.ZLP_width - 56, 44);
+         [LoginBtn addTarget:self action:@selector(LoginButtonClick) forControlEvents:UIControlEventTouchUpInside];
+         [MainBGView addSubview:LoginBtn];
+         [YYTools ChangeView:LoginBtn RadiusSize:10 BorderColor:[UIColor clearColor]];
+         
+         UIButton * ChoseBtn = [[UIButton alloc]init];
+         [ChoseBtn setBackgroundImage:[UIImage imageNamed:@"gouxuan"] forState:UIControlStateNormal];
+         [ChoseBtn setBackgroundImage:[UIImage imageNamed:@"Chose"] forState:UIControlStateSelected];
+         ChoseBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+         ChoseBtn.frame = CGRectMake(36, 360 ,15 , 15);
+         [ChoseBtn addTarget:self action:@selector(ChoseButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+         [MainBGView addSubview:ChoseBtn];
+        
+         UILabel * AggreLabel = [[UILabel alloc]init];
+         AggreLabel.text = @"登录即代表同意《服务协议》和《隐私政策》";
+         AggreLabel.frame = CGRectMake(55, 360 , 280 , 15);
+         AggreLabel.textColor = YY99Color;
+         AggreLabel.textAlignment = NSTextAlignmentLeft;
+         AggreLabel.font = [UIFont systemFontOfSize:12 weight:0];
+         [MainBGView addSubview:AggreLabel];
+         
+         UILabel * QustLabel = [[UILabel alloc]init];
+         QustLabel.text = @"—— 快捷登录 ——";
+         QustLabel.textColor = YY99Color;
+         QustLabel.frame = CGRectMake((YYScreenWidth -180)/2, 410, 180, 20);
+         QustLabel.textAlignment = NSTextAlignmentCenter;
+         QustLabel.font = [UIFont systemFontOfSize:14 weight:0];
+         [MainBGView addSubview:QustLabel];
+         
+         UIImageView * WchatImg = [[UIImageView alloc] init];
+         WchatImg.backgroundColor = [UIColor clearColor];
+         WchatImg.frame = CGRectMake(MainBGView.ZLP_centerX - 22, 450 ,44, 44);
+         WchatImg.image = [UIImage imageNamed:@"wechat"];
+         [MainBGView addSubview:WchatImg];
+         [WchatImg addTarget:self action:@selector(WchatImgClick)];
+        
+    }else{
+        
+        UIButton * LoginBtn = [[UIButton alloc]init];
+        LoginBtn.backgroundColor = YYHexColor(@"#FFD409");
+        [LoginBtn setTitle:@"登录" forState:UIControlStateNormal];
+        [LoginBtn setTitleColor:YY22Color forState:UIControlStateNormal];
+        LoginBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+        LoginBtn.frame = CGRectMake(28, 340 ,MainBGView.ZLP_width - 56, 44);
+        [LoginBtn addTarget:self action:@selector(LoginButtonClick) forControlEvents:UIControlEventTouchUpInside];
+        [MainBGView addSubview:LoginBtn];
+        [YYTools ChangeView:LoginBtn RadiusSize:10 BorderColor:[UIColor clearColor]];
+        
+        UIButton * ChoseBtn = [[UIButton alloc]init];
+        [ChoseBtn setBackgroundImage:[UIImage imageNamed:@"gouxuan"] forState:UIControlStateNormal];
+        [ChoseBtn setBackgroundImage:[UIImage imageNamed:@"Chose"] forState:UIControlStateSelected];
+        ChoseBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+        ChoseBtn.frame = CGRectMake(36, 400 ,15 , 15);
+        [ChoseBtn addTarget:self action:@selector(ChoseButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [MainBGView addSubview:ChoseBtn];
+       
+        UILabel * AggreLabel = [[UILabel alloc]init];
+        AggreLabel.text = @"登录即代表同意《服务协议》和《隐私政策》";
+        AggreLabel.frame = CGRectMake(55, 400 , 280 , 15);
+        AggreLabel.textColor = YY99Color;
+        AggreLabel.textAlignment = NSTextAlignmentLeft;
+        AggreLabel.font = [UIFont systemFontOfSize:12 weight:0];
+        [MainBGView addSubview:AggreLabel];
+        NSMutableAttributedString * AggreString = [[NSMutableAttributedString alloc] initWithString:AggreLabel.text];
+        NSRange Range1 = NSMakeRange(7, 6);
+        NSRange Range2 = NSMakeRange(14, 6);
+        [AggreString addAttribute:NSForegroundColorAttributeName value:YYRGBColor(20, 138, 255) range:Range1];
+        [AggreString addAttribute:NSForegroundColorAttributeName value:YYRGBColor(20, 138, 255) range:Range2];
+        [AggreLabel setAttributedText:AggreString];
+        [AggreLabel yb_addAttributeTapActionWithStrings:@[@"《服务协议》",@"《隐私政策》"] tapClicked:^(NSString * string, NSRange range, NSInteger index) {
+            
+//             [self YYShowMessage:string];
+          
+            [[LPAnimationView sharedMask] show:self.AgreeView withType:QWAlertViewStyleAlert];
+     
+            
+            
+        }];
+        
+      
+        UILabel * QustLabel = [[UILabel alloc]init];
+        QustLabel.text = @"—— 快捷登录 ——";
+        QustLabel.textColor = YY99Color;
+        QustLabel.frame = CGRectMake((YYScreenWidth -180)/2, 500, 180, 20);
+        QustLabel.textAlignment = NSTextAlignmentCenter;
+        QustLabel.font = [UIFont systemFontOfSize:14 weight:0];
+        [MainBGView addSubview:QustLabel];
+        
+        UIImageView * WchatImg = [[UIImageView alloc] init];
+        WchatImg.backgroundColor = [UIColor clearColor];
+        WchatImg.frame = CGRectMake(MainBGView.ZLP_centerX - 22, 540 ,44, 44);
+        WchatImg.image = [UIImage imageNamed:@"wechat"];
+        [MainBGView addSubview:WchatImg];
+        [WchatImg addTarget:self action:@selector(WchatImgClick)];
+    }
     
-    UIImageView * WchatImg = [[UIImageView alloc] init];
-    WchatImg.backgroundColor = [UIColor clearColor];
-    WchatImg.frame = CGRectMake(MainBGView.ZLP_centerX - 22, 520 ,44, 44);
-    WchatImg.image = [UIImage imageNamed:@"wechat"];
-    [MainBGView addSubview:WchatImg];
-    [WchatImg addTarget:self action:@selector(WchatImgClick)];
     
   
 }
 
-
+-(YYAgreeView*)AgreeView{
+    
+    if (!_AgreeView) {
+        
+        _AgreeView = [[YYAgreeView alloc]init];
+        _AgreeView.frame = CGRectMake(0, 0, YYScreenWidth, YYScreenHeight);
+        _AgreeView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+        
+    }
+    return _AgreeView;
+    
+}
 
 -(void)CodeButtonClick{
     
@@ -259,7 +345,7 @@
 -(void)LoginButtonClick{
     
     if (self.PhoneTextField.text.length < 11) {
-[self.PhoneTextField shake];
+        [self.PhoneTextField shake];
         return;
     }
        
@@ -296,10 +382,45 @@
 
 -(void)WchatImgClick{
     
-    PhoneCollectionViewController * PhoneVc = [[PhoneCollectionViewController alloc]init];
-    PhoneVc.title = @"";
-    [self.navigationController pushViewController:PhoneVc animated:YES];
    
+    [[UMSocialManager defaultManager] getUserInfoWithPlatform:UMSocialPlatformType_WechatSession currentViewController:self completion:^(id result, NSError *error) {
+           
+           if (error) {
+               
+               [self YYShowMessage:error.localizedFailureReason];
+   
+           } else {
+               
+               UMSocialUserInfoResponse * resp = result;
+               NSDictionary * OriginDic = resp.originalResponse;
+               NSString * City;
+               if (!EncodeStringFromDic(OriginDic, @"city")) {
+                   City =EncodeStringFromDic(OriginDic, @"city");
+               }else{
+                   City  =@"杭州";
+               }
+               NSString * country;
+               if (!EncodeStringFromDic(OriginDic, @"country")) {
+                   country =EncodeStringFromDic(OriginDic, @"province");
+               }else{
+                   country  =@"杭州";
+               }
+               NSString * province;
+               if (!EncodeStringFromDic(OriginDic, @"province")) {
+                   province =EncodeStringFromDic(OriginDic, @"province");
+               }else{
+                   province  =@"浙江";
+               }
+            
+           }
+        
+           
+       }];
+    
+//    PhoneCollectionViewController * PhoneVc = [[PhoneCollectionViewController alloc]init];
+//    PhoneVc.title = @"";
+//    [self.navigationController pushViewController:PhoneVc animated:YES];
+//
     
 }
 

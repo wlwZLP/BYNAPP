@@ -77,14 +77,14 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 
-     return 1;
+      return 1;
     
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return self.BrandArray.count;
+      return self.BrandArray.count;
     
 }
 
@@ -171,7 +171,6 @@
         
         headerView.backgroundColor = YYBGColor;
         
-        NSLog(@"1111111");
         return headerView;
     
     }
@@ -194,8 +193,6 @@
        return 0;
     
 }
-
-
 
 
 
