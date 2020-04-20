@@ -31,7 +31,7 @@
     
     self.window.rootViewController = [[YYMainTabBarController alloc] init];
     
-     //好像远程添加支付宝失败了
+     //111111111111
     
     return YES;
     
