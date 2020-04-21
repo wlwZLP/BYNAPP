@@ -10,6 +10,9 @@
 #import "DetailsTopCollectionViewCell.h"
 #import "DetailsNumCollectionViewCell.h"
 #import "DetailsNotesCollectionViewCell.h"
+#import "YYBuyVipHeadView.h"
+#import "LPAnimationView.h"
+#import "MyVipCollectionViewController.h"
 
 @interface BrandCouponCollectionViewController ()
 
@@ -20,6 +23,8 @@
 @property (nonatomic, assign)NSInteger BuyNum;
 
 @property(nonatomic,strong)UserModel * UserModel;
+
+@property(nonatomic,strong)YYBuyVipHeadView * BuyHeadView;
 
 @end
 
@@ -274,6 +279,7 @@
         HomeImage.frame = CGRectMake(24, 15 , 20, 20);
     }
     HomeImage.image = [UIImage imageNamed:@"icon_tabbar_homepage"];
+    [HomeImage addTarget:self action:@selector(homeImgBtnClick)];
     [BottomView addSubview:HomeImage];
     
     UILabel * TitleLabel = [[UILabel alloc]init];
@@ -300,6 +306,14 @@
     [BuyButton addTarget:self action:@selector(BrandDetailBuyButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [BottomView addSubview:BuyButton];
     [YYTools ChangeView:BuyButton RadiusSize:10 BorderColor:[UIColor clearColor]];
+    
+}
+
+#pragma mark ===============返回到首页============
+
+-(void)homeImgBtnClick{
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
 
@@ -334,11 +348,18 @@
 
 -(void)BrandDetailBuyButtonClick{
     
+//    BOOL alipay = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay://"]];
+//
+//    if (alipay == NO) {
+//
+//        [self YYShowMessage:@"请先安装支付宝"];
+//        return;
+//
+//    }
     
-    
-    if ([self.UserModel.plus_level isEqualToString:@"0"]) {
+    if ([self.UserModel.plus_level isEqualToString:@"1"]) {
         
-    
+         [[LPAnimationView sharedMask] show:self.BuyHeadView withType:QWAlertViewStyleAlert];
         
     }else{
       
@@ -416,23 +437,8 @@
     }];
     
     
-    
-    
 }
 
-
-
--(void)BrandToPay{
-    
-    
-
-
-
-    
-
-    
-    
-}
 
 
 
@@ -448,6 +454,27 @@
 
 }
 
+
+#pragma mark ===============网络请求=============
+-(YYBuyVipHeadView*)BuyHeadView{
+    
+    if (!_BuyHeadView) {
+        _BuyHeadView = [[YYBuyVipHeadView alloc]init];
+        _BuyHeadView.frame = CGRectMake(0, 0, YYScreenWidth, YYScreenHeight);
+        _BuyHeadView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+        _BuyHeadView.LeftBtnBlockClick = ^{
+            [[LPAnimationView sharedMask] dismiss];
+        };
+        _BuyHeadView.RightBtnBlockClick = ^{
+            [[LPAnimationView sharedMask] dismiss];
+            MyVipCollectionViewController * VipVc = [[MyVipCollectionViewController alloc]init];
+            VipVc.title = @"会员中心";
+            VipVc.VipType = @"2";
+            [self.navigationController pushViewController:VipVc animated:YES];
+        };
+    }
+    return _BuyHeadView;
+}
 
 
 

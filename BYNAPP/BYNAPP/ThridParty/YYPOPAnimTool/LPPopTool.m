@@ -2,26 +2,19 @@
 //  MJPopTool.m
 //  MJPopToolDemo
 //
-//  Created by Mengjie.Wang on 2016/06/22.
-//  Copyright © 2016年 王梦杰. All rights reserved.
 //
 
 #import "LPPopTool.h"
 
 @interface LPPopTool ()
 
-/**
- *  @author 王梦杰, 16-06-24 14:06:30
- *
- *  当前弹出的view
- */
 @property (nonatomic, strong) UIView *currentView;
 
 @end
 
 @implementation LPPopTool
 
-+ (instancetype)sharedInstance {
++(instancetype)sharedInstance {
     static LPPopTool *_popTool = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -29,6 +22,8 @@
     });
     return _popTool;
 }
+
+
 
 - (void)popView:(UIView *)view animated:(BOOL)animated {
     _currentView = view;
@@ -58,6 +53,7 @@
 - (void)closeAnimated:(BOOL)animated {
     
     if (animated) {
+        
         [UIView animateWithDuration:0.2 animations:^{
             self->_currentView.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.2, 1.2);
         } completion:^(BOOL finished) {
@@ -67,6 +63,7 @@
                 [self->_currentView removeFromSuperview];
             }];
         }];
+        
     } else {
         [_currentView removeFromSuperview];
     }

@@ -144,8 +144,6 @@
     
     self.PriceLabel.text = [NSString stringWithFormat:@" ￥%@ ",Model.member_price];
        
-//    self.CouponLabel.text = [NSString stringWithFormat:@"省%@元",[self GetTracMoneyWithAmount:Model.face_price ToMoney:Model.member_price]];
-       
     self.OldPriceLabel.text = [NSString stringWithFormat:@"官方价￥%@ ",Model.face_price];
     
     NSMutableAttributedString *  abs = [[NSMutableAttributedString alloc]initWithString:self.OldPriceLabel.text];
@@ -155,17 +153,8 @@
     
 }
 
-//-(NSString *)GetTracMoneyWithAmount:(NSString *)amount ToMoney:(NSString*)toMoney{
-//
-//    NSDecimalNumber * number1 = [NSDecimalNumber decimalNumberWithString:amount];
-//
-//    NSDecimalNumber * number2 = [NSDecimalNumber decimalNumberWithString:toMoney];
-//
-//    NSDecimalNumber * subTracFeeNum = [number1 decimalNumberBySubtracting:number2];
-//
-//    return [subTracFeeNum stringValue];
-//
-//}
+
+
 
 
 

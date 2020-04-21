@@ -9,12 +9,13 @@
 #import "BrandAllCollectionViewController.h"
 #import "BrandTopCollectionViewCell.h"
 #import "BrandRecomdCollectionViewCell.h"
-#import "BrandVipDetailsCollectionViewController.h"
+#import "BrandRechargeCollectionViewController.h"
 #import "BrandMainModel.h"
 #import "BrandModel.h"
 #import "BrandTopTwoCollectionViewCell.h"
 #import "BrandListCollectionViewController.h"
 #import "BrandCouponCollectionViewController.h"
+#import "BrandCardCollectionViewCell.h"
 
 @interface BrandAllCollectionViewController ()
 
@@ -36,6 +37,8 @@
     [self.collectionView registerClass:[BrandTopCollectionViewCell class] forCellWithReuseIdentifier:@"BrandTopCollectionViewCell"];
     
     [self.collectionView registerClass:[BrandTopTwoCollectionViewCell class] forCellWithReuseIdentifier:@"BrandTopTwoCollectionViewCell"];
+    
+    [self.collectionView registerClass:[BrandCardCollectionViewCell class] forCellWithReuseIdentifier:@"BrandCardCollectionViewCell"];
     
     [self.collectionView registerClass:[BrandRecomdCollectionViewCell class] forCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell"];
     
@@ -116,6 +119,8 @@
      [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
       
           NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
+         
+          YYNSLog(@"热门推荐数据------%@",DataArray);
                 
           self.RecommendsArray = [[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray] mutableCopy];
      
@@ -123,9 +128,9 @@
          
      } failure:^(NSError *error, id responseCache) {
        
-         NSArray * DataArray = EncodeArrayFromDic(responseCache, @"data");
+          NSArray * DataArray = EncodeArrayFromDic(responseCache, @"data");
          
-         self.RecommendsArray = [[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray] mutableCopy];
+          self.RecommendsArray = [[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray] mutableCopy];
          
           dispatch_group_leave(group);
         
@@ -199,12 +204,25 @@
         
     }else{
         
-        BrandRecomdCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell" forIndexPath:indexPath];
+        if ([self.RecommendsArray[indexPath.item].coupon_type isEqualToString:@"1"] ||[self.RecommendsArray[indexPath.item].coupon_type isEqualToString:@"3"]) {
+            
+            BrandCardCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandCardCollectionViewCell" forIndexPath:indexPath];
                
-        cell.Model = self.RecommendsArray[indexPath.item];
+            cell.Model = self.RecommendsArray[indexPath.item];
+
+            return cell;
         
-        return cell;
+        }else{
+            
+            BrandRecomdCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell" forIndexPath:indexPath];
+               
+            cell.Model = self.RecommendsArray[indexPath.item];
+
+            return cell;
+            
+        }
         
+   
     }
    
     
@@ -225,7 +243,7 @@
         
     } else {
         
-        BrandVipDetailsCollectionViewController * BrandVc = [[BrandVipDetailsCollectionViewController alloc]init];
+        BrandRechargeCollectionViewController * BrandVc = [[BrandRechargeCollectionViewController alloc]init];
         BrandVc.title = Model.coupon_name;
         BrandVc.Details_id = Model.brand_id;
         BrandVc.mall_id = Model.mall_id;

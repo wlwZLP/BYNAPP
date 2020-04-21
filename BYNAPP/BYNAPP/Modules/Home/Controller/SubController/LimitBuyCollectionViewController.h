@@ -7,10 +7,12 @@
 //
 
 #import "YYBaseCollectionViewController.h"
-
+#import "HomeTimeModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LimitBuyCollectionViewController : YYBaseCollectionViewController
+
+
 
 @end
 

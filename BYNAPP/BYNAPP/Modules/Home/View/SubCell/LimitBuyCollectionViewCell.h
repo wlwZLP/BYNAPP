@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "HomeMainModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LimitBuyCollectionViewCell : UICollectionViewCell
+
+@property(nonatomic,strong)HomeMainModel * Model;
 
 @end
 

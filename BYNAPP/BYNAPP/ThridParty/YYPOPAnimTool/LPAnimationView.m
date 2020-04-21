@@ -108,7 +108,7 @@
     
     _maskLayer = [UIView new];
     [_maskLayer setFrame:[[UIScreen mainScreen] bounds]];
-    [_maskLayer setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.30]];
+    [_maskLayer setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.50]];
     [KEYWINDOW  addSubview:_maskLayer];
     
     UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismiss)];

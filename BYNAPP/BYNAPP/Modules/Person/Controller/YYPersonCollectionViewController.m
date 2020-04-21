@@ -69,12 +69,9 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    if ([[YYSaveTool GetCacheForKey:YYLogin] isEqualToString:@"0"]) {
+    if ([[YYSaveTool GetCacheForKey:YYLogin] isEqualToString:@"1"]) {
         
-        
-    }else{
-        
-         [self GetPersonUserNetworkData];
+          [self GetPersonUserNetworkData];
         
     }
     
@@ -125,9 +122,9 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 
-    return 4;
+     return 4;
+    
 }
-
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -164,7 +161,7 @@
                        
             cell.PersonVipheadBtnBlockClick = ^(NSString * _Nonnull ClickString) {
                            
-                [self PersonPushNextController:ClickString];
+                 [self PersonPushNextController:ClickString];
                            
             };
                        
@@ -182,7 +179,7 @@
         
          cell.PersonTopBtnBlockClick = ^(NSString * _Nonnull Title) {
             
-            [self PersonPushNextController:Title];
+              [self PersonPushNextController:Title];
             
          };
            

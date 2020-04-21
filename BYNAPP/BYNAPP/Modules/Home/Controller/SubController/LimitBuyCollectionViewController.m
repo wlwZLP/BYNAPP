@@ -16,7 +16,14 @@ static int const TimelabelWith = 90;
 /** 用来存放所有时间的scrollView */
 @property (nonatomic, strong) UIScrollView * TimeScrollView;
 
+/** 用来存放所有时间的scrollView */
+@property (nonatomic, strong) NSArray<HomeTimeModel*> * TimelistArray;
+
+/** 当前点击的button */
+@property (nonatomic, strong) UIButton * OldClickBtn;
+
 @end
+
 
 @implementation LimitBuyCollectionViewController
 
@@ -26,9 +33,28 @@ static int const TimelabelWith = 90;
     
     [super viewDidLoad];
     
-    [self CreateLimitBuyTopnavView];
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsFlashSaleTimes];
+    
+    NSDictionary * dict = @{@"mode":@"0"};
+                       
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+       
+         self.TimelistArray =  [NSArray modelArrayWithClass:[HomeTimeModel class] json:EncodeArrayFromDic(responseObject, @"data")];
+     
+          [self CreateLimitBuyTopnavView:self.TimelistArray];
+               
+    } failure:^(NSError *error, id responseCache) {
+        
+        self.TimelistArray =  [NSArray modelArrayWithClass:[HomeTimeModel class] json:EncodeArrayFromDic(responseCache, @"data")];
+        
+        [self CreateLimitBuyTopnavView:self.TimelistArray];
+                              
+    }];
+   
     
     self.collectionView.frame = CGRectMake(0, YYBarHeight + 56, YYScreenWidth, YYScreenHeight - YYBarHeight - 56);
+    
+    self.collectionView.backgroundColor = YYBGColor;
     
     [self.collectionView registerClass:[LimitBuyCollectionViewCell class] forCellWithReuseIdentifier:@"LimitBuyCollectionViewCell"];
     
@@ -42,7 +68,7 @@ static int const TimelabelWith = 90;
 }
 
 #pragma mark 创建头部控件
--(void)CreateLimitBuyTopnavView{
+-(void)CreateLimitBuyTopnavView:(NSArray <HomeTimeModel*> *)TitleListArray{
     
    UIView * TopNavView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, YYScreenWidth, YYBarHeight + 56)];
    TopNavView.backgroundColor = UIColor.yellowColor;
@@ -57,33 +83,34 @@ static int const TimelabelWith = 90;
    [BackBtn addTarget:self action:@selector(LimitLeftBackClick) forControlEvents:UIControlEventTouchUpInside];
    [TopNavView addSubview:BackBtn];
    
-   UILabel * Titlelabel = [[UILabel alloc] init];
-   Titlelabel.frame = CGRectMake((YYScreenWidth -200)/2,YYStatusHeight + 10 ,200,24);
-   Titlelabel.numberOfLines = 0;
-   Titlelabel.text= @"限时抢购";
-   Titlelabel.font = [UIFont fontWithName:@"PangMenZhengDao" size:22.f];
-   Titlelabel.textAlignment = NSTextAlignmentCenter;
-   Titlelabel.textColor = YY22Color;
-   [TopNavView addSubview:Titlelabel];
+    UILabel * Titlelabel = [[UILabel alloc] init];
+    Titlelabel.frame = CGRectMake((YYScreenWidth -200)/2,YYStatusHeight + 10 ,200,24);
+    Titlelabel.numberOfLines = 0;
+    Titlelabel.text= @"限时抢购";
+    Titlelabel.font = [UIFont fontWithName:@"PangMenZhengDao" size:22.f];
+    Titlelabel.textAlignment = NSTextAlignmentCenter;
+    Titlelabel.textColor = YY22Color;
+    [TopNavView addSubview:Titlelabel];
     
-   UIImageView * SearchImage = [[UIImageView alloc] init];
-   SearchImage.backgroundColor = [UIColor clearColor];
+    UIImageView * SearchImage = [[UIImageView alloc] init];
+    SearchImage.backgroundColor = [UIColor clearColor];
     SearchImage.frame = CGRectMake(YYScreenWidth -31, YYStatusHeight + 13, 17 , 17);
-   SearchImage.image = [UIImage imageNamed:@"yuanquan"];
-   [TopNavView addSubview:SearchImage];
+    SearchImage.image = [UIImage imageNamed:@"yuanquan"];
+    [TopNavView addSubview:SearchImage];
     
-   [TopNavView addSubview:self.TimeScrollView];
+    [TopNavView addSubview:self.TimeScrollView];
     
-    NSArray * TimeArray = [[NSArray alloc]initWithObjects:@"01:00",@"02:00",@"03:00",@"04:00",@"05:00",@"06:00",@"07:00",@"08:00",@"09:00",@"10:00",@"11:00",@"12:00",@"13:00",nil ];
-    // 创建3个标题按钮
-   for (NSUInteger i = 0; i < TimeArray.count; i++) {
+    
+    for (NSUInteger i = 0; i < TitleListArray.count; i++) {
        
        CGFloat X =  i * TimelabelWith ;
        UIButton *titleButton = [[UIButton alloc]init];
-       [titleButton setTitleColor:YY22Color forState:UIControlStateSelected];
        [titleButton setTitleColor:YY66Color forState:UIControlStateNormal];
+       [titleButton setTitleColor:YYHexColor(@"#FFD409") forState:UIControlStateSelected];
+       [titleButton setBackgroundImage:[UIImage imageWithColor:UIColor.clearColor] forState:UIControlStateNormal];
+       [titleButton setBackgroundImage:[UIImage imageWithColor:YYHexColor(@"#312903")] forState:UIControlStateSelected];
        titleButton.titleLabel.hidden = YES;
-       titleButton.frame = CGRectMake(X , 10, TimelabelWith, 30);
+       titleButton.frame = CGRectMake(X , 10, TimelabelWith, 43);
        [titleButton setAdjustsImageWhenHighlighted:NO];
        titleButton.titleLabel.textAlignment = NSTextAlignmentCenter;
        titleButton.titleLabel.font = [UIFont systemFontOfSize: 14.0];
@@ -91,14 +118,56 @@ static int const TimelabelWith = 90;
        [titleButton addTarget:self action:@selector(titleButtonClick:) forControlEvents:UIControlEventTouchUpInside];
        titleButton.layer.masksToBounds = YES;
        titleButton.layer.cornerRadius = 10;
+       titleButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
        [self.TimeScrollView addSubview:titleButton];
-       [titleButton setTitle:TimeArray[i] forState:UIControlStateNormal];
+       if ([TitleListArray[i].desc isEqualToString:@"抢购中"]) {
+            titleButton.selected = YES;
+           self.OldClickBtn  = titleButton;
+            [self GetLimitBuyNetWorkData:TitleListArray[i].time];
+//           self.titleUnderline.ZLP_centerX = sender.ZLP_centerX;
+        }else{
+            titleButton.selected = NO;
+        }
+       NSString * Title = [NSString stringWithFormat:@"%@\n%@",TitleListArray[i].show_time,TitleListArray[i].desc];
+       [titleButton setTitle:Title forState:UIControlStateNormal];
    
    }
     
-    self.TimeScrollView.contentSize = CGSizeMake(TimeArray.count * TimelabelWith, 0);
+    self.TimeScrollView.contentSize = CGSizeMake(TitleListArray.count * TimelabelWith, 0);
     
 }
+
+
+
+#pragma mark ===============网络请求=============
+
+-(void)GetLimitBuyNetWorkData:(NSString *)TimeString{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsFlashSaleItems];
+    
+    NSDictionary * dict = @{@"time":TimeString,@"mode":@"0",@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+                       
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+       
+        NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+        
+        self.ListDataArray =  [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data, @"items")];
+     
+        [self.collectionView reloadData];
+               
+    } failure:^(NSError *error, id responseCache) {
+        
+        NSDictionary * Data = EncodeDicFromDic(responseCache, @"data");
+            
+        self.ListDataArray =  [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data, @"items")];
+         
+        [self.collectionView reloadData];
+   
+    }];
+    
+    
+}
+
 
 /**
  *  懒加载UISearchBar
@@ -131,8 +200,15 @@ static int const TimelabelWith = 90;
 }
 
 -(void)titleButtonClick:(UIButton*)Sender{
-    
-    [self YYShowAlertViewTitle:[NSString stringWithFormat:@"第%ld张",(long)Sender.tag]];
+     
+    if (Sender.tag ==  self.OldClickBtn.tag) {
+        return;
+    }else{
+        self.OldClickBtn.selected = NO;
+        Sender.selected = YES;
+        self.OldClickBtn = Sender;
+        [self GetLimitBuyNetWorkData:self.TimelistArray[Sender.tag].time];
+    }
     
 }
 
@@ -141,12 +217,13 @@ static int const TimelabelWith = 90;
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 
       return 1;
+    
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
    
-    return 10;
+    return self.ListDataArray.count;
  
 }
 
@@ -154,6 +231,8 @@ static int const TimelabelWith = 90;
 
     LimitBuyCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"LimitBuyCollectionViewCell" forIndexPath:indexPath];
 
+    cell.Model = self.ListDataArray[indexPath.item];
+     
     return cell;
 
 }
@@ -162,8 +241,11 @@ static int const TimelabelWith = 90;
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-
-   
+    HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
+    HomeVc.Goods_Type = self.ListDataArray[indexPath.item].mall_id;
+    HomeVc.item_id = self.ListDataArray[indexPath.item].item_id;
+    HomeVc.activity_id = self.ListDataArray[indexPath.item].activity_id;
+    [self.navigationController pushViewController:HomeVc animated:YES];
     
 }
 
@@ -222,7 +304,7 @@ static int const TimelabelWith = 90;
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     
-      return UIEdgeInsetsMake(0, 0, 0, 0);//上左下右
+      return UIEdgeInsetsMake(10, 0, 0, 0);//上左下右
    
 }
 

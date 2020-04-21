@@ -99,7 +99,7 @@
         
         UICollectionViewFlowLayout * flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        _SaleCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 50, self.ZLP_width , 160 ) collectionViewLayout:flowLayout];
+        _SaleCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 50, self.ZLP_width, self.ZLP_height - 50) collectionViewLayout:flowLayout];
         _SaleCollectionView.backgroundColor= UIColor.whiteColor;
         _SaleCollectionView.scrollsToTop = YES;
         _SaleCollectionView.showsHorizontalScrollIndicator = NO;
@@ -108,20 +108,15 @@
     }
     
     return _SaleCollectionView;
+    
 }
+
+
 
 #pragma mark ---- 点击跳转更多页面
 -(void)LimtMoreButtonClick{
     
     self.PushLimtbuyBlockClick();
-    
-}
-
-#pragma mark ---- UIScrollViewDelegate
-
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-
     
 }
 
@@ -142,7 +137,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-     return self.TimeListArray[0].data.count;
+      return self.TimeListArray[0].data.count;
     
 }
 
@@ -153,6 +148,8 @@
     
     
      SaleCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SaleCollectionViewCell" forIndexPath:indexPath];
+    
+     cell.backgroundColor = UIColor.whiteColor;
     
      cell.Model = self.TimeListArray[0].data[indexPath.item];
     
@@ -188,7 +185,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
   
-     return CGSizeMake(112 , 160);
+     return CGSizeMake(self.ZLP_width /3 - 13 , 160);
   
 }
 
@@ -214,7 +211,7 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     
-      return 0;
+      return 10;
     
 }
 

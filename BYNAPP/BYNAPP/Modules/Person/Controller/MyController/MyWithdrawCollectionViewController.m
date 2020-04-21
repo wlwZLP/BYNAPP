@@ -175,8 +175,7 @@
         _WithHeadView.TitleArray = [[NSArray alloc]initWithObjects:@"佣金",@"会员费",nil ];
         
         _WithHeadView.TitleBtnBlockClick = ^(NSInteger TagIndex) {
-            
-
+        
             
         };
         

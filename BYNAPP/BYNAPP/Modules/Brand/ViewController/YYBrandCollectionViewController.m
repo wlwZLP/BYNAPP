@@ -145,9 +145,6 @@ static int const HomelabelWith = 90;
 
 
 
-
-
-
 /**
  *  懒加载UISearchBar
  *
@@ -182,8 +179,6 @@ static int const HomelabelWith = 90;
     return _HomeSearchBar;
     
 }
-
-
 
 
 
@@ -419,6 +414,7 @@ static int const HomelabelWith = 90;
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
     
     BrandSearchCollectionViewController * Search = [[BrandSearchCollectionViewController alloc]init];
+    Search.title = @"搜索";
     [self.navigationController pushViewController:Search animated:YES];
     return NO;
     

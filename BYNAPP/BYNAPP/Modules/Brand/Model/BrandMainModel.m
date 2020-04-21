@@ -9,7 +9,9 @@
 #import "BrandMainModel.h"
 
 @implementation BrandMainModel
+
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{@"brand_id" : @[@"id",@"ID"]};
 }
+
 @end

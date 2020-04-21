@@ -45,6 +45,10 @@
      NSString * app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     
      [YYSaveTool SetCahceForvalue:@"0" forKey:YYLogin];
+     
+     if ([YYSaveTool GetCacheForKey:YYAgreeXieyi] == nil) {
+        [YYSaveTool SetCahceForvalue:@"0" forKey:YYAgreeXieyi];
+     }
     
      [YYSaveTool SetCahceForvalue:app_Version forKey:CacheAPPVersion];
     
@@ -53,10 +57,12 @@
      [YYSaveTool SetCahceForvalue:@"2d0063ff9424ec1cb9cc3c3d6cdd420f" forKey:CacheAPPSecret];
     
     
+    
 }
 
 -(void)SetAPPThirdSDKInformation{
     
+    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wx603dcad9a4e0b55d" appSecret:@"32797ea1fba76ad32ca152f5bceb334a" redirectURL:nil];
 
    // 百川平台基础SDK初始化，加载并初始化各个业务能力插件
 //      [[AlibcTradeSDK sharedInstance] setDebugLogOpen:YES];//开发阶段打开日志开关，方便排查错误信息

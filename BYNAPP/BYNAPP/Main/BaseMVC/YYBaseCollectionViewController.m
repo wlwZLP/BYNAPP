@@ -170,6 +170,7 @@ static NSString * const reuseIdentifier = @"Cell";
     HUD.label.textColor = YY66Color;
     HUD.removeFromSuperViewOnHide= YES;
     [self.view addSubview:HUD];
+//    [self.view bringSubviewToFront:HUD];
     [HUD showAnimated:YES];
     [HUD hideAnimated:YES afterDelay:2];
 

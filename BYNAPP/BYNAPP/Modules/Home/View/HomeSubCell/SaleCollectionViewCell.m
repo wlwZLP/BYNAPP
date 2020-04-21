@@ -41,7 +41,7 @@
   
     UIImageView * Mainimage = [[UIImageView alloc] init];
     Mainimage.backgroundColor = [UIColor clearColor];
-    Mainimage.frame = CGRectMake(4, 2, 104, 104);
+    Mainimage.frame = CGRectMake(0, 0, self.ZLP_width , self.ZLP_width);
     Mainimage.image = [UIImage imageNamed:@"sale"];
     [self addSubview:Mainimage];
     self.Mainimage = Mainimage;
@@ -49,7 +49,7 @@
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"实时热卖";
     TitleLabel.textColor = YY33Color;
-    TitleLabel.frame = CGRectMake(5, 113, 102, 15);
+    TitleLabel.frame = CGRectMake(5, self.ZLP_width + 5, 102, 15);
     TitleLabel.textAlignment = NSTextAlignmentLeft;
     TitleLabel.font = [UIFont systemFontOfSize:14 weight:0];
     [self addSubview:TitleLabel];
@@ -60,12 +60,13 @@
     GainMoneyLabel.text = @"最多赚一元";
     GainMoneyLabel.textAlignment = NSTextAlignmentLeft;
     GainMoneyLabel.textColor = YYHexColor(@"#F53C25");
-    GainMoneyLabel.frame = CGRectMake(5, 133, 102, 15);
+    GainMoneyLabel.frame = CGRectMake(5, self.ZLP_width + 20, 102, 15);
     GainMoneyLabel.font = [UIFont systemFontOfSize:11 weight:0];
     [self addSubview:GainMoneyLabel];
     self.GainMoneyLabel = GainMoneyLabel;
   
 }
+
 
 
 -(void)setModel:(HomeMainModel *)Model{
@@ -76,6 +77,8 @@
     
     self.TitleLabel.text = Model.title;
     
+    self.GainMoneyLabel.text = [NSString stringWithFormat:@"抢购价￥%@",Model.discount_price];
+
     
     
 }

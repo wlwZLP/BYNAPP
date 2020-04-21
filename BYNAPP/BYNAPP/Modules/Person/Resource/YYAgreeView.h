@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YYAgreeView : UIView
 
+@property(nonatomic,strong)NSString * WebUrlString;
+
 @end
 
 NS_ASSUME_NONNULL_END

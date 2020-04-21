@@ -88,11 +88,11 @@
     
     _Model = Model;
        
-    [self.Mainimage sd_setImageWithURL:[NSURL URLWithString:Model.brand_cover] placeholderImage:[UIImage imageNamed:@"banner01"]];
+    [self.Mainimage sd_setImageWithURL:[NSURL URLWithString:Model.coupon_cover] placeholderImage:[UIImage imageNamed:@"banner01"]];
     
     self.TitleLabel.text = Model.coupon_name;
        
-    self.CouponLabel.text = [NSString stringWithFormat:@" ￥%@ ",Model.sale_price];
+    self.CouponLabel.text = (Model.coupon_money_text.length > 0) ? Model.coupon_money_text : @"优惠五折起";
        
 
     

@@ -66,17 +66,19 @@
         
      [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
-    self.collectionView.mj_header = [LPRefreshGifHeader headerWithRefreshingBlock:^{
+     self.collectionView.mj_header = [LPRefreshGifHeader headerWithRefreshingBlock:^{
            
-            [self GetHomebannerGoodsNetdata];
+          [self GetHomebannerGoodsNetdata];
            
-    }];
+     }];
    
-    self.collectionView.mj_footer = [LPRefreshFooter footerWithRefreshingBlock:^{
+     self.collectionView.mj_footer = [LPRefreshFooter footerWithRefreshingBlock:^{
        
 //         [self GetHomeMoreHotData];
        
-    }];
+     }];
+    
+    
 }
 
 
@@ -89,45 +91,109 @@
 }
 
 
-#pragma mark  多个网络请求结束后在这里处理数据
-
+#pragma mark ===============网络请求=============
 
 -(void)GetHomebannerGoodsNetdata{
     
+    dispatch_group_t group = dispatch_group_create();
+    
+    [self loadPartOne:group];
+    
+    [self loadPartTwo:group];
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+       
+        [self.collectionView.mj_header endRefreshing];
+           
+        [self.collectionView reloadData];
+              
+    });
+    
+}
+
+
+-(void)loadPartOne:(dispatch_group_t)group{
+    
+     dispatch_group_enter(group);
+    
+     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsHome];
+                 
+     [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+          
+        NSDictionary * Data1 = EncodeDicFromDic(responseObject, @"data");
+         
+//        YYNSLog(@"首页广告位数据------%@",Data1);
+         
+        [self.BannerImgArray removeAllObjects];
+        
+        self.BannerArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"banners")];
+        
+        for (HomeBannerModel * Model in self.BannerArray) {
+            [self.BannerImgArray addObject:Model.cover];
+        }
+        
+        self.ChannlesArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"channels")];
+        
+        self.MiddlesArray =  [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data1, @"middles")];
+
+        self.ZonesArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"zones")];
+        
+        self.TimesArray =  [NSArray modelArrayWithClass:[HomeTimeModel class] json:EncodeArrayFromDic(Data1, @"flash_sales")];
+         
+         dispatch_group_leave(group);
+         
+     } failure:^(NSError *error, id responseCache) {
+         
+                 
+           dispatch_group_leave(group);
+         
+                        
+     }];
+
+}
+
+
+-(void)loadPartTwo:(dispatch_group_t)group{
+    
+     dispatch_group_enter(group);
+
+     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsTaobaoHot];
+                        
+     [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+          
+         NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+         
+         self.GoodsItemsArray =  [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data, @"items")];
+         
+          dispatch_group_leave(group);
+                
+     } failure:^(NSError *error, id responseCache) {
+         
+         NSDictionary * Data = EncodeDicFromDic(responseCache, @"data");
+         
+         self.GoodsItemsArray =  [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data, @"items")];
+                           
+           dispatch_group_leave(group);
+                               
+     }];
+    
+}
+
+
+-(void)GetNetdata{
+    
     //网络请求1
      RACSignal * signal1 = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-      
-         NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsHome];
-                     
-         [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
-                         
-              [subscriber sendNext:responseObject];
-             
-         } failure:^(NSError *error, id responseCache) {
-                        
-              [subscriber sendNext:responseCache];
-                            
-         }];
-         
+    
          return  nil;
          
      }];
          
     //网络请求2
      RACSignal * signal2 = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        
-         NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsTaobaoHot];
-                     
-         [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
-             
-              [subscriber sendNext:responseObject];
-             
-         } failure:^(NSError *error, id responseCache) {
-                        
-              [subscriber sendNext:responseCache];
-                            
-         }];
+  
          return  nil;
+         
      }];
      
     
@@ -137,39 +203,11 @@
 
 - (void)updateUIPic:(id)pic1 pic2:(id)pic2{
   
-    NSDictionary * NetData1 = (NSDictionary*)pic1;
-    
-    NSDictionary * NetData2 = (NSDictionary*)pic2;
-    
+
 //    YYNSLog(@"首页广告位数据------%@",NetData1);
     
-    NSDictionary * Data1 = EncodeDicFromDic(NetData1, @"data");
-    
-    [self.BannerImgArray removeAllObjects];
-    
-    self.BannerArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"banners")];
-    
-    for (HomeBannerModel * Model in self.BannerArray) {
-        [self.BannerImgArray addObject:Model.cover];
-    }
-    
-    self.ChannlesArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"channels")];
-    
-    self.MiddlesArray =  [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data1, @"middles")];
-
-    self.ZonesArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"zones")];
-    
-    self.TimesArray =  [NSArray modelArrayWithClass:[HomeTimeModel class] json:EncodeArrayFromDic(Data1, @"flash_sales")];
-    
-    NSDictionary * Data2 = EncodeDicFromDic(NetData2, @"data");
-    
-    self.GoodsItemsArray =  [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data2, @"items")];
-    
-    [self.collectionView.mj_header endRefreshing];
-    
-    [self.collectionView reloadData];
-    
-    
+  
+ 
 }
 
 
@@ -282,10 +320,9 @@
         
          cell.PushLimtbuyBlockClick = ^{
          
-             LimitBuyCollectionViewController * LimitVc = [[LimitBuyCollectionViewController alloc]init];
-             LimitVc.title = @"限时抢购";
-             [self.navigationController pushViewController:LimitVc animated:YES];
-             
+             LimitBuyCollectionViewController * BuyVc = [[LimitBuyCollectionViewController alloc]init];
+             BuyVc.title = @"限时抢购";
+             [self.navigationController pushViewController:BuyVc animated:YES];
              
          };
         
@@ -420,11 +457,11 @@
         
     }else if (indexPath.section == 3){
         
-        return CGSizeMake(YYScreenWidth - 24 ,  (self.ZonesArray.count / 2  + 1) * 90 + 15);
+         return CGSizeMake(YYScreenWidth - 24 ,  (self.ZonesArray.count / 2  + 1) * 90 + 15);
     
     }else if (indexPath.section == 4){
         
-         return CGSizeMake(YYScreenWidth , 220);
+        return CGSizeMake(YYScreenWidth , YYScreenWidth/3 + 100);
         
     }else{
         

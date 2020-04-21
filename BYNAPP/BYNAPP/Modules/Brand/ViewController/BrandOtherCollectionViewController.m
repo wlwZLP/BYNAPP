@@ -10,7 +10,9 @@
 #import "BrandRecomdCollectionViewCell.h"
 #import "BrandCardCollectionViewCell.h"
 #import "BrandModel.h"
-#import "BrandVipDetailsCollectionViewController.h"
+#import "BrandRechargeCollectionViewController.h"
+#import "BrandCouponCollectionViewController.h"
+
 
 @interface BrandOtherCollectionViewController ()
 
@@ -116,13 +118,24 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     BrandMainModel * Model = self.BrandArray[indexPath.item];
-    BrandVipDetailsCollectionViewController * DetailsVc = [[BrandVipDetailsCollectionViewController alloc]init];
-    DetailsVc.Details_id = Model.brand_id;
-    DetailsVc.mall_id = Model.mall_id;
-    DetailsVc.title = Model.coupon_name;
-    [self.navigationController pushViewController:DetailsVc animated:YES];
     
-    
+    if ([Model.coupon_type isEqualToString:@"2"]) {
+        
+        BrandCouponCollectionViewController * BrandVc = [[BrandCouponCollectionViewController alloc]init];
+        BrandVc.title = Model.coupon_name;
+        BrandVc.Details_id = Model.brand_id;
+        BrandVc.mall_id = Model.mall_id;
+        [self.navigationController pushViewController:BrandVc animated:YES];
+        
+    } else {
+        
+        BrandRechargeCollectionViewController * BrandVc = [[BrandRechargeCollectionViewController alloc]init];
+        BrandVc.title = Model.coupon_name;
+        BrandVc.Details_id = Model.brand_id;
+        BrandVc.mall_id = Model.mall_id;
+        [self.navigationController pushViewController:BrandVc animated:YES];
+        
+    }
 }
 
 

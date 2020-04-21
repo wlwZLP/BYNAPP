@@ -52,7 +52,7 @@
 #import "YYWebViewController.h"
 #import "UserModel.h"
 #import "LPAnimationView.h"
-
+#import "LPPopTool.h"
 
 //常用分类
 #import "UIView+AnimationExtend.h"

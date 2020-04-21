@@ -26,8 +26,12 @@
 #define URL_APIGoodsItems @"api/goods/items"
 //4.检测用户是否存在
 #define URL_APIUserExist @"api/user/exist"
-//5.用户手机号 注册、登录
+//5.用户手机号登录
 #define URL_APIUserLogin @"api/user/login"
+//5.用户手机号注册
+#define URL_APIUserRegister @"api/user/register"
+//6.获取邀请人信息
+#define URL_APIUserRecommendor @"api/user/get_recommendor"
 //6.获取验证码
 #define URL_APIGetValidateCode @"api/user/get_validate_code"
 //7.根据商品类目搜索
@@ -76,11 +80,14 @@
 #define URL_APIMPVSearch @"api/mpv2/search"
 //29.卡券和直冲下单接口
 #define URL_APIMPVProductOrder @"api/mpv2/product-order"
-//30.通过订单号获取最新paysign
-//#define URL_APIMPVProductOrder @"api/mpv2/product-order"
-
-
-
+//30.邀请海报
+#define URL_APIUserInvitePoster @"api/user/invite_poster"
+//31.限时抢购时间表
+#define URL_APIGoodsFlashSaleTimes @"api/goods/flash_sale_times"
+//31.限时抢购列表
+#define URL_APIGoodsFlashSaleItems @"api/goods/flash_sale_items"
+//32.品牌墙搜索
+#define URL_APIMPVSearch @"api/mpv2/search"
 
 
 

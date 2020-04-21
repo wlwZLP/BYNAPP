@@ -83,7 +83,6 @@
     TodayPredictLabel.font = [UIFont systemFontOfSize:12 weight:0];
     [MainView addSubview:TodayPredictLabel];
     
-   
     
     UILabel * MonthPredict = [[UILabel alloc]init];
     MonthPredict.text = @"8888";

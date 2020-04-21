@@ -29,6 +29,10 @@
 		183C30E82444071100FB4BDA /* PhoneCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 183C30E72444071100FB4BDA /* PhoneCollectionViewController.m */; };
 		18521D99244DACD000BB5172 /* UILabel+YBAttributeTextTapAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 18521D98244DACD000BB5172 /* UILabel+YBAttributeTextTapAction.m */; };
 		18521D9C244DAE3F00BB5172 /* YYAgreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18521D9B244DAE3F00BB5172 /* YYAgreeView.m */; };
+		18521D9F244E9C7700BB5172 /* YYWChatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18521D9E244E9C7700BB5172 /* YYWChatView.m */; };
+		1859ED16244EFB0100612130 /* BrandSearchDataCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859ED15244EFB0100612130 /* BrandSearchDataCollectionViewCell.m */; };
+		1859ED19244EFB1600612130 /* BrandSearchTopCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859ED18244EFB1600612130 /* BrandSearchTopCollectionViewCell.m */; };
+		1859ED1C244EFF6600612130 /* BrandSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1859ED1B244EFF6600612130 /* BrandSearchModel.m */; };
 		18633B842432D79100CE3E60 /* UIImage+imgaeWithColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 18633B612432D79000CE3E60 /* UIImage+imgaeWithColor.m */; };
 		18633B862432D79100CE3E60 /* UIButton+EX.m in Sources */ = {isa = PBXBuildFile; fileRef = 18633B682432D79000CE3E60 /* UIButton+EX.m */; };
 		18633B872432D79100CE3E60 /* UIButton+XYButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 18633B692432D79000CE3E60 /* UIButton+XYButton.m */; };
@@ -82,7 +86,7 @@
 		1880F398243C881E003EECB9 /* HomePlistModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F397243C881E003EECB9 /* HomePlistModel.m */; };
 		1880F39B243C8D32003EECB9 /* BrandRecomdCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F39A243C8D32003EECB9 /* BrandRecomdCollectionViewCell.m */; };
 		1880F39E243C8D43003EECB9 /* BrandGridCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F39D243C8D43003EECB9 /* BrandGridCollectionViewCell.m */; };
-		1880F3A2243C8E41003EECB9 /* BrandVipDetailsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F3A1243C8E41003EECB9 /* BrandVipDetailsCollectionViewController.m */; };
+		1880F3A2243C8E41003EECB9 /* BrandRechargeCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F3A1243C8E41003EECB9 /* BrandRechargeCollectionViewController.m */; };
 		1889D4CA244445CE00DEBE90 /* YYWithdrawHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1889D4C9244445CE00DEBE90 /* YYWithdrawHeadView.m */; };
 		188F5E50244699E00020B245 /* BrandListCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F5E4F244699DF0020B245 /* BrandListCollectionViewController.m */; };
 		188F5E532446B2CA0020B245 /* TBHotCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F5E522446B2CA0020B245 /* TBHotCollectionViewController.m */; };
@@ -145,6 +149,7 @@
 		18BD4689243C300100707A53 /* GridCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BD4688243C300100707A53 /* GridCollectionViewCell.m */; };
 		18BD468C243C4AE500707A53 /* HomeTopicCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BD468B243C4AE500707A53 /* HomeTopicCollectionViewCell.m */; };
 		18BD4690243C4C0300707A53 /* ImgCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BD468F243C4C0300707A53 /* ImgCollectionViewCell.m */; };
+		18D81A76244F1BF7005BE67F /* MyNoVipCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18D81A75244F1BF7005BE67F /* MyNoVipCollectionViewCell.m */; };
 		18DC38EC243EC12F0030DE97 /* DetailsTopCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC38EB243EC12F0030DE97 /* DetailsTopCollectionViewCell.m */; };
 		18DC38EF243EC1420030DE97 /* DetailsNumCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC38EE243EC1420030DE97 /* DetailsNumCollectionViewCell.m */; };
 		18DC38F2243EC1710030DE97 /* DetailsNotesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18DC38F1243EC1710030DE97 /* DetailsNotesCollectionViewCell.m */; };
@@ -249,6 +254,14 @@
 		18521D98244DACD000BB5172 /* UILabel+YBAttributeTextTapAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+YBAttributeTextTapAction.m"; sourceTree = "<group>"; };
 		18521D9A244DAE3F00BB5172 /* YYAgreeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYAgreeView.h; sourceTree = "<group>"; };
 		18521D9B244DAE3F00BB5172 /* YYAgreeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYAgreeView.m; sourceTree = "<group>"; };
+		18521D9D244E9C7700BB5172 /* YYWChatView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYWChatView.h; sourceTree = "<group>"; };
+		18521D9E244E9C7700BB5172 /* YYWChatView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYWChatView.m; sourceTree = "<group>"; };
+		1859ED14244EFB0100612130 /* BrandSearchDataCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrandSearchDataCollectionViewCell.h; sourceTree = "<group>"; };
+		1859ED15244EFB0100612130 /* BrandSearchDataCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrandSearchDataCollectionViewCell.m; sourceTree = "<group>"; };
+		1859ED17244EFB1600612130 /* BrandSearchTopCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrandSearchTopCollectionViewCell.h; sourceTree = "<group>"; };
+		1859ED18244EFB1600612130 /* BrandSearchTopCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrandSearchTopCollectionViewCell.m; sourceTree = "<group>"; };
+		1859ED1A244EFF6600612130 /* BrandSearchModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrandSearchModel.h; sourceTree = "<group>"; };
+		1859ED1B244EFF6600612130 /* BrandSearchModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrandSearchModel.m; sourceTree = "<group>"; };
 		18633B602432D79000CE3E60 /* UIImage+imgaeWithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+imgaeWithColor.h"; sourceTree = "<group>"; };
 		18633B612432D79000CE3E60 /* UIImage+imgaeWithColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+imgaeWithColor.m"; sourceTree = "<group>"; };
 		18633B662432D79000CE3E60 /* UIButton+XYButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+XYButton.h"; sourceTree = "<group>"; };
@@ -355,8 +368,8 @@
 		1880F39A243C8D32003EECB9 /* BrandRecomdCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrandRecomdCollectionViewCell.m; sourceTree = "<group>"; };
 		1880F39C243C8D43003EECB9 /* BrandGridCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrandGridCollectionViewCell.h; sourceTree = "<group>"; };
 		1880F39D243C8D43003EECB9 /* BrandGridCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrandGridCollectionViewCell.m; sourceTree = "<group>"; };
-		1880F3A0243C8E41003EECB9 /* BrandVipDetailsCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrandVipDetailsCollectionViewController.h; sourceTree = "<group>"; };
-		1880F3A1243C8E41003EECB9 /* BrandVipDetailsCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrandVipDetailsCollectionViewController.m; sourceTree = "<group>"; };
+		1880F3A0243C8E41003EECB9 /* BrandRechargeCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrandRechargeCollectionViewController.h; sourceTree = "<group>"; };
+		1880F3A1243C8E41003EECB9 /* BrandRechargeCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrandRechargeCollectionViewController.m; sourceTree = "<group>"; };
 		1889D4C8244445CE00DEBE90 /* YYWithdrawHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYWithdrawHeadView.h; sourceTree = "<group>"; };
 		1889D4C9244445CE00DEBE90 /* YYWithdrawHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYWithdrawHeadView.m; sourceTree = "<group>"; };
 		188F5E4F244699DF0020B245 /* BrandListCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrandListCollectionViewController.m; sourceTree = "<group>"; };
@@ -460,6 +473,8 @@
 		18BD468B243C4AE500707A53 /* HomeTopicCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeTopicCollectionViewCell.m; sourceTree = "<group>"; };
 		18BD468E243C4C0300707A53 /* ImgCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImgCollectionViewCell.h; sourceTree = "<group>"; };
 		18BD468F243C4C0300707A53 /* ImgCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImgCollectionViewCell.m; sourceTree = "<group>"; };
+		18D81A74244F1BF7005BE67F /* MyNoVipCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyNoVipCollectionViewCell.h; sourceTree = "<group>"; };
+		18D81A75244F1BF7005BE67F /* MyNoVipCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyNoVipCollectionViewCell.m; sourceTree = "<group>"; };
 		18DC38EA243EC12F0030DE97 /* DetailsTopCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsTopCollectionViewCell.h; sourceTree = "<group>"; };
 		18DC38EB243EC12F0030DE97 /* DetailsTopCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsTopCollectionViewCell.m; sourceTree = "<group>"; };
 		18DC38ED243EC1420030DE97 /* DetailsNumCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsNumCollectionViewCell.h; sourceTree = "<group>"; };
@@ -843,6 +858,8 @@
 				186F3B4A2445B92F002737DA /* BrandMainModel.m */,
 				189506602449898900F9147F /* BrandDetailsModel.h */,
 				189506612449898900F9147F /* BrandDetailsModel.m */,
+				1859ED1A244EFF6600612130 /* BrandSearchModel.h */,
+				1859ED1B244EFF6600612130 /* BrandSearchModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -873,6 +890,8 @@
 				1899D8232435F18000809BFD /* BrandAllCollectionViewController.m */,
 				1899D8252435F19A00809BFD /* BrandOtherCollectionViewController.h */,
 				1899D8262435F19A00809BFD /* BrandOtherCollectionViewController.m */,
+				DCE664C62445FC0300C7BE3B /* BrandListCollectionViewController.h */,
+				188F5E4F244699DF0020B245 /* BrandListCollectionViewController.m */,
 				1880F39F243C8E23003EECB9 /* SubController */,
 			);
 			path = ViewController;
@@ -1120,6 +1139,10 @@
 			children = (
 				1880F39C243C8D43003EECB9 /* BrandGridCollectionViewCell.h */,
 				1880F39D243C8D43003EECB9 /* BrandGridCollectionViewCell.m */,
+				1859ED17244EFB1600612130 /* BrandSearchTopCollectionViewCell.h */,
+				1859ED18244EFB1600612130 /* BrandSearchTopCollectionViewCell.m */,
+				1859ED14244EFB0100612130 /* BrandSearchDataCollectionViewCell.h */,
+				1859ED15244EFB0100612130 /* BrandSearchDataCollectionViewCell.m */,
 			);
 			path = SubCell;
 			sourceTree = "<group>";
@@ -1213,6 +1236,8 @@
 				187F555A24401F3B005205E1 /* CollectCollectionViewCell.m */,
 				18FF85382448402E00260949 /* MyNewImgCollectionViewCell.h */,
 				18FF85392448402E00260949 /* MyNewImgCollectionViewCell.m */,
+				18D81A74244F1BF7005BE67F /* MyNoVipCollectionViewCell.h */,
+				18D81A75244F1BF7005BE67F /* MyNoVipCollectionViewCell.m */,
 				18FF853E24484CEA00260949 /* MyVipImgCollectionViewCell.h */,
 				18FF853F24484CEA00260949 /* MyVipImgCollectionViewCell.m */,
 				18FF854124484DBA00260949 /* MyVipGridCollectionViewCell.h */,
@@ -1244,6 +1269,8 @@
 				187D067D24407260005DAA0C /* YYReportHeadView.m */,
 				18521D9A244DAE3F00BB5172 /* YYAgreeView.h */,
 				18521D9B244DAE3F00BB5172 /* YYAgreeView.m */,
+				18521D9D244E9C7700BB5172 /* YYWChatView.h */,
+				18521D9E244E9C7700BB5172 /* YYWChatView.m */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -1251,12 +1278,10 @@
 		1880F39F243C8E23003EECB9 /* SubController */ = {
 			isa = PBXGroup;
 			children = (
-				DCE664C62445FC0300C7BE3B /* BrandListCollectionViewController.h */,
-				188F5E4F244699DF0020B245 /* BrandListCollectionViewController.m */,
-				1880F3A0243C8E41003EECB9 /* BrandVipDetailsCollectionViewController.h */,
-				1880F3A1243C8E41003EECB9 /* BrandVipDetailsCollectionViewController.m */,
 				1895065424495D5800F9147F /* BrandCouponCollectionViewController.h */,
 				1895065524495D5800F9147F /* BrandCouponCollectionViewController.m */,
+				1880F3A0243C8E41003EECB9 /* BrandRechargeCollectionViewController.h */,
+				1880F3A1243C8E41003EECB9 /* BrandRechargeCollectionViewController.m */,
 				18A74A59244D7323004EEF8B /* BrandSearchCollectionViewController.h */,
 				18A74A5A244D7323004EEF8B /* BrandSearchCollectionViewController.m */,
 			);
@@ -1783,6 +1808,7 @@
 				18633B8D2432D79100CE3E60 /* UIBarButtonItem+Item.m in Sources */,
 				1869CA59243D7B1100F3C79E /* RightCollectionViewCell.m in Sources */,
 				18DC3906243F15F30030DE97 /* SetTopCollectionViewCell.m in Sources */,
+				1859ED19244EFB1600612130 /* BrandSearchTopCollectionViewCell.m in Sources */,
 				187F55512440004F005205E1 /* MyOrderTopCollectionViewCell.m in Sources */,
 				18DC3916243F28D50030DE97 /* MyWithdrawCollectionViewController.m in Sources */,
 				18DC3909243F16070030DE97 /* SetMidCollectionViewCell.m in Sources */,
@@ -1792,6 +1818,7 @@
 				188F5E5F2446B6430020B245 /* AblumCollectionViewController.m in Sources */,
 				DC7E5FE7244191A100A50185 /* UILabel+YY.m in Sources */,
 				18DC3919243F29040030DE97 /* MyOrderCollectionViewController.m in Sources */,
+				1859ED1C244EFF6600612130 /* BrandSearchModel.m in Sources */,
 				186F3B45244576CE002737DA /* YYPDDHeadView.m in Sources */,
 				18DC3900243F14420030DE97 /* SetCollectionViewController.m in Sources */,
 				DC21BD15244B268400E4A330 /* MyTeamModel.m in Sources */,
@@ -1800,9 +1827,11 @@
 				1836AFC52431E28300EA8F30 /* LPRefreshFooter.m in Sources */,
 				18FF853D24484C1E00260949 /* MyNoVipCollectionViewController.m in Sources */,
 				18A74A6F244D7DBA004EEF8B /* LPPopTool.m in Sources */,
+				1859ED16244EFB0100612130 /* BrandSearchDataCollectionViewCell.m in Sources */,
 				186F3B4B2445B92F002737DA /* BrandMainModel.m in Sources */,
 				1871A04A243732D8000955D5 /* PersonMainCollectionViewCell.m in Sources */,
 				DC21BD18244B3E8C00E4A330 /* ReportModel.m in Sources */,
+				18D81A76244F1BF7005BE67F /* MyNoVipCollectionViewCell.m in Sources */,
 				18FF853A2448402E00260949 /* MyNewImgCollectionViewCell.m in Sources */,
 				1869CA58243D7B1100F3C79E /* LeftTableViewCell.m in Sources */,
 				183C30E52444070300FB4BDA /* LoginCollectionViewController.m in Sources */,
@@ -1844,7 +1873,7 @@
 				1895065C24495E1400F9147F /* BDetailsCenCollectionViewCell.m in Sources */,
 				1895065F24495E5B00F9147F /* BDetailsShuoCollectionViewCell.m in Sources */,
 				186F3B512445BEAC002737DA /* BrandTopTwoCollectionViewCell.m in Sources */,
-				1880F3A2243C8E41003EECB9 /* BrandVipDetailsCollectionViewController.m in Sources */,
+				1880F3A2243C8E41003EECB9 /* BrandRechargeCollectionViewController.m in Sources */,
 				18BD467D243C1E0100707A53 /* HomeBannerCollectionViewCell.m in Sources */,
 				18DC3928243F29B60030DE97 /* MyTraceCollectionViewController.m in Sources */,
 				DC21BD1B244C437700E4A330 /* WChatCollectionViewCell.m in Sources */,
@@ -1856,6 +1885,7 @@
 				18633B8A2432D79100CE3E60 /* UIColor+Hex.m in Sources */,
 				18B909C62447EAC100481E03 /* MyCollectModel.m in Sources */,
 				187F555E244025BB005205E1 /* TraceCollectionViewCell.m in Sources */,
+				18521D9F244E9C7700BB5172 /* YYWChatView.m in Sources */,
 				18DC391C243F291B0030DE97 /* MyTeamCollectionViewController.m in Sources */,
 				18FF854324484DBA00260949 /* MyVipGridCollectionViewCell.m in Sources */,
 				1836ACCC2431BE4200EA8F30 /* main.m in Sources */,

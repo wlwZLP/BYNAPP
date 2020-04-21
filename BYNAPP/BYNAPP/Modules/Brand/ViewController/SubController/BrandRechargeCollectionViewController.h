@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BrandVipDetailsCollectionViewController : YYBaseCollectionViewController
+@interface BrandRechargeCollectionViewController : YYBaseCollectionViewController
 
 @property(nonatomic,strong)NSString * Details_id;
 

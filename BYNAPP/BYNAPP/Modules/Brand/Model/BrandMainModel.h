@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString * need_login;
 @property (nonatomic, strong) NSString * short_title;
 @property (nonatomic, strong) NSString * sales;
+//1为橙券直冲  3为福禄直冲   2为橙券卡券  4为福禄的卡券 
 @property (nonatomic, strong) NSString * coupon_type;
 @property (nonatomic, strong) NSString * coupon_cover;
 

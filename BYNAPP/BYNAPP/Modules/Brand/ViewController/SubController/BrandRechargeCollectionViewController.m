@@ -6,14 +6,14 @@
 //  Copyright © 2020 xidian. All rights reserved.
 //
 
-#import "BrandVipDetailsCollectionViewController.h"
+#import "BrandRechargeCollectionViewController.h"
 #import "BDetailsTopCollectionViewCell.h"
 #import "BDetailsCenCollectionViewCell.h"
 #import "BDetailsShuoCollectionViewCell.h"
 #import "DetailsNotesCollectionViewCell.h"
 #import "BrandDetailsModel.h"
 
-@interface BrandVipDetailsCollectionViewController ()
+@interface BrandRechargeCollectionViewController ()
 
 @property(nonatomic,strong)NSDictionary * DetaisDic;
 
@@ -30,7 +30,7 @@
 
 @end
 
-@implementation BrandVipDetailsCollectionViewController
+@implementation BrandRechargeCollectionViewController
 
 ;
 
@@ -63,12 +63,6 @@
     
 }
 
--(void)viewWillAppear:(BOOL)animated{
-    
-   
-    
-}
-
 
 
 -(void)GetHomeGoodsDetailsNetData{
@@ -80,6 +74,8 @@
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
         
         self.DetaisDic = EncodeDicFromDic(responseObject, @"data");
+        
+        YYNSLog(@"直冲数据--------%@",self.DetaisDic);
         
         self.TitleArray = self.DetaisDic.allKeys;
         
@@ -131,7 +127,6 @@
     if (indexPath.item == 0) {
         
         BDetailsTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BDetailsTopCollectionViewCell" forIndexPath:indexPath];
-        
         
         return cell;
         
@@ -331,7 +326,7 @@
 }
 
 
-#pragma mark ===============网络请求=============
+#pragma mark ===============返回到首页============
 
 -(void)homeImgBtnClick{
     

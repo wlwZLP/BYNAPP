@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString * tk_rate;
 @property (nonatomic, strong) NSString * mall_icon;
 @property (nonatomic, strong) NSString * item_id;
+@property (nonatomic, strong) NSString * sold_num;
+@property (nonatomic, strong) NSString * total_num;
 @property (nonatomic, strong) NSString * discount_text;
 @property (nonatomic, strong) NSString * month_sales;
 @property (nonatomic, strong) NSString * price;

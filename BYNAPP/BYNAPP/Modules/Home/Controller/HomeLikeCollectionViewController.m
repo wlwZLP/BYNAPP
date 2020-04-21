@@ -92,23 +92,23 @@
          
     NSDictionary * dict = @{@"mall_id":@"1",@"category_id":self.category_id,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
                         
-       [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
                 
-           NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+        NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
        
-           self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+        self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
            
-           [self.collectionView reloadData];
+        [self.collectionView reloadData];
           
-       } failure:^(NSError *error, id responseCache) {
+    } failure:^(NSError *error, id responseCache) {
               
-            NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
+        NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
             
-            self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+        self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
                 
-            [self.collectionView reloadData];
+        [self.collectionView reloadData];
 
-       }];
+    }];
     
     
 }
@@ -119,16 +119,14 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     
-    return 1;
+     return 1;
   
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
- 
-    return self.ListDataArray.count;
+     return self.ListDataArray.count;
    
-    
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

@@ -2,7 +2,7 @@
 #import "BrandRecomdCollectionViewCell.h"
 #import "BrandCardCollectionViewCell.h"
 #import "BrandModel.h"
-#import "BrandVipDetailsCollectionViewController.h"
+#import "BrandRechargeCollectionViewController.h"
 
 @interface BrandListCollectionViewController ()
 

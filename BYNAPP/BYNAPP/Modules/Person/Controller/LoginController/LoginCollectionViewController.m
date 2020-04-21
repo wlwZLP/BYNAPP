@@ -17,14 +17,31 @@
 
 @property (nonatomic,strong)UITextField * CodeTextField;
 
+@property (nonatomic,strong)UITextField * INVitTextField;
+
 @property (nonatomic,strong)RACDisposable * disposable;
 
 @property (nonatomic,assign)int time;
 
 @property (nonatomic,strong)YYAgreeView * AgreeView;
 
-/// 判断手机号是否已经注册了，然后判断验证码是登录还是注册
-@property (nonatomic,strong)NSString * GetCodeType;
+/// 判断手机号是否已经注册了，1 表示未注册  2表示已经注册
+@property (nonatomic,strong)NSString * UserIsExit;
+
+/// 判断是否要填邀请人邀请码
+@property (nonatomic,strong)UIView * PersonInVitView;
+
+/// 判断是否勾选服务一些btn
+@property (nonatomic,strong)UIButton * GouXuanBtn;
+
+/// 获取邀请人头像
+@property (nonatomic,strong)UIImageView * PersonInVitImg;
+
+///  获取邀请人名字信息
+@property (nonatomic,strong)UILabel * InvitNameLabel;
+
+///  获取邀请人是否成功
+@property (nonatomic,strong)NSString * InvitSucefulResult;
 
 @end
 
@@ -38,14 +55,14 @@
  
     [self CreateLoginView];
 
-    
+    self.InvitSucefulResult = @"0";
     
     
 }
 
--(void)viewWillAppear:(BOOL)animated{
+-(void)viewWillDisappear:(BOOL)animated{
     
-  
+     [[LPPopTool sharedInstance]closeAnimated:YES];
     
 }
 
@@ -156,13 +173,7 @@
     }];
     
     
-    UIView * YLineView = UIView.new;
-    YLineView.backgroundColor = YYE5Color;
-    YLineView.frame = CGRectMake(28, 290 , self.view.ZLP_width - 56, 0.5);
-    [MainBGView addSubview:YLineView];
- 
-    
-    
+  
     if (IPhoneSE) {
         
          UIButton * LoginBtn = [[UIButton alloc]init];
@@ -205,6 +216,15 @@
          WchatImg.image = [UIImage imageNamed:@"wechat"];
          [MainBGView addSubview:WchatImg];
          [WchatImg addTarget:self action:@selector(WchatImgClick)];
+         if ([[UMSocialManager defaultManager]isInstall:UMSocialPlatformType_WechatSession] == NO) {
+            WchatImg.hidden = YES;
+            QustLabel.hidden = YES;
+         } else {
+            WchatImg.hidden = NO;
+            QustLabel.hidden = NO;
+         }
+        
+        
         
     }else{
         
@@ -225,6 +245,13 @@
         ChoseBtn.frame = CGRectMake(36, 400 ,15 , 15);
         [ChoseBtn addTarget:self action:@selector(ChoseButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         [MainBGView addSubview:ChoseBtn];
+        NSString * AgreeLishi = [YYSaveTool GetCacheForKey:YYAgreeXieyi];
+        if ([AgreeLishi isEqualToString:@"0"]) {
+            ChoseBtn.selected = NO;
+        }else{
+            ChoseBtn.selected = YES;
+        }
+        self.GouXuanBtn = ChoseBtn;
        
         UILabel * AggreLabel = [[UILabel alloc]init];
         AggreLabel.text = @"登录即代表同意《服务协议》和《隐私政策》";
@@ -241,13 +268,15 @@
         [AggreLabel setAttributedText:AggreString];
         [AggreLabel yb_addAttributeTapActionWithStrings:@[@"《服务协议》",@"《隐私政策》"] tapClicked:^(NSString * string, NSRange range, NSInteger index) {
             
-//             [self YYShowMessage:string];
-          
-            [[LPAnimationView sharedMask] show:self.AgreeView withType:QWAlertViewStyleAlert];
-     
+          if ([string containsString:@"服务协议"] == YES) {
+               [[LPAnimationView sharedMask] show:self.AgreeView withType:QWAlertViewStyleAlert];
+               self.AgreeView.WebUrlString = @"http://www.biyingniao.com/articles/5";
+          }else{
+               [[LPAnimationView sharedMask] show:self.AgreeView withType:QWAlertViewStyleAlert];
+               self.AgreeView.WebUrlString = @"http://www.biyingniao.com/articles/17";
+          }
             
-            
-        }];
+      }];
         
       
         UILabel * QustLabel = [[UILabel alloc]init];
@@ -264,23 +293,77 @@
         WchatImg.image = [UIImage imageNamed:@"wechat"];
         [MainBGView addSubview:WchatImg];
         [WchatImg addTarget:self action:@selector(WchatImgClick)];
+//        WchatImg.hidden = NO;
+//        QustLabel.hidden = NO;
+        
+        
     }
-    
-    
-  
+
 }
+
+
+/**
+ *  懒加载UISearchBar
+ *
+ *  @return SalesSearchBar
+ */
+-(UIView *)PersonInVitView
+{
+    
+    if (_PersonInVitView == nil) {
+        
+        _PersonInVitView = [[UIView alloc] initWithFrame:CGRectMake(28, 230 , YYScreenWidth - 56 , 60)];
+        
+        _PersonInVitView.backgroundColor = UIColor.whiteColor;
+        
+        UITextField * InvitTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 20 , 200, 30)];
+        InvitTextField.placeholderColor = YY99Color;
+        [InvitTextField setXmg_Placeholder:@"请输入邀请码"];
+        InvitTextField.font = [UIFont systemFontOfSize:14];
+        InvitTextField.borderStyle = UITextBorderStyleNone;
+        InvitTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        InvitTextField.keyboardType = UIKeyboardTypeNumberPad;
+        [_PersonInVitView addSubview:InvitTextField];
+        [InvitTextField addTarget:self action:@selector(InvitTextchangedField:) forControlEvents:UIControlEventEditingChanged];
+        self.INVitTextField = InvitTextField;
+        
+        UIImageView * InvitImgView = [[UIImageView alloc] init];
+        InvitImgView.backgroundColor = [UIColor clearColor];
+        InvitImgView.frame = CGRectMake(YYScreenWidth - 150, 22 ,30 , 30);
+        InvitImgView.image = [UIImage imageNamed:@"MainBG"];
+        [YYTools ChangeView:InvitImgView RadiusSize:15 BorderColor:[UIColor clearColor]];
+        [_PersonInVitView addSubview:InvitImgView];
+        self.PersonInVitImg = InvitImgView;
+        
+        UILabel * InvitNameLabel = [[UILabel alloc]init];
+        InvitNameLabel.text = @"邀请人昵称";
+        InvitNameLabel.textColor = YY99Color;
+        InvitNameLabel.frame = CGRectMake(YYScreenWidth - 110, 25 ,70 , 25);
+        InvitNameLabel.textAlignment = NSTextAlignmentLeft;
+        InvitNameLabel.font = [UIFont systemFontOfSize:12 weight:0];
+        [_PersonInVitView addSubview:InvitNameLabel];
+        self.InvitNameLabel = InvitNameLabel;
+        
+        UIView * YLineView = UIView.new;
+        YLineView.backgroundColor = YYE5Color;
+        YLineView.frame = CGRectMake(0, 59 , YYScreenWidth - 56 , 0.5);
+        [_PersonInVitView addSubview:YLineView];
+        
+     }
+    
+    return _PersonInVitView;
+    
+}
+
 
 -(YYAgreeView*)AgreeView{
     
     if (!_AgreeView) {
-        
         _AgreeView = [[YYAgreeView alloc]init];
         _AgreeView.frame = CGRectMake(0, 0, YYScreenWidth, YYScreenHeight);
         _AgreeView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
-        
     }
     return _AgreeView;
-    
 }
 
 -(void)CodeButtonClick{
@@ -300,18 +383,21 @@
 
         NSString * is_exist = EncodeStringFromDic(Data, @"is_exist");
 
-        if ([is_exist isEqualToString:@"1"]) {
-             self.GetCodeType = @"2";
+         if ([is_exist isEqualToString:@"0"]) {
+#pragma mark ===============表示是新用户，未注册用户============
+             self.UserIsExit = @"1";
+             [[LPPopTool sharedInstance]popView:self.PersonInVitView animated:YES];
              
-        }else{
-             self.GetCodeType = @"1";
-        }
-
-        [self GetLoginViewCode];
+         }else{
+ #pragma mark ===============老用户,获取验证码登录============
+            self.UserIsExit = @"2";
+         }
+ 
+         [self GetLoginViewCode];
         
     } failure:^(NSError *error, id responseCache) {
 
-
+    
 
     }];
     
@@ -325,7 +411,7 @@
     
     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGetValidateCode];
 
-    NSDictionary * dict = @{@"area_code":@"+86",@"phone":self.PhoneTextField.text,@"type":self.GetCodeType};
+    NSDictionary * dict = @{@"area_code":@"+86",@"phone":self.PhoneTextField.text,@"type":self.UserIsExit};
 
     [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
 
@@ -333,16 +419,21 @@
         
     } failure:^(NSError *error, id responseCache) {
 
-        [self YYShowAlertViewTitle:@"网络错误，请稍后再试"];
+          [self YYShowAlertViewTitle:@"网络错误，请稍后再试"];
 
     }];
-    
     
     
 }
 
 
+
 -(void)LoginButtonClick{
+    
+    if (self.GouXuanBtn.selected == NO) {
+        [self YYShowMessage:@"请阅读并同意服务协议"];
+        return;
+    }
     
     if (self.PhoneTextField.text.length < 11) {
         [self.PhoneTextField shake];
@@ -354,29 +445,123 @@
         return;
     }
     
-    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserLogin];
-    
-    NSDictionary * dict = @{@"area_code":@"+86",@"phone":self.PhoneTextField.text,@"validate_code":self.CodeTextField.text};
-    
-    [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
-        
-        YYNSLog(@"用户请求登录接口---%@",responseObject);
-        
-        NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
-        
-        NSString * Token = EncodeStringFromDic(Data, @"token");
+    if ([ self.UserIsExit isEqualToString:@"1"]) {
          
-        [YYSaveTool SetCahceForvalue:Token forKey:YYToken];
-      
-        [self.navigationController popToRootViewControllerAnimated:YES];
+#pragma mark ===============表示是新用户，进行注册APIUserRegister============
+        if (self.INVitTextField.text.length < 4) {
+            [self.INVitTextField shake];
+            return;
+        }
         
-    } failure:^(NSError *error, id responseCache) {
-    
-        [self YYShowAlertViewTitle:@"网络错误，请稍后再试"];
+       NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserRegister];
+      
+       NSDictionary * dict = @{@"area_code":@"+86",@"phone":self.PhoneTextField.text,@"validate_code":self.CodeTextField.text,@"recommend_code":self.INVitTextField.text};
+      
+       [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
+          
+            if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+              
+                 NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+                
+                 NSString * Token = EncodeStringFromDic(Data, @"token");
+                
+                 [YYSaveTool SetCahceForvalue:@"1" forKey:YYLogin];
+                 
+                 [YYSaveTool SetCahceForvalue:Token forKey:YYToken];
+              
+                 [self.navigationController popToRootViewControllerAnimated:YES];
+              
+           }else{
+              
+                [self YYShowAlertViewTitle:EncodeStringFromDic(responseObject, @"msg")];
+              
+           }
+          
+      } failure:^(NSError *error, id responseCache) {
+      
+            [self YYShowAlertViewTitle:@"网络错误，请稍后再试"];
 
-    }];
+      }];
+           
+    }else{
+        
+#pragma mark ===============老用户,进行登录APIUserLogin============
+        
+       NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserLogin];
+       
+       NSDictionary * dict = @{@"area_code":@"+86",@"phone":self.PhoneTextField.text,@"validate_code":self.CodeTextField.text};
+       
+       [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
+           
+           if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+              
+                 NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+                
+                 NSString * Token = EncodeStringFromDic(Data, @"token");
+                
+                 [YYSaveTool SetCahceForvalue:@"1" forKey:YYLogin];
+                 
+                 [YYSaveTool SetCahceForvalue:Token forKey:YYToken];
+              
+                 [self.navigationController popToRootViewControllerAnimated:YES];
+              
+           }else{
+              
+                [self YYShowAlertViewTitle:EncodeStringFromDic(responseObject, @"msg")];
+              
+           }
+           
+       } failure:^(NSError *error, id responseCache) {
+       
+           [self YYShowAlertViewTitle:@"网络错误，请稍后再试"];
+
+       }];
+           
+    }
     
 
+}
+
+
+
+#pragma mark ===============监听UITextField 获取邀请人信息=============
+
+-(void)InvitTextchangedField:(UITextField*)textField
+{
+    
+    if (textField.text.length >= 6) {
+        
+        NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserRecommendor];
+        
+        NSDictionary * dict = @{@"recommend_code":self.INVitTextField.text};
+        
+        [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
+           
+            if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+                
+                self.InvitSucefulResult = @"1";
+                
+                NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+                           
+                [self.PersonInVitImg sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(Data, @"avatar")] placeholderImage:[UIImage imageNamed:@"MainBg"]];
+                           
+                self.InvitNameLabel.text = EncodeStringFromDic(Data, @"name");
+                
+             }else{
+                
+                self.InvitSucefulResult = @"0";
+                
+             }
+        
+        } failure:^(NSError *error, id responseCache) {
+         
+              [self YYShowAlertViewTitle:@"网络错误，请稍后再试"];
+            
+        }];
+    
+    }
+    
+    
 }
 
 
@@ -393,6 +578,7 @@
                
                UMSocialUserInfoResponse * resp = result;
                NSDictionary * OriginDic = resp.originalResponse;
+               
                NSString * City;
                if (!EncodeStringFromDic(OriginDic, @"city")) {
                    City =EncodeStringFromDic(OriginDic, @"city");
@@ -411,21 +597,29 @@
                }else{
                    province  =@"浙江";
                }
+               
+            //    PhoneCollectionViewController * PhoneVc = [[PhoneCollectionViewController alloc]init];
+            //    PhoneVc.title = @"";
+            //    [self.navigationController pushViewController:PhoneVc animated:YES];
             
            }
         
            
        }];
     
-//    PhoneCollectionViewController * PhoneVc = [[PhoneCollectionViewController alloc]init];
-//    PhoneVc.title = @"";
-//    [self.navigationController pushViewController:PhoneVc animated:YES];
-//
+
+
     
 }
 
 
 -(void)ChoseButtonClick:(UIButton*)sender{
+    
+    NSString * AgreeLishi = [YYSaveTool GetCacheForKey:YYAgreeXieyi];
+    
+    if ([AgreeLishi isEqualToString:@"0"]) {
+        [YYSaveTool SetCahceForvalue:@"1" forKey:YYAgreeXieyi];
+    }
     
     sender.selected = !sender.selected;
     

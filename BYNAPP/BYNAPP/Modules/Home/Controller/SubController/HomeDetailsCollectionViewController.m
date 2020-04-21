@@ -295,18 +295,16 @@
      }
      
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
-        
-         YYNSLog(@"商品详情数据-----%@",responseObject);
-        
+      
          self.DetailsDic = EncodeDicFromDic(responseObject, @"data");
         
-         dispatch_group_leave(group);
+          dispatch_group_leave(group);
         
     } failure:^(NSError *error, id responseCache) {
         
-        self.DetailsDic = EncodeDicFromDic(responseCache, @"data");
+         self.DetailsDic = EncodeDicFromDic(responseCache, @"data");
         
-        dispatch_group_leave(group);
+          dispatch_group_leave(group);
         
     }];
          
@@ -324,16 +322,16 @@
 
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
         
-        NSDictionary * DataDic =  EncodeDicFromDic(responseObject, @"data");
+         NSDictionary * DataDic =  EncodeDicFromDic(responseObject, @"data");
         
-        self.SimlarListArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+         self.SimlarListArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
         
          dispatch_group_leave(group);
         
     } failure:^(NSError *error, id responseCache) {
         
         
-        dispatch_group_leave(group);
+         dispatch_group_leave(group);
         
         
     }];

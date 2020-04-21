@@ -25,6 +25,7 @@
 #define YYLogin @"ISLogin"
 
 
-
+//0 表示未勾选过登录服务协议
+#define YYAgreeXieyi @"AgreeXieyi"
 
 #endif /* ThirdMacros_h */

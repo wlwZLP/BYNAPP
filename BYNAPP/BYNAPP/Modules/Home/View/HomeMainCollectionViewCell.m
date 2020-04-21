@@ -170,7 +170,6 @@
        make.left.equalTo(Mainimage.mas_right).with.offset(20);
        make.top.equalTo(MainBGView.mas_top).with.offset(30);
        make.height.offset(20);
-//       make.right.equalTo(MainBGView.mas_right).with.offset(-5);
 
     }];
 
@@ -219,6 +218,8 @@
 
 
 }
+
+
 
 
 -(void)setModel:(HomeMainModel *)Model{

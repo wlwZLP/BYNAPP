@@ -12,9 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HomeMainCollectionViewCell : UICollectionViewCell
 
-//@property (nonatomic, weak) UILabel *titleLabel;
-//
-//@property (nonatomic, weak) UILabel *contentLabel;
+
 
 @property (nonatomic, weak) HomeMainModel * Model;
 
