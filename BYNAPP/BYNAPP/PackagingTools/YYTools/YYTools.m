@@ -25,6 +25,15 @@
     
 }
 
+//封装一个设置圆角和边框
++(void)SetView:(UIView *)view RadiusSize:(int)radiussize BorderColor:(UIColor*)bordercolor{
+    
+    view.layer.borderWidth = 0.5;//设置边框的宽度，当然可以不要
+    view.layer.borderColor = [bordercolor CGColor];//设置边框的颜色
+    view.layer.cornerRadius = radiussize;//设置那个圆角的有多圆
+    view.layer.masksToBounds = YES;//设为NO去试试
+    
+}
 
 
 //封装一个渐变色渐变的过程

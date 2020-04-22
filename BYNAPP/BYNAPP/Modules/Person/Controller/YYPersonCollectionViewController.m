@@ -8,8 +8,7 @@
 
 #import "YYPersonCollectionViewController.h"
 #import "PersonNoLoginCollectionViewCell.h"
-#import "PersonVipHeadCollectionViewCell.h"
-#import "PersonNoVipheadCollectionViewCell.h"
+#import "PersonLoginHeadCollectionViewCell.h"
 #import "PersonTeamCollectionViewCell.h"
 #import "PersonToolsCollectionViewCell.h"
 #import "PersonMainCollectionViewCell.h"
@@ -49,12 +48,10 @@
     self.collectionView.frame = CGRectMake(0, -YYStatusHeight, YYScreenWidth, YYScreenHeight + YYStatusHeight);
     
     self.collectionView.backgroundColor = YYBGColor;
-         
-    [self.collectionView registerClass:[PersonNoVipheadCollectionViewCell class] forCellWithReuseIdentifier:@"PersonNoVipheadCollectionViewCell"];
     
     [self.collectionView registerClass:[PersonNoLoginCollectionViewCell class] forCellWithReuseIdentifier:@"PersonNoLoginCollectionViewCell"];
     
-    [self.collectionView registerClass:[PersonVipHeadCollectionViewCell class] forCellWithReuseIdentifier:@"PersonVipHeadCollectionViewCell"];
+    [self.collectionView registerClass:[PersonLoginHeadCollectionViewCell class] forCellWithReuseIdentifier:@"PersonLoginHeadCollectionViewCell"];
     
     [self.collectionView registerClass:[PersonTeamCollectionViewCell class] forCellWithReuseIdentifier:@"PersonTeamCollectionViewCell"];
     
@@ -73,6 +70,9 @@
         
           [self GetPersonUserNetworkData];
         
+    }else{
+        
+         [YYSaveTool SetCahceForvalue:@"0" forKey:YYLogin];
     }
     
     [self.navigationController setNavigationBarHidden:YES animated:nil];
@@ -96,6 +96,8 @@
    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
        
         NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+       
+        YYNSLog(@"个人中心数据-----%@",Data);
        
         self.Usermodel = [UserModel modelWithDictionary:Data];
        
@@ -157,15 +159,15 @@
             
         }else{
             
-            PersonVipHeadCollectionViewCell  * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonVipHeadCollectionViewCell" forIndexPath:indexPath];
+            PersonLoginHeadCollectionViewCell  * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonLoginHeadCollectionViewCell" forIndexPath:indexPath];
                        
             cell.PersonVipheadBtnBlockClick = ^(NSString * _Nonnull ClickString) {
                            
-                 [self PersonPushNextController:ClickString];
+                  [self PersonPushNextController:ClickString];
                            
-            };
+             };
                        
-            cell.Model = self.Usermodel;
+             cell.Model = self.Usermodel;
                
              return cell;
            
@@ -191,7 +193,7 @@
         
         cell.PersonToolsBtnBlockClick = ^(NSString * _Nonnull Title) {
          
-           [self PersonPushNextController:Title];
+             [self PersonPushNextController:Title];
            
         };
        
@@ -214,7 +216,7 @@
         
         cell.TopRowBtnBlockClick = ^(NSInteger TagIndex) {
           
-            [self PersonPushToViewController:TagIndex];
+             [self PersonPushToViewController:TagIndex];
             
         };
 
@@ -303,7 +305,17 @@
          SetVc.title = @"邀请好友";
          [self.navigationController pushViewController:SetVc animated:YES];
         
+    }else if ([PushTitleString isEqualToString:@"开通会员"]){
+        
+         MyNoVipCollectionViewController * VipVc = [[MyNoVipCollectionViewController alloc]init];
+         VipVc.title = @"会员中心";
+         [self.navigationController pushViewController:VipVc animated:YES];
+        
     }
+    
+    
+    
+    
     
 }
 
@@ -317,10 +329,19 @@
     }
     
     if (rowIndex == 0) {
-       
-        MyNoVipCollectionViewController * VipVc = [[MyNoVipCollectionViewController alloc]init];
-        VipVc.title = @"会员中心";
-        [self.navigationController pushViewController:VipVc animated:YES];
+        
+        if ([self.Usermodel.plus_level isEqualToString:@"0"]) {
+            
+            MyNoVipCollectionViewController * VipVc = [[MyNoVipCollectionViewController alloc]init];
+            VipVc.title = @"会员中心";
+            [self.navigationController pushViewController:VipVc animated:YES];
+            
+        }else{
+            
+            MyVipCollectionViewController * VipVc = [[MyVipCollectionViewController alloc]init];
+            VipVc.title = @"会员中心";
+            [self.navigationController pushViewController:VipVc animated:YES];
+        }
         
     }else if (rowIndex == 1){
         

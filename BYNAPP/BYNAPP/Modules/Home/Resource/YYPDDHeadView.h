@@ -12,15 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YYPDDHeadView : UIView
 
-@property(nonatomic,strong)NSString * HeaderType;
-
-@property(nonatomic,strong)NSString * HeaderCoupon;
-
-@property (nonatomic,copy) void(^HeaderBtnBlockClick)(NSString * HeaderType);
-
-@property (nonatomic,copy) void(^YouHuiButtonBlockClick)(NSString * CouponType);
-
-@property (nonatomic,copy) void(^ShaiXuanButtonBlockClick)(void);
+@property (nonatomic,copy) void(^HeaderTopBlockClick)(NSString * SortType);
 
 
 @end

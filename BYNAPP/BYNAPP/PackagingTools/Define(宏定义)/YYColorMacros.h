@@ -39,7 +39,9 @@
 #endif
 
 
-
+//强弱引用
+#define YYWeakSelf(type)  __weak typeof(type) weak##type = type;
+#define YYStrongSelf(type) __strong typeof(type) type = weak##type;
 
 
 

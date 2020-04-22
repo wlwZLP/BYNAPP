@@ -12,7 +12,7 @@
 #import "DetailsNotesCollectionViewCell.h"
 #import "YYBuyVipHeadView.h"
 #import "LPAnimationView.h"
-#import "MyVipCollectionViewController.h"
+#import "MyNoVipCollectionViewController.h"
 
 @interface BrandCouponCollectionViewController ()
 
@@ -357,7 +357,7 @@
 //
 //    }
     
-    if ([self.UserModel.plus_level isEqualToString:@"1"]) {
+    if ([self.UserModel.plus_level isEqualToString:@"0"]) {
         
          [[LPAnimationView sharedMask] show:self.BuyHeadView withType:QWAlertViewStyleAlert];
         
@@ -467,9 +467,8 @@
         };
         _BuyHeadView.RightBtnBlockClick = ^{
             [[LPAnimationView sharedMask] dismiss];
-            MyVipCollectionViewController * VipVc = [[MyVipCollectionViewController alloc]init];
+            MyNoVipCollectionViewController * VipVc = [[MyNoVipCollectionViewController alloc]init];
             VipVc.title = @"会员中心";
-            VipVc.VipType = @"2";
             [self.navigationController pushViewController:VipVc animated:YES];
         };
     }

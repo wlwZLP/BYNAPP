@@ -9,10 +9,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+
+
+/// 这个是会员界面
 @interface MyVipCollectionViewController : YYBaseCollectionViewController
 
-//VipType 字段判断是否为会员  1为非会员  2为会员
-@property(nonatomic,strong)NSString * VipType;
+
 
 @end
 

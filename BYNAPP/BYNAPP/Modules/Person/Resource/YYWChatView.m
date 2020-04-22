@@ -34,7 +34,6 @@
     [self addSubview:CenterView];
     [YYTools ChangeView:CenterView RadiusSize:8 BorderColor:[UIColor clearColor]];
     
-
     
     UIButton * OkBtn = UIButton.new;
     [OkBtn setTitle:@"好的" forState:UIControlStateNormal];

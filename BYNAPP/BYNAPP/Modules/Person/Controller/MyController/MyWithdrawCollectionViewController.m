@@ -15,8 +15,9 @@
 
 @interface MyWithdrawCollectionViewController ()
 
-
 @property(nonatomic,strong)YYOrderHeadView * WithHeadView;
+
+@property(nonatomic,strong)NSString * RecordType;
 
 @end
 
@@ -28,6 +29,8 @@
     
     [super viewDidLoad];
     
+    self.RecordType = @"1";
+    
     self.collectionView.backgroundColor = YYBGColor;
     
     [self.collectionView registerClass:[MyWithTopCollectionViewCell class] forCellWithReuseIdentifier:@"MyWithTopCollectionViewCell"];
@@ -38,18 +41,12 @@
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
-    [self YYSetRightNavTitle:@"提现记录" target:self action:@selector(RightWithdrawClick)];
+//    [self YYSetRightNavTitle:@"提现记录" target:self action:@selector(RightWithdrawClick)];
     
 }
 
 
--(void)RightWithdrawClick{
-    
-    WithRecordCollectionViewController * ListVc = [[WithRecordCollectionViewController alloc]init];
-    ListVc.title = @"提现记录";
-    [self.navigationController pushViewController:ListVc animated:YES];
-    
-}
+
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -70,6 +67,15 @@
     if (indexPath.item == 0) {
         
         MyWithTopCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyWithTopCollectionViewCell" forIndexPath:indexPath];
+        
+        cell.MyRecordBtnBlockClick = ^{
+           
+            WithRecordCollectionViewController * ListVc = [[WithRecordCollectionViewController alloc]init];
+            ListVc.title = @"提现记录";
+            ListVc.RecordType = self.RecordType;
+            [self.navigationController pushViewController:ListVc animated:YES];
+            
+        };
            
         return cell;
         
@@ -98,9 +104,6 @@
      
     
 }
-
-#pragma mark <UICollectionViewDelegate>
-
 
 #pragma mark <UICollectionViewDelegate>
 
@@ -176,6 +179,7 @@
         
         _WithHeadView.TitleBtnBlockClick = ^(NSInteger TagIndex) {
         
+         
             
         };
         

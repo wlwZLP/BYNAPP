@@ -7,7 +7,7 @@
 //
 
 #import "MyNoVipCollectionViewController.h"
-#import "MyVipImgCollectionViewCell.h"
+#import "MyNoVipCollectionViewCell.h"
 #import "MyVipGridCollectionViewCell.h"
 #import "MyNewImgCollectionViewCell.h"
 
@@ -34,7 +34,7 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName :[UIColor whiteColor], NSFontAttributeName : [UIFont systemFontOfSize:18]}];
 
-    [self.collectionView registerClass:[MyVipImgCollectionViewCell class] forCellWithReuseIdentifier:@"MyVipImgCollectionViewCell"];
+    [self.collectionView registerClass:[MyNoVipCollectionViewCell class] forCellWithReuseIdentifier:@"MyNoVipCollectionViewCell"];
     
     [self.collectionView registerClass:[MyVipGridCollectionViewCell class] forCellWithReuseIdentifier:@"MyVipGridCollectionViewCell"];
     
@@ -171,11 +171,10 @@
     
     if (indexPath.section == 0) {
         
-        MyVipImgCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyVipImgCollectionViewCell" forIndexPath:indexPath];
-        
-        [cell.MainImgView setImage:[UIImage imageNamed:@"NoVipBg"]];
-           
+        MyNoVipCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyNoVipCollectionViewCell" forIndexPath:indexPath];
+              
         return cell;
+        
         
     }else if (indexPath.section ==1){
        

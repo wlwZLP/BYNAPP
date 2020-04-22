@@ -12,11 +12,15 @@
 
 @property(nonatomic,strong)UIButton * VHDLBtn;
 
+@property(nonatomic,assign)NSInteger SaleClickNum;
+
 @property(nonatomic,strong)UIButton * SaleLeftBtn;
 
 @property(nonatomic,strong)UIButton * SaleTopBtn;
 
 @property(nonatomic,strong)UIButton * SaleBotBtn;
+
+@property(nonatomic,assign)NSInteger PriceClickNum;
 
 @property(nonatomic,strong)UIButton * PriceLeftBtn;
 
@@ -45,6 +49,10 @@
 -(void)CreateHeader{
     
     
+    self.SaleClickNum = 1;
+    
+    self.PriceClickNum = 1;
+    
     UIView * VHDLView = [[UIView alloc]init];
     VHDLView.backgroundColor = [UIColor whiteColor];
     VHDLView.frame = CGRectMake(0, 0, YYScreenWidth / 3 ,40);
@@ -56,7 +64,8 @@
     VHDLBtn.frame = CGRectMake((YYScreenWidth / 3 - 30)/2, 10, 30, 20);
     VHDLBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [VHDLBtn setTitleColor:YY66Color forState:UIControlStateNormal];
-    [VHDLBtn setTitleColor:YY66Color forState:UIControlStateSelected];
+    [VHDLBtn setTitleColor:YYHexColor(@"#FFD409") forState:UIControlStateSelected];
+     VHDLBtn.selected = YES;
     [VHDLView addSubview:VHDLBtn];
     self.VHDLBtn = VHDLBtn;
     
@@ -67,7 +76,8 @@
     NavLeftBtn.backgroundColor = [UIColor clearColor];
     [VHDLView addSubview:NavLeftBtn];
     
-   #pragma mark ===============11111111=============
+
+#pragma mark ===============11111111=============
     
     
     UIView * SaleView = [[UIView alloc]init];
@@ -82,13 +92,13 @@
     SaleLeftBtn.frame =  CGRectMake((YYScreenWidth / 3 - 45)/2, 10, 30 , 20);
     SaleLeftBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [SaleLeftBtn setTitleColor:YY66Color forState:UIControlStateNormal];
-    [SaleLeftBtn setTitleColor:YY66Color forState:UIControlStateSelected];
+    [SaleLeftBtn setTitleColor:YYHexColor(@"#FFD409") forState:UIControlStateSelected];
     [SaleView addSubview:SaleLeftBtn];
     self.SaleLeftBtn = SaleLeftBtn;
     
     
     UIButton * SaleTopBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    SaleTopBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 37.8, 12.5 , 10, 6);
+    SaleTopBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 38, 13 , 9 , 5);
     [SaleTopBtn setBackgroundImage:[UIImage imageNamed:@"blacksha"] forState:UIControlStateNormal];
     [SaleTopBtn setBackgroundImage:[UIImage imageNamed:@"YellowSha"] forState:UIControlStateSelected];
     SaleTopBtn.backgroundColor = [UIColor clearColor];
@@ -98,7 +108,7 @@
     
     
     UIButton * SaleBotBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    SaleBotBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 38, 22, 10, 6);
+    SaleBotBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 38, 22, 9 , 5);
     [SaleBotBtn setBackgroundImage:[UIImage imageNamed:@"blackxia"] forState:UIControlStateNormal];
     [SaleBotBtn setBackgroundImage:[UIImage imageNamed:@"YellowXia"] forState:UIControlStateSelected];
     SaleBotBtn.backgroundColor = [UIColor clearColor];
@@ -112,7 +122,6 @@
     [SaleBtn addTarget:self action:@selector(SaleButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     SaleBtn.backgroundColor = [UIColor clearColor];
     [SaleView addSubview:SaleBtn];
-    
     
     
     
@@ -131,12 +140,12 @@
     PriceLeftBtn.frame =  CGRectMake((YYScreenWidth / 3 - 45)/2, 10, 30 , 20);
     PriceLeftBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [PriceLeftBtn setTitleColor:YY66Color forState:UIControlStateNormal];
-    [PriceLeftBtn setTitleColor:YY66Color forState:UIControlStateSelected];
+    [PriceLeftBtn setTitleColor:YYHexColor(@"#FFD409") forState:UIControlStateSelected];
     [PriceView addSubview:PriceLeftBtn];
     self.PriceLeftBtn = PriceLeftBtn;
     
     UIButton * PriceTopBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    PriceTopBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 37.8, 12.5, 10, 6);
+    PriceTopBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 38, 13, 9 , 5);
     [PriceTopBtn setBackgroundImage:[UIImage imageNamed:@"blacksha"] forState:UIControlStateNormal];
     [PriceTopBtn setBackgroundImage:[UIImage imageNamed:@"YellowSha"] forState:UIControlStateSelected];
     PriceTopBtn.backgroundColor = [UIColor clearColor];
@@ -146,13 +155,13 @@
     
     
     UIButton * PriceBotBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    PriceBotBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 38, 22, 10, 6);
+    PriceBotBtn.frame = CGRectMake((YYScreenWidth / 3 - 45)/2 + 38, 22, 9 , 5);
     [PriceBotBtn setBackgroundImage:[UIImage imageNamed:@"blackxia"] forState:UIControlStateNormal];
     [PriceBotBtn setBackgroundImage:[UIImage imageNamed:@"YellowXia"] forState:UIControlStateSelected];
     PriceBotBtn.backgroundColor = [UIColor clearColor];
     PriceBotBtn.selected = NO;
     [PriceView addSubview:PriceBotBtn];
-    self.PriceBotBtn = SaleBotBtn;
+    self.PriceBotBtn = PriceBotBtn;
     
     
     UIButton * PriceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -173,23 +182,34 @@
 
 -(void)VHDLButtonClick:(UIButton*)sender{
     
-    self.HeaderBtnBlockClick(@"default");
+    self.VHDLBtn.selected = YES;
+    self.PriceLeftBtn.selected = NO;
+    self.PriceBotBtn.selected = NO;
+    self.PriceTopBtn.selected = NO;
+    self.SaleLeftBtn.selected = NO;
+    self.SaleTopBtn.selected = NO;
+    self.SaleBotBtn.selected = NO;
+    self.HeaderTopBlockClick(@"");
     
 }
 
 
 -(void)SaleButtonClick:(UIButton*)sender{
     
-    sender.selected = ! sender.selected;
-    
-    if (sender.selected ) {
-        
-        self.HeaderBtnBlockClick(@"total_sales_des");
-        
+    self.VHDLBtn.selected = NO;
+    self.PriceLeftBtn.selected = NO;
+    self.SaleLeftBtn.selected = YES;
+    self.PriceBotBtn.selected = NO;
+    self.PriceTopBtn.selected = NO;
+    self.SaleClickNum ++ ;
+    if ( self.SaleClickNum % 2 == 0) {
+        self.SaleTopBtn.selected = YES;
+        self.SaleBotBtn.selected = NO;
+        self.HeaderTopBlockClick(@"month_sales_des");
     }else{
-        
-        self.HeaderBtnBlockClick(@"total_sales_asc");
-        
+        self.SaleTopBtn.selected = NO;
+        self.SaleBotBtn.selected = YES;
+        self.HeaderTopBlockClick(@"month_sales_asc");
     }
     
     
@@ -198,56 +218,23 @@
 
 -(void)PriceButtonClick:(UIButton*)sender{
     
-    sender.selected = ! sender.selected;
+    self.VHDLBtn.selected = NO;
     
-    if (sender.selected) {
-        
-        self.HeaderBtnBlockClick(@"price_des");
-        
+    self.SaleLeftBtn.selected = NO;
+    self.SaleTopBtn.selected = NO;
+    self.SaleBotBtn.selected = NO;
+    
+    self.PriceLeftBtn.selected = YES;
+    self.PriceClickNum ++ ;
+    if ( self.PriceClickNum % 2 == 0) {
+        self.PriceTopBtn.selected = YES;
+        self.PriceBotBtn.selected = NO;
+        self.HeaderTopBlockClick(@"discount_price_des");
     }else{
-        
-        self.HeaderBtnBlockClick(@"price_asc");
-        
-    }
-    
-}
-
-
-
--(void)setHeaderType:(NSString *)HeaderType{
-    
-
-    if ([HeaderType isEqualToString:@"default"]){
-        
-    
-       
-    }else if ([HeaderType isEqualToString:@"price_des"]){
-        
-       
-       
-        
-    }else if ([HeaderType isEqualToString:@"price_asc"]){
-        
-       
-        
-    }else if ([HeaderType isEqualToString:@"total_sales_des"]){
-        
-      
-        
-    }else if ([HeaderType isEqualToString:@"total_sales_asc"]){
-        
-       
-    }
-    
-    
-}
-
-
-
-
--(void)ShaixuanButtonClick{
-    
-    self.ShaiXuanButtonBlockClick();
+        self.PriceTopBtn.selected = NO;
+        self.PriceBotBtn.selected = YES;
+        self.HeaderTopBlockClick(@"discount_price_asc");
+     }
     
 }
 
@@ -255,32 +242,5 @@
 
 
 
-
--(void)setHeaderCoupon:(NSString *)HeaderCoupon{
-    
-    if ([HeaderCoupon isEqualToString:@"White_Coupon"]){
-        
-       
-    }else{
-        
-       
-        
-    }
-    
-    
-}
-
--(void)CouponButtonClick:(UIButton*)Sender{
-    
-    if (Sender.selected == YES) {
-        
-        self.YouHuiButtonBlockClick(@"White_Coupon");
-        
-    }else{
-        
-        self.YouHuiButtonBlockClick(@"Red_Coupon");
-    }
-    
-}
 
 @end

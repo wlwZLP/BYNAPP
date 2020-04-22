@@ -40,15 +40,7 @@
     [self addSubview:CenterView];
     [YYTools ChangeView:CenterView RadiusSize:8 BorderColor:[UIColor clearColor]];
     
-//    UILabel * TitleLabel = [[UILabel alloc]init];
-//    TitleLabel.text = @"服务协议和隐私条款";
-//    TitleLabel.frame = CGRectMake(50 , 22, CenterView.ZLP_width - 100, 24);
-//    TitleLabel.textColor = YY33Color;
-//    TitleLabel.textAlignment = NSTextAlignmentCenter;
-//    TitleLabel.font = [UIFont systemFontOfSize:16 weight:1];
-//    [CenterView addSubview:TitleLabel];
-    
-    
+
     [CenterView addSubview:self.AgreeWkWebView];
     
     

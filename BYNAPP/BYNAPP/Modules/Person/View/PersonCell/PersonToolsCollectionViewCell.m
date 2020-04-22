@@ -164,7 +164,7 @@
    if (titleButton.tag == 0) {
         self.PersonToolsBtnBlockClick(@"我的收藏");
     }else if (titleButton.tag == 1){
-        self.PersonToolsBtnBlockClick(@"团队足迹");
+        self.PersonToolsBtnBlockClick(@"我的足迹");
     }else if (titleButton.tag == 2){
         self.PersonToolsBtnBlockClick(@"新人必看");
     }else if (titleButton.tag == 3){

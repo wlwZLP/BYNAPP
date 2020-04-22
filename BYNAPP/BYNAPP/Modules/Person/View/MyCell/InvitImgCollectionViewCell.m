@@ -40,6 +40,7 @@
     Mainimage.image = [UIImage imageNamed:@"Invitcode"];
     [self addSubview:Mainimage];
     
+    self.InvitImgView = Mainimage;
 
     
  

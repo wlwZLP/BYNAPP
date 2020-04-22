@@ -40,6 +40,7 @@
     TopImage.frame = CGRectMake(12, 25 , YYScreenWidth - 24 , 150);
     [self addSubview:TopImage];
     
+    
     UIImageView * Mainimage = [[UIImageView alloc] init];
     Mainimage.backgroundColor = [UIColor clearColor];
     Mainimage.image = [UIImage imageNamed:@"vipbg"];
@@ -53,7 +54,8 @@
     }];
     
    
-    self.MainImgView = Mainimage;
+    
+    
   
     
 }

@@ -53,7 +53,7 @@
            NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
            
            YYNSLog(@"猜你喜欢数据----%@",responseObject);
-           self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+            [self.MainListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
                    
             [self.collectionView reloadData];
         
@@ -62,7 +62,7 @@
               
             NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
            
-            self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+             [self.MainListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
                    
             [self.collectionView reloadData];
            
@@ -81,7 +81,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-      return self.ListDataArray.count;
+      return self.MainListArray.count;
     
 }
 
@@ -90,7 +90,7 @@
     
       HomeMainCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeMainCollectionViewCell" forIndexPath:indexPath];
     
-      cell.Model = self.ListDataArray[indexPath.item];
+      cell.Model = self.MainListArray[indexPath.item];
     
       return cell;
     
@@ -103,9 +103,9 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
-    HomeVc.Goods_Type = self.ListDataArray[indexPath.item].mall_id;
-    HomeVc.item_id = self.ListDataArray[indexPath.item].item_id;
-    HomeVc.activity_id = self.ListDataArray[indexPath.item].activity_id;
+    HomeVc.mall_id = self.MainListArray[indexPath.item].mall_id;
+    HomeVc.item_id = self.MainListArray[indexPath.item].item_id;
+    HomeVc.activity_id = self.MainListArray[indexPath.item].activity_id;
     [self.navigationController pushViewController:HomeVc animated:YES];
     
     

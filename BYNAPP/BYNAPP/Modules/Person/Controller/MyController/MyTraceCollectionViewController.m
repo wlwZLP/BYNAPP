@@ -51,8 +51,6 @@
         
         self.TraceData = EncodeDicFromDic(DataDic, @"data");
         
-        YYNSLog(@"我的足迹-----%@",self.TraceData);
-        
         self.TitleArray = self.TraceData.allKeys;
             
         [self.collectionView reloadData];
@@ -61,7 +59,9 @@
               
          NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
            
-         self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"data")];
+         self.TraceData = EncodeDicFromDic(DataDic, @"data");
+         
+         self.TitleArray = self.TraceData.allKeys;
                
           [self.collectionView reloadData];
 
@@ -87,12 +87,24 @@
     
       TraceCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TraceCollectionViewCell" forIndexPath:indexPath];
     
-     cell.Model = [NSArray modelArrayWithClass:[MyCollectModel class] json:EncodeArrayFromDic(self.TraceData, self.TraceData.allKeys[indexPath.section])][indexPath.item];
+      cell.Model = [NSArray modelArrayWithClass:[MyCollectModel class] json:EncodeArrayFromDic(self.TraceData, self.TraceData.allKeys[indexPath.section])][indexPath.item];
     
       return cell;
 
 }
 
+#pragma mark -选中某item进行跳转
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    MyCollectModel * Model =  [NSArray modelArrayWithClass:[MyCollectModel class] json:EncodeArrayFromDic(self.TraceData, self.TraceData.allKeys[indexPath.section])][indexPath.item];
+    HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
+    HomeVc.mall_id = Model.item_type;
+    HomeVc.item_id = Model.item_id;
+    HomeVc.activity_id = Model.collect_id;
+    [self.navigationController pushViewController:HomeVc animated:YES];
+    
+}
 
 
 

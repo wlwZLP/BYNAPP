@@ -25,7 +25,7 @@
     
     [super viewDidLoad];
     
-    self.collectionView.frame = CGRectMake(0, 0, YYScreenWidth, YYScreenHeight  - 70);
+    self.collectionView.frame = CGRectMake(0, 0, YYScreenWidth, YYScreenHeight);
     
     self.collectionView.showsVerticalScrollIndicator = NO;
     
@@ -47,57 +47,13 @@
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
-    [self CreateGoodsDetailsBottomView];
-    
     [self GetMyVipControllerNetData];
     
-}
-
-#pragma mark ===============创建下面UIview控制=============
-
--(void)CreateGoodsDetailsBottomView{
-    
-    
-    UIView * BottomView = [[UIView alloc]init];
-    BottomView.backgroundColor = UIColor.clearColor;
-    BottomView.frame = CGRectMake(0, YYScreenHeight - YYBarHeight - 70, YYScreenWidth, 70);
-    [self.view addSubview:BottomView];
-    
-    UIButton * ShareButton = [[UIButton alloc]init];
-    ShareButton.backgroundColor = YYHexColor(@"#FFD117");
-    ShareButton.frame = CGRectMake(0, 20 , YYScreenWidth, 50);
-    [ShareButton setTitle:@"29.9元/年 开通会员" forState:UIControlStateNormal];
-    ShareButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    [ShareButton setTitleColor:YY22Color forState:UIControlStateNormal];
-    [ShareButton addTarget:self action:@selector(BuyVipBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    ShareButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:0];
-    [BottomView addSubview:ShareButton];
-   
-    UIImageView * HomeImage = [[UIImageView alloc] init];
-    HomeImage.frame = CGRectMake(YYScreenWidth/2 - 151, 0, 302, 28);
-    HomeImage.image = [UIImage imageNamed:@"vipbuytop"];
-    [BottomView addSubview:HomeImage];
-    
-    UILabel * VipLabel = [[UILabel alloc]init];
-    VipLabel.text = @"开通后7天内，如无享受过任何会员特权，支持退款";
-    VipLabel.frame = CGRectMake(YYScreenWidth/2 - 151, 2 , 302, 18);
-    VipLabel.textAlignment = NSTextAlignmentCenter;
-    VipLabel.font = [UIFont systemFontOfSize:12];
-    VipLabel.textColor = YYHexColor(@"#FFF6CA");
-    [BottomView addSubview:VipLabel];
-    
-
-}
-
-
-#pragma mark ===============购买按钮=============
-
--(void)BuyVipBtnClick{
-    
-    
-    
     
 }
+
+
+
 
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -111,11 +67,6 @@
 }
 
 
--(void)viewWillAppear:(BOOL)animated{
-    
-
-    
-}
 
 #pragma mark 获取当前界面网络数据
 
@@ -140,7 +91,6 @@
        [self.collectionView reloadData];
 
     }];
-    
     
 
 }
@@ -174,20 +124,10 @@
     
     if (indexPath.section == 0) {
         
-        if ([self.VipType isEqualToString:@"1"]) {
+        MyVipImgCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyVipImgCollectionViewCell" forIndexPath:indexPath];
             
-            MyNoVipCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyNoVipCollectionViewCell" forIndexPath:indexPath];
-        
-             return cell;
-            
-        }else{
-            
-           MyVipImgCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyVipImgCollectionViewCell" forIndexPath:indexPath];
-            
-               
-            return cell;
-            
-        }
+        return cell;
+   
         
     }else if (indexPath.section ==1){
        

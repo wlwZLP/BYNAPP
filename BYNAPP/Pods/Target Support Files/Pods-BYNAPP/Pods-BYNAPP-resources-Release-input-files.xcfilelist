@@ -1,3 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-BYNAPP/Pods-BYNAPP-resources.sh
 ${PODS_ROOT}/AlipaySDK-iOS/AlipaySDK.bundle
 ${PODS_ROOT}/MJRefresh/MJRefresh/MJRefresh.bundle
+${PODS_ROOT}/UMCShare/UMShare/UMSocialUI/UMSocialSDKResources.bundle

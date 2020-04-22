@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface YYBaseCollectionViewController : UICollectionViewController
 
 
-@property(nonatomic,strong)NSArray<HomeMainModel*> * ListDataArray;
+@property(nonatomic,strong)NSMutableArray<HomeMainModel*> * MainListArray;
 
 /**
  *  是否显示返回按钮,默认情况是YES

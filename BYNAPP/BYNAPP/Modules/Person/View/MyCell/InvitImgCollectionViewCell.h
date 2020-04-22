@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface InvitImgCollectionViewCell : UICollectionViewCell
 
+@property(nonatomic,strong)UIImageView * InvitImgView;
+
 @end
 
 NS_ASSUME_NONNULL_END

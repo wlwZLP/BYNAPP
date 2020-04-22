@@ -40,6 +40,7 @@
     Mainimage.frame = CGRectMake(self.ZLP_centerX - 39, 20, 78, 78);
     Mainimage.image = [UIImage imageNamed:@"iqiyi"];
     [self addSubview:Mainimage];
+    self.AvatarImgView = Mainimage;
     
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"贴心小客服";
@@ -48,6 +49,7 @@
     TitleLabel.textAlignment = NSTextAlignmentCenter;
     TitleLabel.font = [UIFont systemFontOfSize:16 weight:1];
     [MainBGView addSubview:TitleLabel];
+    self.nicknamelabel = TitleLabel;
     
     
     UILabel * TimeLabel = [[UILabel alloc]init];
@@ -63,6 +65,7 @@
     WXImage.frame = CGRectMake(MainBGView.ZLP_width * 0.215, 110, MainBGView.ZLP_width * 0.57, MainBGView.ZLP_width * 0.57);
     WXImage.image = [UIImage imageNamed:@"MyWX"];
     [MainBGView addSubview:WXImage];
+    self.QrcodeImgView = WXImage;
     
     UILabel * ImgLabel = [[UILabel alloc]init];
     ImgLabel.text = @"截图二维码保存到相册，打开微信扫一扫";

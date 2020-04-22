@@ -112,6 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString * yhkf_qrcode;
 
+//通过这个判断是否是会员
 @property (nonatomic, copy) NSString * plus_level;
 
 @property (nonatomic, copy) NSString * swkf_config_id;

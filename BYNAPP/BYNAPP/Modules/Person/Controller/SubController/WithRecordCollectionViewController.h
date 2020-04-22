@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WithRecordCollectionViewController : YYBaseCollectionViewController
 
+//类型：1-佣金；2-会员费
+@property(nonatomic,strong)NSString * RecordType;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

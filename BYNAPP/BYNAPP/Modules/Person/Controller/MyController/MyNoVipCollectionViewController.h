@@ -10,7 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// 这个非会员界面
 @interface MyNoVipCollectionViewController : YYBaseCollectionViewController
+
 
 @end
 

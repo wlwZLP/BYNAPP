@@ -135,6 +135,7 @@ static int const HomelabelWith = 90;
               
         CompleteData([NSArray modelArrayWithClass:[HomePlistModel class] json:DataArray]);
         
+        
     }];
     
     
@@ -151,6 +152,7 @@ static int const HomelabelWith = 90;
     TopBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:TopBarView];
     self.TopBarView = TopBarView;
+    
     //添加搜索控价
     [TopBarView addSubview:self.HomeSearchBar];
     
@@ -358,7 +360,11 @@ static int const HomelabelWith = 90;
         
         CGFloat X =  i * titleButtonW + rowMargin*(i + 1) ;
         UIButton *titleButton = [[UIButton alloc]init];
-        [titleButton setTitleColor:YY22Color forState:UIControlStateSelected];
+        if (i == 1) {
+           [titleButton setTitleColor:YYHexColor(@"#FB5434") forState:UIControlStateSelected];
+        }else{
+           [titleButton setTitleColor:YY22Color forState:UIControlStateSelected];
+        }
         [titleButton setTitleColor:YY66Color forState:UIControlStateNormal];
         titleButton.titleLabel.hidden = YES;
         // frame
@@ -373,8 +379,9 @@ static int const HomelabelWith = 90;
         [self.titleScrollView addSubview:titleButton];
         [titleButton setTitle:self.HomeTitleModelArray[i].name forState:UIControlStateNormal];
     
-        
     }
+    
+    
     
 }
 

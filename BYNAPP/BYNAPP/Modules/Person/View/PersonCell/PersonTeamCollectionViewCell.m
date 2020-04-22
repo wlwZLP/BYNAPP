@@ -134,7 +134,7 @@
     UIButton * RightBtn = [[UIButton alloc]init];
     RightBtn.frame = CGRectMake(0 , 0, YYScreenWidth/4, 72);
     [RightBtn setBackgroundColor:[UIColor clearColor]];
-    RightCenterBtn.tag = 3 ;
+    RightBtn.tag = 3 ;
     [RightBtn addTarget:self action:@selector(ALlButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [RightBGView addSubview:RightBtn];
     

@@ -28,6 +28,22 @@
          Mainimage.image = [UIImage imageNamed:@"celltop"];
          [self addSubview:Mainimage];
         
+         UILabel * TitleLabel = [[UILabel alloc]init];
+         TitleLabel.text = @"会员专享超200项特权";
+         TitleLabel.frame = CGRectMake(24, 12, self.ZLP_width - 48 , 25);
+         TitleLabel.textColor = YYHexColor(@"#FFDD39");
+         TitleLabel.textAlignment = NSTextAlignmentLeft;
+         TitleLabel.font = [UIFont systemFontOfSize:18 weight:0];
+         [self addSubview:TitleLabel];
+         
+         UILabel * ContentLabel = [[UILabel alloc]init];
+         ContentLabel.text = @"一省到底的品质生活";
+         ContentLabel.frame = CGRectMake(24, 37 , self.ZLP_width - 48 , 25);
+         ContentLabel.textColor = YYHexColor(@"#FFF6CA");
+         ContentLabel.textAlignment = NSTextAlignmentLeft;
+         ContentLabel.font = [UIFont systemFontOfSize:12 weight:0];
+         [self addSubview:ContentLabel];
+        
          [self addSubview:self.GridCollectionView];
          
          self.GridCollectionView.delegate = self;
@@ -67,9 +83,9 @@
 
 -(void)setImgListArray:(NSArray *)ImgListArray{
     
-    _ImgListArray = ImgListArray;
+     _ImgListArray = ImgListArray;
     
-    [self.GridCollectionView reloadData];
+     [self.GridCollectionView reloadData];
     
 }
 
@@ -106,13 +122,6 @@
         
 }
 
-#pragma mark -选中某item进行跳转
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-   
-    
-}
 
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section{
@@ -141,6 +150,7 @@
 -(BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds{
     
     return YES;
+    
 }
 
 #pragma mark ---- UICollectionViewDelegateFlowLayout

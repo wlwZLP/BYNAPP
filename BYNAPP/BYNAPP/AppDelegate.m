@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "YYMainTabBarController.h"
-//#import <AlibcTradeSDK/AlibcTradeSDK.h>
+#import <AlibcTradeSDK/AlibcTradeSDK.h>
 
 @interface AppDelegate ()
 
@@ -31,8 +31,6 @@
     
     self.window.rootViewController = [[YYMainTabBarController alloc] init];
     
-     //111111111111
-    
     return YES;
     
 }
@@ -43,8 +41,6 @@
      NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         
      NSString * app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    
-     [YYSaveTool SetCahceForvalue:@"0" forKey:YYLogin];
      
      if ([YYSaveTool GetCacheForKey:YYAgreeXieyi] == nil) {
         [YYSaveTool SetCahceForvalue:@"0" forKey:YYAgreeXieyi];
@@ -56,25 +52,29 @@
     
      [YYSaveTool SetCahceForvalue:@"2d0063ff9424ec1cb9cc3c3d6cdd420f" forKey:CacheAPPSecret];
     
+     [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wx603dcad9a4e0b55d" appSecret:@"32797ea1fba76ad32ca152f5bceb334a" redirectURL:nil];
+
+     [[AlibcTradeSDK sharedInstance] setDebugLogOpen:NO];//开发阶段打开日志开关，方便排查错误信息
+     
+     [[AlibcTradeSDK sharedInstance] setIsvVersion:app_Version];
+     [[AlibcTradeSDK sharedInstance] setIsvAppName:@"baichuanDemo"];
+     [[AlibcTradeSDK sharedInstance] asyncInitWithSuccess:^{
+          YYNSLog(@"百川SDK初始化成功");
+     } failure:^(NSError *error) {
+          YYNSLog(@"百川SDK初始化失败");
+     }];
     
     
 }
 
+
+
 -(void)SetAPPThirdSDKInformation{
     
-    [[UMSocialManager defaultManager] setPlaform:UMSocialPlatformType_WechatSession appKey:@"wx603dcad9a4e0b55d" appSecret:@"32797ea1fba76ad32ca152f5bceb334a" redirectURL:nil];
-
-   // 百川平台基础SDK初始化，加载并初始化各个业务能力插件
-//      [[AlibcTradeSDK sharedInstance] setDebugLogOpen:YES];//开发阶段打开日志开关，方便排查错误信息
-//      
-//      [[AlibcTradeSDK sharedInstance] setIsvVersion:@"2.2.2"];
-//      [[AlibcTradeSDK sharedInstance] setIsvAppName:@"baichuanDemo"];
-//      [[AlibcTradeSDK sharedInstance] asyncInitWithSuccess:^{
-//          //      openSDKSwitchLog(NO);
-//          YYNSLog(@"百川SDK初始化成功");
-//      } failure:^(NSError *error) {
-//          YYNSLog(@"百川SDK初始化失败");
-//      }];
+     
+    
+    
+    
    
     
     

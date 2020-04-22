@@ -51,6 +51,15 @@
     TitleLabel.font = [UIFont systemFontOfSize:14 weight:0];
     [MainView addSubview:TitleLabel];
     
+    
+    UIButton * RecordBtn = [[UIButton alloc]init];
+    [RecordBtn setTitle:@"提现记录" forState:UIControlStateNormal];
+    RecordBtn.frame = CGRectMake(MainView.ZLP_width - 100, 24, 80, 16);
+    RecordBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    [RecordBtn setTitleColor:YY99Color forState:UIControlStateNormal];
+    [RecordBtn addTarget:self action:@selector(RecordBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [MainView addSubview:RecordBtn];
+    
     UILabel * MoneyLabel = [[UILabel alloc]init];
     MoneyLabel.textColor = YY22Color;
     MoneyLabel.text =@"¥";
@@ -86,6 +95,20 @@
 
     
 }
+
+
+
+-(void)RecordBtnClick{
+    
+    
+    self.MyRecordBtnBlockClick();
+    
+    
+}
+
+
+
+
 
 
 

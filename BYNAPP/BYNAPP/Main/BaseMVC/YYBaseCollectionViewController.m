@@ -41,7 +41,7 @@ static NSString * const reuseIdentifier = @"Cell";
     
       self.collectionView.backgroundColor = [UIColor whiteColor];
     
-      self.ListDataArray = [NSMutableArray array];
+      self.MainListArray = [NSMutableArray array];
     
       [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
 
@@ -98,7 +98,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
 
-    return self.ListDataArray.count;
+    return self.MainListArray.count;
     
 }
 

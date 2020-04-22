@@ -14,6 +14,8 @@
 
 @property(nonatomic,strong)YYPDDHeadView * PDDHeadView;
 
+@property(nonatomic,strong)NSString * HeadSort;
+
 @end
 
 @implementation TBMatterCollectionViewController
@@ -23,37 +25,58 @@
     
     [super viewDidLoad];
     
+    self.HeadSort = @"";
+    
     self.collectionView.backgroundColor = YYBGColor;
     
     [self.collectionView registerClass:[HomeMainCollectionViewCell class] forCellWithReuseIdentifier:@"HomeMainCollectionViewCell"];
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
+    self.collectionView.mj_header = [LPRefreshGifHeader headerWithRefreshingBlock:^{
+            
+           [self GetSelfViewControllerNetworkData];
+            
+    }];
+    
+    self.collectionView.mj_footer = [LPRefreshFooter footerWithRefreshingBlock:^{
+        
+          [self GetSelfViewControllerNetwMoreData];
+        
+     }];
+    
+    
 }
 
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    [self GetSelfViewControllerNetworkData];
+      [self GetSelfViewControllerNetworkData];
     
 }
+
 
 #pragma mark 网络请求数据
 
 -(void)GetSelfViewControllerNetworkData{
     
-                  
+     self.RefreshCount = 1;
+    
      NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsItems];
          
-     NSDictionary * dict = @{@"mall_id":@"1",@"activity_type":@"4",@"material_id":self.material_id,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+     NSDictionary * dict = @{@"mall_id":@"1",@"sort":self.HeadSort,@"activity_type":@"4",@"material_id":self.material_id,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
                         
        [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
                 
-           NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+            NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+
+            self.RefreshCount ++ ;
            
-           YYNSLog(@"淘宝物料数据----%@",responseObject);
+            [self.MainListArray removeAllObjects];
            
-           self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+            [self.MainListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
+           
+            [self.collectionView.mj_header endRefreshing];
                    
             [self.collectionView reloadData];
         
@@ -62,7 +85,11 @@
               
             NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
            
-            self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+            [self.MainListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
+           
+            self.RefreshCount ++ ;
+           
+            [self.collectionView.mj_header endRefreshing];
                    
             [self.collectionView reloadData];
            
@@ -71,6 +98,42 @@
 
     
 }
+
+
+-(void)GetSelfViewControllerNetwMoreData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsItems];
+        
+    NSDictionary * dict = @{@"mall_id":@"1",@"sort":self.HeadSort,@"activity_type":@"4",@"material_id":self.material_id,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+                       
+      [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+               
+            NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+          
+            self.RefreshCount ++ ;
+          
+            [self GetSelfViewControllerNetworkData];
+          
+            [self.MainListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
+          
+            [self.collectionView.mj_footer endRefreshing];
+                  
+            [self.collectionView reloadData];
+       
+         
+      } failure:^(NSError *error, id responseCache) {
+             
+           NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
+          
+           [self.MainListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
+                  
+           [self.collectionView reloadData];
+          
+
+      }];
+    
+}
+
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -81,7 +144,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-      return self.ListDataArray.count;
+      return self.MainListArray.count;
     
 }
 
@@ -89,7 +152,7 @@
     
       HomeMainCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeMainCollectionViewCell" forIndexPath:indexPath];
     
-      cell.Model = self.ListDataArray[indexPath.item];
+      cell.Model = self.MainListArray[indexPath.item];
     
       return cell;
     
@@ -102,9 +165,9 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
-    HomeVc.Goods_Type = self.ListDataArray[indexPath.item].mall_id;
-    HomeVc.item_id = self.ListDataArray[indexPath.item].item_id;
-    HomeVc.activity_id = self.ListDataArray[indexPath.item].activity_id;
+    HomeVc.mall_id = self.MainListArray[indexPath.item].mall_id;
+    HomeVc.item_id = self.MainListArray[indexPath.item].item_id;
+    HomeVc.activity_id = self.MainListArray[indexPath.item].activity_id;
     [self.navigationController pushViewController:HomeVc animated:YES];
     
     
@@ -151,7 +214,6 @@
         
         [headerView addSubview:self.PDDHeadView];
         
-     
         return headerView;
     
     }
@@ -170,7 +232,15 @@
     
     if (_PDDHeadView == nil) {
         
-       _PDDHeadView = [[YYPDDHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 45)];
+        _PDDHeadView = [[YYPDDHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 45)];
+        
+        _PDDHeadView.HeaderTopBlockClick = ^(NSString * _Nonnull SortType) {
+        
+               self.HeadSort = SortType;
+            
+              [self GetSelfViewControllerNetworkData];
+            
+        };
         
      }
     
@@ -192,7 +262,7 @@
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-      return 0.5;
+       return 0.5;
     
 }
 

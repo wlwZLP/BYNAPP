@@ -88,6 +88,21 @@
 #define URL_APIGoodsFlashSaleItems @"api/goods/flash_sale_items"
 //32.品牌墙搜索
 #define URL_APIMPVSearch @"api/mpv2/search"
+//33.邀请海报
+#define URL_APIUserInvitePoster @"api/user/invite_poster"
+//34.APP版本升级通知
+#define URL_APIGoodsCheckVersion @"api/goods/check_version"
+//35.弹窗
+#define URL_APIgoodsPopWindow @"api/goods/pop_window"
+//36.悬浮挂件
+#define URL_APIGoodsSuspend @"api/goods/suspend"
+//37.客服信息
+#define URL_APIMPVKefu @"api/mpv2/app_kefu"
+//38.提现记录
+#define URL_APIMPVUserTxrecs @"api/mpv2/user/tx_recs"
+
+
+
 
 
 

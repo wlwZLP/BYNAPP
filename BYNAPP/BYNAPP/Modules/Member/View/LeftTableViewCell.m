@@ -24,8 +24,6 @@
     {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        self.backgroundColor = YYBGColor;
-        
         self.name = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, 95 , 25)];
         self.name.numberOfLines = 1;
         self.name.textColor = YY33Color;
@@ -34,18 +32,20 @@
         [self.contentView addSubview:self.name];
         
 
-        self.yellowView = [[UIView alloc] initWithFrame:CGRectMake(0, 5, 2, 45)];
-        self.yellowView.backgroundColor = YY33Color;
+        self.yellowView = [[UIView alloc] initWithFrame:CGRectMake(1, 7 , 3, 40)];
+        self.yellowView.backgroundColor = YYHexColor(@"#FFD409");
         [self.contentView addSubview:self.yellowView];
         
     }
+    
     return self;
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated{
     
     [super setSelected:selected animated:animated];
-    self.contentView.backgroundColor = selected ? [UIColor whiteColor] : YYBGColor;
+    self.contentView.backgroundColor = selected ?  YYHexColor(@"#FFFAE3"):[UIColor whiteColor] ;
     self.highlighted = selected;
     self.name.highlighted = selected;
     self.yellowView.hidden = !selected;

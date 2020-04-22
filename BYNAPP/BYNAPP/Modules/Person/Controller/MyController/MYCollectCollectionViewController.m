@@ -25,7 +25,6 @@
     [super viewDidLoad];
     
     self.collectionView.backgroundColor = YYBGColor;
-    
 
     [self.collectionView registerClass:[CollectCollectionViewCell class] forCellWithReuseIdentifier:@"CollectCollectionViewCell"];
     
@@ -45,8 +44,6 @@
     [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
                 
         NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
-        
-        YYNSLog(@"我的收藏数据-------%@",responseObject);
         
         self.ListArray = [NSArray modelArrayWithClass:[MyCollectModel class] json:EncodeArrayFromDic(DataDic, @"data")];
             
@@ -85,7 +82,7 @@
     
      cell.Model = self.ListArray[indexPath.item];
     
-      return cell;
+     return cell;
     
 }
 
@@ -95,7 +92,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
-    HomeVc.Goods_Type = self.ListArray[indexPath.item].mall_id;
+    HomeVc.mall_id = self.ListArray[indexPath.item].mall_id;
     HomeVc.item_id = self.ListArray[indexPath.item].item_id;
     HomeVc.activity_id = self.ListArray[indexPath.item].collect_id;
     [self.navigationController pushViewController:HomeVc animated:YES];

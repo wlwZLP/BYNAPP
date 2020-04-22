@@ -12,6 +12,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CustomCollectionViewCell : UICollectionViewCell
 
+@property(nonatomic,strong)UIImageView * AvatarImgView;
+
+@property(nonatomic,strong)UILabel * nicknamelabel;
+
+@property(nonatomic,strong)UIImageView * QrcodeImgView;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

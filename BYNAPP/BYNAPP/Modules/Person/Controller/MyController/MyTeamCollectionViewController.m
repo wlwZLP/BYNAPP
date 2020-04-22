@@ -27,8 +27,6 @@
     
     [super viewDidLoad];
     
-    self.collectionView.backgroundColor = YYBGColor;
-    
     [self.collectionView registerClass:[TeamCollectionViewCell class] forCellWithReuseIdentifier:@"TeamCollectionViewCell"];
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];

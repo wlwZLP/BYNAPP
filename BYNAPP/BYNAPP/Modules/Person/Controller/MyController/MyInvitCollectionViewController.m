@@ -11,6 +11,8 @@
 
 @interface MyInvitCollectionViewController ()
 
+@property(nonatomic,strong)NSArray *  PostersArray;
+
 @end
 
 @implementation MyInvitCollectionViewController
@@ -29,8 +31,34 @@
     
     [super viewDidLoad];
     
-   
+    [self GetPersonInVitNetWordData];
       
+    
+}
+
+-(void)GetPersonInVitNetWordData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserInvitePoster];
+         
+                        
+    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+                
+          NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+        
+          self.PostersArray = EncodeArrayFromDic(Data, @"posters");
+           
+          [self.collectionView reloadData];
+          
+    } failure:^(NSError *error, id responseCache) {
+              
+          NSDictionary * Data = EncodeDicFromDic(responseCache, @"data");
+         
+          self.PostersArray = EncodeArrayFromDic(Data, @"posters");
+        
+          [self.collectionView reloadData];
+
+    }];
+
     
 }
 
@@ -43,13 +71,11 @@
        
    self.collectionView.frame = CGRectMake(0, 0, YYScreenWidth, 1.3 * YYScreenWidth + 200);
    
-  
    self.collectionView.showsHorizontalScrollIndicator = NO;
    
    [self.collectionView registerClass:[InvitImgCollectionViewCell class] forCellWithReuseIdentifier:@"InvitImgCollectionViewCell"];
    
    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
-   
    
    UIButton * SaveBtn = [[UIButton alloc] initWithFrame:CGRectMake(12, 1.3 * YYScreenWidth + 230 - YYBarHeight , YYScreenWidth - 24 , 45)];
    [SaveBtn addTarget:self action:@selector(SavePosterButtonClick) forControlEvents:UIControlEventTouchUpInside];
@@ -70,6 +96,8 @@
     
     [self YYShowAlertViewTitle:@"保存海报"];
     
+    
+    
 }
 
 
@@ -80,24 +108,26 @@
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
 
      return 1;
+    
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-     return 6;
+     return self.PostersArray.count;
 }
+
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
       InvitImgCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"InvitImgCollectionViewCell" forIndexPath:indexPath];
     
+      [cell.InvitImgView sd_setImageWithURL:[NSURL URLWithString:self.PostersArray[indexPath.item]] placeholderImage:[UIImage imageNamed:@"Invitcode"]];
+     
       return cell;
     
+    
 }
-
-#pragma mark <UICollectionViewDelegate>
-
 
 #pragma mark <UICollectionViewDelegate>
 
@@ -124,8 +154,7 @@
 
 
 // 和UITableView类似，UICollectionView也可设置段头段尾
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     
     if([kind isEqualToString:UICollectionElementKindSectionHeader])
     {
@@ -150,8 +179,7 @@
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    
-      return UIEdgeInsetsMake(0, YYScreenWidth * 0.08, 40, YYScreenWidth * 0.08);//上左下右
+      return UIEdgeInsetsMake(0, YYScreenWidth * 0.08, 40 , YYScreenWidth * 0.08);//上左下右
    
 }
 
@@ -166,5 +194,18 @@
        return 0;
 
 }
+
+#pragma mark uiscrollview delegate
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    
+  
+    YYNSLog(@"----------%f", scrollView.contentOffset.x);
+ 
+
+    
+}
+
 
 @end

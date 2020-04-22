@@ -52,7 +52,7 @@ UICollectionViewDataSource>
     
     self.selectIndex = 0;
     
-    _isScrollDown = YES;
+     _isScrollDown = YES;
 
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -66,12 +66,16 @@ UICollectionViewDataSource>
     
     [self.RightCollectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
+    [YYTools SetView:self.RightCollectionView RadiusSize:1 BorderColor:YYE5Color];
+    
+    [self GetMenberNetworkData];
+    
+    
 }
 
 
 -(void)viewWillAppear:(BOOL)animated{
-    
-    [self GetMenberNetworkData];
+
     
     [self.navigationController setNavigationBarHidden:YES animated:nil];
     
@@ -79,12 +83,6 @@ UICollectionViewDataSource>
     
 }
 
--(void)viewWillDisappear:(BOOL)animated{
-    
-  
-    [super viewWillDisappear:animated];
-    
-}
 
 
 
@@ -95,14 +93,14 @@ UICollectionViewDataSource>
     NSDictionary * dict = @{@"mall_id":@"1",@"mode":@"2"};
        
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
-        
-        YYNSLog(@"分类数据-----%@",responseObject);
-        
+
         NSArray * DataArray = EncodeArrayFromDic(responseObject, @"data");
            
         self.MenListArray = [NSArray modelArrayWithClass:[MenModel class] json:DataArray];
         
         [self.LeftTableView reloadData];
+        
+        [self.LeftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]   animated:YES scrollPosition:UITableViewScrollPositionNone];
         
         [self.RightCollectionView reloadData];
            
@@ -115,6 +113,7 @@ UICollectionViewDataSource>
         [self.LeftTableView reloadData];
         
         [self.RightCollectionView reloadData];
+        
            
     }];
     
@@ -134,7 +133,7 @@ UICollectionViewDataSource>
         _LeftTableView.dataSource = self;
         _LeftTableView.tableFooterView = [UIView new];
         _LeftTableView.rowHeight = 55;
-        _LeftTableView.backgroundColor = YYBGColor;
+        _LeftTableView.backgroundColor = UIColor.whiteColor;
         _LeftTableView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
         _LeftTableView.showsVerticalScrollIndicator = NO;
         _LeftTableView.separatorColor = [UIColor clearColor];
@@ -142,8 +141,6 @@ UICollectionViewDataSource>
     }
     return _LeftTableView;
 }
-
-
 
 
 /**
@@ -162,6 +159,7 @@ UICollectionViewDataSource>
         _RightCollectionView.scrollsToTop = YES;
         _RightCollectionView.delegate = self;
         _RightCollectionView.dataSource = self;
+        _RightCollectionView.showsVerticalScrollIndicator = NO;
         _RightCollectionView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     }
     
@@ -171,15 +169,14 @@ UICollectionViewDataSource>
 
 #pragma mark - UITableView DataSource Delegate
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
       return self.MenListArray.count;
     
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     LeftTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LeftTableViewCell" forIndexPath:indexPath];
     
@@ -190,8 +187,8 @@ UICollectionViewDataSource>
 }
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     _selectIndex = indexPath.row;
     
     [self scrollToTopOfSection:_selectIndex animated:YES];

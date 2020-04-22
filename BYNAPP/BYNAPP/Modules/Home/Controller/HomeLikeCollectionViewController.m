@@ -15,6 +15,8 @@
 
 @property(nonatomic,strong)HomeMainViewModel * ViewModel;
 
+@property(nonatomic,strong)NSMutableArray<HomeMainModel*> * homeListArray;
+
 @end
 
 @implementation HomeLikeCollectionViewController
@@ -25,13 +27,44 @@
     [super viewDidLoad];
     
     self.collectionView.backgroundColor = YYBGColor;
+    
+    self.homeListArray = [NSMutableArray array];
  
     [self.collectionView registerClass:[HomeMainCollectionViewCell class] forCellWithReuseIdentifier:@"HomeMainCollectionViewCell"];
      
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
-  
+    self.collectionView.mj_header = [LPRefreshGifHeader headerWithRefreshingBlock:^{
+            
+           if ([self.category_id isEqualToString:@"8888"]) {
+             
+                [self GetHomeGuessLikeNetworkData];
+               
+           }else{
+               
+                [self GetHomePlistCateNetworkData];
+               
+           }
+            
+    }];
+    
+    self.collectionView.mj_footer = [LPRefreshFooter footerWithRefreshingBlock:^{
+        
+         if ([self.category_id isEqualToString:@"8888"]) {
+          
+              [self GetHomeGuessLikeNetMoreData];
+            
+         }else{
+            
+              [self GetHomePlistCateNetMoreData];
+            
+         }
+        
+    }];
+    
+    
 }
+
 
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -56,6 +89,7 @@
 
 -(void)GetHomeGuessLikeNetworkData{
     
+     self.RefreshCount = 1;
                   
      NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsGuessLike];
          
@@ -67,15 +101,55 @@
                 
            NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
        
-           self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+           [self.homeListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
            
-            [self.collectionView reloadData];
+           self.RefreshCount ++;
+           
+           [self.collectionView.mj_header endRefreshing];
+           
+           [self.collectionView reloadData];
           
        } failure:^(NSError *error, id responseCache) {
               
             NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
             
-            self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+            [self.homeListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
+                
+            [self.collectionView.mj_header endRefreshing];
+           
+            [self.collectionView reloadData];
+
+       }];
+
+    
+}
+
+
+-(void)GetHomeGuessLikeNetMoreData{
+    
+     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsGuessLike];
+         
+     NSString * iPhoneIDFA = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+    
+     NSDictionary * dict = @{@"device_type":@"IDFA",@"device_value":iPhoneIDFA,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+                        
+       [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+                
+           NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+       
+           [self.homeListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
+           
+           self.RefreshCount ++;
+           
+           [self.collectionView.mj_footer endRefreshing];
+           
+           [self.collectionView reloadData];
+          
+       } failure:^(NSError *error, id responseCache) {
+              
+            NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
+            
+            [self.homeListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
                 
             [self.collectionView reloadData];
 
@@ -84,9 +158,13 @@
     
 }
 
+
+
 #pragma mark 获取其他类目数据
 
 -(void)GetHomePlistCateNetworkData{
+    
+    self.RefreshCount = 1;
     
     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsItems];
          
@@ -96,7 +174,11 @@
                 
         NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
        
-        self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+        [self.homeListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
+        
+        self.RefreshCount ++;
+        
+        [self.collectionView.mj_header endRefreshing];
            
         [self.collectionView reloadData];
           
@@ -104,7 +186,38 @@
               
         NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
             
-        self.ListDataArray = [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")];
+        [self.homeListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
+                
+        [self.collectionView reloadData];
+
+    }];
+    
+    
+}
+
+-(void)GetHomePlistCateNetMoreData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsItems];
+         
+    NSDictionary * dict = @{@"mall_id":@"1",@"category_id":self.category_id,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+                        
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+                
+        NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+       
+        [self.homeListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
+        
+        self.RefreshCount ++;
+        
+        [self.collectionView.mj_footer endRefreshing];
+           
+        [self.collectionView reloadData];
+          
+    } failure:^(NSError *error, id responseCache) {
+              
+        NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
+            
+        [self.homeListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
                 
         [self.collectionView reloadData];
 
@@ -125,7 +238,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-     return self.ListDataArray.count;
+     return self.homeListArray.count;
    
 }
 
@@ -133,7 +246,7 @@
 
     HomeMainCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HomeMainCollectionViewCell" forIndexPath:indexPath];
     
-    cell.Model = self.ListDataArray[indexPath.item];
+    cell.Model = self.homeListArray[indexPath.item];
 
     return cell;
 
@@ -144,9 +257,9 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
     HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
-    HomeVc.Goods_Type = self.ListDataArray[indexPath.item].mall_id;
-    HomeVc.item_id = self.ListDataArray[indexPath.item].item_id;
-    HomeVc.activity_id = self.ListDataArray[indexPath.item].activity_id;
+    HomeVc.mall_id = self.homeListArray[indexPath.item].mall_id;
+    HomeVc.item_id = self.homeListArray[indexPath.item].item_id;
+    HomeVc.activity_id = self.homeListArray[indexPath.item].activity_id;
     [self.navigationController pushViewController:HomeVc animated:YES];
     
 }

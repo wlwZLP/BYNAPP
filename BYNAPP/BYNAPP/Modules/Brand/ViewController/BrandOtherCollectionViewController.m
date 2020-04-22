@@ -54,6 +54,8 @@
     
         NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
         
+        YYNSLog(@"获取品牌券数据------%@",DataDic);
+        
         NSArray * DataArray = EncodeArrayFromDic(DataDic, @"data");
     
         self.BrandArray = [[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray] mutableCopy];
@@ -119,7 +121,7 @@
     
     BrandMainModel * Model = self.BrandArray[indexPath.item];
     
-    if ([Model.coupon_type isEqualToString:@"2"]) {
+    if ([Model.coupon_type isEqualToString:@"2"] || [Model.coupon_type isEqualToString:@"4"]) {
         
         BrandCouponCollectionViewController * BrandVc = [[BrandCouponCollectionViewController alloc]init];
         BrandVc.title = Model.coupon_name;

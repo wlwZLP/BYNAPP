@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 //商品类型: 1-淘宝；2-拼多多；3-京东
-@property(nonatomic,strong)NSString * Goods_Type;
+@property(nonatomic,strong)NSString * mall_id;
 
 @property(nonatomic,strong)NSString * item_id;
 

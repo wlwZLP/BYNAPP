@@ -11,6 +11,8 @@
 
 @interface MyCustomCollectionViewController ()
 
+@property(nonatomic,strong)NSDictionary * DataDic;
+
 @end
 
 @implementation MyCustomCollectionViewController
@@ -24,6 +26,33 @@
     [self.collectionView registerClass:[CustomCollectionViewCell class] forCellWithReuseIdentifier:@"CustomCollectionViewCell"];
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
+    
+    [self GetPersonCustomNetWordData];
+    
+}
+
+
+
+-(void)GetPersonCustomNetWordData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVKefu];
+         
+    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+                
+          self.DataDic = EncodeDicFromDic(responseObject, @"data");
+        
+           
+          [self.collectionView reloadData];
+          
+    } failure:^(NSError *error, id responseCache) {
+              
+          self.DataDic = EncodeDicFromDic(responseCache, @"data");
+         
+        
+          [self.collectionView reloadData];
+
+    }];
+
     
 }
 
@@ -45,14 +74,18 @@
     
       CustomCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CustomCollectionViewCell" forIndexPath:indexPath];
     
+      [cell.AvatarImgView sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(self.DataDic, @"avatar")] placeholderImage:[UIImage imageNamed:@"iqiyi"]];
+    
+      cell.nicknamelabel.text = EncodeStringFromDic(self.DataDic, @"nickname");
+    
+      [cell.QrcodeImgView sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(self.DataDic, @"qrcode")] placeholderImage:[UIImage imageNamed:@"MyWX"]];
+    
       return cell;
     
 }
 
 #pragma mark <UICollectionViewDelegate>
 
-
-#pragma mark <UICollectionViewDelegate>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
  

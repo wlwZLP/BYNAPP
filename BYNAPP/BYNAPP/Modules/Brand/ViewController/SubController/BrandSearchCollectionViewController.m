@@ -7,87 +7,200 @@
 //
 
 #import "BrandSearchCollectionViewController.h"
+#import "BrandSearchTopCollectionViewCell.h"
+#import "BrandSearchDataCollectionViewCell.h"
+#import "BrandCouponCollectionViewController.h"
+#import "BrandSearchModel.h"
 
 @interface BrandSearchCollectionViewController ()
+
+@property(nonatomic,strong)NSArray * brandTopArray;
+
+@property(nonatomic,strong)NSArray <BrandSearchModel*> * BrandDataArray;
 
 @end
 
 @implementation BrandSearchCollectionViewController
 
-static NSString * const reuseIdentifier = @"Cell";
+
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:nil];
     
-    // Register cell classes
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    self.collectionView.backgroundColor = YYBGColor;
     
-    // Do any additional setup after loading the view.
+    [self.collectionView registerClass:[BrandSearchTopCollectionViewCell class] forCellWithReuseIdentifier:@"BrandSearchTopCollectionViewCell"];
+    
+    [self.collectionView registerClass:[BrandSearchDataCollectionViewCell class] forCellWithReuseIdentifier:@"BrandSearchDataCollectionViewCell"];
+    
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
+    
+    [self GetBrandSearchNetWorkData:@"肯德基"];
+    
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)GetBrandSearchNetWorkData:(NSString *)SearchTitle{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVSearch];
+    
+    NSDictionary * dict = @{@"keyword":SearchTitle,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+                       
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+       
+        NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+        
+        YYNSLog(@"搜索结果数据-----------%@",Data);
+        
+        self.brandTopArray =  [NSArray modelArrayWithClass:[BrandSearchModel class] json:EncodeArrayFromDic(Data, @"brands")];
+        
+        self.BrandDataArray =  [NSArray modelArrayWithClass:[BrandSearchModel class] json:EncodeArrayFromDic(Data, @"data")];
+        
+        [self.collectionView reloadData];
+               
+    } failure:^(NSError *error, id responseCache) {
+        
+         NSDictionary * Data = EncodeDicFromDic(responseCache, @"data");
+            
+         self.brandTopArray =  [NSArray modelArrayWithClass:[BrandSearchModel class] json:EncodeArrayFromDic(Data, @"brands")];
+         
+         self.BrandDataArray =  [NSArray modelArrayWithClass:[BrandSearchModel class] json:EncodeArrayFromDic(Data, @"data")];
+      
+         [self.collectionView reloadData];
+   
+    }];
+    
+    
 }
-*/
 
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+
+      return 2;
+    
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of items
-    return 0;
+    
+    if (section == 0) {
+        return self.brandTopArray.count;
+    }else{
+        return self.BrandDataArray.count;
+    }
+
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     
-    // Configure the cell
-    
-    return cell;
+    if (indexPath.section == 0) {
+        
+        BrandSearchTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandSearchTopCollectionViewCell" forIndexPath:indexPath];
+         
+        return cell;
+        
+    }else{
+        
+        BrandSearchDataCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BrandSearchDataCollectionViewCell" forIndexPath:indexPath];
+
+        cell.Model = self.BrandDataArray[indexPath.item];
+         
+        return cell;
+        
+    }
+
 }
+
+
+#pragma mark -选中某item进行跳转
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    BrandSearchModel * Model = self.BrandDataArray[indexPath.item];
+    BrandCouponCollectionViewController * DetailsVc = [[BrandCouponCollectionViewController alloc]init];
+    DetailsVc.Details_id = Model.Brand_id;
+    DetailsVc.mall_id = Model.mall_id;
+    DetailsVc.title = Model.coupon_name;
+    [self.navigationController pushViewController:DetailsVc animated:YES];
+    
+}
+
+
 
 #pragma mark <UICollectionViewDelegate>
 
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
 
-/*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
+    if (indexPath.section == 0) {
+      
+        return CGSizeMake((YYScreenWidth - 32)/2 , (YYScreenWidth - 32)/4);
+        
+    }else{
+        
+        return CGSizeMake(YYScreenWidth - 12 , (YYScreenWidth - 12) * 0.28);
+        
+    }
+     
+     
 
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
 }
 
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
+#pragma mark 设置区头区尾
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
+    
+        return (CGSize){YYScreenWidth,0};
+    
 }
 
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
+    
+       return (CGSize){YYScreenWidth,0};
+    
 }
-*/
+
+
+// 和UITableView类似，UICollectionView也可设置段头段尾
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if([kind isEqualToString:UICollectionElementKindSectionHeader])
+    {
+        UICollectionReusableView *headerView = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"headerId" forIndexPath:indexPath];
+        
+        if(headerView == nil){
+            headerView = [[UICollectionReusableView alloc] init];
+        }
+        
+        headerView.backgroundColor = YYBGColor;
+     
+        return headerView;
+    
+    }
+    
+    return nil;
+    
+}
+
+#pragma mark ---- UICollectionViewDelegateFlowLayout
+
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
+{
+    
+      return UIEdgeInsetsMake(10, 0, 0, 0);//上左下右
+   
+}
+
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+{
+      return 0;
+}
 
 @end

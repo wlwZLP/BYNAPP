@@ -12,6 +12,8 @@
 
 @interface WithRecordCollectionViewController ()
 
+@property(nonatomic,strong)NSMutableArray * RecordListArray;
+
 @end
 
 @implementation WithRecordCollectionViewController
@@ -21,13 +23,40 @@
     
     [super viewDidLoad];
     
+    self.RecordListArray = [NSMutableArray array];
+    
     [self.collectionView registerClass:[WithRecordCollectionViewCell class] forCellWithReuseIdentifier:@"WithRecordCollectionViewCell"];
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
+    [self GetPersonRecordNetWordData];
+    
+    
 }
 
+-(void)GetPersonRecordNetWordData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVUserTxrecs];
+    
+    NSDictionary * dict = @{@"type":self.RecordType,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+         
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+            
+          NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+          
+          [self.RecordListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data, @"Data")]];
+        
+          [self.collectionView reloadData];
+          
+    } failure:^(NSError *error, id responseCache) {
+              
+        
+           [self.collectionView reloadData];
 
+    }];
+
+    
+}
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -39,7 +68,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-     return 20;
+     return self.RecordListArray.count;
     
 }
 

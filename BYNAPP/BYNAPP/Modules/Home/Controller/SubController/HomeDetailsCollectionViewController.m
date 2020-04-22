@@ -15,6 +15,8 @@
 #import "GoodsDetailsCollectionViewCell.h"
 #import "GoodsSameCollectionViewCell.h"
 #import "HomeSearchCollectionViewController.h"
+#import "MyNewCollectionViewController.h"
+#import "YYShareView.h"
 
 @interface HomeDetailsCollectionViewController ()<WKUIDelegate, WKNavigationDelegate,UISearchBarDelegate>
 
@@ -39,6 +41,9 @@
 @property (nonatomic, assign)CGFloat webViewHeight;
 
 @property(nonatomic, strong)NSArray<HomeMainModel*> * SimlarListArray;
+
+@property(nonatomic,strong)YYShareView * ShareView;
+
 
 @end
 
@@ -227,11 +232,11 @@
            
        NSDictionary * dict = @{@"item_type":EncodeStringFromDic(self.DetailsDic, @"mall_id"),@"item_id":self.item_id,@"price":EncodeStringFromDic(self.DetailsDic, @"mall_id"),@"title":EncodeStringFromDic(self.DetailsDic, @"title"),@"cover_image":EncodeStringFromDic(self.DetailsDic, @"cover_image")};
          
-       [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
+        [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
                
             self.RightCollectBtn.selected = YES;
             
-       } failure:^(NSError *error, id responseCache) {
+        } failure:^(NSError *error, id responseCache) {
                
           
                
@@ -245,7 +250,7 @@
 #pragma mark ===============分享点击事件============
 -(void)ShareButtonClick{
     
-    
+    [[LPAnimationView sharedMask]show:self.ShareView withType:QWAlertViewStyleActionSheetDown];
     
 }
 #pragma mark ===============购买点击事件=============
@@ -289,9 +294,9 @@
      NSDictionary * dict ;
      
      if (self.activity_id.length == 0) {
-         dict = @{@"item_id":self.item_id,@"mall_id":self.Goods_Type};
+         dict = @{@"item_id":self.item_id,@"mall_id":self.mall_id};
      }else{
-         dict = @{@"item_id":self.item_id,@"mall_id":self.Goods_Type,@"activity_id":self.activity_id};
+         dict = @{@"item_id":self.item_id,@"mall_id":self.mall_id,@"activity_id":self.activity_id};
      }
      
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
@@ -330,9 +335,7 @@
         
     } failure:^(NSError *error, id responseCache) {
         
-        
          dispatch_group_leave(group);
-        
         
     }];
     
@@ -435,6 +438,14 @@
     }else if (indexPath.section == 3){
         
         GoodsCourseCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"GoodsCourseCollectionViewCell" forIndexPath:indexPath];
+        
+        cell.IMgClickBlockClick = ^{
+          
+            MyNewCollectionViewController * NewVc = [[MyNewCollectionViewController alloc]init];
+            NewVc.title = @"新人教程";
+            [self.navigationController pushViewController:NewVc animated:YES];
+            
+        };
 
         return cell;
         
@@ -514,7 +525,7 @@
     if (indexPath.section == 6) {
         
         HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
-        HomeVc.Goods_Type = self.SimlarListArray[indexPath.item].mall_id;
+        HomeVc.mall_id = self.SimlarListArray[indexPath.item].mall_id;
         HomeVc.item_id = self.SimlarListArray[indexPath.item].item_id;
         HomeVc.activity_id = self.SimlarListArray[indexPath.item].activity_id;
         [self.navigationController pushViewController:HomeVc animated:YES];
@@ -721,21 +732,32 @@
 
 
 
-
-#pragma 监听webView  contentSize 值的变化
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-
-    if ([keyPath isEqualToString:@"contentSize"]) {
-        //方法一
-        UIScrollView *scrollView = (UIScrollView *)object;
-        
-        CGFloat height = scrollView.contentSize.height;
-        
-     
+/**
+ *  懒加载UISearchBar
+ *
+ *  @return SalesSearchBar
+ */
+-(YYShareView *)ShareView
+{
     
-     }
+    if (_ShareView== nil) {
+        
+        _ShareView = [[YYShareView alloc] init];
+        _ShareView.frame = CGRectMake(0, 0, YYScreenWidth, YYScreenHeight);
+        _ShareView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+        _ShareView.BottomShareBlockClick = ^(NSInteger BtnIndex) {
+            
+            [[LPAnimationView sharedMask]dismiss];
+            
+        };
+        
+    }
+    
+    return _ShareView;
     
 }
+
+
 
 
  

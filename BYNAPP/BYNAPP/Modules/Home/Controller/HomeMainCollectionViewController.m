@@ -39,9 +39,10 @@
 
 @property(nonatomic,strong)NSArray<HomeTimeModel*> * TimesArray;
 
-@property(nonatomic,strong)NSArray<HomeMainModel*> * GoodsItemsArray;
+@property(nonatomic,strong)NSMutableArray<HomeMainModel*> * GoodsItemsArray;
 
 @end
+
 
 @implementation HomeMainCollectionViewController
 
@@ -51,6 +52,8 @@
      [super viewDidLoad];
     
      self.BannerImgArray = [NSMutableArray array];
+    
+     self.GoodsItemsArray = [NSMutableArray array];
    
      [self.collectionView registerClass:[HomeBannerCollectionViewCell class] forCellWithReuseIdentifier:@"HomeBannerCollectionViewCell"];
     
@@ -74,7 +77,7 @@
    
      self.collectionView.mj_footer = [LPRefreshFooter footerWithRefreshingBlock:^{
        
-//         [self GetHomeMoreHotData];
+         [self GetHomeRecommendMoreData];
        
      }];
     
@@ -122,8 +125,6 @@
           
         NSDictionary * Data1 = EncodeDicFromDic(responseObject, @"data");
          
-//        YYNSLog(@"首页广告位数据------%@",Data1);
-         
         [self.BannerImgArray removeAllObjects];
         
         self.BannerArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"banners")];
@@ -156,26 +157,69 @@
 -(void)loadPartTwo:(dispatch_group_t)group{
     
      dispatch_group_enter(group);
+    
+     self.RefreshCount = 1;
 
      NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsTaobaoHot];
                         
      [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
           
-         NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+          NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
          
-         self.GoodsItemsArray =  [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data, @"items")];
+          self.RefreshCount ++ ;
+         
+          [self.GoodsItemsArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data, @"items")]];
          
           dispatch_group_leave(group);
                 
      } failure:^(NSError *error, id responseCache) {
          
-         NSDictionary * Data = EncodeDicFromDic(responseCache, @"data");
+          NSDictionary * Data = EncodeDicFromDic(responseCache, @"data");
          
-         self.GoodsItemsArray =  [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data, @"items")];
+          [self.GoodsItemsArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data, @"items")]];
                            
-           dispatch_group_leave(group);
+          dispatch_group_leave(group);
                                
      }];
+    
+}
+
+
+#pragma mark ===============网络请求获取更多=============
+
+-(void)GetHomeRecommendMoreData{
+    
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsTaobaoHot];
+    
+    NSDictionary * dict = @{@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+                       
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+         
+        NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+        
+        self.RefreshCount ++ ;
+        
+        [self.GoodsItemsArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data, @"items")]];
+        
+        [self.collectionView.mj_footer endRefreshing];
+        
+        [self.collectionView reloadData];
+               
+    } failure:^(NSError *error, id responseCache) {
+        
+         NSDictionary * Data = EncodeDicFromDic(responseCache, @"data");
+        
+         [self.GoodsItemsArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data, @"items")]];
+        
+         [self.collectionView.mj_footer endRefreshing];
+        
+         [self.collectionView reloadData];
+                          
+                              
+    }];
+    
+    
     
 }
 
@@ -329,7 +373,7 @@
          cell.PushLGoodDetailsBlockClick = ^(HomeMainModel * _Nonnull Model) {
           
              HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
-             HomeVc.Goods_Type = Model.mall_id;
+             HomeVc.mall_id = Model.mall_id;
              HomeVc.item_id = Model.item_id;
              HomeVc.activity_id = Model.activity_id;
              [self.navigationController pushViewController:HomeVc animated:YES];
@@ -371,7 +415,7 @@
     }else if ([HomeModel.target_type isEqualToString:@"2"]){
        
         HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
-        HomeVc.Goods_Type = HomeModel.target_Sub_type;
+        HomeVc.mall_id = HomeModel.target_Sub_type;
         HomeVc.item_id = HomeModel.target_item_id;
         HomeVc.activity_id = HomeModel.target_Tactivity_id;
         [self.navigationController pushViewController:HomeVc animated:YES];
@@ -429,7 +473,7 @@
     
     HomeMainModel * Model = self.GoodsItemsArray[indexPath.item];
     HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
-    HomeVc.Goods_Type = Model.mall_id;
+    HomeVc.mall_id = Model.mall_id;
     HomeVc.item_id = Model.item_id;
     HomeVc.activity_id = Model.activity_id;
     [self.navigationController pushViewController:HomeVc animated:YES];
