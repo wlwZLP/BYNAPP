@@ -35,21 +35,21 @@
     [self addSubview:MainBGView];
     [YYTools ChangeView:self RadiusSize:10 BorderColor:[UIColor clearColor]];
     
-    UILabel * TitleLabel = [[UILabel alloc]init];
-    TitleLabel.text = @"实时热卖";
-    TitleLabel.frame = CGRectMake(0, 4 , self.ZLP_width, 20);
-    TitleLabel.textColor = YY66Color;
-    TitleLabel.textAlignment = NSTextAlignmentCenter;
-    TitleLabel.font = [UIFont systemFontOfSize:14 weight:0];
-    [MainBGView addSubview:TitleLabel];
-    self.TextLabel = TitleLabel;
-    [TitleLabel addLabelTarget:self action:@selector(LabelButtonClick)];
+    UIButton * TitleBtn = [[UIButton alloc]init];
+    [TitleBtn setTitle:@"纸巾" forState:UIControlStateNormal];
+    TitleBtn.frame = CGRectMake(0, 4 , self.ZLP_width, 20);
+    [TitleBtn setTitleColor:YY66Color forState:UIControlStateNormal];
+    [TitleBtn addTarget:self action:@selector(TitleButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    TitleBtn.titleLabel.font = [UIFont systemFontOfSize:14 weight:0];
+    [MainBGView addSubview:TitleBtn];
+    self.TextBtn = TitleBtn;
+ 
 
 
 }
 
 
--(void)LabelButtonClick{
+-(void)TitleButtonClick:(UIButton*)Sender{
     
     self.labelClickBlockClick();
     

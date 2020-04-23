@@ -10,10 +10,10 @@
 #define URLMacros_h
 
 /**生产服务器*/
-//#define Common_URL @"http://open.biyingniao.com/"
+#define Common_URL @"http://open.biyingniao.com/"
 
 ///**测试服务器*/
-#define Common_URL @"http://test.wef2.top/"
+//#define Common_URL @"http://test.wef2.top/"
 
 #pragma mark - ——————— 详细接口地址 ————————
 //1.获取首页广告
@@ -61,9 +61,13 @@
 //19.足迹
 #define URL_APIUserBrowsers @"api/user/browsers"
 //20.订单列表
-#define URL_APIUserOrders @"api/user/orders"
+#define URL_APIUserMPVOrders @"api/user/orders"
 //21.卡券列表
 #define URL_APIMPVOerders @"api/mpv2/orders"
+//21-2.卡券列表订单详情
+#define URL_APIMPVOerdersDetail @"api/mpv2/order-detail"
+//21-3.卡券列表订单详情
+#define URL_APIMPVOerdersCancel @"api/mpv2/order-cancel"
 //22.新手教程
 #define URL_APIUserArticleCategories @"api/user/article_categories"
 //23.新手教程m内容和文章
@@ -100,8 +104,10 @@
 #define URL_APIMPVKefu @"api/mpv2/app_kefu"
 //38.提现记录
 #define URL_APIMPVUserTxrecs @"api/mpv2/user/tx_recs"
-
-
+//39.会员购买
+#define URL_APIMPVMemberBuy @"api/mpv2/member-buy"
+//40.会员页面
+#define URL_APIMPVMemberpage @"api/mpv2/member-page"
 
 
 

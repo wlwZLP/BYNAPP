@@ -234,11 +234,13 @@
         
         _PDDHeadView = [[YYPDDHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 45)];
         
+        YYWeakSelf(self);
+        
         _PDDHeadView.HeaderTopBlockClick = ^(NSString * _Nonnull SortType) {
         
-               self.HeadSort = SortType;
+               weakself.HeadSort = SortType;
             
-              [self GetSelfViewControllerNetworkData];
+               [weakself GetSelfViewControllerNetworkData];
             
         };
         

@@ -15,6 +15,10 @@
 
 @property(nonatomic,strong)NSArray * ImgListArray;
 
+@property(nonatomic,strong)UserModel * UserModel;
+
+@property(nonatomic,strong)NSDictionary * VIPDataDic;
+
 @end
 
 @implementation MyNoVipCollectionViewController
@@ -44,11 +48,72 @@
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
-    [self CreateGoodsDetailsBottomView];
-    
     [self GetMyVipControllerNetData];
     
+    [self GetVipControllerNetData];
+    
 }
+
+
+#pragma mark 获取当前界面网络数据
+
+-(void)GetMyVipControllerNetData{
+    
+   NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVCommon];
+        
+   [PPNetworkTools POST:url parameters:nil success:^(id responseObject) {
+               
+       NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+       
+       self.ImgListArray = EncodeArrayFromDic(DataDic, @"plus_benefit_poster");
+ 
+       [self.collectionView reloadData];
+         
+   } failure:^(NSError *error, id responseCache) {
+             
+       NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
+       
+       self.ImgListArray = EncodeArrayFromDic(DataDic, @"plus_benefit_poster");
+       
+       [self.collectionView reloadData];
+       
+
+    }];
+    
+}
+
+//id = 3;
+//month = 12;
+//"ori_price" = 299;
+//price = "29.9";
+//"short_title" = "\U8d85\U503c1\U6298";
+//"single_price" = "\U00a52.49/\U6708";
+//title = "\U5e74\U5361";
+
+-(void)GetVipControllerNetData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVMemberpage];
+        
+    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+               
+        NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+        
+        NSArray * LevelArray = EncodeArrayFromDic(DataDic, @"level");
+       
+        self.VIPDataDic = LevelArray[0];
+        
+        [self CreateGoodsDetailsBottomView];
+ 
+        [self.collectionView reloadData];
+         
+    } failure:^(NSError *error, id responseCache) {
+             
+        [self YYShowMessage:error.localizedFailureReason];
+
+    }];
+    
+}
+
 
 #pragma mark ===============创建下面UIview控制=============
 
@@ -63,7 +128,8 @@
     UIButton * ShareButton = [[UIButton alloc]init];
     ShareButton.backgroundColor = YYHexColor(@"#FFD117");
     ShareButton.frame = CGRectMake(0, 20 , YYScreenWidth, 50);
-    [ShareButton setTitle:@"29.9元/年 开通会员" forState:UIControlStateNormal];
+    NSString * TitleString = [NSString stringWithFormat:@"%@元/年 开通会员",EncodeStringFromDic(self.VIPDataDic, @"ori_price")];
+    [ShareButton setTitle:TitleString forState:UIControlStateNormal];
     ShareButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     [ShareButton setTitleColor:YY22Color forState:UIControlStateNormal];
     [ShareButton addTarget:self action:@selector(BuyVipBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -92,6 +158,86 @@
 -(void)BuyVipBtnClick{
     
     
+    BOOL alipay = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay://"]];
+
+    if (alipay == NO) {
+
+        [self YYShowMessage:@"请先安装支付宝"];
+        return;
+
+    }
+    
+    self.UserModel = [YYSaveTool YY_GetSaveModelWithkey:YYUser modelClass:UserModel.class];
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVMemberBuy];
+    
+    NSDictionary * dict = @{@"id":EncodeStringFromDic(self.VIPDataDic, @"id")};
+                  
+    [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
+      
+        if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+            
+            NSDictionary * data = EncodeDicFromDic(responseObject, @"data");
+            
+             NSString * order_no = EncodeStringFromDic(data, @"order_no");
+            
+             [self GetBarndPaySignNetWork:order_no];
+            
+        }else{
+            
+            [self YYShowMessage:EncodeStringFromDic(responseObject, @"msg")];
+            
+        }
+        
+    } failure:^(NSError *error, id responseCache) {
+     
+         [self YYShowMessage:@"网络请求失败"];
+       
+    }];
+    
+}
+
+#pragma mark ===============得到支付订单参数=============
+
+-(void)GetBarndPaySignNetWork:(NSString*)order_no{
+    
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVMemberBuy];
+    
+    NSDictionary * dict = @{@"order_no":order_no};
+                  
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+      
+        if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+            
+              NSDictionary * data = EncodeDicFromDic(responseObject, @"data");
+            
+              if (EncodeStringFromDic(data, @"pay_params") != nil) {
+                  
+                 //应用注册scheme,在AliSDKDemo-Info.plist定义URL types
+                 NSString *appScheme = @"BYNAPP";
+                 // NOTE: 调用支付结果开始支付
+                 [[AlipaySDK defaultService] payOrder:EncodeStringFromDic(data, @"pay_params")  fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+
+                      NSLog(@"reslut = %@",resultDic);
+
+                 }];
+
+             }
+            
+        }else{
+            
+           [self YYShowMessage:EncodeStringFromDic(responseObject, @"msg")];
+            
+        }
+        
+
+    } failure:^(NSError *error, id responseCache) {
+     
+         [self YYShowMessage:@"网络请求失败"];
+        
+       
+    }];
     
     
 }
@@ -107,40 +253,6 @@
     
 }
 
-
--(void)viewWillAppear:(BOOL)animated{
-    
-
-    
-}
-
-#pragma mark 获取当前界面网络数据
-
--(void)GetMyVipControllerNetData{
-    
-   NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVCommon];
-        
-   [PPNetworkTools POST:url parameters:nil success:^(id responseObject) {
-               
-       NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
-       
-       self.ImgListArray = EncodeArrayFromDic(DataDic, @"plus_benefit_poster");
- 
-       [self.collectionView reloadData];
-         
-   } failure:^(NSError *error, id responseCache) {
-             
-       NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
-       
-       self.ImgListArray = EncodeArrayFromDic(DataDic, @"plus_benefit_poster");
-       
-       [self.collectionView reloadData];
-
-    }];
-    
-    
-
-}
 
 
 

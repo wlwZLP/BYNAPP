@@ -95,5 +95,24 @@
     
 }
 
+//创建一个Plist文件路径
++(NSString *)YYCreatPath:(NSString *)pathName{
+    
+    NSArray *array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *pathIndes = [array objectAtIndex:0];
+    NSString *path = [pathIndes stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist",pathName]];
+    return path;
+    
+}
+
+
+//通过路径名字获取文件
++(NSMutableDictionary *)YYGetDataByPathName:(NSString *)pathName{
+    
+     NSMutableDictionary *  dataDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:pathName];
+    
+    return dataDictionary;
+    
+}
 
 @end

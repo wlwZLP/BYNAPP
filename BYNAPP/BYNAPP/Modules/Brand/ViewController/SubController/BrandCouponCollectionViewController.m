@@ -348,14 +348,28 @@
 
 -(void)BrandDetailBuyButtonClick{
     
-//    BOOL alipay = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay://"]];
-//
-//    if (alipay == NO) {
-//
-//        [self YYShowMessage:@"请先安装支付宝"];
-//        return;
-//
-//    }
+    BOOL alipay = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay://"]];
+    
+    NSString * ISLogin = [YYSaveTool GetCacheForKey:YYLogin];
+    
+    if ([ISLogin isEqualToString:@"0"]) {
+        [self YYShowMessage:@"请先登录账号"];
+        return;
+    }
+
+    if (alipay == NO) {
+
+        [self YYShowMessage:@"请先安装支付宝"];
+        return;
+
+    }
+    
+    if (self.UserModel == nil) {
+
+        [self YYShowMessage:@"登录失效，请重新登录"];
+        return;
+
+    }
     
     if ([self.UserModel.plus_level isEqualToString:@"0"]) {
         
@@ -364,8 +378,10 @@
     }else{
       
        NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVProductOrder];
+        
+        NSString * BuyNumString = [NSString stringWithFormat:@"%ld",(long)self.BuyNum];
        
-       NSDictionary * dict = @{@"id":EncodeStringFromDic(self.DetaisDic, @"id"),@"count":@"1",@"type":@"2"};
+       NSDictionary * dict = @{@"id":EncodeStringFromDic(self.DetaisDic, @"id"),@"count":BuyNumString,@"type":@"2"};
                      
        [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
          
@@ -455,7 +471,7 @@
 }
 
 
-#pragma mark ===============网络请求=============
+#pragma mark ===============自定义View=============
 -(YYBuyVipHeadView*)BuyHeadView{
     
     if (!_BuyHeadView) {
@@ -465,11 +481,12 @@
         _BuyHeadView.LeftBtnBlockClick = ^{
             [[LPAnimationView sharedMask] dismiss];
         };
+        YYWeakSelf(self);
         _BuyHeadView.RightBtnBlockClick = ^{
             [[LPAnimationView sharedMask] dismiss];
             MyNoVipCollectionViewController * VipVc = [[MyNoVipCollectionViewController alloc]init];
             VipVc.title = @"会员中心";
-            [self.navigationController pushViewController:VipVc animated:YES];
+            [weakself.navigationController pushViewController:VipVc animated:YES];
         };
     }
     return _BuyHeadView;

@@ -54,14 +54,12 @@
         
          MyOrderTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyOrderTopCollectionViewCell" forIndexPath:indexPath];
         
-        cell.MyOrderBtnBlockClick = ^(NSInteger TagIndex) {
+        YYWeakSelf(self);
         
-            OrderListCollectionViewController * listVc = [[OrderListCollectionViewController alloc]init];
-            listVc.title =@"订单列表";
-            listVc.OrderType = [NSString stringWithFormat:@"%ld",TagIndex];
-            listVc.mode = self.UserType;
-            [self.navigationController pushViewController:listVc animated:YES];
-            
+        cell.MyOrderBtnBlockClick = ^(NSInteger TagIndex) {
+         
+            [weakself OrderControllerPushNext:TagIndex];
+       
         };
            
         return cell;
@@ -70,20 +68,49 @@
         
          MyOrderXiaCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"MyOrderXiaCollectionViewCell" forIndexPath:indexPath];
         
+         YYWeakSelf(self);
+        
         cell.MyOrderBtnBlockClick = ^(NSInteger TagIndex) {
+
             
-            OrderListCollectionViewController * listVc = [[OrderListCollectionViewController alloc]init];
-            listVc.title =@"订单列表";
-            listVc.OrderType = [NSString stringWithFormat:@"%ld",TagIndex];
-            listVc.mode = self.UserType;
-            [self.navigationController pushViewController:listVc animated:YES];
+              [weakself OrderControllerPushNext:TagIndex];
             
-        };
+         };
            
          return cell;
     }
     
 }
+
+
+#pragma mark ===============跳转=============
+
+-(void)OrderControllerPushNext:(NSInteger)PushIndex{
+    
+    OrderListCollectionViewController * listVc = [[OrderListCollectionViewController alloc]init];
+    listVc.title =@"订单列表";
+    if (PushIndex == 0) {
+        listVc.OrderType = @"1";
+    }else if (PushIndex == 1){
+        listVc.OrderType = @"3";
+    }else if (PushIndex == 2){
+        listVc.OrderType = @"2";
+    }else if (PushIndex == 3){
+        listVc.OrderType = @"6";
+    }else if (PushIndex == 4){
+        listVc.OrderType = @"6";
+    }else if (PushIndex == 5){
+        listVc.OrderType = @"5";
+    }else if (PushIndex == 6){
+        listVc.OrderType = @"4";
+    }
+    listVc.mode = self.UserType;
+    [self.navigationController pushViewController:listVc animated:YES];
+    
+ 
+}
+
+
 
 #pragma mark <UICollectionViewDelegate>
 

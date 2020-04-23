@@ -9,12 +9,15 @@
 #import "OrderListCollectionViewController.h"
 #import "OrderDetailsCollectionViewCell.h"
 #import "YYOrderHeadView.h"
+#import "OrderListModel.h"
 
 @interface OrderListCollectionViewController ()
 
 @property(nonatomic,strong)YYOrderHeadView * OederHeadView;
 
 @property(nonatomic,strong)NSString  * status;
+
+@property(nonatomic,strong)NSMutableArray<OrderListModel*> * OrderListArray;
 
 
 @end
@@ -27,7 +30,7 @@
     
     [super viewDidLoad];
     
-    self.collectionView.backgroundColor = YYBGColor;
+    self.OrderListArray = [NSMutableArray array];
     
     self.status = @"0";
     
@@ -35,8 +38,8 @@
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
-    
     [self GetMyCollectNetworkData];
+    
     
 }
 
@@ -44,16 +47,21 @@
 
 -(void)GetMyCollectNetworkData{
     
-    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserOrders];
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserMPVOrders];
          
     NSDictionary * dict = @{@"type":self.OrderType,@"mode":self.mode,@"status":self.status,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
     
+    [self.OrderListArray removeAllObjects];
+    
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
-                
-
-        YYNSLog(@"我的订单数据-------%@",responseObject);
+            
+        NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+            
+        [self.OrderListArray addObjectsFromArray:[NSArray modelArrayWithClass:[OrderListModel class] json:EncodeArrayFromDic(Data, @"data")]];
         
-          
+        [self.collectionView reloadData];
+        
+        
      } failure:^(NSError *error, id responseCache) {
               
       
@@ -75,7 +83,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-      return 12;
+      return self.OrderListArray.count;
     
 }
 
@@ -84,6 +92,7 @@
     
       OrderDetailsCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"OrderDetailsCollectionViewCell" forIndexPath:indexPath];
     
+      cell.Model = self.OrderListArray[indexPath.item];
     
       return cell;
     
@@ -154,12 +163,16 @@
         
         _OederHeadView.TitleArray = [[NSArray alloc]initWithObjects:@"全部",@"待结算",@"已结算",@"已失败",nil ];
         
-       _OederHeadView.backgroundColor = UIColor.whiteColor;
+        _OederHeadView.backgroundColor = UIColor.whiteColor;
+         
+        YYWeakSelf(self);
         
         _OederHeadView.TitleBtnBlockClick = ^(NSInteger TagIndex) {
             
-            [self YYShowAlertViewTitle:@"1"];
+            weakself.status = [NSString stringWithFormat:@"%ld",TagIndex];
             
+            [weakself GetMyCollectNetworkData];
+  
         };
      
      }

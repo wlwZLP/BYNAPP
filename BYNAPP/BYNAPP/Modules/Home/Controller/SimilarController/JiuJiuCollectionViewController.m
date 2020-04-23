@@ -14,6 +14,8 @@
 
 @property(nonatomic,strong)YYPDDHeadView * PDDHeadView;
 
+@property(nonatomic,strong)NSString * HeadSort;
+
 @end
 
 @implementation JiuJiuCollectionViewController
@@ -23,11 +25,25 @@
     
     [super viewDidLoad];
     
+    self.HeadSort = @"";
+    
     self.collectionView.backgroundColor = YYBGColor;
     
     [self.collectionView registerClass:[HomeMainCollectionViewCell class] forCellWithReuseIdentifier:@"HomeMainCollectionViewCell"];
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
+    
+    self.collectionView.mj_header = [LPRefreshGifHeader headerWithRefreshingBlock:^{
+            
+           [self GetSelfViewControllerNetworkData];
+            
+    }];
+    
+    self.collectionView.mj_footer = [LPRefreshFooter footerWithRefreshingBlock:^{
+        
+          [self GetSelfViewControllerNetwMoreData];
+        
+     }];
     
 }
 
@@ -41,21 +57,26 @@
 #pragma mark 网络请求数据
 
 -(void)GetSelfViewControllerNetworkData{
-    
+     
+     self.RefreshCount = 1;
                   
      NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsItems];
          
-     NSDictionary * dict = @{@"mall_id":@"1",@"activity_type":@"4",@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+     NSDictionary * dict = @{@"mall_id":@"1",@"sort":self.HeadSort,@"activity_type":@"4",@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
                         
        [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
                 
            NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
            
-           YYNSLog(@"聚划算----%@",responseObject);
+           self.RefreshCount ++ ;
+           
+           [self.MainListArray removeAllObjects];
            
            [self.MainListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
-                   
-            [self.collectionView reloadData];
+               
+           [self.collectionView.mj_header endRefreshing];
+           
+           [self.collectionView reloadData];
         
           
        } failure:^(NSError *error, id responseCache) {
@@ -69,6 +90,40 @@
 
        }];
 
+    
+}
+
+-(void)GetSelfViewControllerNetwMoreData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsItems];
+        
+    NSDictionary * dict = @{@"mall_id":@"1",@"sort":self.HeadSort,@"activity_type":@"4",@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+    
+      [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+               
+            NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+          
+            self.RefreshCount ++ ;
+          
+            [self GetSelfViewControllerNetworkData];
+          
+            [self.MainListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
+          
+            [self.collectionView.mj_footer endRefreshing];
+                  
+            [self.collectionView reloadData];
+       
+         
+      } failure:^(NSError *error, id responseCache) {
+             
+           NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
+          
+           [self.MainListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
+                  
+           [self.collectionView reloadData];
+          
+
+      }];
     
 }
 #pragma mark <UICollectionViewDataSource>
@@ -171,6 +226,18 @@
     if (_PDDHeadView == nil) {
         
        _PDDHeadView = [[YYPDDHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 45)];
+        
+       YYWeakSelf(self);
+       
+       _PDDHeadView.HeaderTopBlockClick = ^(NSString * _Nonnull SortType) {
+       
+              weakself.HeadSort = SortType;
+           
+              [weakself GetSelfViewControllerNetworkData];
+           
+       };
+        
+        
         
      }
     

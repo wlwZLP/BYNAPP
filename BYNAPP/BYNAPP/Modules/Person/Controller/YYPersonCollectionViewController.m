@@ -72,7 +72,9 @@
         
     }else{
         
-         [YYSaveTool SetCahceForvalue:@"0" forKey:YYLogin];
+          [YYSaveTool SetCahceForvalue:@"0" forKey:YYLogin];
+        
+          [self.collectionView reloadData];
     }
     
     [self.navigationController setNavigationBarHidden:YES animated:nil];

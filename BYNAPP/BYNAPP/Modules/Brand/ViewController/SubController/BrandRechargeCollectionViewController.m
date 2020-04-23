@@ -12,6 +12,8 @@
 #import "BDetailsShuoCollectionViewCell.h"
 #import "DetailsNotesCollectionViewCell.h"
 #import "BrandDetailsModel.h"
+#import "YYBuyVipHeadView.h"
+#import "MyNoVipCollectionViewController.h"
 
 @interface BrandRechargeCollectionViewController ()
 
@@ -26,6 +28,10 @@
 @property (nonatomic, assign)NSInteger TopIndex;
 
 @property (nonatomic, assign)NSInteger bottomIndex;
+
+@property(nonatomic,strong)UserModel * UserModel;
+
+@property(nonatomic,strong)YYBuyVipHeadView * BuyHeadView;
 
 
 @end
@@ -55,6 +61,9 @@
     self.bottomIndex = 0;
     
     self.ContengHeight = 0;
+    
+    self.UserModel = [YYSaveTool YY_GetSaveModelWithkey:YYUser modelClass:UserModel.class];
+    
     
     [self GetHomeGoodsDetailsNetData];
     
@@ -319,11 +328,124 @@
     }
     [BuyButton setTitle:@"立即购买" forState:UIControlStateNormal];
     [BuyButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
-    [BuyButton addTarget:self action:@selector(BottomBuyButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [BuyButton addTarget:self action:@selector(ReChargeBottomBuyButtonClick) forControlEvents:UIControlEventTouchUpInside];
     [BottomView addSubview:BuyButton];
     [YYTools ChangeView:BuyButton RadiusSize:10 BorderColor:[UIColor clearColor]];
     
 }
+
+
+
+#pragma mark ===============立即购买商品=============
+
+-(void)ReChargeBottomBuyButtonClick{
+    
+   
+    
+    NSString * ISLogin = [YYSaveTool GetCacheForKey:YYLogin];
+    
+    if ([ISLogin isEqualToString:@"0"]) {
+        [self YYShowMessage:@"请先登录账号"];
+        return;
+    }
+    
+    BOOL alipay = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay://"]];
+
+    if (alipay == NO) {
+
+        [self YYShowMessage:@"请先安装支付宝"];
+        return;
+
+    }
+    
+    if (self.UserModel == nil) {
+
+        [self YYShowMessage:@"登录失效，请重新登录"];
+        return;
+
+    }
+    
+    if ([self.UserModel.plus_level isEqualToString:@"0"]) {
+        
+         [[LPAnimationView sharedMask] show:self.BuyHeadView withType:QWAlertViewStyleAlert];
+        
+    }else{
+      
+       NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVProductOrder];
+       
+       NSDictionary * dict = @{@"id":EncodeStringFromDic(self.DetaisDic, @"id"),@"count":@"1",@"type":@"2"};
+                     
+       [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
+         
+           if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+               
+               NSDictionary * data = EncodeDicFromDic(responseObject, @"data");
+               
+                NSString * order_no = EncodeStringFromDic(data, @"order_no");
+               
+                [self GetBarndPaySignNetWork:order_no];
+               
+           }else{
+               
+               [self YYShowMessage:EncodeStringFromDic(responseObject, @"msg")];
+               
+           }
+           
+       } failure:^(NSError *error, id responseCache) {
+        
+            [self YYShowMessage:@"网络请求失败"];
+          
+       }];
+        
+    }
+    
+}
+
+#pragma mark ===============得到支付订单参数=============
+
+-(void)GetBarndPaySignNetWork:(NSString*)order_no{
+    
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVProductOrder];
+    
+    NSDictionary * dict = @{@"order_no":order_no};
+                  
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+      
+        if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+            
+              NSDictionary * data = EncodeDicFromDic(responseObject, @"data");
+            
+              if (EncodeStringFromDic(data, @"pay_params") != nil) {
+                  
+                 //应用注册scheme,在AliSDKDemo-Info.plist定义URL types
+                 NSString *appScheme = @"BYNAPP";
+                 // NOTE: 调用支付结果开始支付
+                 [[AlipaySDK defaultService] payOrder:EncodeStringFromDic(data, @"pay_params")  fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+
+                      NSLog(@"reslut = %@",resultDic);
+
+                }];
+
+            }
+            
+        }else{
+            
+           [self YYShowMessage:EncodeStringFromDic(responseObject, @"msg")];
+            
+        }
+        
+
+    } failure:^(NSError *error, id responseCache) {
+     
+         [self YYShowMessage:@"网络请求失败"];
+        
+       
+    }];
+    
+    
+}
+
 
 
 #pragma mark ===============返回到首页============
@@ -362,14 +484,27 @@
     
 }
 
-#pragma mark 立即购买商品
 
--(void)BottomBuyButtonClick{
+#pragma mark ===============自定义View=============
+-(YYBuyVipHeadView*)BuyHeadView{
     
-  
-    
+    if (!_BuyHeadView) {
+        _BuyHeadView = [[YYBuyVipHeadView alloc]init];
+        _BuyHeadView.frame = CGRectMake(0, 0, YYScreenWidth, YYScreenHeight);
+        _BuyHeadView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+        _BuyHeadView.LeftBtnBlockClick = ^{
+            [[LPAnimationView sharedMask] dismiss];
+        };
+        YYWeakSelf(self);
+        _BuyHeadView.RightBtnBlockClick = ^{
+            [[LPAnimationView sharedMask] dismiss];
+            MyNoVipCollectionViewController * VipVc = [[MyNoVipCollectionViewController alloc]init];
+            VipVc.title = @"会员中心";
+            [weakself.navigationController pushViewController:VipVc animated:YES];
+        };
+    }
+    return _BuyHeadView;
 }
-
 
 
 

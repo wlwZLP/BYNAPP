@@ -82,7 +82,6 @@
         TitleLabel.font = [UIFont systemFontOfSize:16 weight:0];
         [CenterView addSubview:TitleLabel];
         
-     
     
     }
     

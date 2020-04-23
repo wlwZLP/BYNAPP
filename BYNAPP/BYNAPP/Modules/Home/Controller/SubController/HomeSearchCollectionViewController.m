@@ -28,7 +28,7 @@
 /** 上一个点击的btn黄色下划线 */
 @property (nonatomic, strong) UIView * titleUnderline;
 /** 搜索记录 */
-@property(nonatomic,strong)NSArray * CacheArray;
+@property(nonatomic,strong)NSMutableArray * SearchCacheArray;
 /** 热门推荐*/
 @property(nonatomic,strong)NSArray * HotWordsArray;
 /** 当前界面展示形式 1为刚进来 2为搜索结果*/
@@ -39,6 +39,8 @@
 @property(nonatomic,strong)NSString  * mall_id;
 /** 搜索头部类型  价格(discount_price_des, discount_price_asc) 销量(month_sales_des, month_sales_asc) 综合(不用传)*/
 @property(nonatomic,strong)NSString  * HeadSort;
+/** 搜索头部类型  是否用券*/
+@property(nonatomic,assign)NSString * has_coupon;
 
 
 @end
@@ -48,29 +50,48 @@
 
 - (void)viewDidLoad {
     
-    [super viewDidLoad];
+     [super viewDidLoad];
     
-    self.SearchTpye = @"1";
+     self.SearchTpye = @"1";
     
-    self.mall_id = @"1";
+     self.mall_id = @"1";
     
-    self.HeadSort = @"";
+     self.HeadSort = @"";
     
-    self.CacheArray  = [[NSArray alloc]initWithObjects:@"淘宝",@"天猫",@"京东",@"拼多多",nil ];
+     self.has_coupon = @"false";
     
-    self.HotWordsArray  = [[NSArray alloc]initWithObjects:@"美的电",@"美的电饭煲2",@"美的电饭煲3",@"美的电饭4",nil ];
+     self.SearchCacheArray = [NSMutableArray array];
     
-    [self CreateHomeBaseViewController];
+     // 创建缓存对象
+     YYCache *cache = [[YYCache alloc]initWithName:MyCache];
+     
+      // 判断对象是否存在
+     if ([cache containsObjectForKey:YYHotWords]) {
+           // 取出缓存
+        self.HotWordsArray = (NSArray*)[cache objectForKey:YYHotWords];
     
-    self.collectionView.frame = CGRectMake(0, YYBarHeight + 40, YYScreenWidth, YYScreenHeight - YYBarHeight - 40);
+     }
     
-    [self.collectionView registerClass:[GoodsCourseCollectionViewCell class] forCellWithReuseIdentifier:@"GoodsCourseCollectionViewCell"];
+    if ([cache containsObjectForKey:YYSearchCache]) {
+           // 取出缓存
+        NSArray * CacehArray = (NSArray*)[cache objectForKey:YYSearchCache];
+        
+        [self.SearchCacheArray addObjectsFromArray:CacehArray];
+
+     }
     
-    [self.collectionView registerClass:[SearchTagCollectionViewCell class] forCellWithReuseIdentifier:@"SearchTagCollectionViewCell"];
+        
+     [self CreateHomeBaseViewController];
     
-    [self.collectionView registerClass:[HomeMainCollectionViewCell class] forCellWithReuseIdentifier:@"HomeMainCollectionViewCell"];
+     self.collectionView.frame = CGRectMake(0, YYBarHeight + 40, YYScreenWidth, YYScreenHeight - YYBarHeight - 40);
     
-    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
+     [self.collectionView registerClass:[GoodsCourseCollectionViewCell class] forCellWithReuseIdentifier:@"GoodsCourseCollectionViewCell"];
+    
+     [self.collectionView registerClass:[SearchTagCollectionViewCell class] forCellWithReuseIdentifier:@"SearchTagCollectionViewCell"];
+    
+     [self.collectionView registerClass:[HomeMainCollectionViewCell class] forCellWithReuseIdentifier:@"HomeMainCollectionViewCell"];
+   
+     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
 
     
 }
@@ -79,9 +100,16 @@
       
     [self.navigationController setNavigationBarHidden:YES animated:nil];
      
-
 }
 
+
+-(void)viewWillDisappear:(BOOL)animated{
+    
+     YYCache * cache = [[YYCache alloc]initWithName:MyCache];
+    
+     [cache setObject:self.SearchCacheArray forKey:YYSearchCache];
+    
+}
 
 #pragma mark ===============网络请求=============
 
@@ -89,18 +117,21 @@
     
     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsSearch];
             
-    NSDictionary * dict = @{@"keyword":self.MainSearchBar.text,@"mall_id":self.mall_id,@"sort":self.HeadSort,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+    NSDictionary * dict = @{@"keyword":self.MainSearchBar.text,@"mall_id":self.mall_id,@"has_coupon":self.has_coupon,@"sort":self.HeadSort,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
                            
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
         
+       
+        [self.SearchCacheArray addObject:self.MainSearchBar.text];
         
         [UIView animateWithDuration:0.25 animations:^{
+            
             // 滚动scrollView
             self.LeftBackBtn.frame = CGRectMake( 12 , YYStatusHeight + 14 , 10 , 17);
             
             self.MainSearchBar.frame = CGRectMake(40, YYStatusHeight + 6, YYScreenWidth - 60, 32);
             
-            self.RightCalBtn.frame = CGRectMake( YYScreenWidth , YYStatusHeight + 6 , 60 , 32);
+            self.RightCalBtn.frame = CGRectMake(YYScreenWidth , YYStatusHeight + 6 , 60 , 32);
           
         } completion:^(BOOL finished) {
            
@@ -109,6 +140,8 @@
         }];
         
         self.SearchTpye = @"2";
+        
+        [self.MainListArray removeAllObjects];
         
         NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
           
@@ -192,9 +225,10 @@
     self.titleUnderline = titleUnderline;
     self.titleUnderline.ZLP_width = 30;
     self.titleUnderline.ZLP_centerX = firstTitleButton.ZLP_centerX;
-
+    
+    
+    
 }
-
 
 
 
@@ -298,9 +332,20 @@
         self.titleUnderline.ZLP_centerX = titleButton.ZLP_centerX;
       
     } completion:^(BOOL finished) {
-       
-       
         
+        if (titleButton.tag == 0) {
+            self.mall_id = @"1";
+        }else if (titleButton.tag == 1){
+            self.mall_id = @"2";
+        }else if (titleButton.tag == 2){
+            self.mall_id = @"4";
+        }else{
+            self.mall_id = @"3";
+        }
+        if ([self.SearchTpye isEqualToString:@"1"]) {
+            return ;
+        }
+        [self GetSearchViewControllerNetWorkData];
         
     }];
   
@@ -328,7 +373,7 @@
          if (section == 0) {
             return 1;
          }else if (section == 1){
-            return self.CacheArray.count;
+            return self.SearchCacheArray.count;
          }else{
             return self.HotWordsArray.count;
          }
@@ -360,11 +405,11 @@
             
            SearchTagCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SearchTagCollectionViewCell" forIndexPath:indexPath];
             
-           cell.TextLabel.text = self.CacheArray[indexPath.item];
+          [cell.TextBtn setTitle:self.SearchCacheArray[indexPath.item] forState:UIControlStateNormal];
             
            cell.labelClickBlockClick = ^{
                 
-               self.MainSearchBar.text = @"水果";
+               self.MainSearchBar.text = self.SearchCacheArray[indexPath.item];
                [self GetSearchViewControllerNetWorkData];
                 
            };
@@ -375,10 +420,11 @@
             
           SearchTagCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SearchTagCollectionViewCell" forIndexPath:indexPath];
             
-          cell.TextLabel.text = self.HotWordsArray[indexPath.item];
+          [cell.TextBtn setTitle:self.HotWordsArray[indexPath.item] forState:UIControlStateNormal];
             
           cell.labelClickBlockClick = ^{
-               
+               self.MainSearchBar.text = self.HotWordsArray[indexPath.item];
+               [self GetSearchViewControllerNetWorkData];
                
           };
             
@@ -393,6 +439,7 @@
         cell.Model = self.MainListArray[indexPath.item];
         
         return cell;
+        
     }
     
  
@@ -424,7 +471,7 @@
         if (indexPath.section == 0) {
             return CGSizeMake(YYScreenWidth , YYScreenWidth * 0.17 + 20);
         }else if (indexPath.section == 1){
-            return CGSizeMake([self GetStringText:self.CacheArray[indexPath.item]] + 20 , 30);
+            return CGSizeMake([self GetStringText:self.SearchCacheArray[indexPath.item]] + 20 , 30);
         }else{
             return CGSizeMake([self GetStringText:self.HotWordsArray[indexPath.item]] + 20 , 30);
         }
@@ -443,6 +490,12 @@
     if ([self.SearchTpye isEqualToString:@"1"]) {
         if (section == 0) {
            return (CGSize){YYScreenWidth,0};
+        }else if (section == 1){
+            if (self.SearchCacheArray.count == 0) {
+                 return (CGSize){YYScreenWidth,0};
+            }else{
+                 return (CGSize){YYScreenWidth,60};
+            }
         }else{
            return (CGSize){YYScreenWidth,60};
         }
@@ -523,8 +576,13 @@
 
 -(void)SearchDelButtonClick{
     
+    YYCache * cache = [[YYCache alloc]initWithName:MyCache];
     
+    [cache removeObjectForKey:YYSearchCache];
     
+    [self.SearchCacheArray removeAllObjects];
+    
+    [self.collectionView reloadData];
     
 }
 
@@ -538,7 +596,25 @@
     
     if (_SearchHeadView == nil) {
         
-       _SearchHeadView = [[YYSearchHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 45)];
+        _SearchHeadView = [[YYSearchHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 45)];
+        
+        YYWeakSelf(self);
+        
+        _SearchHeadView.HeaderTopBlockClick = ^(NSString * _Nonnull SortType) {
+            
+             weakself.HeadSort = SortType;
+            
+             [weakself GetSearchViewControllerNetWorkData];
+            
+        };
+        
+        _SearchHeadView.HeaderCouponBlockClick = ^(NSString * _Nonnull CouponType) {
+            
+             weakself.has_coupon = CouponType;
+            
+             [weakself GetSearchViewControllerNetWorkData];
+            
+        };
         
      }
     
@@ -585,7 +661,7 @@
                                      options:NSStringDrawingUsesLineFragmentOrigin
                                   attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
                                      context:nil];
-    return rect.size.width;
+    return rect.size.width + 5;
     
     
 }

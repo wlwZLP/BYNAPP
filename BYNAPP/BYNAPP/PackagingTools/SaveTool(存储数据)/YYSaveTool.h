@@ -30,5 +30,13 @@
 ///获取保存的模型数组
 + (id) YY_GetSaveModelArrayWithkey:(NSString *)key modelClass:(Class)modelClass;
 
+//创建一个Plist文件路径名字
++(NSString *)YYCreatPath:(NSString *)pathName;
+
+//通过路径名字获取文件
++(NSMutableDictionary *)YYGetDataByPathName:(NSString *)pathName;
+
+
+
 
 @end

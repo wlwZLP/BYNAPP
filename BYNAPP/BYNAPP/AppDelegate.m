@@ -43,8 +43,12 @@
      NSString * app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
      
      if ([YYSaveTool GetCacheForKey:YYAgreeXieyi] == nil) {
-        [YYSaveTool SetCahceForvalue:@"0" forKey:YYAgreeXieyi];
+         [YYSaveTool SetCahceForvalue:@"0" forKey:YYAgreeXieyi];
      }
+    
+    if ([YYSaveTool GetCacheForKey:YYLogin] == nil) {
+        [YYSaveTool SetCahceForvalue:@"0" forKey:YYLogin];
+    }
     
      [YYSaveTool SetCahceForvalue:app_Version forKey:CacheAPPVersion];
     

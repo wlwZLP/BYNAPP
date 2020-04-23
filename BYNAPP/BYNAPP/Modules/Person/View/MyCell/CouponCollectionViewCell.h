@@ -7,10 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PersonCouponModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CouponCollectionViewCell : UICollectionViewCell
+
+@property(nonatomic,strong)PersonCouponModel * Model;
+
+@property (nonatomic,copy) void(^CouponListBtnBlockClick)(NSString * Title);
+
 
 @end
 

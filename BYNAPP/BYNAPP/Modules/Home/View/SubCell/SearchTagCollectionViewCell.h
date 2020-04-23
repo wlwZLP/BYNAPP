@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SearchTagCollectionViewCell : UICollectionViewCell
 
-@property(nonatomic,strong)UILabel * TextLabel;
+@property(nonatomic,strong)UIButton * TextBtn;
 
 @property (nonatomic,copy) void(^labelClickBlockClick)(void);
 

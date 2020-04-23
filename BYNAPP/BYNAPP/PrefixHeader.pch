@@ -31,7 +31,9 @@
 #import <UIScrollView+EmptyDataSet.h>
 #import <AlipaySDK/AlipaySDK.h>
 #import <UShareUI/UShareUI.h>
-
+#import <AlibcTradeSDK/AlibcTradeSDK.h>
+#import <AlibabaAuthSDK/ALBBSDK.h>
+#import <AlibcTradeBiz/AlibcTradeBiz.h>
 
 
 

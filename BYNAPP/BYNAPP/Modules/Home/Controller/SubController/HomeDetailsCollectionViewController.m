@@ -17,6 +17,8 @@
 #import "HomeSearchCollectionViewController.h"
 #import "MyNewCollectionViewController.h"
 #import "YYShareView.h"
+#import "YYTBAuthView.h"
+#import "YYTbAuthWebViewController.h"
 
 @interface HomeDetailsCollectionViewController ()<WKUIDelegate, WKNavigationDelegate,UISearchBarDelegate>
 
@@ -44,6 +46,11 @@
 
 @property(nonatomic,strong)YYShareView * ShareView;
 
+@property(nonatomic,strong)YYTBAuthView * TBAuthView;
+
+//打开淘宝券的url
+@property(nonatomic,strong)NSString * coupon_click_url;
+
 
 @end
 
@@ -60,7 +67,7 @@
     self.ISHideGoodsDetails = NO;
     
     self.webViewHeight = 1;
-    
+ 
     self.view.backgroundColor = UIColor.redColor;
     
     self.collectionView.frame = CGRectMake(0, -YYBarHeight , YYScreenWidth, YYScreenHeight + YYBarHeight - 55);
@@ -100,8 +107,9 @@
     [barImageView addSubview:self.GoodsSearchBar];
    
     [self getHomeGoodsDetailsNetData];
-        
+    
 }
+
 
 -(void)viewWillDisappear:(BOOL)animated{
     
@@ -212,6 +220,8 @@
 }
 
 
+
+
 #pragma mark ===============回到首页============
 -(void)HomeImgClick{
     
@@ -256,7 +266,42 @@
 #pragma mark ===============购买点击事件=============
 -(void)BottomBuyButtonClick{
     
+    NSString * IsNeed_oauth = EncodeStringFromDic(self.DetailsDic, @"need_oauth");
     
+    if ([IsNeed_oauth isEqualToString:@"1"]) {
+    
+         [[LPAnimationView sharedMask]show:self.TBAuthView withType:QWAlertViewStyleAlert];
+        
+    }else{
+        
+        //打开商品详情页
+        id page;
+        if (self.coupon_click_url.length == 0) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            page = [AlibcTradePageFactory page:self.coupon_click_url];
+        }
+        
+        AlibcTradeShowParams * showParam = [[AlibcTradeShowParams alloc] init];
+        showParam.openType = AlibcOpenTypeAuto;
+        showParam.backUrl =[NSString stringWithFormat:@"tbopen%@://",@"2252455"];
+        showParam.isNeedPush = YES;
+        showParam.linkKey = @"taobao_scheme";//拉起天猫
+
+        //淘客信息
+        AlibcTradeTaokeParams *taoKeParams=[[AlibcTradeTaokeParams alloc] init];
+        taoKeParams.pid=nil;
+        
+        [[AlibcTradeSDK sharedInstance].tradeService openByUrl:self.coupon_click_url identity:@"trade" webView:nil parentController:self.navigationController showParams:showParam taoKeParams:taoKeParams trackParam:nil tradeProcessSuccessCallback:^(AlibcTradeResult * _Nullable result) {
+            
+            
+        } tradeProcessFailedCallback:^(NSError * _Nullable error) {
+            
+            
+            
+        }];
+    
+    }
     
 }
 
@@ -300,14 +345,27 @@
      }
      
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
-      
-         self.DetailsDic = EncodeDicFromDic(responseObject, @"data");
         
-          dispatch_group_leave(group);
+         if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+            
+             self.DetailsDic = EncodeDicFromDic(responseObject, @"data");
+               
+             self.coupon_click_url = EncodeStringFromDic(self.DetailsDic, @"coupon_click_url");
+             
+         }else{
+             
+             [self YYShowMessage:EncodeStringFromDic(responseObject, @"msg")];
+             
+             [self.navigationController popViewControllerAnimated:YES];
+             
+         }
+      
+    
+         dispatch_group_leave(group);
         
     } failure:^(NSError *error, id responseCache) {
         
-         self.DetailsDic = EncodeDicFromDic(responseCache, @"data");
+          self.DetailsDic = EncodeDicFromDic(responseCache, @"data");
         
           dispatch_group_leave(group);
         
@@ -427,9 +485,11 @@
         
         cell.TimeLabel.text = [NSString stringWithFormat:@"%@-%@",EncodeStringFromDic(self.DetailsDic, @"coupon_starttime"),EncodeStringFromDic(self.DetailsDic, @"coupon_endtime")];
         
+        YYWeakSelf(self);
+        
         cell.DrawLabelBlockClick = ^{
             
-            [self YYShowAlertViewTitle:@"立即领取"];
+            [weakself BottomBuyButtonClick];
             
         };
 
@@ -760,7 +820,29 @@
 
 
 
+#pragma mark ===============淘宝授权============
  
+-(YYTBAuthView*)TBAuthView{
+    
+    if (!_TBAuthView) {
+        
+        _TBAuthView = [[YYTBAuthView alloc]init];;
+       
+        _TBAuthView.frame = CGRectMake(0, 0, YYScreenWidth, YYScreenHeight);
+//        YYWeakSelf(self);
+        
+        _TBAuthView.AuthButtonBlockClick = ^{
+            
+            
+            
+        };
+       
+        
+    }
+    
+    return _TBAuthView;
+    
+}
 
  
 @end

@@ -61,14 +61,14 @@
        // 创建3个标题按钮
     for (NSUInteger i = 0; i < TitleArray.count; i++) {
         
-       CGFloat X =  i * 48 + (YYScreenWidth - 262 )/6 * (i + 1);
+         CGFloat X =  i * 48 + (YYScreenWidth - 262 )/6 * (i + 1);
          
-        UIButton *titleButton = [[UIButton alloc]init];
-        titleButton.frame = CGRectMake(X + 11 , 45 , 25 , 25);
-        titleButton.tag = i;
-        [titleButton addTarget:self action:@selector(titleButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [MainBGView addSubview:titleButton];
-        [titleButton setBackgroundImage:[UIImage imageNamed:ImgArray[i]] forState:UIControlStateNormal];
+         UIButton *titleButton = [[UIButton alloc]init];
+         titleButton.frame = CGRectMake(X + 11 , 45 , 25 , 25);
+         [titleButton addTarget:self action:@selector(titleButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+         titleButton.tag = i;
+         [MainBGView addSubview:titleButton];
+         [titleButton setBackgroundImage:[UIImage imageNamed:ImgArray[i]] forState:UIControlStateNormal];
          
          UILabel * SubLabel = [[UILabel alloc]init];
          SubLabel.text = TitleArray[i];
@@ -79,7 +79,7 @@
          SubLabel.font = [UIFont systemFontOfSize:12 weight:0];
          [MainBGView addSubview:SubLabel];
      
-      }
+    }
     
 
 }
@@ -88,7 +88,7 @@
 -(void)titleButtonClick:(UIButton*)Sender{
     
     
-    self.MyOrderBtnBlockClick(Sender.tag);
+     self.MyOrderBtnBlockClick(Sender.tag);
     
     
 }

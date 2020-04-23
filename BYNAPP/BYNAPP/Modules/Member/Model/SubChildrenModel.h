@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy) NSString * logo;
 
+
 @end
 
 NS_ASSUME_NONNULL_END

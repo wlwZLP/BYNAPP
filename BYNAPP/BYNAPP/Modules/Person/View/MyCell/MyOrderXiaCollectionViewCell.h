@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MyOrderXiaCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic,copy) void(^MyOrderBtnBlockClick)(NSInteger TagIndex);
+@property(nonatomic,copy)void(^MyOrderBtnBlockClick)(NSInteger TagIndex);
 
 @end
 

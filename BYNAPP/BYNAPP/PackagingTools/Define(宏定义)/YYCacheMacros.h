@@ -24,8 +24,13 @@
 //0 表示未登录, 1表示已经登录
 #define YYLogin @"ISLogin"
 
-
 //0 表示未勾选过登录服务协议
 #define YYAgreeXieyi @"AgreeXieyi"
+
+#define MyCache @"myCache"
+
+#define YYHotWords @"HotWords"
+
+#define YYSearchCache @"SearchCache"
 
 #endif /* ThirdMacros_h */

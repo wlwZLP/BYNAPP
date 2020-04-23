@@ -120,6 +120,8 @@
     
     [YYSaveTool RemoveCacheForKey:YYToken];
     
+    [YYSaveTool SetCahceForvalue:@"0" forKey:YYLogin];
+    
     [self.navigationController popToRootViewControllerAnimated:YES];
     
 }

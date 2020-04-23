@@ -12,17 +12,22 @@
 
 @property(nonatomic,strong)UIButton * VHDLBtn;
 
+@property(nonatomic,assign)NSInteger SaleClickNum;
+
 @property(nonatomic,strong)UIButton * SaleLeftBtn;
 
 @property(nonatomic,strong)UIButton * SaleTopBtn;
 
 @property(nonatomic,strong)UIButton * SaleBotBtn;
 
+@property(nonatomic,assign)NSInteger PriceClickNum;
+
 @property(nonatomic,strong)UIButton * PriceLeftBtn;
 
 @property(nonatomic,strong)UIButton * PriceTopBtn;
 
 @property(nonatomic,strong)UIButton * PriceBotBtn;
+
 
 @end
 
@@ -56,7 +61,8 @@
     VHDLBtn.frame = CGRectMake((YYScreenWidth / 4 - 30)/2 , 10, 30, 20);
     VHDLBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [VHDLBtn setTitleColor:YY66Color forState:UIControlStateNormal];
-    [VHDLBtn setTitleColor:YY66Color forState:UIControlStateSelected];
+    [VHDLBtn setTitleColor:YYHexColor(@"#FFD409") forState:UIControlStateSelected];
+    VHDLBtn.selected = YES;
     [VHDLView addSubview:VHDLBtn];
     self.VHDLBtn = VHDLBtn;
     
@@ -82,7 +88,7 @@
     SaleLeftBtn.frame =  CGRectMake((YYScreenWidth / 4 - 45)/2, 10, 30 , 20);
     SaleLeftBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [SaleLeftBtn setTitleColor:YY66Color forState:UIControlStateNormal];
-    [SaleLeftBtn setTitleColor:YY66Color forState:UIControlStateSelected];
+    [SaleLeftBtn setTitleColor:YYHexColor(@"#FFD409") forState:UIControlStateSelected];
     [SaleView addSubview:SaleLeftBtn];
     self.SaleLeftBtn = SaleLeftBtn;
     
@@ -131,7 +137,7 @@
     PriceLeftBtn.frame =  CGRectMake((YYScreenWidth / 4 - 45)/2, 10, 30 , 20);
     PriceLeftBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [PriceLeftBtn setTitleColor:YY66Color forState:UIControlStateNormal];
-    [PriceLeftBtn setTitleColor:YY66Color forState:UIControlStateSelected];
+    [PriceLeftBtn setTitleColor:YYHexColor(@"#FFD409") forState:UIControlStateSelected];
     [PriceView addSubview:PriceLeftBtn];
     self.PriceLeftBtn = PriceLeftBtn;
     
@@ -152,7 +158,7 @@
     PriceBotBtn.backgroundColor = [UIColor clearColor];
     PriceBotBtn.selected = NO;
     [PriceView addSubview:PriceBotBtn];
-    self.PriceBotBtn = SaleBotBtn;
+    self.PriceBotBtn = PriceBotBtn;
     
     
     UIButton * PriceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -172,7 +178,8 @@
     UIButton * CouponBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     CouponBtn.frame = CGRectMake(CouponView.ZLP_width - 73, 14 , 13 , 13);
     [CouponBtn setBackgroundImage:[UIImage imageNamed:@"Juxing"] forState:UIControlStateNormal];
-    [CouponBtn setBackgroundImage:[UIImage imageNamed:@"Juxing"] forState:UIControlStateSelected];
+    [CouponBtn setBackgroundImage:[UIImage imageNamed:@"xuanzhong"] forState:UIControlStateSelected];
+    [CouponBtn addTarget:self action:@selector(RightChoseButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     CouponBtn.backgroundColor = [UIColor clearColor];
     CouponBtn.selected = NO;
     [CouponView addSubview:CouponBtn];
@@ -191,16 +198,35 @@
 
 -(void)VHDLButtonClick:(UIButton*)sender{
     
-   
+    self.VHDLBtn.selected = YES;
+    self.PriceLeftBtn.selected = NO;
+    self.PriceBotBtn.selected = NO;
+    self.PriceTopBtn.selected = NO;
+    self.SaleLeftBtn.selected = NO;
+    self.SaleTopBtn.selected = NO;
+    self.SaleBotBtn.selected = NO;
+    self.HeaderTopBlockClick(@"");
     
 }
 
 
 -(void)SaleButtonClick:(UIButton*)sender{
     
-    sender.selected = ! sender.selected;
-    
-   
+    self.VHDLBtn.selected = NO;
+    self.PriceLeftBtn.selected = NO;
+    self.SaleLeftBtn.selected = YES;
+    self.PriceBotBtn.selected = NO;
+    self.PriceTopBtn.selected = NO;
+    self.SaleClickNum ++ ;
+    if ( self.SaleClickNum % 2 == 0) {
+        self.SaleTopBtn.selected = YES;
+        self.SaleBotBtn.selected = NO;
+        self.HeaderTopBlockClick(@"month_sales_des");
+    }else{
+        self.SaleTopBtn.selected = NO;
+        self.SaleBotBtn.selected = YES;
+        self.HeaderTopBlockClick(@"month_sales_asc");
+    }
     
     
 }
@@ -208,49 +234,43 @@
 
 -(void)PriceButtonClick:(UIButton*)sender{
     
-    sender.selected = ! sender.selected;
+    self.VHDLBtn.selected = NO;
     
-   
+    self.SaleLeftBtn.selected = NO;
+    self.SaleTopBtn.selected = NO;
+    self.SaleBotBtn.selected = NO;
+    
+    self.PriceLeftBtn.selected = YES;
+    self.PriceClickNum ++ ;
+    if ( self.PriceClickNum % 2 == 0) {
+        self.PriceTopBtn.selected = YES;
+        self.PriceBotBtn.selected = NO;
+        self.HeaderTopBlockClick(@"discount_price_des");
+    }else{
+        self.PriceTopBtn.selected = NO;
+        self.PriceBotBtn.selected = YES;
+        self.HeaderTopBlockClick(@"discount_price_asc");
+     }
+    
 }
 
 
 
--(void)setHeaderType:(NSString *)HeaderType{
-    
 
-    if ([HeaderType isEqualToString:@"default"]){
-        
+-(void)RightChoseButtonClick:(UIButton*)Sender{
     
-       
-    }else if ([HeaderType isEqualToString:@"price_des"]){
-        
-       
-       
-        
-    }else if ([HeaderType isEqualToString:@"price_asc"]){
-        
-       
-        
-    }else if ([HeaderType isEqualToString:@"total_sales_des"]){
-        
-      
-        
-    }else if ([HeaderType isEqualToString:@"total_sales_asc"]){
-        
-       
+     Sender.selected = !Sender.selected;
+    if (Sender.selected == NO) {
+        self.HeaderCouponBlockClick(@"false");
+    }else{
+        self.HeaderCouponBlockClick(@"true");
     }
     
-    
-}
+   
 
-
-
--(void)ShaixuanButtonClick{
-    
     
     
 }
-
 
 
 

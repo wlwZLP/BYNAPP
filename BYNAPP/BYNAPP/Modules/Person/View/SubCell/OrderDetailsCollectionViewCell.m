@@ -10,6 +10,20 @@
 
 @interface OrderDetailsCollectionViewCell ()
 
+@property (nonatomic, strong) UILabel * OrderNoLabel;
+
+@property (nonatomic, strong) UIImageView * MainImage;
+
+@property (nonatomic, strong) UILabel * TitleLabel;
+
+@property (nonatomic, strong) UILabel * ByTimeLabel;
+
+@property (nonatomic, strong) UILabel * GetGoodsLabel;
+
+@property (nonatomic, strong) UILabel * PriceLabel;
+
+@property (nonatomic, strong) UILabel * EarnLabel;
+
 @end
 
 
@@ -51,6 +65,7 @@
         make.left.equalTo(MainBGView.mas_left).with.offset(12);
         make.height.offset(17);
     }];
+    self.OrderNoLabel = OrderLabel;
     
     UIButton * CopyBtn = [[UIButton alloc]init];
     [CopyBtn setTitle:@"复制" forState:UIControlStateNormal];
@@ -62,6 +77,8 @@
         make.height.offset(17);
         make.width.offset(24);
     }];
+    
+    
     
     UILabel * RightLabel = [[UILabel alloc]init];
     RightLabel.text = @"已结算";
@@ -75,6 +92,7 @@
         make.height.offset(17);
         make.width.offset(46);
     }];
+    
     
     UIView * LineView = UIView.new;
     LineView.backgroundColor = YYE5Color;
@@ -97,6 +115,7 @@
         make.width.offset(87.5);
         make.height.offset(87.5);
     }];
+    self.MainImage = Mainimage;
    
     
     UILabel * TitleLabel = [[UILabel alloc]init];
@@ -107,6 +126,7 @@
     TitleLabel.frame = CGRectMake(110, 51, self.ZLP_width - 180, 15);
     TitleLabel.font = [UIFont systemFontOfSize:12 weight:2];
     [MainBGView addSubview:TitleLabel];
+    self.TitleLabel = TitleLabel;
     
     UILabel * PriceLabel = [[UILabel alloc]init];
     PriceLabel.text = @"¥128.00";
@@ -121,6 +141,7 @@
         make.height.offset(13);
         make.width.offset(60);
     }];
+    self.PriceLabel = PriceLabel;
 
     UILabel * BuyTimeLabel = [[UILabel alloc]init];
     BuyTimeLabel.text = @"下单时间：2019-12-12 13:34:18";
@@ -129,7 +150,8 @@
     BuyTimeLabel.textAlignment = NSTextAlignmentLeft;
     BuyTimeLabel.font = [UIFont systemFontOfSize:12 weight:0];
     [MainBGView addSubview:BuyTimeLabel];
-
+    self.ByTimeLabel = BuyTimeLabel;
+    
     UILabel * GetTimeLabel = [[UILabel alloc]init];
     GetTimeLabel.text = @"收货时间：2019-12-12 13:34:18";
     GetTimeLabel.textColor = YY66Color;
@@ -137,6 +159,7 @@
     GetTimeLabel.textAlignment = NSTextAlignmentLeft;
     GetTimeLabel.font = [UIFont systemFontOfSize:12 weight:0];
     [MainBGView addSubview:GetTimeLabel];
+    self.GetGoodsLabel = GetTimeLabel;
 
     UILabel * GetMoneyLabel = [[UILabel alloc]init];
     GetMoneyLabel.text = @"奖励¥48.00";
@@ -148,10 +171,34 @@
     GetMoneyLabel.font = [UIFont systemFontOfSize:11 weight:0];
     [MainBGView addSubview:GetMoneyLabel];
     [YYTools ChangeView:GetMoneyLabel RadiusSize:5 BorderColor:[UIColor clearColor]];
+    self.EarnLabel = GetMoneyLabel;
     
 
 }
 
+
+
+-(void)setModel:(OrderListModel *)Model{
+    
+    
+    _Model = Model;
+    
+    [self.MainImage sd_setImageWithURL:[NSURL URLWithString:Model.item_image] placeholderImage:[UIImage imageNamed:@"bmht"]];
+    
+    self.OrderNoLabel.text = [NSString stringWithFormat:@"订单编号:%@",Model.order_no];
+   
+    self.TitleLabel.text = [NSString stringWithFormat:@"%@",Model.item_title];
+   
+    self.ByTimeLabel.text =[NSString stringWithFormat:@"下单%@",Model.create_time];
+   
+    self.GetGoodsLabel.text = [NSString stringWithFormat:@"收货时间:%@ ",Model.earning_time];
+   
+    self.EarnLabel.text = [NSString stringWithFormat:@"奖励￥%@ ",Model.pre_amount];
+   
+    self.PriceLabel.text = [NSString stringWithFormat:@"￥%@",Model.pay_amount];
+    
+    
+}
 
 
 

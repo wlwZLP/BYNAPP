@@ -12,6 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YYSearchHeadView : UIView
 
+@property (nonatomic,copy) void(^HeaderTopBlockClick)(NSString * SortType);
+
+@property (nonatomic,copy) void(^HeaderCouponBlockClick)(NSString * CouponType);
+
+
 @end
 
 NS_ASSUME_NONNULL_END

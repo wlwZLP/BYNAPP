@@ -25,6 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 */
 -(void)YYShowAlertViewTitle:(NSString *)title;
 
+
+-(void)YYShowAlertTitleClick;
+
 /**
  *  根据内容提示
  */

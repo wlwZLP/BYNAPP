@@ -105,6 +105,11 @@
 		1880F39B243C8D32003EECB9 /* BrandRecomdCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F39A243C8D32003EECB9 /* BrandRecomdCollectionViewCell.m */; };
 		1880F39E243C8D43003EECB9 /* BrandGridCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F39D243C8D43003EECB9 /* BrandGridCollectionViewCell.m */; };
 		1880F3A2243C8E41003EECB9 /* BrandRechargeCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F3A1243C8E41003EECB9 /* BrandRechargeCollectionViewController.m */; };
+		1881B0ED24512BB500E29288 /* YYTBAuthView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881B0EC24512BB500E29288 /* YYTBAuthView.m */; };
+		1881B0F02451325B00E29288 /* YYTbAuthWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881B0EF2451325B00E29288 /* YYTbAuthWebViewController.m */; };
+		1881B0F324517E9700E29288 /* PersonCouponModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881B0F224517E9700E29288 /* PersonCouponModel.m */; };
+		1881B0F624519BE700E29288 /* CouponsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881B0F524519BE700E29288 /* CouponsModel.m */; };
+		1881B0F92451B5E800E29288 /* OrderListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1881B0F82451B5E800E29288 /* OrderListModel.m */; };
 		1889D4CA244445CE00DEBE90 /* YYWithdrawHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1889D4C9244445CE00DEBE90 /* YYWithdrawHeadView.m */; };
 		188F5E50244699E00020B245 /* BrandListCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F5E4F244699DF0020B245 /* BrandListCollectionViewController.m */; };
 		188F5E532446B2CA0020B245 /* TBHotCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188F5E522446B2CA0020B245 /* TBHotCollectionViewController.m */; };
@@ -397,6 +402,16 @@
 		1880F39D243C8D43003EECB9 /* BrandGridCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrandGridCollectionViewCell.m; sourceTree = "<group>"; };
 		1880F3A0243C8E41003EECB9 /* BrandRechargeCollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrandRechargeCollectionViewController.h; sourceTree = "<group>"; };
 		1880F3A1243C8E41003EECB9 /* BrandRechargeCollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrandRechargeCollectionViewController.m; sourceTree = "<group>"; };
+		1881B0EB24512BB500E29288 /* YYTBAuthView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYTBAuthView.h; sourceTree = "<group>"; };
+		1881B0EC24512BB500E29288 /* YYTBAuthView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYTBAuthView.m; sourceTree = "<group>"; };
+		1881B0EE2451325B00E29288 /* YYTbAuthWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYTbAuthWebViewController.h; sourceTree = "<group>"; };
+		1881B0EF2451325B00E29288 /* YYTbAuthWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYTbAuthWebViewController.m; sourceTree = "<group>"; };
+		1881B0F124517E9700E29288 /* PersonCouponModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonCouponModel.h; sourceTree = "<group>"; };
+		1881B0F224517E9700E29288 /* PersonCouponModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonCouponModel.m; sourceTree = "<group>"; };
+		1881B0F424519BE700E29288 /* CouponsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CouponsModel.h; sourceTree = "<group>"; };
+		1881B0F524519BE700E29288 /* CouponsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CouponsModel.m; sourceTree = "<group>"; };
+		1881B0F72451B5E800E29288 /* OrderListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderListModel.h; sourceTree = "<group>"; };
+		1881B0F82451B5E800E29288 /* OrderListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderListModel.m; sourceTree = "<group>"; };
 		1889D4C8244445CE00DEBE90 /* YYWithdrawHeadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYWithdrawHeadView.h; sourceTree = "<group>"; };
 		1889D4C9244445CE00DEBE90 /* YYWithdrawHeadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYWithdrawHeadView.m; sourceTree = "<group>"; };
 		188F5E4F244699DF0020B245 /* BrandListCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BrandListCollectionViewController.m; sourceTree = "<group>"; };
@@ -1241,10 +1256,10 @@
 				186F3B4024456EE6002737DA /* PDDCollectionViewController.m */,
 				188F5E5A2446B61C0020B245 /* JingDCollectionViewController.h */,
 				188F5E5B2446B61C0020B245 /* JingDCollectionViewController.m */,
-				188F5E5D2446B6430020B245 /* AblumCollectionViewController.h */,
-				188F5E5E2446B6430020B245 /* AblumCollectionViewController.m */,
 				188F5E602446B66F0020B245 /* TBMatterCollectionViewController.h */,
 				188F5E612446B66F0020B245 /* TBMatterCollectionViewController.m */,
+				188F5E5D2446B6430020B245 /* AblumCollectionViewController.h */,
+				188F5E5E2446B6430020B245 /* AblumCollectionViewController.m */,
 			);
 			path = SimilarController;
 			sourceTree = "<group>";
@@ -1258,6 +1273,8 @@
 				18A74A57244D47BF004EEF8B /* YYSearchHeadView.m */,
 				185B9ACA24504F6800CD7255 /* YYShareView.h */,
 				185B9ACB24504F6800CD7255 /* YYShareView.m */,
+				1881B0EB24512BB500E29288 /* YYTBAuthView.h */,
+				1881B0EC24512BB500E29288 /* YYTBAuthView.m */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -1381,6 +1398,8 @@
 				DC9794212442D10900322F00 /* MessageCollectionViewController.m */,
 				DC9794232442D11B00322F00 /* HomeSearchCollectionViewController.h */,
 				DC9794242442D11B00322F00 /* HomeSearchCollectionViewController.m */,
+				1881B0EE2451325B00E29288 /* YYTbAuthWebViewController.h */,
+				1881B0EF2451325B00E29288 /* YYTbAuthWebViewController.m */,
 			);
 			path = SubController;
 			sourceTree = "<group>";
@@ -1479,10 +1498,10 @@
 				18DC3915243F28D50030DE97 /* MyWithdrawCollectionViewController.m */,
 				18DC3917243F29040030DE97 /* MyOrderCollectionViewController.h */,
 				18DC3918243F29040030DE97 /* MyOrderCollectionViewController.m */,
-				18DC391A243F291B0030DE97 /* MyTeamCollectionViewController.h */,
-				18DC391B243F291B0030DE97 /* MyTeamCollectionViewController.m */,
 				18DC391D243F29370030DE97 /* MyCouponCollectionViewController.h */,
 				18DC391E243F29370030DE97 /* MyCouponCollectionViewController.m */,
+				18DC391A243F291B0030DE97 /* MyTeamCollectionViewController.h */,
+				18DC391B243F291B0030DE97 /* MyTeamCollectionViewController.m */,
 				18DC3923243F29880030DE97 /* MYCollectCollectionViewController.h */,
 				18DC3924243F29880030DE97 /* MYCollectCollectionViewController.m */,
 				18DC3926243F29B60030DE97 /* MyTraceCollectionViewController.h */,
@@ -1589,6 +1608,12 @@
 				DC21BD14244B268400E4A330 /* MyTeamModel.m */,
 				DC21BD16244B3E8C00E4A330 /* ReportModel.h */,
 				DC21BD17244B3E8C00E4A330 /* ReportModel.m */,
+				1881B0F72451B5E800E29288 /* OrderListModel.h */,
+				1881B0F82451B5E800E29288 /* OrderListModel.m */,
+				1881B0F124517E9700E29288 /* PersonCouponModel.h */,
+				1881B0F224517E9700E29288 /* PersonCouponModel.m */,
+				1881B0F424519BE700E29288 /* CouponsModel.h */,
+				1881B0F524519BE700E29288 /* CouponsModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1831,6 +1856,7 @@
 				18DC391F243F29370030DE97 /* MyCouponCollectionViewController.m in Sources */,
 				187D0671244065CB005DAA0C /* WithdrawCollectionViewCell.m in Sources */,
 				1869CA60243DAF8400F3C79E /* GoodsTopCollectionViewCell.m in Sources */,
+				1881B0F92451B5E800E29288 /* OrderListModel.m in Sources */,
 				187F555B24401F3B005205E1 /* CollectCollectionViewCell.m in Sources */,
 				1869CA53243D5FB000F3C79E /* BrandTopCollectionViewCell.m in Sources */,
 				18FF853124480A8100260949 /* YYOrderHeadView.m in Sources */,
@@ -1845,6 +1871,7 @@
 				DCCE9B04244AEE0F00485449 /* CouponDetailsCollectionViewController.m in Sources */,
 				1836AFC82431E28300EA8F30 /* XMGFileTool.m in Sources */,
 				186F3B542445D5A9002737DA /* BrandCardCollectionViewCell.m in Sources */,
+				1881B0F02451325B00E29288 /* YYTbAuthWebViewController.m in Sources */,
 				1836ACD52431D18100EA8F30 /* YYNetHTTPTool.m in Sources */,
 				18DC38F2243EC1710030DE97 /* DetailsNotesCollectionViewCell.m in Sources */,
 				1836AFD42431E61B00EA8F30 /* YYPersonCollectionViewController.m in Sources */,
@@ -1857,10 +1884,12 @@
 				188F5E562446B41F0020B245 /* JiuJiuCollectionViewController.m in Sources */,
 				18DC38F9243EF4DC0030DE97 /* LimitBuyCollectionViewCell.m in Sources */,
 				1836AFC42431E28300EA8F30 /* LPRefreshGifHeader.m in Sources */,
+				1881B0F624519BE700E29288 /* CouponsModel.m in Sources */,
 				187F555424400F66005205E1 /* CouponCollectionViewCell.m in Sources */,
 				DCE664BC2444CD9300C7BE3B /* HomeBannerModel.m in Sources */,
 				187D0681244075E8005DAA0C /* MyIncomeCollectionViewController.m in Sources */,
 				DCE664CB2445FE1600C7BE3B /* ChildrenModel.m in Sources */,
+				1881B0ED24512BB500E29288 /* YYTBAuthView.m in Sources */,
 				18DC38EF243EC1420030DE97 /* DetailsNumCollectionViewCell.m in Sources */,
 				18633B8B2432D79100CE3E60 /* UIView+AnimationExtend.m in Sources */,
 				18BD4690243C4C0300707A53 /* ImgCollectionViewCell.m in Sources */,
@@ -1869,6 +1898,7 @@
 				18F7C00E24445F9800BFA891 /* MenModel.m in Sources */,
 				1880F39B243C8D32003EECB9 /* BrandRecomdCollectionViewCell.m in Sources */,
 				DC9794252442D11B00322F00 /* HomeSearchCollectionViewController.m in Sources */,
+				1881B0F324517E9700E29288 /* PersonCouponModel.m in Sources */,
 				18DC3913243F28200030DE97 /* TaobaoCollectionViewController.m in Sources */,
 				187F55672440503F005205E1 /* CustomCollectionViewCell.m in Sources */,
 				186F3B4E2445BB45002737DA /* BrandModel.m in Sources */,

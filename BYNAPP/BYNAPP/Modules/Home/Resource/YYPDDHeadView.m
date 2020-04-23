@@ -65,7 +65,7 @@
     VHDLBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [VHDLBtn setTitleColor:YY66Color forState:UIControlStateNormal];
     [VHDLBtn setTitleColor:YYHexColor(@"#FFD409") forState:UIControlStateSelected];
-     VHDLBtn.selected = YES;
+    VHDLBtn.selected = YES;
     [VHDLView addSubview:VHDLBtn];
     self.VHDLBtn = VHDLBtn;
     

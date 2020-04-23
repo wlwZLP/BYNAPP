@@ -37,6 +37,8 @@
 
 @property(nonatomic,strong)NSArray<HomeBannerModel*> * ZonesArray;
 
+@property(nonatomic,strong)NSArray * HotWordsArray;
+
 @property(nonatomic,strong)NSArray<HomeTimeModel*> * TimesArray;
 
 @property(nonatomic,strong)NSMutableArray<HomeMainModel*> * GoodsItemsArray;
@@ -107,8 +109,12 @@
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
        
         [self.collectionView.mj_header endRefreshing];
-           
-        [self.collectionView reloadData];
+        
+         YYCache * cache = [[YYCache alloc]initWithName:MyCache];
+        
+         [cache setObject:self.HotWordsArray forKey:YYHotWords];
+      
+         [self.collectionView reloadData];
               
     });
     
@@ -126,13 +132,17 @@
         NSDictionary * Data1 = EncodeDicFromDic(responseObject, @"data");
          
         [self.BannerImgArray removeAllObjects];
+         
+        YYNSLog(@"获取首页数据--------%@",Data1);
         
         self.BannerArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"banners")];
         
         for (HomeBannerModel * Model in self.BannerArray) {
             [self.BannerImgArray addObject:Model.cover];
         }
-        
+         
+        self.HotWordsArray = EncodeArrayFromDic(Data1, @"hot_words");
+         
         self.ChannlesArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"channels")];
         
         self.MiddlesArray =  [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data1, @"middles")];
