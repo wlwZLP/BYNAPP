@@ -122,9 +122,8 @@ static int const TimelabelWith = 90;
        [self.TimeScrollView addSubview:titleButton];
        if ([TitleListArray[i].desc isEqualToString:@"抢购中"]) {
             titleButton.selected = YES;
-           self.OldClickBtn  = titleButton;
+            self.OldClickBtn  = titleButton;
             [self GetLimitBuyNetWorkData:TitleListArray[i].time];
-//           self.titleUnderline.ZLP_centerX = sender.ZLP_centerX;
         }else{
             titleButton.selected = NO;
         }

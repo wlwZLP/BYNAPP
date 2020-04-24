@@ -73,8 +73,6 @@
         
         self.DetaisDic = EncodeDicFromDic(responseObject, @"data");
         
-        YYNSLog(@"品牌转商品详情-------%@",self.DetaisDic);
-        
         self.StrViewHeight = [self getStringHeightWithText:EncodeStringFromDic(self.DetaisDic, @"help") font:[UIFont systemFontOfSize:14] viewWidth:YYScreenWidth - 48];
         
         [self.collectionView reloadData];
@@ -119,7 +117,7 @@
         
         [cell.Logoimage sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(self.DetaisDic, @"brand_cover")] placeholderImage:[UIImage imageNamed:@"MainBG"]];
         
-//        cell.CouponLabel.text = [NSString stringWithFormat:@"省%@元",[self GetTracFaceMoney:EncodeStringFromDic(self.DetaisDic, @"face_price") NumMoney:EncodeStringFromDic(self.DetaisDic, @"member_price")]];
+        cell.CouponLabel.text = [NSString stringWithFormat:@"省%@元",[YYTools YYSetAllMaxSting:EncodeStringFromDic(self.DetaisDic, @"face_price") MinString:EncodeStringFromDic(self.DetaisDic, @"member_price")]];
         
         cell.TitleLabel.text = EncodeStringFromDic(self.DetaisDic, @"coupon_name");
         

@@ -41,13 +41,7 @@ pod 'UMCShare/UI'
 # 集成微信(精简版0.2M)
 pod 'UMCShare/Social/ReducedWeChat'
 
-#pod 'AlibcTradeSDK','4.0.1.1'
-#pod 'AliAuthSDK','1.1.0.39-bc'
-#pod 'mtopSDK','3.0.0.4'
-#pod 'securityGuard','5.4.173'
-#pod 'AliLinkPartnerSDK','4.0.0.24'
-#pod 'BCUserTrack','5.2.0.16-appkeys'
-#pod 'UTDID','1.1.0.16'
+
 
 
 

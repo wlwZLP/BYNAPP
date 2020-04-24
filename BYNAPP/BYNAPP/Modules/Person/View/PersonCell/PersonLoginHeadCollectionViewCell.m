@@ -22,6 +22,8 @@
 
 @property (nonatomic, strong) UILabel * MoneyLabel;
 
+@property (nonatomic, strong) UILabel * VipTypeLabel;
+
 @property (nonatomic, strong) UILabel * TodayLabel;
 
 @property (nonatomic, strong) UILabel * MonthLabel;
@@ -75,7 +77,6 @@
     [YYTools ChangeView:HeadImage RadiusSize:22 BorderColor:[UIColor clearColor]];
     self.Logoimage = HeadImage;
    
-    
     UILabel * NameLabel = [[UILabel alloc]init];
     NameLabel.text = @"我是昵称";
     NameLabel.textAlignment = NSTextAlignmentLeft;
@@ -83,27 +84,52 @@
     NameLabel.font = [UIFont systemFontOfSize:17 weight:0];
     [self addSubview:NameLabel];
     [NameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-
         make.left.equalTo(HeadImage.mas_right).with.offset(10);
         make.top.equalTo(HeadImage.mas_top).with.offset(0);
         make.height.offset(24);
-    
     }];
     self.NameLabel = NameLabel;
     
-    UIImageView * VipImage = [[UIImageView alloc] init];
-    VipImage.image = [UIImage imageNamed:@"headVip"];
-    [self addSubview:VipImage];
-    [VipImage mas_makeConstraints:^(MASConstraintMaker *make) {
-        
+    
+    UIImageView * VipBgImage = [[UIImageView alloc] init];
+    VipBgImage.image = [UIImage imageNamed:@"VipTypeBg"];
+    [self addSubview:VipBgImage];
+    [VipBgImage mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(NameLabel.mas_right).with.offset(5);
-        make.top.equalTo(HeadImage.mas_top).with.offset(2);
+        make.top.equalTo(HeadImage.mas_top).with.offset(5);
         make.height.offset(18);
         make.width.offset(67);
-        
+
     }];
-    self.VipTypeImage = VipImage;
-  
+   
+
+    UIImageView * VipVipImage = [[UIImageView alloc] init];
+    VipVipImage.image = [UIImage imageNamed:@"VipVip"];
+    [self addSubview:VipVipImage];
+    [VipVipImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(NameLabel.mas_right).with.offset(15);
+        make.top.equalTo(HeadImage.mas_top).with.offset(10);
+        make.height.offset(10);
+        make.width.offset(9);
+    }];
+   
+
+    UILabel * VipTypeLabel = [[UILabel alloc]init];
+    VipTypeLabel.textAlignment = NSTextAlignmentCenter;
+    VipTypeLabel.adjustsFontSizeToFitWidth = YES;
+    VipTypeLabel.textColor = YYHexColor(@"#FFE569");
+    VipTypeLabel.font = [UIFont systemFontOfSize:11 weight:0];
+    [self addSubview:VipTypeLabel];
+    [VipTypeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(NameLabel.mas_right).with.offset(20);
+        make.top.equalTo(HeadImage.mas_top).with.offset(5);
+        make.height.offset(18);
+        make.width.offset(50);
+
+    }];
+    self.VipTypeLabel = VipTypeLabel;
+ 
+
     
     UILabel * InvitCodeLabel = [[UILabel alloc]init];
     InvitCodeLabel.text = @"邀请码：543575477";
@@ -276,6 +302,8 @@
         self.OpenVipBtn.hidden = YES;
     }
     
+    self.VipTypeLabel.text = Model.type_text;
+    
     self.CodeLabel.text = [NSString stringWithFormat:@"邀请码:%@   复制",Model.recommend_code];
     
     self.MoneyLabel.text = [NSString stringWithFormat:@"%@",Model.withdraw_amount];
@@ -285,7 +313,11 @@
     self.MonthLabel.text = [NSString stringWithFormat:@"%@",Model.this_month_plus_amount];
     
     self.YearLabel.text = [NSString stringWithFormat:@"%@",Model.total_plus_amount];
+    
+    
 }
+
+
 
 
 @end

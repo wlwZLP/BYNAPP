@@ -94,6 +94,7 @@
         make.height.offset(20);
     }];
     
+    
     UIImageView * CouponImage = [[UIImageView alloc] init];
     CouponImage.backgroundColor = [UIColor clearColor];
     CouponImage.image = [UIImage imageNamed:@"biaoqian"];
@@ -118,6 +119,7 @@
         make.width.offset(60);
         make.height.offset(20);
     }];
+    
     
     UILabel * OldPriceLabel = [[UILabel alloc]init];
     OldPriceLabel.text = @"官方价¥32.5";
@@ -145,6 +147,8 @@
     self.PriceLabel.text = [NSString stringWithFormat:@" ￥%@ ",Model.member_price];
        
     self.OldPriceLabel.text = [NSString stringWithFormat:@"官方价￥%@ ",Model.face_price];
+    
+    self.CouponLabel.text = [NSString stringWithFormat:@"￥%@",[YYTools YYSetAllMaxSting:Model.face_price MinString:Model.member_price]];
     
     NSMutableAttributedString *  abs = [[NSMutableAttributedString alloc]initWithString:self.OldPriceLabel.text];
     [abs addAttribute:NSStrikethroughStyleAttributeName value:@(2) range:NSMakeRange(0, self.OldPriceLabel.text.length)];

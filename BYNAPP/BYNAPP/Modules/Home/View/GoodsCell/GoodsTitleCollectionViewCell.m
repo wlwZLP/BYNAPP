@@ -36,14 +36,13 @@
      [self addSubview:IconImage];
      self.Logoimage = IconImage;
     
-     UILabel * TitleLabel = [[UILabel alloc]init];
+     SFLabel * TitleLabel = [[SFLabel alloc]init];
      TitleLabel.text = @"      瑞雪黑森林摩卡中杯瑞雪黑森林摩卡中杯瑞雪黑森林摩卡中杯瑞雪黑森林摩卡中杯瑞雪黑森林摩卡中杯";
      TitleLabel.numberOfLines = 2;
      TitleLabel.textColor = YY22Color;
      TitleLabel.frame = CGRectMake(13 ,12 , self.ZLP_width -26, 40);
      TitleLabel.textAlignment = NSTextAlignmentLeft;
      TitleLabel.font = [UIFont systemFontOfSize:15 weight:1];
-//     TitleLabel.backgroundColor = UIColor.yellowColor;
      [self addSubview:TitleLabel];
      TitleLabel.YYLineSpace = 3;
      [TitleLabel YYUpdateConstraints];

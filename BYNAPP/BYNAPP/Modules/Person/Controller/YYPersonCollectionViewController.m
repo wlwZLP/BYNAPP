@@ -98,13 +98,21 @@
    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
        
         NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+        
+        if (Data.count == 0) {
+        
+             [YYSaveTool SetCahceForvalue:@"0" forKey:YYLogin];
+            
+             [YYSaveTool RemoveCacheForKey:YYToken];
        
-        YYNSLog(@"个人中心数据-----%@",Data);
-       
-        self.Usermodel = [UserModel modelWithDictionary:Data];
-       
-        [YYSaveTool YY_SaveModel:self.Usermodel key:YYUser];
-    
+        }else{
+         
+            self.Usermodel = [UserModel modelWithDictionary:Data];
+            
+            [YYSaveTool YY_SaveModel:self.Usermodel key:YYUser];
+            
+        }
+   
         [self.collectionView reloadData];
        
    } failure:^(NSError *error, id responseCache) {
@@ -234,7 +242,10 @@
 -(void)PersonPushNextController:(NSString*)PushTitleString{
     
     if ([[YYSaveTool GetCacheForKey:YYLogin] isEqualToString:@"0"]) {
-        [self YYShowMessage:@"请先登录"];
+        
+        LoginCollectionViewController * LoginVc = [[LoginCollectionViewController alloc]init];
+        LoginVc.title = @"";
+        [self.navigationController pushViewController:LoginVc animated:YES];
         return;
     }
     

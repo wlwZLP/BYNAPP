@@ -55,6 +55,112 @@
 }
 
 
+//封装减法的公共方法
+#pragma mark ----两个数相加-----------
++(NSString *)calculateByadding:(NSString *)number1 secondNumber:(NSString *)number2
+{
+    NSDecimalNumber *num1 = [NSDecimalNumber decimalNumberWithString:number1];
+    NSDecimalNumber *num2 = [NSDecimalNumber decimalNumberWithString:number2];
+    NSDecimalNumber *addingNum = [num1 decimalNumberByAdding:num2];
+    return [addingNum stringValue];
+}
+
+#pragma mark ----两个数相减------------ number1 - number2
++(NSString *)YYSetAllMaxSting:(NSString *)maxstring MinString:(NSString *)minsting{
+    if (maxstring.length == 0) {
+        maxstring = @"0.00";
+    }
+    
+    if (minsting.length == 0) {
+        minsting = @"0.00";
+    }
+    NSDecimalNumber *num1 = [NSDecimalNumber decimalNumberWithString:maxstring];
+    NSDecimalNumber *num2 = [NSDecimalNumber decimalNumberWithString:minsting];
+    NSDecimalNumber *addingNum = [num1 decimalNumberBySubtracting:num2];
+    return [addingNum stringValue];
+}
+
+#pragma mark ----两个数相乘------------
+//+(NSString *)calculateByMultiplying:(NSString *)number1 secondNumber:(NSString *)number2
+//{
+//    NSDecimalNumber *num1 = [NSDecimalNumber decimalNumberWithString:number1];
+//    NSDecimalNumber *num2 = [NSDecimalNumber decimalNumberWithString:number2];
+//    NSDecimalNumber *multiplyingNum = [num1 decimalNumberByMultiplyingBy:num2];
+//    return [multiplyingNum stringValue];
+//
+//}
+
+#pragma mark ----两个数相除------------
+//+ (NSString *)calculateByDividingNumber:(NSString *)number1 secondNumber:(NSString *)number2
+//{
+//    NSDecimalNumber *num1 = [NSDecimalNumber decimalNumberWithString:number1];
+//    NSDecimalNumber *num2 = [NSDecimalNumber decimalNumberWithString:number2];
+//    NSDecimalNumber *dividingNum = [num1 decimalNumberByDividingBy:num2];
+//    return [dividingNum stringValue];
+//
+//}
+
+#pragma mark ----四舍五入------------
+//+ (NSString *)calculateTargetNumber:(NSString *)targetNumber ByRounding:(NSUInteger)scale
+//{
+//    NSDecimalNumberHandler * handler = [[NSDecimalNumberHandler alloc] initWithRoundingMode:NSRoundPlain scale:scale raiseOnExactness:NO raiseOnOverflow:YES raiseOnUnderflow:YES raiseOnDivideByZero:YES];
+//    NSDecimalNumber *num1 = [NSDecimalNumber decimalNumberWithString:targetNumber];
+//    NSDecimalNumber *roundingNum = [num1 decimalNumberByRoundingAccordingToBehavior:handler];
+//    return [roundingNum stringValue];
+//}
+
+
+#pragma mark ----是否相等------------
+//+ (BOOL)calculateIsEqualNumber:(NSString *)number1 secondNumber:(NSString *)number2
+//{
+//    NSDecimalNumber *num1 = [NSDecimalNumber decimalNumberWithString:number1];
+//    NSDecimalNumber *num2 = [NSDecimalNumber decimalNumberWithString:number2];
+//    NSComparisonResult result = [num1 compare:num2];
+//    if (result == NSOrderedSame) {
+//        return YES;
+//    }
+//    return NO;
+//}
+
+#pragma mark ----是否大于------------
+//+ (BOOL)calculateNumber: (NSString *)number1 IsGreaterThan:(NSString *)number2
+//{
+//    NSDecimalNumber *num1 = [NSDecimalNumber decimalNumberWithString:number1];
+//    NSDecimalNumber *num2 = [NSDecimalNumber decimalNumberWithString:number2];
+//    NSComparisonResult result = [num1 compare:num2];
+//    if (result == NSOrderedDescending) {
+//        return YES;
+//    }
+//    return NO;
+//
+//}
+
+#pragma mark ----是否小于------------
+//+ (BOOL)calculateNumber:(NSString *)number1  IsLessThan:(NSString *)number2
+//{
+//    NSDecimalNumber *num1 = [NSDecimalNumber decimalNumberWithString:number1];
+//    NSDecimalNumber *num2 = [NSDecimalNumber decimalNumberWithString:number2];
+//    NSComparisonResult result = [num1 compare:num2];
+//    if (result == NSOrderedAscending) {
+//        return YES;
+//    }
+//    return NO;
+//
+//}
+
+
+
+#pragma mark ---------单纯保留小数位数----------
+//+(NSString *)calculateRetainedDecimalNumber:(NSString *)targetNumber ByRonding:(short)power
+//{
+//    NSDecimalNumber * balanceNumber = [[NSDecimalNumber alloc]initWithString:targetNumber];
+//    NSDecimalNumberHandler * hander = [NSDecimalNumberHandler decimalNumberHandlerWithRoundingMode:NSRoundDown scale:4 raiseOnExactness:NO raiseOnOverflow:NO raiseOnUnderflow:NO raiseOnDivideByZero:NO];
+//    NSNumber *changeNumber = [balanceNumber decimalNumberByRoundingAccordingToBehavior:hander];
+//
+//    return [changeNumber stringValue];
+//
+//}
+
 
 
 

@@ -34,7 +34,6 @@
 
 - (void)setup{
     
-   
     
     UIImageView * Mainimage = [[UIImageView alloc] init];
     Mainimage.backgroundColor = [UIColor clearColor];
@@ -55,6 +54,15 @@
     
 }
 
+
+
+-(void)MiddleImgClick{
+    
+    
+ 
+    
+    
+}
 
 
 @end

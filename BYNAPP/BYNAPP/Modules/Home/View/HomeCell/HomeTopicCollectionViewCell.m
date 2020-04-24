@@ -111,7 +111,7 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
     
-     return self.ZonesListArray.count;
+      return self.ZonesListArray.count;
     
 }
 
@@ -120,8 +120,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    
-     ImgCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ImgCollectionViewCell" forIndexPath:indexPath];
+      ImgCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ImgCollectionViewCell" forIndexPath:indexPath];
     
       [cell.MainImgView setImageURL:[NSURL URLWithString: self.ZonesListArray[indexPath.item].cover]];
     

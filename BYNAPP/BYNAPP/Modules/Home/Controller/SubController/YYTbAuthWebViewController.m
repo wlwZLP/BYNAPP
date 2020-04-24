@@ -20,16 +20,7 @@
     
     [super viewDidLoad];
 
-    AlibcTradeShowParams * showParam = [[AlibcTradeShowParams alloc] init];
-    showParam.openType = AlibcOpenTypeAuto;
-    showParam.backUrl =[NSString stringWithFormat:@"tbopen%@://",@"22222"];
-    showParam.isNeedPush = NO;
-    showParam.linkKey = @"taobao_scheme";//拉起天猫
    
-    AlibcTradeTaokeParams * taoKeParams=[[AlibcTradeTaokeParams alloc] init];
-    
-    taoKeParams.pid=nil;
-    
     
     
     

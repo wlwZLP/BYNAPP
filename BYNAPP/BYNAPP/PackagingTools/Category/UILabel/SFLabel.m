@@ -22,7 +22,7 @@
 {
     if(self = [super initWithFrame:frame])
     {
-        self.edgeInsets = UIEdgeInsetsMake(25, 0, 25, 0);
+        self.edgeInsets = UIEdgeInsetsMake(0, 0, 20, 0);
     }
     return self;
 }
@@ -30,29 +30,29 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [super initWithCoder:aDecoder]) {
-        self.edgeInsets = UIEdgeInsetsMake(25, 0, 25, 0);
+        self.edgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     }
     return self;
 }
 
 - (void)awakeFromNib
 {
-    self.edgeInsets = UIEdgeInsetsMake(25, 0, 25, 0);
+    self.edgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     
     [super awakeFromNib];
+    
 }
+
 
 + (UIEdgeInsets)edgeInsets
 {
-    /*- (CGRect)boundingRectWithSize:(CGSize)size options:(NSStringDrawingOptions)options attributes:(nullable NSDictionary<NSString *, id> *)attributes context:(nullable NSStringDrawingContext *)context NS_AVAILABLE(10_11, 7_0);
-     方法计算label的大小时，由于不会调用textRectForBounds方法，并不会计算自己通过edgeInsets插入的内边距，而是实际的大小，因此手动返回进行修正*/
-    return UIEdgeInsetsMake(25, 0, 25, 0);
+    return UIEdgeInsetsMake(0, 0, 0 , 0);
 }
 
 
 + (NSDictionary *)textLabelArrtibute
 {
-//    可以通过 NSMutableParagraphStyle修改左边内边距
+    
     NSMutableDictionary *attribute = [NSMutableDictionary dictionary];
     attribute[NSFontAttributeName] = [UIFont systemFontOfSize:16];
     NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -82,5 +82,8 @@
     [super drawTextInRect:UIEdgeInsetsInsetRect(rect, self.edgeInsets)];
     
 }
+
+
+
 
 @end

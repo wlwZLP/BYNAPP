@@ -290,12 +290,10 @@
         UIImageView * WchatImg = [[UIImageView alloc] init];
         WchatImg.backgroundColor = [UIColor clearColor];
         WchatImg.frame = CGRectMake(MainBGView.ZLP_centerX - 22, 540 ,44, 44);
-        WchatImg.image = [UIImage imageNamed:@"wechat"];
-        [MainBGView addSubview:WchatImg];
-        [WchatImg addTarget:self action:@selector(WchatImgClick)];
-//        WchatImg.hidden = NO;
-//        QustLabel.hidden = NO;
-        
+       WchatImg.image = [UIImage imageNamed:@"wechat"];
+       [MainBGView addSubview:WchatImg];
+       [WchatImg addTarget:self action:@selector(WchatImgClick)];
+
         
     }
 
@@ -577,6 +575,7 @@
            } else {
                
                UMSocialUserInfoResponse * resp = result;
+               
                NSDictionary * OriginDic = resp.originalResponse;
                
                NSString * City;

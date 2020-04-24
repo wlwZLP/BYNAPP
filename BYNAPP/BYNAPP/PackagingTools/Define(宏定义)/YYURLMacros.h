@@ -10,10 +10,10 @@
 #define URLMacros_h
 
 /**生产服务器*/
-#define Common_URL @"http://open.biyingniao.com/"
+//#define Common_URL @"http://open.biyingniao.com/"
 
 ///**测试服务器*/
-//#define Common_URL @"http://test.wef2.top/"
+#define Common_URL @"http://test.wef2.top/"
 
 #pragma mark - ——————— 详细接口地址 ————————
 //1.获取首页广告

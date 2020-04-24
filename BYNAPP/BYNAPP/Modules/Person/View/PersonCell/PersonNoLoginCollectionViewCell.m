@@ -67,7 +67,7 @@
     
     UIImageView * HeadImage = [[UIImageView alloc] init];
     HeadImage.image = [UIImage imageNamed:@"MainBG"];
-    HeadImage.frame = CGRectMake(20, YYStatusHeight + 20, 55, 55);
+    HeadImage.frame = CGRectMake(20, YYStatusHeight + 10, 55, 55);
     [self addSubview:HeadImage];
     [YYTools ChangeView:HeadImage RadiusSize:22 BorderColor:[UIColor clearColor]];
     
@@ -75,14 +75,14 @@
     LoginLabel.text = @"立即登录";
     LoginLabel.textAlignment = NSTextAlignmentLeft;
     LoginLabel.textColor = YY22Color;
-    LoginLabel.frame = CGRectMake(95 , YYStatusHeight + 35 , 160 , 28);
+    LoginLabel.frame = CGRectMake(95 , YYStatusHeight + 25 , 160 , 28);
     LoginLabel.font = [UIFont systemFontOfSize:20 weight:2];
     [self addSubview:LoginLabel];
     [LoginLabel addLabelTarget:self action:@selector(LoginBtnBlockClick)];
    
     UIView * LineView = UIView.new;
     LineView.backgroundColor = YY22Color;
-    LineView.frame = CGRectMake(95, YYStatusHeight + 65, 85 , 2);
+    LineView.frame = CGRectMake(95, YYStatusHeight + 55, 85 , 2);
     [self addSubview:LineView];
     
     UILabel * AllMoneyLabel = [[UILabel alloc]init];

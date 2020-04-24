@@ -63,7 +63,7 @@
     UILabel * BtnLabel = [[UILabel alloc]init];
     BtnLabel.text = @"立即领取";
     BtnLabel.textColor = UIColor.whiteColor;
-    BtnLabel.frame = CGRectMake(self.ZLP_width - 88, 32 , 62, 20);
+    BtnLabel.frame = CGRectMake(self.ZLP_width - 82 , 25 , 62, 20);
     BtnLabel.textAlignment = NSTextAlignmentCenter;
     BtnLabel.font = [UIFont systemFontOfSize:15 weight:0];
     [BtnLabel addLabelTarget:self action:@selector(LingquBtnClick)];

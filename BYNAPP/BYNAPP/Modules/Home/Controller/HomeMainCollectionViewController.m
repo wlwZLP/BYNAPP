@@ -145,7 +145,7 @@
          
         self.ChannlesArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"channels")];
         
-        self.MiddlesArray =  [NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(Data1, @"middles")];
+        self.MiddlesArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"middles")];
 
         self.ZonesArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"zones")];
         
@@ -251,18 +251,10 @@
      }];
      
     
-     [self rac_liftSelector:@selector(updateUIPic:pic2:) withSignalsFromArray:@[signal1,signal2]];
+//     [self rac_liftSelector:@selector(updateUIPic:pic2:) withSignalsFromArray:@[signal1,signal2]];
     
 }
 
-- (void)updateUIPic:(id)pic1 pic2:(id)pic2{
-  
-
-//    YYNSLog(@"首页广告位数据------%@",NetData1);
-    
-  
- 
-}
 
 
 
@@ -349,7 +341,7 @@
     }else if (indexPath.section == 2){
         
         ImgCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ImgCollectionViewCell" forIndexPath:indexPath];
-
+        
         return cell;
         
     }else if (indexPath.section == 3){
@@ -360,7 +352,7 @@
         
         cell.TopicBtnBlockClick = ^(NSInteger index) {
           
-            [self HomeMainPushNextController:self.ZonesArray[index]];
+             [self HomeMainPushNextController:self.ZonesArray[index]];
             
         };
 
@@ -481,14 +473,22 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
-    HomeMainModel * Model = self.GoodsItemsArray[indexPath.item];
-    HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
-    HomeVc.mall_id = Model.mall_id;
-    HomeVc.item_id = Model.item_id;
-    HomeVc.activity_id = Model.activity_id;
-    [self.navigationController pushViewController:HomeVc animated:YES];
+    if (indexPath.section == 2) {
+        
+        [self HomeMainPushNextController:self.MiddlesArray[0]];
+        
+    }else if (indexPath.section == 5){
+        
+        HomeMainModel * Model = self.GoodsItemsArray[indexPath.item];
+        HomeDetailsCollectionViewController * HomeVc = [[HomeDetailsCollectionViewController alloc]init];
+        HomeVc.mall_id = Model.mall_id;
+        HomeVc.item_id = Model.item_id;
+        HomeVc.activity_id = Model.activity_id;
+        [self.navigationController pushViewController:HomeVc animated:YES];
+        
+    }
     
-    
+
 }
 
 
@@ -511,7 +511,7 @@
         
     }else if (indexPath.section == 3){
         
-         return CGSizeMake(YYScreenWidth - 24 ,  (self.ZonesArray.count / 2  + 1) * 90 + 15);
+         return CGSizeMake(YYScreenWidth - 24 ,  (self.ZonesArray.count / 2) * 90 + 15);
     
     }else if (indexPath.section == 4){
         
@@ -519,7 +519,7 @@
         
     }else{
         
-        return CGSizeMake(YYScreenWidth , YYScreenWidth * 0.36);
+        return CGSizeMake(YYScreenWidth , 144);
         
     }
     

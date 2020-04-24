@@ -63,6 +63,11 @@
     [self addSubview:Mainimage];
     self.Mainimage = Mainimage;
     
+    UIImageView * XuImage = [[UIImageView alloc] init];
+    XuImage.backgroundColor = [UIColor clearColor];
+    XuImage.image = [UIImage imageNamed:@"xuxian"];
+    [self addSubview:XuImage];
+    
     UIImageView * Iconimage = [[UIImageView alloc] init];
     Iconimage.backgroundColor = [UIColor clearColor];
     Iconimage.image = [UIImage imageNamed:@"HomeIcon"];
@@ -73,7 +78,7 @@
     TitleLabel.text = @"实时热卖";
     TitleLabel.textColor = YY33Color;
     TitleLabel.textAlignment = NSTextAlignmentLeft;
-    TitleLabel.font = [UIFont systemFontOfSize:16 weight:1];
+    TitleLabel.font = [UIFont systemFontOfSize:15 weight:1];
     [self addSubview:TitleLabel];
     self.TitleLabel = TitleLabel;
     
@@ -97,7 +102,6 @@
     
     
     UILabel * GainMoneyLabel = [[UILabel alloc]init];
-//    GainMoneyLabel.text = @"最多赚一元";
     GainMoneyLabel.textAlignment = NSTextAlignmentCenter;
     GainMoneyLabel.textColor = UIColor.whiteColor;
     GainMoneyLabel.backgroundColor = YYRGBColor(247, 60, 40);
@@ -107,7 +111,6 @@
     self.GainMoneyLabel = GainMoneyLabel;
     
     UILabel * CouponPriceLabel = [[UILabel alloc]init];
-//    CouponPriceLabel.text = @"￥15券后价";
     CouponPriceLabel.textColor = YYHexColor(@"#FB5434");
     CouponPriceLabel.textAlignment = NSTextAlignmentLeft;
     CouponPriceLabel.font = [UIFont systemFontOfSize:17 weight:2];
@@ -115,7 +118,6 @@
     self.CouponPriceLabel = CouponPriceLabel;
     
     UILabel * OldPriceLabel = [[UILabel alloc]init];
-//    OldPriceLabel.text = @"原价￥32.5";
     OldPriceLabel.textColor = YY99Color;
     OldPriceLabel.textAlignment = NSTextAlignmentLeft;
     OldPriceLabel.font = [UIFont systemFontOfSize:12 weight:0];
@@ -123,7 +125,6 @@
     self.OldPriceLabel = OldPriceLabel;
     
     UILabel * SaleNumLabel = [[UILabel alloc]init];
-//    SaleNumLabel.text = @"已售3201件";
     SaleNumLabel.textColor = YY99Color;
     SaleNumLabel.textAlignment = NSTextAlignmentLeft;
     SaleNumLabel.font = [UIFont systemFontOfSize:12 weight:0];
@@ -138,11 +139,20 @@
     }];
     
     [Mainimage mas_makeConstraints:^(MASConstraintMaker *make) {
-         
-       make.top.equalTo(MainBGView.mas_top).with.offset(8);
+
+       make.centerY.equalTo(MainBGView.mas_centerY);
        make.left.equalTo(MainBGView.mas_left).with.offset(8);
-       make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-8);
-       make.width.equalTo(Mainimage.mas_height);
+       make.width.equalTo(MainBGView.mas_width).multipliedBy(0.33);
+       make.height.equalTo(MainBGView.mas_width).multipliedBy(0.33);
+       
+    }];
+    
+    [XuImage mas_makeConstraints:^(MASConstraintMaker *make) {
+
+       make.top.equalTo(MainBGView.mas_top).with.offset(10);
+       make.left.equalTo(Mainimage.mas_right).with.offset(8);
+       make.width.offset(1);
+       make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-10);
        
     }];
 
@@ -177,7 +187,6 @@
 
        make.left.equalTo(Mainimage.mas_right).with.offset(20);
        make.top.equalTo(MainBGView.mas_top).with.offset(58);
-//       make.width.offset(50);
        make.height.offset(18);
 
     }];
@@ -186,7 +195,6 @@
 
        make.left.equalTo(CouponLabel.mas_right).with.offset(8);
        make.top.equalTo(MainBGView.mas_top).with.offset(58);
-//       make.width.offset(70);
        make.height.offset(18);
         
     }];

@@ -67,8 +67,6 @@
     self.ISHideGoodsDetails = NO;
     
     self.webViewHeight = 1;
- 
-    self.view.backgroundColor = UIColor.redColor;
     
     self.collectionView.frame = CGRectMake(0, -YYBarHeight , YYScreenWidth, YYScreenHeight + YYBarHeight - 55);
     
@@ -142,14 +140,9 @@
     
     
     UIView * BottomView = [[UIView alloc]init];
+    BottomView.frame = CGRectMake(0, YYScreenHeight - YYBarHeight - 55 , YYScreenWidth , 55);
     BottomView.backgroundColor = UIColor.whiteColor;
     [self.view addSubview:BottomView];
-    [BottomView mas_makeConstraints:^(MASConstraintMaker *make) {
-       make.top.equalTo(self.collectionView.mas_bottom).with.offset(0);
-       make.left.equalTo(self.view.mas_left).with.offset(0);
-       make.right.equalTo(self.view.mas_right).with.offset(0);
-       make.height.offset(55);
-    }];
     
     UIImageView * HomeImage = [[UIImageView alloc] init];
     HomeImage.backgroundColor = [UIColor clearColor];
@@ -188,10 +181,10 @@
 #pragma mark ===============分享商品按钮=============
     UIButton * ShareButton = [[UIButton alloc]init];
     ShareButton.backgroundColor = YYHexColor(@"#FFEC91");
-    ShareButton.frame = CGRectMake(YYScreenWidth - 260 , 7 , 124, 40);
     [ShareButton setTitle:@"分享商品" forState:UIControlStateNormal];
     [ShareButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     [ShareButton addTarget:self action:@selector(ShareButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    ShareButton.frame = CGRectMake(110, 7, (YYScreenWidth -120)*0.5, 40);
     ShareButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:0];
     [BottomView addSubview:ShareButton];
     UIBezierPath * LeftPath = [UIBezierPath bezierPathWithRoundedRect:ShareButton.bounds byRoundingCorners:UIRectCornerTopLeft | UIRectCornerBottomLeft cornerRadii:CGSizeMake(17,17)];
@@ -199,15 +192,16 @@
     LeftLayer.frame = ShareButton.bounds;
     LeftLayer.path = LeftPath.CGPath;
     ShareButton.layer.mask = LeftLayer;
-
+   
 #pragma mark ===============立即购买商品按钮=============
     UIButton * BuyButton = [[UIButton alloc]init];
     BuyButton.backgroundColor = YYHexColor(@"#FFD409");
-    BuyButton.frame = CGRectMake(YYScreenWidth - 136 , 7 , 124, 40);
     [BuyButton setTitle:@"立即购买" forState:UIControlStateNormal];
     [BuyButton setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
-    BuyButton.titleLabel.font = [UIFont systemFontOfSize:15 weight:0];
+    BuyButton.titleLabel.font = [UIFont systemFontOfSize:13 weight:0];
     [BuyButton addTarget:self action:@selector(BottomBuyButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    BuyButton.frame = CGRectMake(110 + (YYScreenWidth -120)*0.5 , 7, (YYScreenWidth -120)*0.5, 40);
+    BuyButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [BottomView addSubview:BuyButton];
     UIBezierPath * RightPath = [UIBezierPath bezierPathWithRoundedRect:BuyButton.bounds byRoundingCorners:UIRectCornerTopRight | UIRectCornerBottomRight cornerRadii:CGSizeMake(17,17)];
     CAShapeLayer * RightLayer = [[CAShapeLayer alloc] init];
@@ -228,6 +222,7 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
     
 }
+
 
 #pragma mark ===============收藏事件============
 -(void)CollectImgClick{
@@ -263,6 +258,8 @@
     [[LPAnimationView sharedMask]show:self.ShareView withType:QWAlertViewStyleActionSheetDown];
     
 }
+
+
 #pragma mark ===============购买点击事件=============
 -(void)BottomBuyButtonClick{
     
@@ -275,31 +272,31 @@
     }else{
         
         //打开商品详情页
-        id page;
-        if (self.coupon_click_url.length == 0) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }else{
-            page = [AlibcTradePageFactory page:self.coupon_click_url];
-        }
-        
-        AlibcTradeShowParams * showParam = [[AlibcTradeShowParams alloc] init];
-        showParam.openType = AlibcOpenTypeAuto;
-        showParam.backUrl =[NSString stringWithFormat:@"tbopen%@://",@"2252455"];
-        showParam.isNeedPush = YES;
-        showParam.linkKey = @"taobao_scheme";//拉起天猫
-
-        //淘客信息
-        AlibcTradeTaokeParams *taoKeParams=[[AlibcTradeTaokeParams alloc] init];
-        taoKeParams.pid=nil;
-        
-        [[AlibcTradeSDK sharedInstance].tradeService openByUrl:self.coupon_click_url identity:@"trade" webView:nil parentController:self.navigationController showParams:showParam taoKeParams:taoKeParams trackParam:nil tradeProcessSuccessCallback:^(AlibcTradeResult * _Nullable result) {
-            
-            
-        } tradeProcessFailedCallback:^(NSError * _Nullable error) {
-            
-            
-            
-        }];
+//        id page;
+//        if (self.coupon_click_url.length == 0) {
+//            [self.navigationController popViewControllerAnimated:YES];
+//        }else{
+//            page = [AlibcTradePageFactory page:self.coupon_click_url];
+//        }
+//        
+//        AlibcTradeShowParams * showParam = [[AlibcTradeShowParams alloc] init];
+//        showParam.openType = AlibcOpenTypeAuto;
+//        showParam.backUrl =[NSString stringWithFormat:@"tbopen%@://",@"2252455"];
+//        showParam.isNeedPush = YES;
+//        showParam.linkKey = @"taobao_scheme";//拉起天猫
+//
+//        //淘客信息
+//        AlibcTradeTaokeParams *taoKeParams=[[AlibcTradeTaokeParams alloc] init];
+//        taoKeParams.pid=nil;
+//        
+//        [[AlibcTradeSDK sharedInstance].tradeService openByUrl:self.coupon_click_url identity:@"trade" webView:nil parentController:self.navigationController showParams:showParam taoKeParams:taoKeParams trackParam:nil tradeProcessSuccessCallback:^(AlibcTradeResult * _Nullable result) {
+//            
+//            
+//        } tradeProcessFailedCallback:^(NSError * _Nullable error) {
+//            
+//            
+//            
+//        }];
     
     }
     
@@ -323,6 +320,9 @@
             self.RightCollectBtn.selected = NO;
         }
         
+        NSString * Title = [NSString stringWithFormat:@"立即开抢\n  %@",EncodeStringFromDic(self.DetailsDic, @"fl_commission")];
+        [self.RightBuyBtn setTitle:Title forState:UIControlStateNormal];
+        
         [self.collectionView reloadData];
       
     });
@@ -344,11 +344,13 @@
          dict = @{@"item_id":self.item_id,@"mall_id":self.mall_id,@"activity_id":self.activity_id};
      }
      
-    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
         
          if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
             
              self.DetailsDic = EncodeDicFromDic(responseObject, @"data");
+             
+             YYNSLog(@"个人中心数据----------%@",self.DetailsDic);
                
              self.coupon_click_url = EncodeStringFromDic(self.DetailsDic, @"coupon_click_url");
              
@@ -360,7 +362,6 @@
              
          }
       
-    
          dispatch_group_leave(group);
         
     } failure:^(NSError *error, id responseCache) {
@@ -415,6 +416,7 @@
     }
     UIView *barImageView = self.navigationController.navigationBar.subviews.firstObject;
     barImageView.alpha = alpha;
+    
 }
 
 
@@ -805,9 +807,12 @@
         _ShareView = [[YYShareView alloc] init];
         _ShareView.frame = CGRectMake(0, 0, YYScreenWidth, YYScreenHeight);
         _ShareView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+        YYWeakSelf(self);
         _ShareView.BottomShareBlockClick = ^(NSInteger BtnIndex) {
             
             [[LPAnimationView sharedMask]dismiss];
+            
+            [weakself BottomShareButtonClick:BtnIndex];
             
         };
         
@@ -818,6 +823,78 @@
 }
 
 
+
+#pragma mark ===============分享给好友=============
+
+-(void)BottomShareButtonClick:(NSInteger)ClickIndex{
+    
+    
+    if (ClickIndex == 0) {
+        
+        
+        
+    }else if (ClickIndex == 1){
+        
+        
+        //创建分享消息对象
+        [self shareWebPageToPlatformType:UMSocialPlatformType_WechatTimeLine];
+        
+        
+    }else if (ClickIndex == 2){
+        
+         //创建分享消息对象
+        [self shareWebPageToPlatformType:UMSocialPlatformType_WechatTimeLine];
+           
+      
+    }else{
+        
+         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+                           
+         pasteboard.string = EncodeStringFromDic(self.DetailsDic, @"share_url");
+                           
+         [self YYShowMessage:@"复制成功!"];
+        
+    }
+    
+ 
+}
+
+
+-(void)shareWebPageToPlatformType:(UMSocialPlatformType)platformType
+{
+    //创建分享消息对象
+    UMSocialMessageObject *messageObject = [UMSocialMessageObject messageObject];
+
+    //创建网页内容对象
+    NSString* thumbURL =  @"https://mobile.umeng.com/images/pic/home/social/img-1.png";
+    
+    UMShareWebpageObject *shareObject = [UMShareWebpageObject shareObjectWithTitle:@"欢迎使用【友盟+】社会化组件U-Share" descr:@"欢迎使用【友盟+】社会化组件U-Share，SDK包最小，集成成本最低，助力您的产品开发、运营与推广！" thumImage:thumbURL];
+    //设置网页地址
+    shareObject.webpageUrl = @"http://mobile.umeng.com/social";
+
+    //分享消息对象设置分享内容对象
+    messageObject.shareObject = shareObject;
+
+    //调用分享接口
+    [[UMSocialManager defaultManager] shareToPlatform:platformType messageObject:messageObject currentViewController:self completion:^(id data, NSError *error) {
+        if (error) {
+            UMSocialLogInfo(@"************Share fail with error %@*********",error);
+        }else{
+            if ([data isKindOfClass:[UMSocialShareResponse class]]) {
+                UMSocialShareResponse *resp = data;
+                //分享结果消息
+                UMSocialLogInfo(@"response message is %@",resp.message);
+                //第三方原始返回的数据
+                UMSocialLogInfo(@"response originalResponse data is %@",resp.originalResponse);
+
+            }else{
+                UMSocialLogInfo(@"response data is %@",data);
+            }
+        }
+    }];
+    
+    
+}
 
 
 #pragma mark ===============淘宝授权============
