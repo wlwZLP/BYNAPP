@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "YYMainTabBarController.h"
-#import <AlibcTradeSDK/AlibcTradeSDK.h>
 #import <UMCommon/UMCommon.h>
 
 @interface AppDelegate ()
@@ -57,15 +56,15 @@
     
      [YYSaveTool SetCahceForvalue:@"2d0063ff9424ec1cb9cc3c3d6cdd420f" forKey:CacheAPPSecret];
 
-     [[AlibcTradeSDK sharedInstance] setDebugLogOpen:NO];//开发阶段打开日志开关，方便排查错误信息
-     
-     [[AlibcTradeSDK sharedInstance] setIsvVersion:app_Version];
-     [[AlibcTradeSDK sharedInstance] setIsvAppName:@"baichuanDemo"];
-     [[AlibcTradeSDK sharedInstance] asyncInitWithSuccess:^{
-          YYNSLog(@"百川SDK初始化成功");
-     } failure:^(NSError *error) {
-          YYNSLog(@"百川SDK初始化失败");
-     }];
+//     [[AlibcTradeSDK sharedInstance] setDebugLogOpen:NO];//开发阶段打开日志开关，方便排查错误信息
+//     
+//     [[AlibcTradeSDK sharedInstance] setIsvVersion:app_Version];
+//     [[AlibcTradeSDK sharedInstance] setIsvAppName:@"baichuanDemo"];
+//     [[AlibcTradeSDK sharedInstance] asyncInitWithSuccess:^{
+//          YYNSLog(@"百川SDK初始化成功");
+//     } failure:^(NSError *error) {
+//          YYNSLog(@"百川SDK初始化失败");
+//     }];
     
     
 }

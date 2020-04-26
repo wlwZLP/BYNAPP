@@ -145,6 +145,7 @@
     
     }];
     self.CodeLabel = InvitCodeLabel;
+    [InvitCodeLabel addLabelTarget:self action:@selector(CopyInvitCodeClick)];
     
     
     UIButton * OpenVipBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -265,6 +266,12 @@
     
 }
 
+-(void)CopyInvitCodeClick{
+    
+     self.PersonVipheadBtnBlockClick(@"复制邀请码");
+}
+
+
 -(void)WdrawButtonClick{
     
     self.PersonVipheadBtnBlockClick(@"提现");
@@ -305,6 +312,12 @@
     self.VipTypeLabel.text = Model.type_text;
     
     self.CodeLabel.text = [NSString stringWithFormat:@"邀请码:%@   复制",Model.recommend_code];
+    
+    NSMutableAttributedString *  abs = [[NSMutableAttributedString alloc]initWithString:self.CodeLabel.text];
+    [abs addAttribute:NSUnderlineStyleAttributeName value:@(1) range:NSMakeRange(self.CodeLabel.text.length -2, 2)];
+    self.CodeLabel.attributedText = abs;
+    
+  
     
     self.MoneyLabel.text = [NSString stringWithFormat:@"%@",Model.withdraw_amount];
     

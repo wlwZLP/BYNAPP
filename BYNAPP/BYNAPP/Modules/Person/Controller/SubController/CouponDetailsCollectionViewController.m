@@ -38,6 +38,7 @@
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
+    [self GetCouponDetailsNetWordData];
     
     self.ContentString = @"使用须知使用须知使用须知使用须知使用须知使用须知使用须知使用须知使用须知使用须知使用须知使用须知使用须知使用须知使用须知使用须知使用须知使用须知使用须知使用须知11111111111";
     
@@ -45,9 +46,32 @@
     
      [self.collectionView reloadData];
     
+    
 }
 
 
+#pragma mark ===============卡券详情网络接口=============
+
+-(void)GetCouponDetailsNetWordData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVOerdersDetail];
+
+         
+    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+            
+          NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+          
+    
+       
+          
+    } failure:^(NSError *error, id responseCache) {
+              
+        
+
+    }];
+
+    
+}
 
 #pragma mark <UICollectionViewDataSource>
 

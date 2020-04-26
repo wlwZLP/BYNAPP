@@ -36,7 +36,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     
-    [self.navigationController setNavigationBarHidden:YES animated:nil];
+   [self.navigationController setNavigationBarHidden:YES animated:nil];
     
     [self GetBrandOtherNetData];
     
@@ -138,6 +138,7 @@
         [self.navigationController pushViewController:BrandVc animated:YES];
         
     }
+    
 }
 
 

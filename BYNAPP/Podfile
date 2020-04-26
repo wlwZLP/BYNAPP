@@ -24,8 +24,7 @@ pod 'SDCycleScrollView'
 pod 'SDAutoLayout', '~> 2.1.3'
 #键盘控制
 pod 'IQKeyboardManager'
-#支付宝支付文档
-pod 'AlipaySDK-iOS'
+
 #控件布局
 pod 'Masonry'
 
@@ -33,7 +32,6 @@ pod 'Masonry'
 
 #友盟的依赖库
 pod 'UMCCommon'
-#pod 'UMCSecurityPlugins'
 #友盟的推送
 pod 'UMCPush'
 #友盟的的分享
@@ -41,8 +39,18 @@ pod 'UMCShare/UI'
 # 集成微信(精简版0.2M)
 pod 'UMCShare/Social/ReducedWeChat'
 
+#阿里百川sdk
+#pod 'AlibcTradeSDK','4.0.1.1'
+#pod 'AliAuthSDK','1.1.0.39-bc'
+#pod 'mtopSDK','3.0.0.4'
+#pod 'securityGuard','5.4.173'
+#pod 'AliLinkPartnerSDK','4.0.0.24'
+#pod 'BCUserTrack','5.2.0.16-appkeys'
+#pod 'UTDID','1.1.0.16'
+#pod 'WindVane','8.5.0.46-bc7-mini'
 
-
+#支付宝支付文档
+pod 'AlipaySDK-iOS'
 
 
 

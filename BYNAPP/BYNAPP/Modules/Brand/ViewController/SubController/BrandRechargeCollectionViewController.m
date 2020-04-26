@@ -78,13 +78,13 @@
     
     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVProductDetail];
                  
-    NSDictionary * dict = @{@"id":self.Details_id,@"mall_id":self.mall_id};
+    NSDictionary * dict = @{@"id":@"1269xxx",@"mall_id":@"6"};
    
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
         
-        self.DetaisDic = EncodeDicFromDic(responseObject, @"data");
+        YYNSLog(@"直冲数据--------%@",responseObject);
         
-        YYNSLog(@"直冲数据--------%@",self.DetaisDic);
+        self.DetaisDic = EncodeDicFromDic(responseObject, @"data");
         
         self.TitleArray = self.DetaisDic.allKeys;
         
@@ -137,6 +137,10 @@
         
         BDetailsTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BDetailsTopCollectionViewCell" forIndexPath:indexPath];
         
+        [cell.MainImgView sd_setImageWithURL:[NSURL URLWithString:self.TitleListArray[self.bottomIndex].brand_cover] placeholderImage:[UIImage imageNamed:@"iqiyi"]];
+        
+        cell.NameTitleLabel.text = self.TitleListArray[self.bottomIndex].coupon_name;
+        
         return cell;
         
         
@@ -169,7 +173,10 @@
             
             self.ContengHeight = [self getStringHeightWithText:self.TitleListArray[self.bottomIndex].help font:[UIFont systemFontOfSize:14] viewWidth:YYScreenWidth -48] + 30;
             
+            [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:0 inSection:0], nil]];
+            
             [self.collectionView reloadItemsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:3 inSection:0], nil]];
+            
             
         };
         

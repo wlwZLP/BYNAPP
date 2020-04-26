@@ -25,6 +25,11 @@
 #import "TBMatterCollectionViewController.h"
 #import "AblumCollectionViewController.h"
 
+#import "BrandCouponCollectionViewController.h"
+#import "BrandRechargeCollectionViewController.h"
+#import "BrandListCollectionViewController.h"
+#import "HomeBrandCateCollectionViewController.h"
+
 @interface HomeMainCollectionViewController ()
 
 @property(nonatomic,strong)NSArray<HomeBannerModel*> * BannerArray;
@@ -402,10 +407,10 @@
 
 #pragma mark -选中某item进行跳转
 //1-web；2-商品详情；3-聚划算；4-9块9包邮；5-拼多多；6-京东；
-//7-专辑详情；10-淘宝物料 11-拼多多官方活动 12-京东官方活动 13-自定义
+//7-专辑详情；10-淘宝物料 11-拼多多官方活动 12-京东官方活动 13-品牌馆
 -(void)HomeMainPushNextController:(HomeBannerModel *)HomeModel{
     
-     YYNSLog(@"跳转的类型-----%@",HomeModel.target_type);
+//     YYNSLog(@"跳转的类型-----%@",HomeModel.target_type);
     
     if ([HomeModel.target_type isEqualToString:@"1"]) {
         
@@ -464,6 +469,45 @@
        
         
         
+    }else if ([HomeModel.target_type isEqualToString:@"13"]){
+       
+        
+#pragma mark ===============卡券商品详情页=============
+        if ([HomeModel.target_path containsString:@"card_coupons"]) {
+            
+          BrandCouponCollectionViewController * BrandVc = [[BrandCouponCollectionViewController alloc]init];
+          BrandVc.title = @"卡券商品详情";
+          BrandVc.Details_id = [self HomeGetId:HomeModel.target_path];
+          BrandVc.mall_id = [self HomeGetMallId:HomeModel.target_path];
+          [self.navigationController pushViewController:BrandVc animated:YES];
+#pragma mark ===============直充商品详情页=============
+        }else if ([HomeModel.target_path containsString:@"charge_coupons"]){
+          
+            BrandRechargeCollectionViewController * BrandVc = [[BrandRechargeCollectionViewController alloc]init];
+            BrandVc.title = @"卡券商品详情";
+            BrandVc.Details_id = [self HomeGetId:HomeModel.target_path];
+            BrandVc.mall_id = [self HomeGetMallId:HomeModel.target_path];
+            [self.navigationController pushViewController:BrandVc animated:YES];
+          
+#pragma mark ===============某品牌的商品列表=============
+        }else if ([HomeModel.target_path containsString:@"brand-coupons"]){
+          
+           BrandListCollectionViewController * BrandVc = [[BrandListCollectionViewController alloc]init];
+           BrandVc.title =@"商品列表";
+           BrandVc.Bid_id = [self HomeGetId:HomeModel.target_path];
+           [self.navigationController pushViewController:BrandVc animated:YES];
+            
+            
+ #pragma mark ===============某类目的商品列表页=============
+        }else if ([HomeModel.target_path containsString:@"category-coupons"]){
+          
+            
+            HomeBrandCateCollectionViewController * BrandVc = [[HomeBrandCateCollectionViewController alloc]init];
+            BrandVc.title =@"商品列表";
+            BrandVc.Brand_id = [self HomeGetId:HomeModel.target_path];
+            [self.navigationController pushViewController:BrandVc animated:YES];
+        }
+      
     }
     
     
@@ -597,5 +641,58 @@
 
 }
 
+
+
+
+#pragma mark ===============品牌券遍历id=============
+
+-(NSString*)HomeGetMallId:(NSString*)HomePath{
+
+    if (HomePath.length == 0) {
+        
+        return @"1";
+        
+    }else{
+        
+       NSRange range = [HomePath rangeOfString:@"&"];
+        
+       NSRange NewRang = NSMakeRange(range.location + 1, HomePath.length -range.location -1);
+        
+       NSString * NewSting = [HomePath substringWithRange:NewRang];
+        
+       return [NewSting substringWithRange:NSMakeRange(8, NewSting.length - 8)];
+        
+    }
+    
+}
+
+
+-(NSString*)HomeGetId:(NSString*)HomePath{
+
+    if (HomePath.length == 0) {
+        
+        return @"1";
+        
+    }else{
+        
+        NSRange range = [HomePath rangeOfString:@"&"];
+        
+        if (range.length == 0) {
+           
+             NSRange range1 = [HomePath rangeOfString:@"?"];
+            
+             return [HomePath substringWithRange:NSMakeRange(range1.location + 4, HomePath.length - range1.location - 4)];
+            
+        }else{
+         
+            NSRange range1 = [HomePath rangeOfString:@"?"];
+            
+            return [HomePath substringWithRange:NSMakeRange(range1.location + 4, range.location - range1.location - 4)];
+           
+        }
+        
+    }
+    
+}
 
 @end

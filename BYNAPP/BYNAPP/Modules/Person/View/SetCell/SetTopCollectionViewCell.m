@@ -160,20 +160,20 @@
 
 -(void)HeadImgButtonClick{
     
-//    self.TopHeadImgBtnBlockClick();
+   self.TopHeadImgBtnBlockClick();
     
 }
 
 -(void)PersonNameButtonClick{
     
-//     self.TopNameBtnBlockClick();
+     self.TopNameBtnBlockClick();
     
 }
 
 
 -(void)PhoneButtonClick{
     
-//    self.TopPhoneBtnBlockClick();
+   self.TopPhoneBtnBlockClick();
     
 }
 

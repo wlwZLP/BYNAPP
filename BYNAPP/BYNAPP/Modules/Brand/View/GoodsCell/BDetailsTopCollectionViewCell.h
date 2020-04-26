@@ -12,6 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BDetailsTopCollectionViewCell : UICollectionViewCell
 
+@property(nonatomic,strong)UIImageView * MainImgView;
+
+@property(nonatomic,strong)UILabel * NameTitleLabel;
+
+@property(nonatomic,strong)UITextField * PhoneTextField;
 
 
 @end

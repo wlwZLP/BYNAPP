@@ -51,6 +51,7 @@
     NameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     NameTextField.keyboardType = UIKeyboardTypeNumberPad;
     [MainView addSubview:NameTextField];
+    self.PayAccountField = NameTextField;
     
     UIView * FLineView = UIView.new;
     FLineView.backgroundColor = YYE5Color;
@@ -58,28 +59,31 @@
     [MainView addSubview:FLineView];
     
     UILabel * NameLabel = [[UILabel alloc]init];
-    NameLabel.text = @"姓名";
-    NameLabel.frame = CGRectMake(12, 80, 45, 20);
+    NameLabel.text = @"姓    名";
+    NameLabel.frame = CGRectMake(12, 80, 50, 20);
     NameLabel.textColor = YY33Color;
     NameLabel.textAlignment = NSTextAlignmentLeft;
     NameLabel.font = [UIFont systemFontOfSize:15 weight:0];
     [MainView addSubview:NameLabel];
 
-    UITextField * ACCTextField = [[UITextField alloc] initWithFrame:CGRectMake(80, 80 , 300, 30)];
+    UITextField * ACCTextField = [[UITextField alloc] initWithFrame:CGRectMake(80, 75 , 300, 30)];
     ACCTextField.placeholderColor = YY99Color;
-    [ACCTextField setXmg_Placeholder:@"请输入实姓名"];
+    [ACCTextField setXmg_Placeholder:@"请输入实支付宝姓名"];
     ACCTextField.font = [UIFont systemFontOfSize:14];
     ACCTextField.borderStyle = UITextBorderStyleNone;
     ACCTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     ACCTextField.keyboardType = UIKeyboardTypeNumberPad;
     [MainView addSubview:ACCTextField];
-   
-   
-   
-  
+    self.PayNameField = ACCTextField;
     
-
     
     
 }
+
+
+
+
+
+
+
 @end

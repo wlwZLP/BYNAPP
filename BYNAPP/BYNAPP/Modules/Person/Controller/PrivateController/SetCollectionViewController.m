@@ -15,6 +15,8 @@
 
 @interface SetCollectionViewController ()
 
+@property(nonatomic,strong)UserModel * userModel;
+
 @end
 
 @implementation SetCollectionViewController
@@ -39,6 +41,15 @@
 }
 
 
+-(void)viewWillAppear:(BOOL)animated{
+    
+    self.userModel = [YYSaveTool YY_GetSaveModelWithkey:YYUser modelClass:UserModel.class];
+    
+    [self.collectionView reloadData];
+    
+}
+
+
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -60,38 +71,72 @@
         
         SetTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SetTopCollectionViewCell" forIndexPath:indexPath];
         
-        [cell.Logoimage sd_setImageWithURL:[NSURL URLWithString:self.Model.avatar] placeholderImage:[UIImage imageNamed:@"MainBG"]];
+        [cell.Logoimage sd_setImageWithURL:[NSURL URLWithString:self.userModel.avatar] placeholderImage:[UIImage imageNamed:@"MainBG"]];
         
-        cell.NameLabel.text = self.Model.name;
+        cell.TopHeadImgBtnBlockClick = ^{
+           
+            
+            
+        };
         
-        cell.PersonIDLabel.text = self.Model.User_id;
+        cell.NameLabel.text = self.userModel.name;
         
-        cell.PhoneLabel.text = self.Model.phone;
+        cell.TopNameBtnBlockClick = ^{
+            WChatCollectionViewController * WChatVc = [[WChatCollectionViewController alloc]init];
+            WChatVc.UModel = self.userModel;
+            WChatVc.TildType = @"1";
+            WChatVc.title = @"修改用户名";
+            [self.navigationController pushViewController:WChatVc animated:YES];
+            
+        };
+        
+        cell.PersonIDLabel.text = self.userModel.User_id;
+        
+        cell.PhoneLabel.text = self.userModel.phone;
+        
+        cell.TopPhoneBtnBlockClick = ^{
+            
+            WChatCollectionViewController * WChatVc = [[WChatCollectionViewController alloc]init];
+            WChatVc.UModel = self.userModel;
+            WChatVc.TildType = @"2";
+            WChatVc.title = @"修改手机号";
+            [self.navigationController pushViewController:WChatVc animated:YES];
+            
+        };
          
         return cell;
         
     }else if (indexPath.item ==1){
        
-       SetMidCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SetMidCollectionViewCell" forIndexPath:indexPath];
+        SetMidCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"SetMidCollectionViewCell" forIndexPath:indexPath];
         
-        cell.WChatLabel.text = self.Model.wx_account;
+        cell.WChatLabel.text = self.userModel.wx_account;
         
-        cell.TBaoLabel.text = self.Model.phone;
+        cell.TBaoLabel.text = self.userModel.phone;
         
         cell.WeiChatImgBtnBlockClick  = ^{
+            
             WChatCollectionViewController * WChatVc = [[WChatCollectionViewController alloc]init];
+            WChatVc.UModel = self.userModel;
+            WChatVc.TildType = @"3";
             WChatVc.title = @"绑定微信";
             [self.navigationController pushViewController:WChatVc animated:YES];
+            
         };
         
         cell.TaoBaoBtnBlockClick   = ^{
-           TaobaoCollectionViewController * WChatVc = [[TaobaoCollectionViewController alloc]init];
-           WChatVc.title = @"绑定支付宝";
-           [self.navigationController pushViewController:WChatVc animated:YES];
+            
+           TaobaoCollectionViewController * PayVc = [[TaobaoCollectionViewController alloc]init];
+           PayVc.UModel = self.userModel;
+           PayVc.title = @"绑定支付宝";
+           [self.navigationController pushViewController:PayVc animated:YES];
+            
         };
         
         cell.AutuBtnBlockClick   = ^{
+            
             [self YYShowAlertViewTitle:@"3"];
+            
         };
                
         return cell;
@@ -127,18 +172,16 @@
 }
 
 
-
-
 #pragma mark <UICollectionViewDelegate>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
  
     if (indexPath.item == 0) {
-          return CGSizeMake(YYScreenWidth , 257);
+        return CGSizeMake(YYScreenWidth , 257);
     }else if (indexPath.item == 1){
-          return CGSizeMake(YYScreenWidth , 182);
+        return CGSizeMake(YYScreenWidth , 182);
     }else{
-          return CGSizeMake(YYScreenWidth , 65);
+        return CGSizeMake(YYScreenWidth , 65);
     }
 
 }
@@ -147,14 +190,14 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section{
     
-        return (CGSize){YYScreenWidth,0};
+      return (CGSize){YYScreenWidth,0};
     
 }
 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
     
-       return (CGSize){YYScreenWidth,0};
+     return (CGSize){YYScreenWidth,0};
     
 }
 

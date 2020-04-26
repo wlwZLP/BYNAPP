@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BrandCouponCollectionViewController : YYBaseCollectionViewController
 
-@property(nonatomic,strong)NSString * Details_id;
 
+@property(nonatomic,strong)NSString * Details_id;
 //为1时id为淘宝商品id，
 //为2时id为天猫商品id，
 //为3时id为拼多多商品id，

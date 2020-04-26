@@ -38,14 +38,30 @@
     
     UITextField * NameTextField = [[UITextField alloc] initWithFrame:CGRectMake(22, 10 , 300, 40)];
     NameTextField.placeholderColor = YY99Color;
-    [NameTextField setXmg_Placeholder:@"(必填)请输入对应支付宝号的认证姓名"];
     NameTextField.font = [UIFont systemFontOfSize:14];
     NameTextField.borderStyle = UITextBorderStyleNone;
     NameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     NameTextField.keyboardType = UIKeyboardTypeNumberPad;
     [MainView addSubview:NameTextField];
-    
+    self.MainTextField = NameTextField;
 
+    
+}
+
+
+-(void)setTextFieldString:(NSString *)TextFieldString{
+    
+    
+    if ([TextFieldString isEqualToString:@"1"]) {
+        [self.MainTextField setXmg_Placeholder:@"请输入对应的用户名"];
+    }else if ([TextFieldString isEqualToString:@"2"]){
+        [self.MainTextField setXmg_Placeholder:@"请输入对应的手机号"];
+    }else{
+        [self.MainTextField setXmg_Placeholder:@"请输入对应的微信号"];
+    }
+    
+    
+    
     
 }
 

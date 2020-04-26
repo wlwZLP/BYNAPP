@@ -44,6 +44,7 @@
     LeftImage.image = [UIImage imageNamed:@"iqiyi"];
     LeftImage.frame = CGRectMake(13, 19, 48, 48);
     [self addSubview:LeftImage];
+    self.MainImgView = LeftImage;
     
     
     UILabel * TitleLabel = [[UILabel alloc]init];
@@ -53,6 +54,7 @@
     TitleLabel.frame = CGRectMake(68, 30 , 188, 22);
     TitleLabel.font = [UIFont systemFontOfSize:18 weight:1];
     [self addSubview:TitleLabel];
+    self.NameTitleLabel = TitleLabel;
     
     UITextField * PhoneTextField = [[UITextField alloc] init];
     [PhoneTextField setXmg_Placeholder:@"请输入充值手机号码"];
@@ -65,6 +67,7 @@
     PhoneTextField.keyboardType = UIKeyboardTypeNumberPad;
     [self addSubview:PhoneTextField];
     [self bringSubviewToFront:PhoneTextField];
+    self.PhoneTextField = PhoneTextField;
 
    
     UIView * LineView = [[UIView alloc] init];

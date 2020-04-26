@@ -12,7 +12,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SetCollectionViewController : YYBaseCollectionViewController
 
-@property(nonatomic,strong)UserModel * Model;
 
 @end
 

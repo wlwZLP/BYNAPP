@@ -12,6 +12,8 @@
 
 @interface WChatCollectionViewController ()
 
+@property(nonatomic,strong)NSString * TextSting;
+
 @end
 
 @implementation WChatCollectionViewController
@@ -54,7 +56,9 @@
         
         WChatCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"WChatCollectionViewCell" forIndexPath:indexPath];
         
-    
+        [cell.MainTextField addTarget:self action:@selector(textFieldWithText:) forControlEvents:UIControlEventEditingChanged];
+        
+        cell.TextFieldString = self.TildType;
          
         return cell;
         
@@ -65,10 +69,9 @@
         
         cell.TitString = @"确定";
         
-                
         cell.BottomMainBtnBlockClick = ^{
           
-             [self YYShowAlertViewTitle:@"退出登录"];
+             [self YYShowAlertViewTitle:@"确定修改信息"];
             
         };
         
@@ -78,11 +81,81 @@
     
 }
 
+
+
+#pragma mark =============监听uitextField值的变化============
+
+- (void)textFieldWithText:(UITextField *)textField
+{
+    
+    self.TextSting = textField.text;
+    
+}
+
+
+
 #pragma mark 确定
 
 -(void)YYShowAlertTitleClick{
     
+    if (self.TextSting.length == 0) {
+        
+        [self YYShowMessage:@"请输入对应的信息"];
+        
+        return;
+        
+    }
    
+     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserUpdateInfo];
+    
+    NSDictionary * dict;
+    
+     if ([self.TildType isEqualToString:@"1"]) {
+        dict = @{@"name":self.TextSting};
+     }else if ([self.TildType isEqualToString:@"2"]){
+        dict = @{@"area_code":@"+86",@"phone":self.TextSting};
+     }else{
+        dict = @{@"wx_account":self.TextSting};
+     }
+        
+                           
+    [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
+        
+        if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+            
+            if ([self.TildType isEqualToString:@"1"]) {
+            
+                self.UModel.name = self.TextSting;
+                
+                [YYSaveTool YY_SaveModel:self.UModel key:YYUser];
+                
+            }else if ([self.TildType isEqualToString:@"2"]){
+                
+                self.UModel.phone = self.TextSting;
+                
+                [YYSaveTool YY_SaveModel:self.UModel key:YYUser];
+               
+            }else{
+                
+                self.UModel.wx_account = self.TextSting;
+                
+                [YYSaveTool YY_SaveModel:self.UModel key:YYUser];
+                
+            }
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        }else{
+            
+            [self YYShowMessage:@"修改失败"];
+            
+        }
+             
+    } failure:^(NSError *error, id responseCache) {
+                 
+        [self YYShowMessage:@"修改失败"];
+
+    }];
     
     
 }

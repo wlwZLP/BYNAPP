@@ -75,6 +75,7 @@
 }
 
 
+
 -(void)setTitleArray:(NSArray *)TitleArray{
     
       _TitleArray = TitleArray;
@@ -200,9 +201,8 @@
     
      }
     
-
-    
 }
+
 
 
 -(void)TopBtnClick:(UIButton*)Sender{
@@ -215,6 +215,9 @@
     self.TopBtnBlockClick(Sender.tag);
     
 }
+
+
+
 -(void)BottomBtnClick:(UITapGestureRecognizer *)tapGesture{
 
       self.BottomOldimg.image = [UIImage imageWithColor:UIColor.whiteColor];
@@ -231,45 +234,10 @@
     
       self.BottomOldimg = Newimgview;
      
-    
+     self.BottomBtnBlockClick(Newimgview.tag);
     
     
 }
-
-
-
-
-//-(void)BottomBtnClick:(UIButton*)Sender{
-//
-//    self.BottomOldBtn.selected = NO;
-//    [YYTools ChangeView:self.BottomOldBtn RadiusSize:10 BorderColor:YY66Color];
-//    Sender.selected = YES;
-//    self.BottomOldBtn = Sender;
-//    [YYTools ChangeView:self.BottomOldBtn RadiusSize:0 BorderColor:[UIColor clearColor]];
-//     self.BottomBtnBlockClick(Sender.tag);
-//}
-//          [TitleBtn setBackgroundImage:[UIImage imageWithColor:UIColor.whiteColor] forState:UIControlStateNormal];
-//          TitleBtn.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-//          [TitleBtn setBackgroundImage:[UIImage imageNamed:@"brandMBg"] forState:UIControlStateSelected];
-//          [TitleBtn setTitleColor:YY33Color forState:UIControlStateNormal];
-//          [TitleBtn setTitleColor:YY33Color forState:UIControlStateSelected];
-//          TitleBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-//          TitleBtn.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-//          NSString * TitleString = [NSString stringWithFormat:@"     %@\n  ￥%@\n官方价%@",self.TitleListArray[index].validity,self.TitleListArray[index].member_price,self.TitleListArray[index].face_price];
-//          [TitleBtn setTitle:TitleString forState:UIControlStateNormal];
-//          [TitleBtn addTarget:self action:@selector(BottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//          TitleBtn.tag = index;
-//          TitleBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-//          [YYTools ChangeView:TitleBtn RadiusSize:10 BorderColor:YY66Color];
-//          [self.BottomView addSubview:TitleBtn];
-//          NSMutableAttributedString * CouponString = [[NSMutableAttributedString alloc] initWithString:TitleBtn.titleLabel.text];
-//          NSRange range = [CouponString.string rangeOfString:@"\n"];
-         
-//          NSRange Range1 = NSMakeRange(0, 1);
-//          NSRange Range2 = NSMakeRange(cell.CouponPriceLabel.text.length - 3, 3);
-//          [CouponString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13] range:Range1];
-//          [CouponString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:Range2];
-//          [cell.CouponPriceLabel setAttributedText:CouponString];
 
 
 

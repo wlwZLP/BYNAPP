@@ -14,9 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic,copy) void(^WeiChatImgBtnBlockClick)(void);
 
-
 @property (nonatomic,copy) void(^TaoBaoBtnBlockClick)(void);
-
 
 @property (nonatomic,copy) void(^AutuBtnBlockClick)(void);
 

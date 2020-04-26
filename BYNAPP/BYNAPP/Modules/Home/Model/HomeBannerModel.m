@@ -13,6 +13,7 @@
 + (NSDictionary *)modelCustomPropertyMapper {
     
     return @{@"banner_id" : @"id",
+             @"target_path" : @"target.path",
              @"target_Sub_type" : @"target.type",
              @"target_item_id" : @"target.item_id",
              @"target_Tactivity_id" : @"target.Tactivity_id",

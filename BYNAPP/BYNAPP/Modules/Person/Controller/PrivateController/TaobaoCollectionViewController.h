@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TaobaoCollectionViewController : YYBaseCollectionViewController
 
+@property(nonatomic,strong)UserModel * UModel;
+
 @end
 
 NS_ASSUME_NONNULL_END

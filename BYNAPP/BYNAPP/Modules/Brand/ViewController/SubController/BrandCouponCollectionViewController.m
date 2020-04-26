@@ -54,14 +54,20 @@
     
     [self CreateBrandDetailsBottomView];
     
+    [self GetHomeGoodsDetailsNetData];
+   
     
 }
 
+
 -(void)viewWillAppear:(BOOL)animated{
     
-     [self GetHomeGoodsDetailsNetData];
+     
     
 }
+
+
+#pragma mark ===============网络请求=============
 
 -(void)GetHomeGoodsDetailsNetData{
     
@@ -87,6 +93,7 @@
     
     
 }
+
 
 
 

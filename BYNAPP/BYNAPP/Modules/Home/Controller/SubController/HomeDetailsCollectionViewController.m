@@ -380,7 +380,7 @@
     
     dispatch_group_enter(group);
 
-    NSDictionary * dict = @{@"id":self.item_id,@"page":@"1"};
+    NSDictionary * dict = @{@"item_id":self.item_id,@"page":[NSString stringWithFormat:@"%ld",self.RefreshCount]};
                
     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsSimlarItems];
 

@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TaoBaoCollectionViewCell : UICollectionViewCell
 
+@property(nonatomic,strong) UITextField * PayAccountField;
+
+@property(nonatomic,strong) UITextField * PayNameField;
 @end
 
 NS_ASSUME_NONNULL_END

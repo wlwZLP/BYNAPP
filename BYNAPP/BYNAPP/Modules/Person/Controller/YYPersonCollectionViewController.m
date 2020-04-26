@@ -109,7 +109,7 @@
          
             self.Usermodel = [UserModel modelWithDictionary:Data];
             
-            [YYSaveTool YY_SaveModel:self.Usermodel key:YYUser];
+             [YYSaveTool YY_SaveModel:self.Usermodel key:YYUser];
             
         }
    
@@ -172,7 +172,7 @@
             PersonLoginHeadCollectionViewCell  * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"PersonLoginHeadCollectionViewCell" forIndexPath:indexPath];
                        
             cell.PersonVipheadBtnBlockClick = ^(NSString * _Nonnull ClickString) {
-                           
+          
                   [self PersonPushNextController:ClickString];
                            
              };
@@ -259,9 +259,16 @@
         
         SetCollectionViewController * SetVc = [[SetCollectionViewController alloc]init];
         SetVc.title = @"个人信息";
-        SetVc.Model = self.Usermodel;
         [self.navigationController pushViewController:SetVc animated:YES];
             
+    }else if ([PushTitleString isEqualToString:@"复制邀请码"]){
+        
+          UIPasteboard * pasteboard = [UIPasteboard generalPasteboard];
+                           
+          pasteboard.string = self.Usermodel.recommend_code;
+
+          [self YYShowMessage:@"复制成功!"];
+        
     }else if ([PushTitleString isEqualToString:@"提现"]){
         
         MyWithdrawCollectionViewController * SetVc = [[MyWithdrawCollectionViewController alloc]init];
@@ -326,11 +333,9 @@
         
     }
     
-    
-    
-    
-    
+
 }
+
 
 
 #pragma mark 最后一区间点击事件

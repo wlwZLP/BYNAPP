@@ -12,7 +12,9 @@
 
 @interface TaobaoCollectionViewController ()
 
+@property(nonatomic,strong)NSString * PayAccountString;
 
+@property(nonatomic,strong)NSString * PayNameString;
 
 @end
 
@@ -55,9 +57,12 @@
         
         TaoBaoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TaoBaoCollectionViewCell" forIndexPath:indexPath];
         
-    
+        [cell.PayAccountField addTarget:self action:@selector(AccountFieldWithText:) forControlEvents:UIControlEventEditingChanged];
+        
+        [cell.PayNameField addTarget:self action:@selector(NameFieldWithText:) forControlEvents:UIControlEventEditingChanged];
          
         return cell;
+        
         
     }else{
         
@@ -68,7 +73,7 @@
         
         cell.BottomMainBtnBlockClick = ^{
           
-             [self YYShowAlertViewTitle:@"退出登录"];
+             [self YYShowAlertViewTitle:@"确定修改信息"];
             
         };
         
@@ -78,11 +83,63 @@
     
 }
 
+#pragma mark =============监听uitextField值的变化============
+
+- (void)AccountFieldWithText:(UITextField *)textField
+{
+    
+    self.PayAccountString = textField.text;
+    
+}
+
+
+- (void)NameFieldWithText:(UITextField *)textField
+{
+    
+    self.PayNameString = textField.text;
+    
+}
+
+
 #pragma mark 确定
 
 -(void)YYShowAlertTitleClick{
     
+   if (self.PayAccountString.length == 0 || self.PayNameString.length == 0 ) {
+        
+        [self YYShowMessage:@"请输入对应的信息"];
+        
+        return;
+        
+    }
    
+     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIUserUpdateInfo];
+    
+    NSDictionary * dict = @{@"ali_account":self.PayAccountString,@"real_name":self.PayNameString};
+                           
+    [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
+        
+        if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+            
+            self.UModel.ali_account = self.PayAccountString;
+            
+            self.UModel.real_name = self.PayNameString;
+                
+            [YYSaveTool YY_SaveModel:self.UModel key:YYUser];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        }else{
+            
+              [self YYShowMessage:@"修改失败"];
+            
+        }
+             
+    } failure:^(NSError *error, id responseCache) {
+                 
+        [self YYShowMessage:@"修改失败"];
+
+    }];
     
     
 }

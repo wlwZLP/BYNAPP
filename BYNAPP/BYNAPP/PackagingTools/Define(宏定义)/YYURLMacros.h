@@ -66,7 +66,7 @@
 #define URL_APIMPVOerders @"api/mpv2/orders"
 //21-2.卡券列表订单详情
 #define URL_APIMPVOerdersDetail @"api/mpv2/order-detail"
-//21-3.卡券列表订单详情
+//21-3.卡券订单取消
 #define URL_APIMPVOerdersCancel @"api/mpv2/order-cancel"
 //22.新手教程
 #define URL_APIUserArticleCategories @"api/user/article_categories"
@@ -108,8 +108,10 @@
 #define URL_APIMPVMemberBuy @"api/mpv2/member-buy"
 //40.会员页面
 #define URL_APIMPVMemberpage @"api/mpv2/member-page"
-
-
+//41.修改个人信息
+#define URL_APIUserUpdateInfo @"api/user/update_info"
+//42.分享商品海报
+#define URL_APIMpvItemPoster @"api/mpv2/item_poster"
 
 
 #endif /* URLMacros_h */

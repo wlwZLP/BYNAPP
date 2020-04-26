@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 //Target 字典数据，根据里面数据进行跳转
+@property (nonatomic, readwrite, strong) NSString * target_path;
 @property (nonatomic, readwrite, strong) NSString * target_Sub_type;
 @property (nonatomic, readwrite, strong) NSString * target_item_id;
 @property (nonatomic, readwrite, strong) NSString * target_Tactivity_id;

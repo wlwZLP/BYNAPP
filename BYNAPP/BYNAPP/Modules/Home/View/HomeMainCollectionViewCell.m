@@ -264,8 +264,9 @@
     self.SaleNumLabel.text = [NSString stringWithFormat:@"已售%@件",Model.month_sales];
     
     
-    
 }
+
+
 
 
 

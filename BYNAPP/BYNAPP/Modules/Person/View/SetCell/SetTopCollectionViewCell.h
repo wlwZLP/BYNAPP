@@ -20,12 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel * PhoneLabel;
 
-
 @property (nonatomic,copy) void(^TopHeadImgBtnBlockClick)(void);
 
-
 @property (nonatomic,copy) void(^TopNameBtnBlockClick)(void);
-
 
 @property (nonatomic,copy) void(^TopPhoneBtnBlockClick)(void);
 
