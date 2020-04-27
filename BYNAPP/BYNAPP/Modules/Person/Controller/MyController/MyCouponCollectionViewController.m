@@ -166,6 +166,9 @@
         
        
         
+        
+        
+        
     }
     
 
@@ -176,7 +179,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
  
-     return CGSizeMake(YYScreenWidth , (YYScreenWidth -24) * 0.38 );
+     return CGSizeMake(YYScreenWidth , (YYScreenWidth -24) * 0.38 + 10);
    
 }
 

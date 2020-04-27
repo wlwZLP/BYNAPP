@@ -45,6 +45,7 @@
 #import "HomeDetailsCollectionViewController.h"
 #import "WeakWKScriptMessageDelegate.h"
 #import "YYWebViewController.h"
+#import "LoginCollectionViewController.h"
 #import "RootNavigationController.h"
 #import "PPNetworkTools.h"
 #import "XMGFileTool.h"

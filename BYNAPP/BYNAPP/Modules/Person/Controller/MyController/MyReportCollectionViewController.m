@@ -12,6 +12,7 @@
 #import "MyIncomeCollectionViewController.h"
 #import "MyWithdrawCollectionViewController.h"
 #import "ReportModel.h"
+#import "YYReportMessageView.h"
 
 @interface MyReportCollectionViewController ()
 
@@ -22,6 +23,9 @@
 @property(nonatomic,strong)NSArray<ReportModel*> * PlusListAttay;
 
 @property(nonatomic,strong)NSDictionary * DataDic;
+
+@property(nonatomic,strong)YYReportMessageView * MessageView;
+
 
 @end
 
@@ -58,8 +62,6 @@
         self.OrderListAttay = [NSArray modelArrayWithClass:[ReportModel class] json:EncodeArrayFromDic(self.DataDic, @"order_data")];
         
         self.PlusListAttay = [NSArray modelArrayWithClass:[ReportModel class] json:EncodeArrayFromDic(self.DataDic, @"plus_data")];
-    
-        YYNSLog(@"我的数据报表-------%@",self.DataDic);
         
         [self.collectionView reloadData];
           
@@ -109,16 +111,44 @@
      if (indexPath.item == 0) {
         cell.DataArray = self.OrderListAttay;
         cell.TitleLabel.text = @"佣金收益（预估收益于次月28日进行结算）";
+       
      }else{
         cell.DataArray = self.PlusListAttay;
         cell.TitleLabel.text = @"会员费收益（预估收益于7天后进行结算）";
+      
      }
     
-      return cell;
+     cell.ImgBtnBlockClick = ^{
+         if (indexPath.item == 0) {
+              [[LPAnimationView sharedMask]show:self.MessageView withType:QWAlertViewStyleAlert];
+              self.MessageView.TitleTextlabel.text = @"根据官方联盟规则,每月28日结算上月预估佣金。即每月28号结算上个月确认收货的订单，结算完成后'可提现佣金'才会同步更新金额。因结算订单量大,结算时间会较长,结算会在28号晚上完成,建议您29号进行提现。如：10月份确认收货的订单, 11月28号才会进行结算，以此类推.";
+         }else{
+             
+             [[LPAnimationView sharedMask]show:self.MessageView withType:QWAlertViewStyleAlert];
+             self.MessageView.TitleTextlabel.text = @"用户购买会员权益七天后，如无申请退款，“可提现会员费”才会同步更新金额。";
+         }
+     };
+    
+     return cell;
     
 }
 
 
+
+
+#pragma mark ===============自定义View=============
+-(YYReportMessageView*)MessageView
+{
+    
+    if (_MessageView == nil) {
+        
+        _MessageView = [[YYReportMessageView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , YYScreenHeight)];
+        
+    }
+    
+    return _MessageView;
+    
+}
 
 #pragma mark <UICollectionViewDelegate>
 

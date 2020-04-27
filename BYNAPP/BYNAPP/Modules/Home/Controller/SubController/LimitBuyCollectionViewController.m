@@ -67,6 +67,7 @@ static int const TimelabelWith = 90;
         
 }
 
+
 #pragma mark 创建头部控件
 -(void)CreateLimitBuyTopnavView:(NSArray <HomeTimeModel*> *)TitleListArray{
     

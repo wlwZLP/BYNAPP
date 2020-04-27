@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UILabel * TitleLabel;
 
+@property (nonatomic,copy) void(^ImgBtnBlockClick)(void);
+
 
 @end
 

@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BrandDetailsModel : NSObject
 
+@property (nonatomic, strong) NSString * B_id;
 @property (nonatomic, strong) NSString * coupon_name;
 @property (nonatomic, strong) NSString * brand_cover;
 @property (nonatomic, strong) NSString * fl_commission;

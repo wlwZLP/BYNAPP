@@ -84,6 +84,10 @@
 		187F5561244033D2005205E1 /* InvitImgCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F5560244033D2005205E1 /* InvitImgCollectionViewCell.m */; };
 		187F556424404B91005205E1 /* YYBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F556324404B91005205E1 /* YYBaseViewController.m */; };
 		187F55672440503F005205E1 /* CustomCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 187F55662440503F005205E1 /* CustomCollectionViewCell.m */; };
+		1880566C2456BB0900E2FA3D /* YYUpdateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880566B2456BB0900E2FA3D /* YYUpdateView.m */; };
+		188056702456C55B00E2FA3D /* UpdatetitleCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880566F2456C55B00E2FA3D /* UpdatetitleCollectionViewCell.m */; };
+		188056732456CD1100E2FA3D /* YYPOPWindowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 188056722456CD1100E2FA3D /* YYPOPWindowView.m */; };
+		188056762456DDE300E2FA3D /* MyJingDongModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 188056752456DDE300E2FA3D /* MyJingDongModel.m */; };
 		1880F395243C8393003EECB9 /* BrandPlistModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F394243C8393003EECB9 /* BrandPlistModel.m */; };
 		1880F398243C881E003EECB9 /* HomePlistModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F397243C881E003EECB9 /* HomePlistModel.m */; };
 		1880F39B243C8D32003EECB9 /* BrandRecomdCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1880F39A243C8D32003EECB9 /* BrandRecomdCollectionViewCell.m */; };
@@ -139,6 +143,7 @@
 		18A74A89244D85B3004EEF8B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A74A88244D85B3004EEF8B /* Foundation.framework */; };
 		18A74A8B244D85BF004EEF8B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A74A8A244D85BF004EEF8B /* CFNetwork.framework */; };
 		18A74A8D244D85CE004EEF8B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18A74A8C244D85CE004EEF8B /* CoreMotion.framework */; };
+		18B004AF2456931900417A4B /* YYReportMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B004AE2456931900417A4B /* YYReportMessageView.m */; };
 		18B780102452BF4C008AC2E1 /* JKSandBoxManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B7800E2452BF4C008AC2E1 /* JKSandBoxManager.m */; };
 		18B780132452C3F0008AC2E1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18B780122452C3F0008AC2E1 /* CoreGraphics.framework */; };
 		18B780152452C3F7008AC2E1 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18B780142452C3F7008AC2E1 /* WebKit.framework */; };
@@ -378,6 +383,14 @@
 		187F556324404B91005205E1 /* YYBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYBaseViewController.m; sourceTree = "<group>"; };
 		187F55652440503F005205E1 /* CustomCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewCell.h; sourceTree = "<group>"; };
 		187F55662440503F005205E1 /* CustomCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewCell.m; sourceTree = "<group>"; };
+		1880566A2456BB0900E2FA3D /* YYUpdateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYUpdateView.h; sourceTree = "<group>"; };
+		1880566B2456BB0900E2FA3D /* YYUpdateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYUpdateView.m; sourceTree = "<group>"; };
+		1880566E2456C55B00E2FA3D /* UpdatetitleCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdatetitleCollectionViewCell.h; sourceTree = "<group>"; };
+		1880566F2456C55B00E2FA3D /* UpdatetitleCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UpdatetitleCollectionViewCell.m; sourceTree = "<group>"; };
+		188056712456CD1100E2FA3D /* YYPOPWindowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYPOPWindowView.h; sourceTree = "<group>"; };
+		188056722456CD1100E2FA3D /* YYPOPWindowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYPOPWindowView.m; sourceTree = "<group>"; };
+		188056742456DDE300E2FA3D /* MyJingDongModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyJingDongModel.h; sourceTree = "<group>"; };
+		188056752456DDE300E2FA3D /* MyJingDongModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyJingDongModel.m; sourceTree = "<group>"; };
 		1880F393243C8393003EECB9 /* BrandPlistModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrandPlistModel.h; sourceTree = "<group>"; };
 		1880F394243C8393003EECB9 /* BrandPlistModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrandPlistModel.m; sourceTree = "<group>"; };
 		1880F396243C881E003EECB9 /* HomePlistModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePlistModel.h; sourceTree = "<group>"; };
@@ -475,6 +488,8 @@
 		18A74A88244D85B3004EEF8B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		18A74A8A244D85BF004EEF8B /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		18A74A8C244D85CE004EEF8B /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		18B004AD2456931900417A4B /* YYReportMessageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYReportMessageView.h; sourceTree = "<group>"; };
+		18B004AE2456931900417A4B /* YYReportMessageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYReportMessageView.m; sourceTree = "<group>"; };
 		18B7800E2452BF4C008AC2E1 /* JKSandBoxManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKSandBoxManager.m; sourceTree = "<group>"; };
 		18B7800F2452BF4C008AC2E1 /* JKSandBoxManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKSandBoxManager.h; sourceTree = "<group>"; };
 		18B780112452C3E7008AC2E1 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -836,6 +851,8 @@
 				DCE664BB2444CD9300C7BE3B /* HomeBannerModel.m */,
 				DCE664C32444CE7100C7BE3B /* HomeTimeModel.h */,
 				DCE664C42444CE7100C7BE3B /* HomeTimeModel.m */,
+				188056742456DDE300E2FA3D /* MyJingDongModel.h */,
+				188056752456DDE300E2FA3D /* MyJingDongModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1288,12 +1305,23 @@
 				187D066A24405858005DAA0C /* YYTeamHeadView.m */,
 				187D067C24407260005DAA0C /* YYReportHeadView.h */,
 				187D067D24407260005DAA0C /* YYReportHeadView.m */,
+				18B004AD2456931900417A4B /* YYReportMessageView.h */,
+				18B004AE2456931900417A4B /* YYReportMessageView.m */,
 				18521D9A244DAE3F00BB5172 /* YYAgreeView.h */,
 				18521D9B244DAE3F00BB5172 /* YYAgreeView.m */,
 				18521D9D244E9C7700BB5172 /* YYWChatView.h */,
 				18521D9E244E9C7700BB5172 /* YYWChatView.m */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		1880566D2456C53700E2FA3D /* Subcell */ = {
+			isa = PBXGroup;
+			children = (
+				1880566E2456C55B00E2FA3D /* UpdatetitleCollectionViewCell.h */,
+				1880566F2456C55B00E2FA3D /* UpdatetitleCollectionViewCell.m */,
+			);
+			path = Subcell;
 			sourceTree = "<group>";
 		};
 		1880F39F243C8E23003EECB9 /* SubController */ = {
@@ -1312,6 +1340,11 @@
 		1899901C24344A1D00B5D1D6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				1880566A2456BB0900E2FA3D /* YYUpdateView.h */,
+				1880566B2456BB0900E2FA3D /* YYUpdateView.m */,
+				188056712456CD1100E2FA3D /* YYPOPWindowView.h */,
+				188056722456CD1100E2FA3D /* YYPOPWindowView.m */,
+				1880566D2456C53700E2FA3D /* Subcell */,
 				1899902624344A8E00B5D1D6 /* HomeTitle.plist */,
 				1899902424344A4F00B5D1D6 /* data.json */,
 			);
@@ -1705,6 +1738,7 @@
 				18A216042433426900DC0FF8 /* YYBrandCollectionViewController.m in Sources */,
 				18DC3925243F29880030DE97 /* MYCollectCollectionViewController.m in Sources */,
 				18633B902432D79100CE3E60 /* UITextField+Placeholder.m in Sources */,
+				188056762456DDE300E2FA3D /* MyJingDongModel.m in Sources */,
 				189990332434838F00B5D1D6 /* HomeLikeCollectionViewController.m in Sources */,
 				189990302434800000B5D1D6 /* HomeMainCollectionViewController.m in Sources */,
 				1880F39E243C8D43003EECB9 /* BrandGridCollectionViewCell.m in Sources */,
@@ -1745,6 +1779,7 @@
 				189CD517243C722200CC279C /* SaleCollectionViewCell.m in Sources */,
 				1869CA6C243DB07600F3C79E /* GoodsShopCollectionViewCell.m in Sources */,
 				1889D4CA244445CE00DEBE90 /* YYWithdrawHeadView.m in Sources */,
+				1880566C2456BB0900E2FA3D /* YYUpdateView.m in Sources */,
 				188F5E622446B66F0020B245 /* TBMatterCollectionViewController.m in Sources */,
 				18633B842432D79100CE3E60 /* UIImage+imgaeWithColor.m in Sources */,
 				18633B8C2432D79100CE3E60 /* UITextView+ZWPlaceHolder.m in Sources */,
@@ -1775,6 +1810,7 @@
 				DC7924F22442B85C007C5CB4 /* OrderListCollectionViewController.m in Sources */,
 				188F5E50244699E00020B245 /* BrandListCollectionViewController.m in Sources */,
 				1895065C24495E1400F9147F /* BDetailsCenCollectionViewCell.m in Sources */,
+				188056732456CD1100E2FA3D /* YYPOPWindowView.m in Sources */,
 				1895065F24495E5B00F9147F /* BDetailsShuoCollectionViewCell.m in Sources */,
 				186F3B512445BEAC002737DA /* BrandTopTwoCollectionViewCell.m in Sources */,
 				1880F3A2243C8E41003EECB9 /* BrandRechargeCollectionViewController.m in Sources */,
@@ -1823,6 +1859,7 @@
 				1836AFD42431E61B00EA8F30 /* YYPersonCollectionViewController.m in Sources */,
 				1899D8212435E73A00809BFD /* UISearchBar+Text.m in Sources */,
 				185B9ACC24504F6800CD7255 /* YYShareView.m in Sources */,
+				188056702456C55B00E2FA3D /* UpdatetitleCollectionViewCell.m in Sources */,
 				18A74A74244D7DBA004EEF8B /* LPAnimationView.m in Sources */,
 				18DC38FC243F12AC0030DE97 /* UIImageView+YY.m in Sources */,
 				183C30E82444071100FB4BDA /* PhoneCollectionViewController.m in Sources */,
@@ -1830,6 +1867,7 @@
 				188F5E562446B41F0020B245 /* JiuJiuCollectionViewController.m in Sources */,
 				18DC38F9243EF4DC0030DE97 /* LimitBuyCollectionViewCell.m in Sources */,
 				1836AFC42431E28300EA8F30 /* LPRefreshGifHeader.m in Sources */,
+				18B004AF2456931900417A4B /* YYReportMessageView.m in Sources */,
 				1881B0F624519BE700E29288 /* CouponsModel.m in Sources */,
 				187F555424400F66005205E1 /* CouponCollectionViewCell.m in Sources */,
 				DCE664BC2444CD9300C7BE3B /* HomeBannerModel.m in Sources */,

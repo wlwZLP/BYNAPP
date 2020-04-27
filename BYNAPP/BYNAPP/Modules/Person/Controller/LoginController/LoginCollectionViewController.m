@@ -359,7 +359,6 @@
     if (!_AgreeView) {
         _AgreeView = [[YYAgreeView alloc]init];
         _AgreeView.frame = CGRectMake(0, 0, YYScreenWidth, YYScreenHeight);
-        _AgreeView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
     }
     return _AgreeView;
 }

@@ -57,9 +57,9 @@
     
     [self.collectionView registerClass:[PersonToolsCollectionViewCell class] forCellWithReuseIdentifier:@"PersonToolsCollectionViewCell"];
     
-     [self.collectionView registerClass:[PersonMainCollectionViewCell class] forCellWithReuseIdentifier:@"PersonMainCollectionViewCell"];
+    [self.collectionView registerClass:[PersonMainCollectionViewCell class] forCellWithReuseIdentifier:@"PersonMainCollectionViewCell"];
      
-     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
   
 }
@@ -116,10 +116,6 @@
         [self.collectionView reloadData];
        
    } failure:^(NSError *error, id responseCache) {
-   
-        NSDictionary * Data = EncodeDicFromDic(responseCache, @"data");
-          
-        self.Usermodel = [UserModel modelWithDictionary:Data];
        
         [self.collectionView reloadData];
 
@@ -173,9 +169,9 @@
                        
             cell.PersonVipheadBtnBlockClick = ^(NSString * _Nonnull ClickString) {
           
-                  [self PersonPushNextController:ClickString];
+                [self PersonPushNextController:ClickString];
                            
-             };
+            };
                        
              cell.Model = self.Usermodel;
                

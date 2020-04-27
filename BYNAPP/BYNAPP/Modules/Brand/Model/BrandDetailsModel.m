@@ -10,4 +10,9 @@
 
 @implementation BrandDetailsModel
 
++ (NSDictionary *)modelCustomPropertyMapper {
+    
+    return @{@"B_id":@"id"};
+    
+}
 @end

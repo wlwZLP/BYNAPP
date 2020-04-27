@@ -112,6 +112,14 @@
 #define URL_APIUserUpdateInfo @"api/user/update_info"
 //42.分享商品海报
 #define URL_APIMpvItemPoster @"api/mpv2/item_poster"
+//43.检查APP是否需要更新
+#define URL_APIGoodsCheckVersion @"api/goods/check_version"
+//44.检查广告弹窗
+#define URL_APIGoodsPOPWindow @"api/goods/pop_window"
+
+
+
+
 
 
 #endif /* URLMacros_h */

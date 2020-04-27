@@ -7,8 +7,14 @@
 //
 
 #import "YYBaseCollectionViewController.h"
+#import "YYUpdateView.h"
+#import "YYPOPWindowView.h"
 
 @interface YYBaseCollectionViewController ()<DZNEmptyDataSetSource,DZNEmptyDataSetDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
+
+@property(nonatomic,strong)YYUpdateView * UpdateView;
+
+@property(nonatomic,strong)YYPOPWindowView * POPWindowView;
 
 @end
 
@@ -158,6 +164,13 @@ static NSString * const reuseIdentifier = @"Cell";
     
 }
 
+
+-(void)YYShowAlertTitleClick{
+    
+    
+    
+}
+
 /**
  *  根据内容提示
  */
@@ -179,6 +192,58 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 
+/**
+*  检查APP是否需要更新
+*/
+-(void)YYGetCheckAPPUdataMessage{
+    
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsCheckVersion];
+    
+    NSDictionary * dict = @{@"system":@"ios"};
+    
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+         
+        if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+            
+            [[LPAnimationView sharedMask]show:self.UpdateView withType:QWAlertViewStyleAlert];
+            
+        }
+        
+    } failure:^(NSError *error, id responseCache) {
+        
+
+        
+    }];
+    
+ 
+}
+
+/**
+*  检查当前界面是否有弹框
+*/
+-(void)YYGetPOPWindowAdverView{
+    
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsPOPWindow];
+    
+    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+         
+        if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
+            
+            [[LPAnimationView sharedMask]show:self.POPWindowView withType:QWAlertViewStyleAlert];
+            
+        }
+        
+    } failure:^(NSError *error, id responseCache) {
+        
+
+        
+    }];
+    
+ 
+}
+
 #pragma mark 设置右边导航栏
 
 -(void)YYSetRightNavTitle:(NSString *)title target:(id)target action:(SEL)action{
@@ -196,6 +261,50 @@ static NSString * const reuseIdentifier = @"Cell";
     
     
 }
+
+
+
+#pragma mark ===============自定义View=============
+-(YYUpdateView *)UpdateView{
+    
+    if (_UpdateView == nil) {
+        
+        _UpdateView = [[YYUpdateView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , YYScreenHeight)];
+        
+    }
+    
+    return _UpdateView;
+    
+}
+
+-(YYPOPWindowView *)POPWindowView
+{
+    
+    if (_POPWindowView == nil) {
+        
+        _POPWindowView = [[YYPOPWindowView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , YYScreenHeight)];
+        
+        YYWeakSelf(self);
+        
+        _POPWindowView.POPWindowImgBlockClick = ^{
+            
+            [[LPAnimationView sharedMask]dismiss];
+            
+            [weakself POPWindowImgClick];
+            
+        };
+        
+    }
+    
+    return _POPWindowView;
+    
+}
+
+
+
+
+
+
 
 
 

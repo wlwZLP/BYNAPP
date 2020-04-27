@@ -111,7 +111,6 @@
     
     UILabel * TitleLabel = [[UILabel alloc]init];
     TitleLabel.text = @"瑞雪黑森林摩卡中杯";
-//    TitleLabel.frame = CGRectMake(160, 12, 126, 20);
     TitleLabel.textAlignment = NSTextAlignmentCenter;
     TitleLabel.textColor = YY22Color;
     TitleLabel.font = [UIFont systemFontOfSize:12 weight:0];
@@ -149,7 +148,6 @@
     [MainBGView addSubview:LineView];
     
     UIButton * CanceBtn = [[UIButton alloc]init];
-    CanceBtn.frame = CGRectMake(MainBGView.ZLP_width - 168, 102, 70, 24);
     [CanceBtn setTitle:@"取消订单" forState:UIControlStateNormal];
     [CanceBtn setTitleColor:YYHexColor(@"#B2B2B2") forState:UIControlStateNormal];
     [YYTools ChangeView:CanceBtn RadiusSize:10 BorderColor:YYHexColor(@"#B2B2B2")];
@@ -157,16 +155,28 @@
     [CanceBtn addTarget:self action:@selector(CancelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [MainBGView addSubview:CanceBtn];
     CanceBtn.hidden = YES;
+    [CanceBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(MainBGView.mas_right).with.offset(-100);
+        make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-10);
+        make.width.offset(70);
+        make.height.offset(24);
+    }];
     self.LeftBtn = CanceBtn;
    
     UIButton * RightBtn = [[UIButton alloc]init];
-    RightBtn.frame = CGRectMake(MainBGView.ZLP_width -86, 102, 70, 24);
+//    RightBtn.frame = CGRectMake(MainBGView.ZLP_width -86, 102, 70, 24);
     [RightBtn setTitle:@"立即支付" forState:UIControlStateNormal];
     [RightBtn setTitleColor:YY22Color forState:UIControlStateNormal];
     [YYTools ChangeView:RightBtn RadiusSize:10 BorderColor:YY22Color];
     RightBtn.titleLabel.font = [UIFont systemFontOfSize:12];
     [RightBtn addTarget:self action:@selector(PayBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [MainBGView addSubview:RightBtn];
+    [RightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(MainBGView.mas_right).with.offset(-10);
+        make.bottom.equalTo(MainBGView.mas_bottom).with.offset(-10);
+        make.width.offset(70);
+        make.height.offset(24);
+    }];
     RightBtn.hidden = YES;
     self.RightBtn = RightBtn;
     
@@ -223,7 +233,9 @@
         [self.RightBtn setTitle:@"查看卡券" forState:UIControlStateNormal];
         
     }else if ([Model.status isEqualToString:@"3"]){
-        
+
+
+#pragma mark ===============支付成功  等待发货=============
         self.RightImage.image = [UIImage imageNamed:@"cardfa"];
         self.LeftMainView.backgroundColor = YYHexColor(@"#FFD117");
         self.PriceLabel.textColor = YY22Color;
@@ -231,6 +243,8 @@
         self.EndTimeLabel.textColor = YY22Color;
         self.LeftBtn.hidden = YES;
         self.RightBtn.hidden = NO;
+        [self.RightBtn setTitle:@"查看卡券" forState:UIControlStateNormal];
+        
         
     }
   
@@ -241,8 +255,12 @@
      
     self.TitleLabel.text = Model.goods_name;
      
-    self.EndTimeLabel.text = [NSString stringWithFormat:@" %@ ",Model.coupons[0].effective_time];
-     
+    if (Model.coupons[0].effective_time.length == 0) {
+       self.EndTimeLabel.text = @"";
+    }else{
+       self.EndTimeLabel.text = [NSString stringWithFormat:@" %@ ",Model.coupons[0].effective_time];
+    }
+    
     self.BuyTimeLabel.text = [NSString stringWithFormat:@"购买时间 %@ ",Model.created_at];
      
     self.BuyNumLabel.text = [NSString stringWithFormat:@"流水号 %@",Model.order_no];

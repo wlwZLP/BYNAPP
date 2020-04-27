@@ -17,7 +17,7 @@
 
 @interface HomeBrandCateCollectionViewController ()
 
-@property(nonatomic,strong)NSArray<BrandMainModel*> *  BrandArray;
+@property(nonatomic,strong)NSMutableArray<BrandMainModel*> *  BrandArray;
 
 
 @end
@@ -28,10 +28,18 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    self.BrandArray = [NSMutableArray array];
  
     [self.collectionView registerClass:[BrandRecomdCollectionViewCell class] forCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell"];
     
     [self.collectionView registerClass:[BrandCardCollectionViewCell class] forCellWithReuseIdentifier:@"BrandCardCollectionViewCell"];
+    
+    self.collectionView.mj_footer = [LPRefreshFooter footerWithRefreshingBlock:^{
+          
+        [self GetBrandOtherNetMoreData];
+          
+    }];
     
 }
 
@@ -57,7 +65,9 @@
         
         NSArray * DataArray = EncodeArrayFromDic(DataDic, @"data");
     
-        self.BrandArray = [[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray] mutableCopy];
+        [self.BrandArray addObjectsFromArray:[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray]];
+        
+        self.RefreshCount ++ ;
         
         [self.collectionView reloadData];
         
@@ -67,8 +77,39 @@
             
         NSArray * DataArray = EncodeArrayFromDic(DataDic, @"data");
         
-        self.BrandArray = [[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray] mutableCopy];
+        [self.BrandArray addObjectsFromArray:[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray]];
             
+        [self.collectionView reloadData];
+       
+    }];
+    
+}
+
+
+-(void)GetBrandOtherNetMoreData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVCategoryProducts];
+    
+    NSDictionary * dict = @{@"cid":self.Brand_id,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+                  
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+    
+        NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+        
+        NSArray * DataArray = EncodeArrayFromDic(DataDic, @"data");
+    
+        [self.BrandArray addObjectsFromArray:[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray]];
+        
+        self.RefreshCount ++ ;
+        
+        [self.collectionView.mj_footer endRefreshing];
+        
+        [self.collectionView reloadData];
+        
+    } failure:^(NSError *error, id responseCache) {
+     
+        [self.collectionView.mj_footer endRefreshing];
+        
         [self.collectionView reloadData];
        
     }];

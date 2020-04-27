@@ -33,6 +33,7 @@
 
 @property(nonatomic,strong)YYBuyVipHeadView * BuyHeadView;
 
+@property(nonatomic,strong)NSString * ChargePhone;
 
 @end
 
@@ -137,6 +138,8 @@
         
         BDetailsTopCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BDetailsTopCollectionViewCell" forIndexPath:indexPath];
         
+        [cell.PhoneTextField addTarget:self action:@selector(PhoneFieldWithText:) forControlEvents:UIControlEventEditingChanged];
+        
         [cell.MainImgView sd_setImageWithURL:[NSURL URLWithString:self.TitleListArray[self.bottomIndex].brand_cover] placeholderImage:[UIImage imageNamed:@"iqiyi"]];
         
         cell.NameTitleLabel.text = self.TitleListArray[self.bottomIndex].coupon_name;
@@ -204,6 +207,15 @@
 
     
 }
+
+#pragma mark =============监听uitextField值的变化============
+
+- (void)PhoneFieldWithText:(UITextField *)textField{
+    
+    self.ChargePhone = textField.text;
+    
+}
+
 
 
 #pragma mark <UICollectionViewDelegate>
@@ -352,7 +364,12 @@
     NSString * ISLogin = [YYSaveTool GetCacheForKey:YYLogin];
     
     if ([ISLogin isEqualToString:@"0"]) {
-        [self YYShowMessage:@"请先登录账号"];
+         [self YYShowMessage:@"请在个人中心登录账号"];
+         return;
+    }
+    
+    if (self.ChargePhone.length == 0) {
+        [self YYShowMessage:@"请输入充值的账号"];
         return;
     }
     
@@ -380,7 +397,7 @@
       
        NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVProductOrder];
        
-       NSDictionary * dict = @{@"id":EncodeStringFromDic(self.DetaisDic, @"id"),@"count":@"1",@"type":@"2"};
+       NSDictionary * dict = @{@"id":self.TitleListArray[self.bottomIndex].B_id,@"count":@"1",@"type":@"2",@"recharge_number":@"2"};
                      
        [PPNetworkTools POST:url parameters:dict success:^(id responseObject) {
          

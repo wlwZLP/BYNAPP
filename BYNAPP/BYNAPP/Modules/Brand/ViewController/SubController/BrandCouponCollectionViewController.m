@@ -60,13 +60,6 @@
 }
 
 
--(void)viewWillAppear:(BOOL)animated{
-    
-     
-    
-}
-
-
 #pragma mark ===============网络请求=============
 
 -(void)GetHomeGoodsDetailsNetData{
@@ -358,7 +351,9 @@
     NSString * ISLogin = [YYSaveTool GetCacheForKey:YYLogin];
     
     if ([ISLogin isEqualToString:@"0"]) {
-        [self YYShowMessage:@"请先登录账号"];
+        LoginCollectionViewController * LoginVc = [[LoginCollectionViewController alloc]init];
+        LoginVc.title = @"";
+        [self.navigationController pushViewController:LoginVc animated:YES];
         return;
     }
 

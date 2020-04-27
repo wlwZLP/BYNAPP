@@ -105,8 +105,6 @@
           
             self.RefreshCount ++ ;
           
-            [self GetSelfViewControllerNetworkData];
-          
             [self.MainListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
           
             [self.collectionView.mj_footer endRefreshing];

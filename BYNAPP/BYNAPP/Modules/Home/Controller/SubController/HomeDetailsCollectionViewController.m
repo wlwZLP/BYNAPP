@@ -349,8 +349,6 @@
          if ([EncodeStringFromDic(responseObject, @"code") isEqualToString:@"0"]) {
             
              self.DetailsDic = EncodeDicFromDic(responseObject, @"data");
-             
-             YYNSLog(@"个人中心数据----------%@",self.DetailsDic);
                
              self.coupon_click_url = EncodeStringFromDic(self.DetailsDic, @"coupon_click_url");
              
@@ -358,8 +356,14 @@
              
              [self YYShowMessage:EncodeStringFromDic(responseObject, @"msg")];
              
-             [self.navigationController popViewControllerAnimated:YES];
-             
+             dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW,2*NSEC_PER_SEC);
+
+             dispatch_after(timer,dispatch_get_main_queue(), ^{
+
+                  [self.navigationController popViewControllerAnimated:YES];
+
+             });
+
          }
       
          dispatch_group_leave(group);
@@ -891,8 +895,8 @@
                 UMSocialLogInfo(@"response data is %@",data);
             }
         }
+        
     }];
-    
     
 }
 

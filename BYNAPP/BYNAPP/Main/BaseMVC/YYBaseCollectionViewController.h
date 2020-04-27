@@ -25,9 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
 */
 -(void)YYShowAlertViewTitle:(NSString *)title;
 
-
+/**
+*  点击右边的确认事件
+*/
 -(void)YYShowAlertTitleClick;
-
 /**
  *  根据内容提示
  */
@@ -44,6 +45,21 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)YYBaseLeftBackRightClick;
 
 /**
+*  检查APP是否需要更新
+*/
+-(void)YYGetCheckAPPUdataMessage;
+
+/**
+*  检查当前界面是否有弹框
+*/
+-(void)YYGetPOPWindowAdverView;
+
+
+/**
+*  当前弹框图片点击事件
+*/
+-(void)POPWindowImgClick;
+/**
  下拉刷新多少条
  */
 @property(nonatomic,assign)NSInteger RefreshCount;
@@ -51,6 +67,11 @@ NS_ASSUME_NONNULL_BEGIN
  下拉刷新一共多少页
  */
 @property(nonatomic,assign)NSInteger TotalPageCount;
+
+
+
+
+
 
 @end
 

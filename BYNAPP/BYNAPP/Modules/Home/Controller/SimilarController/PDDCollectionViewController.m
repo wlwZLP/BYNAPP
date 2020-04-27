@@ -7,14 +7,14 @@
 //
 
 #import "PDDCollectionViewController.h"
-#import "YYPDDHeadView.h"
+#import "YYOrderHeadView.h"
 #import "HomeMainCollectionViewCell.h"
 
 @interface PDDCollectionViewController ()
 
-@property(nonatomic,strong)YYPDDHeadView * PDDHeadView;
+@property(nonatomic,strong)YYOrderHeadView * PDDHeadView;
 
-@property(nonatomic,strong)NSString * HeadSort;
+@property(nonatomic,strong)NSString * activity_type;
 
 
 @end
@@ -26,7 +26,7 @@
     
     [super viewDidLoad];
     
-    self.HeadSort = @"";
+    self.activity_type = @"1";
     
     self.collectionView.backgroundColor = YYBGColor;
     
@@ -46,14 +46,11 @@
         
      }];
     
-}
-
-
--(void)viewWillAppear:(BOOL)animated{
-    
     [self GetSelfViewControllerNetworkData];
     
 }
+
+
 
 #pragma mark 网络请求数据
 
@@ -63,7 +60,7 @@
     
      NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsItems];
          
-     NSDictionary * dict = @{@"mall_id":@"3",@"sort":self.HeadSort,@"activity_type":@"1",@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+     NSDictionary * dict = @{@"mall_id":@"3",@"activity_type":self.activity_type,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
                         
        [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
                 
@@ -98,15 +95,13 @@
     
     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIGoodsItems];
         
-    NSDictionary * dict = @{@"mall_id":@"3",@"sort":self.HeadSort,@"activity_type":@"1",@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+    NSDictionary * dict = @{@"mall_id":@"3",@"activity_type":self.activity_type,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
                        
       [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
                
             NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
           
             self.RefreshCount ++ ;
-          
-            [self GetSelfViewControllerNetworkData];
           
             [self.MainListArray addObjectsFromArray:[NSArray modelArrayWithClass:[HomeMainModel class] json:EncodeArrayFromDic(DataDic, @"items")]];
           
@@ -222,30 +217,41 @@
  *
  *  @return SalesSearchBar
  */
--(YYPDDHeadView *)PDDHeadView
+- (YYOrderHeadView *)PDDHeadView
 {
     
     if (_PDDHeadView == nil) {
         
-       _PDDHeadView = [[YYPDDHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 45)];
+       _PDDHeadView = [[YYOrderHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 40)];
         
-       YYWeakSelf(self);
-       
-       _PDDHeadView.HeaderTopBlockClick = ^(NSString * _Nonnull SortType) {
-       
-              weakself.HeadSort = SortType;
-           
-              [weakself GetSelfViewControllerNetworkData];
-           
-       };
+        _PDDHeadView.backgroundColor = UIColor.whiteColor;
         
+        _PDDHeadView.TitleArray = [[NSArray alloc]initWithObjects:@"推荐",@"今日爆款",@"1.9包邮",@"品牌清仓",nil ];
         
+        YYWeakSelf(self);
         
+        _PDDHeadView.TitleBtnBlockClick = ^(NSInteger TagIndex) {
+            
+            if (TagIndex == 0) {
+                weakself.activity_type = @"1";
+            }else if (TagIndex == 1){
+                weakself.activity_type = @"31";
+            }else if (TagIndex == 2){
+                weakself.activity_type = @"30";
+            }else if (TagIndex == 3){
+                weakself.activity_type = @"32";
+            }
+            [weakself GetSelfViewControllerNetworkData];
+            
+            
+        };
+     
      }
     
     return _PDDHeadView;
     
 }
+
 
 
 #pragma mark ---- UICollectionViewDelegateFlowLayout

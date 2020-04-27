@@ -88,18 +88,29 @@
        
      }];
     
-    
 }
+
 
 
 -(void)viewWillAppear:(BOOL)animated{
     
     [self.navigationController setNavigationBarHidden:YES animated:nil];
+    
+//    [self YYGetPOPWindowAdverView];
    
     [self GetHomebannerGoodsNetdata];
 
 }
 
+
+#pragma mark ===============当前界面弹框点击事件============
+
+-(void)POPWindowImgClick{
+    
+    
+    
+    
+}
 
 #pragma mark ===============网络请求=============
 
@@ -256,7 +267,7 @@
      }];
      
     
-//     [self rac_liftSelector:@selector(updateUIPic:pic2:) withSignalsFromArray:@[signal1,signal2]];
+     [self rac_liftSelector:@selector(updateUIPic:pic2:) withSignalsFromArray:@[signal1,signal2]];
     
 }
 
@@ -411,6 +422,16 @@
 -(void)HomeMainPushNextController:(HomeBannerModel *)HomeModel{
     
 //     YYNSLog(@"跳转的类型-----%@",HomeModel.target_type);
+    NSString * ISLogin = [YYSaveTool GetCacheForKey:YYLogin];
+    
+    if ([HomeModel.need_login isEqualToString:@"1"] & [ISLogin isEqualToString:@"0"]) {
+        
+        LoginCollectionViewController * LoginVc = [[LoginCollectionViewController alloc]init];
+        LoginVc.title = @"";
+        [self.navigationController pushViewController:LoginVc animated:YES];
+        return;
+        
+    }
     
     if ([HomeModel.target_type isEqualToString:@"1"]) {
         

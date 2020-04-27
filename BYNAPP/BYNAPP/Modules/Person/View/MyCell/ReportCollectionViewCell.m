@@ -72,6 +72,7 @@
     WenImage.frame = CGRectMake( self.ZLP_width -25 , 12 , 15 , 15);
     WenImage.image = [UIImage imageNamed:@"wenhao"];
     [self addSubview:WenImage];
+    [WenImage addTarget:self action:@selector(WHImgButtonClick)];
     
     UIView * LineView = [[UIView alloc] init];
     LineView.backgroundColor = YYE5Color;
@@ -174,6 +175,12 @@
 }
 
 
+
+-(void)WHImgButtonClick{
+    
+    self.ImgBtnBlockClick();
+    
+}
 
 
 @end

@@ -7,7 +7,7 @@
 
 @interface BrandListCollectionViewController ()
 
-@property(nonatomic,strong)NSArray<BrandMainModel*> *  BrandArray;
+@property(nonatomic,strong)NSMutableArray<BrandMainModel*> *  BrandArray;
 
 @end
 
@@ -18,11 +18,20 @@
     
     [super viewDidLoad];
     
+    self.BrandArray = [NSMutableArray array];
+    
     self.collectionView.backgroundColor = YYBGColor;
  
     [self.collectionView registerClass:[BrandRecomdCollectionViewCell class] forCellWithReuseIdentifier:@"BrandRecomdCollectionViewCell"];
     
     [self.collectionView registerClass:[BrandCardCollectionViewCell class] forCellWithReuseIdentifier:@"BrandCardCollectionViewCell"];
+    
+    self.collectionView.mj_footer = [LPRefreshFooter footerWithRefreshingBlock:^{
+             
+        [self GetBrandOtherNetMoreData];
+             
+    }];
+    
     
     
 }
@@ -47,8 +56,10 @@
         NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
         
         NSArray * DataArray = EncodeArrayFromDic(DataDic, @"data");
+        
+        self.RefreshCount ++;
     
-        self.BrandArray = [[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray] mutableCopy];
+        [self.BrandArray addObjectsFromArray:[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray]];
         
         [self.collectionView reloadData];
         
@@ -58,11 +69,42 @@
             
         NSArray * DataArray = EncodeArrayFromDic(DataDic, @"data");
         
-        self.BrandArray = [[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray] mutableCopy];
+        [self.BrandArray addObjectsFromArray:[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray]];
             
         [self.collectionView reloadData];
         
     }];
+    
+}
+
+
+-(void)GetBrandOtherNetMoreData{
+    
+   NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVBrandProducts];
+   
+   NSDictionary * dict = @{@"bid":self.Bid_id,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+                 
+   [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+       
+       NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+       
+       NSArray * DataArray = EncodeArrayFromDic(DataDic, @"data");
+       
+       self.RefreshCount ++;
+   
+       [self.BrandArray addObjectsFromArray:[NSArray modelArrayWithClass:[BrandMainModel class] json:DataArray]];
+       
+       [self.collectionView.mj_footer endRefreshing];
+       
+       [self.collectionView reloadData];
+       
+   } failure:^(NSError *error, id responseCache) {
+    
+       [self.collectionView.mj_footer endRefreshing];
+           
+       [self.collectionView reloadData];
+       
+   }];
     
 }
 
