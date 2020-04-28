@@ -65,7 +65,6 @@
     
     self.UserModel = [YYSaveTool YY_GetSaveModelWithkey:YYUser modelClass:UserModel.class];
     
-    
     [self GetHomeGoodsDetailsNetData];
     
     [self CreateBrandDetailsBottomView];
@@ -363,8 +362,10 @@
     
     NSString * ISLogin = [YYSaveTool GetCacheForKey:YYLogin];
     
-    if ([ISLogin isEqualToString:@"0"]) {
-         [self YYShowMessage:@"请在个人中心登录账号"];
+    if ([ISLogin isEqualToString:@"0"] || self.UserModel == nil) {
+         LoginCollectionViewController * LoginVc = [[LoginCollectionViewController alloc]init];
+         LoginVc.title = @"";
+         [self.navigationController pushViewController:LoginVc animated:YES];
          return;
     }
     
@@ -382,12 +383,6 @@
 
     }
     
-    if (self.UserModel == nil) {
-
-        [self YYShowMessage:@"登录失效，请重新登录"];
-        return;
-
-    }
     
     if ([self.UserModel.plus_level isEqualToString:@"0"]) {
         

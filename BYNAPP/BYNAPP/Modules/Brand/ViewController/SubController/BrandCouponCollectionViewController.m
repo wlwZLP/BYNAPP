@@ -350,7 +350,7 @@
     
     NSString * ISLogin = [YYSaveTool GetCacheForKey:YYLogin];
     
-    if ([ISLogin isEqualToString:@"0"]) {
+    if ([ISLogin isEqualToString:@"0"] || self.UserModel == nil) {
         LoginCollectionViewController * LoginVc = [[LoginCollectionViewController alloc]init];
         LoginVc.title = @"";
         [self.navigationController pushViewController:LoginVc animated:YES];
@@ -360,13 +360,6 @@
     if (alipay == NO) {
 
         [self YYShowMessage:@"请先安装支付宝"];
-        return;
-
-    }
-    
-    if (self.UserModel == nil) {
-
-        [self YYShowMessage:@"登录失效，请重新登录"];
         return;
 
     }

@@ -31,6 +31,6 @@
 
 #define YYHotWords @"HotWords"
 
-#define YYSearchCache @"SearchCache"
+#define YYSearchCache @"SearchCache.txt"
 
 #endif /* ThirdMacros_h */

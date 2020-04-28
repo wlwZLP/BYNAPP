@@ -95,24 +95,84 @@
     
 }
 
-//创建一个Plist文件路径
-+(NSString *)YYCreatPath:(NSString *)pathName{
+
+// 创建一个文件路径去缓存数据
++(void)YYSetSavelCahceName:(NSString *)CacheName pathName:(NSString*)pathName{
     
-    NSArray *array = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *pathIndes = [array objectAtIndex:0];
-    NSString *path = [pathIndes stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist",pathName]];
-    return path;
+    NSString * DocumenPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
+    NSString * CachePath = [DocumenPath stringByAppendingPathComponent:pathName];
     
+    NSArray * CacheData = [NSArray arrayWithContentsOfFile:CachePath];
+    
+    if (CacheData.count == 0) {
+        
+        NSArray * NewDataArray = [NSArray arrayWithObjects:CacheName,nil];
+        
+        [NewDataArray writeToFile:CachePath atomically:YES];
+        
+    }else{
+        
+        NSMutableArray * NewDataArray = [CacheData mutableCopy];
+        
+        [NewDataArray addObject:CacheName];
+        
+        [NewDataArray writeToFile:CachePath atomically:YES];
+        
+    }
+
 }
 
 
-//通过路径名字获取文件
-+(NSMutableDictionary *)YYGetDataByPathName:(NSString *)pathName{
+//通过文件路径名字获取文件
++(NSMutableArray*)YYGetDataByCahcePath:(NSString*)PathName{
     
-     NSMutableDictionary *  dataDictionary = [[NSMutableDictionary alloc] initWithContentsOfFile:pathName];
+    // 3，获取Caches目录路径的方法：
+    NSString * DocumenPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
+    //假设我们需往cache 存入数据，并命名为test的txt格式文件中@"Search.txt"
+    NSString * filePath = [DocumenPath stringByAppendingPathComponent:PathName];
     
-    return dataDictionary;
+    NSArray * Cachdata = [NSArray arrayWithContentsOfFile:filePath];
+  
+    NSArray * ReverArray = [[Cachdata reverseObjectEnumerator] allObjects];
+    
+    NSMutableArray * resultArrM = [NSMutableArray array];
+    
+    for (NSString * item in ReverArray) {
+        if (![resultArrM containsObject:item]) {
+            [resultArrM addObject:item];
+        }
+    }
+    
+    return  resultArrM;
     
 }
+
+#pragma mark - 通过文件路径删除相应的文件
++(void)YYDeleDataByfilePath:(NSString*)PathName{
+    
+    //拿到path路径的下一级目录的子文件夹
+    // 3，获取Caches目录路径的方法：
+    NSString * DocumenPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    //    4，获取tmp目录路径的方法：
+    //    NSString *tmpDir = NSTemporaryDirectory();
+    //假设我们需往cache 存入数据，并命名为test的txt格式文件中
+    NSString * serachPath = [DocumenPath stringByAppendingPathComponent:PathName];
+    
+    NSError * error = nil;
+
+    [[NSFileManager defaultManager] removeItemAtPath:serachPath error:&error];
+    
+    if (error) {
+        NSLog(@"清除缓存失败");
+    }
+
+}
+
+
+
+
+
 
 @end

@@ -10,11 +10,19 @@
 
 @interface YYTeamHeadView ()
 
+@property(nonatomic,strong)UIView * LeftLineView;
+
+@property(nonatomic,strong)UIView * RightLineView;
+
+@property(nonatomic,assign)NSInteger TeamClickNum;
+
 @property(nonatomic,strong)UIButton * SaleLeftBtn;
 
 @property(nonatomic,strong)UIButton * SaleTopBtn;
 
 @property(nonatomic,strong)UIButton * SaleBotBtn;
+
+@property(nonatomic,assign)NSInteger TimeClickNum;
 
 @property(nonatomic,strong)UIButton * PriceLeftBtn;
 
@@ -34,6 +42,10 @@
     if (self) {
    
         self.backgroundColor = UIColor.whiteColor;
+        
+        self.TeamClickNum = 1;
+        
+        self.TeamClickNum = 1;
         
         [self CreateHeaderView];
 
@@ -68,6 +80,7 @@
     LineView.frame = CGRectMake(self.ZLP_width/4 - 20, 34 , 40 , 2);
     LineView.backgroundColor = YYMMColor;
     [self addSubview:LineView];
+    self.LeftLineView = LineView;
     
     
     UIView * MLineView = UIView.new;
@@ -92,15 +105,18 @@
     YellowView.frame = CGRectMake(self.ZLP_width * 0.75 - 20, 34 , 40 , 2);
     YellowView.backgroundColor = YYMMColor;
     [self addSubview:YellowView];
+    self.RightLineView = YellowView;
+    self.RightLineView.hidden = YES;
     
     
     UILabel * TeamNumLabel = [[UILabel alloc]init];
     TeamNumLabel.textColor = YY99Color;
     TeamNumLabel.text =@"其他人数 22人";
-    TeamNumLabel.frame = CGRectMake(12, 50, 100, 19);
+    TeamNumLabel.frame = CGRectMake(12, 50, 200, 19);
     TeamNumLabel.textAlignment = NSTextAlignmentLeft;
     TeamNumLabel.font = [UIFont systemFontOfSize:14 weight:0];
     [self addSubview:TeamNumLabel];
+    self.PeoPleNumLabel = TeamNumLabel;
     
     UILabel * InvitNumLabel = [[UILabel alloc]init];
     InvitNumLabel.textColor = YY99Color;
@@ -109,6 +125,7 @@
     InvitNumLabel.textAlignment = NSTextAlignmentRight;
     InvitNumLabel.font = [UIFont systemFontOfSize:14 weight:0];
     [self addSubview:InvitNumLabel];
+    self.InvitMyPeoLabel = InvitNumLabel;
     
     UILabel * ContentLabel = [[UILabel alloc]init];
     ContentLabel.textColor = YY99Color;
@@ -118,7 +135,6 @@
     ContentLabel.font = [UIFont systemFontOfSize:12 weight:0];
     [self addSubview:ContentLabel];
 
-    
     
     
     UIView * BgView = [[UIView alloc]init];
@@ -227,7 +243,7 @@
     PriceBotBtn.backgroundColor = [UIColor clearColor];
     PriceBotBtn.selected = NO;
     [PriceView addSubview:PriceBotBtn];
-    self.PriceBotBtn = SaleBotBtn;
+    self.PriceBotBtn = PriceBotBtn;
     
     
     UIButton * PriceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -236,8 +252,6 @@
     PriceBtn.backgroundColor = [UIColor clearColor];
     [PriceView addSubview:PriceBtn];
      
-    
-    
 
 }
 
@@ -245,20 +259,60 @@
 
 -(void)LeftButtonClick:(UIButton*)sender{
     
-      self.TopLeftBtnBlockClick();
-    
+    self.RightLineView.hidden = YES;
+    self.LeftLineView.hidden = NO;
+    self.MyTeamNavBtnBlockClick(@"1");
 }
 
 
 -(void)RightButtonClick:(UIButton*)sender{
    
-      self.TopRightBlockClick();
+    self.RightLineView.hidden = NO;
+    self.LeftLineView.hidden = YES;
+     self.MyTeamNavBtnBlockClick(@"2");
+    
+}
+
+-(void)SaleButtonClick:(UIButton*)sender{
+    
+  
+    self.PriceLeftBtn.selected = NO;
+    self.SaleLeftBtn.selected = YES;
+    self.PriceBotBtn.selected = NO;
+    self.PriceTopBtn.selected = NO;
+    self.TeamClickNum ++ ;
+    if ( self.TeamClickNum % 2 == 0) {
+        self.SaleTopBtn.selected = YES;
+        self.SaleBotBtn.selected = NO;
+        self.MyTeamTopBlockClick(@"team_num_des");
+    }else{
+        self.SaleTopBtn.selected = NO;
+        self.SaleBotBtn.selected = YES;
+        self.MyTeamTopBlockClick(@"team_num_asc");
+    }
     
 }
 
 
-
-
+-(void)PriceButtonClick:(UIButton*)sender{
+    
+    self.SaleLeftBtn.selected = NO;
+    self.SaleTopBtn.selected = NO;
+    self.SaleBotBtn.selected = NO;
+    
+    self.PriceLeftBtn.selected = YES;
+    self.TimeClickNum ++ ;
+    if ( self.TimeClickNum % 2 == 0) {
+        self.PriceTopBtn.selected = YES;
+        self.PriceBotBtn.selected = NO;
+        self.MyTeamTopBlockClick(@"register_time_asc");
+    }else{
+        self.PriceTopBtn.selected = NO;
+        self.PriceBotBtn.selected = YES;
+        self.MyTeamTopBlockClick(@"register_time_des");
+     }
+    
+}
 
 
 @end

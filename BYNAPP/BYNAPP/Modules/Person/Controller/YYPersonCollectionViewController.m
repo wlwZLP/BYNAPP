@@ -91,8 +91,7 @@
 
 
 -(void)GetPersonUserNetworkData{
-    
-     
+         
    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVUserInfo];
    
    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
@@ -107,7 +106,7 @@
        
         }else{
          
-            self.Usermodel = [UserModel modelWithDictionary:Data];
+             self.Usermodel = [UserModel modelWithDictionary:Data];
             
              [YYSaveTool YY_SaveModel:self.Usermodel key:YYUser];
             
@@ -338,7 +337,9 @@
 -(void)PersonPushToViewController:(NSInteger)rowIndex{
     
     if ([[YYSaveTool GetCacheForKey:YYLogin] isEqualToString:@"0"]) {
-        [self YYShowMessage:@"请先登录"];
+        LoginCollectionViewController * LoginVc = [[LoginCollectionViewController alloc]init];
+        LoginVc.title = @"";
+        [self.navigationController pushViewController:LoginVc animated:YES];
         return;
     }
     

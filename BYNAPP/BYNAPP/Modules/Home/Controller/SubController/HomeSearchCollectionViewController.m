@@ -67,20 +67,13 @@
      
       // 判断对象是否存在
      if ([cache containsObjectForKey:YYHotWords]) {
-           // 取出缓存
-        self.HotWordsArray = (NSArray*)[cache objectForKey:YYHotWords];
+         // 取出缓存
+         self.HotWordsArray = (NSArray*)[cache objectForKey:YYHotWords];
     
      }
+   
+    self.SearchCacheArray = [YYSaveTool YYGetDataByCahcePath:YYSearchCache];
     
-    if ([cache containsObjectForKey:YYSearchCache]) {
-           // 取出缓存
-        NSArray * CacehArray = (NSArray*)[cache objectForKey:YYSearchCache];
-        
-        [self.SearchCacheArray addObjectsFromArray:CacehArray];
-
-     }
-    
-        
      [self CreateHomeBaseViewController];
     
      self.collectionView.frame = CGRectMake(0, YYBarHeight + 40, YYScreenWidth, YYScreenHeight - YYBarHeight - 40);
@@ -105,9 +98,10 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     
-     YYCache * cache = [[YYCache alloc]initWithName:MyCache];
     
-     [cache setObject:self.SearchCacheArray forKey:YYSearchCache];
+    
+    
+
     
 }
 
@@ -121,9 +115,10 @@
                            
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
         
-       
-        [self.SearchCacheArray addObject:self.MainSearchBar.text];
+        [YYSaveTool YYSetSavelCahceName:self.MainSearchBar.text pathName:YYSearchCache];
         
+        self.SearchCacheArray = [YYSaveTool YYGetDataByCahcePath:YYSearchCache];
+  
         [UIView animateWithDuration:0.25 animations:^{
             
             // 滚动scrollView
@@ -530,6 +525,7 @@
         for (UIView *view in headerView.subviews) {
            [view removeFromSuperview];
         }
+        
         headerView.backgroundColor = UIColor.whiteColor;
         
         if ([self.SearchTpye isEqualToString:@"1"]) {
@@ -576,11 +572,9 @@
 
 -(void)SearchDelButtonClick{
     
-    YYCache * cache = [[YYCache alloc]initWithName:MyCache];
+    [YYSaveTool YYDeleDataByfilePath:YYSearchCache];
     
-    [cache removeObjectForKey:YYSearchCache];
-    
-    [self.SearchCacheArray removeAllObjects];
+    self.SearchCacheArray = [YYSaveTool YYGetDataByCahcePath:YYSearchCache];
     
     [self.collectionView reloadData];
     

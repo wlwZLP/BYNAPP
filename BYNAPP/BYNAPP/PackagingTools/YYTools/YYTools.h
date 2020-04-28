@@ -20,7 +20,6 @@
 //封装一个渐变色渐变的过程
 + (CAGradientLayer *)SetGradLayerView:(UIView *)view FromColor:(NSString *)fromColor ToColor:(NSString *)toColor;
 
-
 //封装减法的公共方法
 +(NSString *)YYSetAllMaxSting:(NSString *)maxstring MinString:(NSString *)minsting;
 

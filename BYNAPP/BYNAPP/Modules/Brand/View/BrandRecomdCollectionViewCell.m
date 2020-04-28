@@ -110,7 +110,8 @@
     CouponLabel.text = @"¥15.5";
     CouponLabel.textColor = UIColor.whiteColor;
     CouponLabel.textAlignment = NSTextAlignmentCenter;
-    CouponLabel.font = [UIFont systemFontOfSize:13 weight:1];
+    CouponLabel.font = [UIFont systemFontOfSize:12 weight:0];
+    CouponLabel.adjustsFontSizeToFitWidth = YES;
     [MainBGView addSubview:CouponLabel];
     self.CouponLabel = CouponLabel;
     [CouponLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -148,7 +149,7 @@
        
     self.OldPriceLabel.text = [NSString stringWithFormat:@"官方价￥%@ ",Model.face_price];
     
-    self.CouponLabel.text = [NSString stringWithFormat:@"￥%@",[YYTools YYSetAllMaxSting:Model.face_price MinString:Model.member_price]];
+    self.CouponLabel.text = [NSString stringWithFormat:@"省%@元",[YYTools YYSetAllMaxSting:Model.face_price MinString:Model.member_price]];
     
     NSMutableAttributedString *  abs = [[NSMutableAttributedString alloc]initWithString:self.OldPriceLabel.text];
     [abs addAttribute:NSStrikethroughStyleAttributeName value:@(2) range:NSMakeRange(0, self.OldPriceLabel.text.length)];

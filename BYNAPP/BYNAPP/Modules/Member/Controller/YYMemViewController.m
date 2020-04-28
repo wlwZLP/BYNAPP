@@ -46,9 +46,9 @@ UICollectionViewDataSource>
     
     [super viewDidLoad];
     
-    [self CreateHomeNavTopSearch];
+//    [self CreateHomeNavTopSearch];
        
-    [self.navigationController setNavigationBarHidden:YES animated:nil];
+//    [self.navigationController setNavigationBarHidden:YES animated:nil];
     
     self.selectIndex = 0;
     
@@ -77,7 +77,7 @@ UICollectionViewDataSource>
 -(void)viewWillAppear:(BOOL)animated{
 
     
-    [self.navigationController setNavigationBarHidden:YES animated:nil];
+//    [self.navigationController setNavigationBarHidden:YES animated:nil];
     
     [super viewWillAppear:animated];
     
@@ -128,7 +128,7 @@ UICollectionViewDataSource>
 {
     if (!_LeftTableView)
     {
-        _LeftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, YYBarHeight, kLeftTableViewWidth, YYScreenHeight)];
+        _LeftTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kLeftTableViewWidth, YYScreenHeight)];
         _LeftTableView.delegate = self;
         _LeftTableView.dataSource = self;
         _LeftTableView.tableFooterView = [UIView new];
@@ -154,7 +154,7 @@ UICollectionViewDataSource>
         
         UICollectionViewFlowLayout * flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
-        _RightCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(kLeftTableViewWidth, YYBarHeight , YYScreenWidth - kLeftTableViewWidth , YYScreenHeight - YYBarHeight ) collectionViewLayout:flowLayout];
+        _RightCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(kLeftTableViewWidth, 0 , YYScreenWidth - kLeftTableViewWidth , YYScreenHeight ) collectionViewLayout:flowLayout];
         _RightCollectionView.backgroundColor= UIColor.whiteColor;
         _RightCollectionView.scrollsToTop = YES;
         _RightCollectionView.delegate = self;

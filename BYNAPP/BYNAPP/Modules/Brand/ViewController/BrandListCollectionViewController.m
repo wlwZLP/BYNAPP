@@ -26,19 +26,19 @@
     
     [self.collectionView registerClass:[BrandCardCollectionViewCell class] forCellWithReuseIdentifier:@"BrandCardCollectionViewCell"];
     
-    self.collectionView.mj_footer = [LPRefreshFooter footerWithRefreshingBlock:^{
-             
-        [self GetBrandOtherNetMoreData];
-             
-    }];
+//    self.collectionView.mj_footer = [LPRefreshFooter footerWithRefreshingBlock:^{
+//
+//        [self GetBrandOtherNetMoreData];
+//
+//    }];
     
-    
+     [self GetBrandOtherNetData];
     
 }
 
 -(void)viewWillAppear:(BOOL)animated{
     
-     [self GetBrandOtherNetData];
+    
     
 }
 

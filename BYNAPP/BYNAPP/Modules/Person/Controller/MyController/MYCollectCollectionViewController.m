@@ -78,7 +78,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-      CollectCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectCollectionViewCell" forIndexPath:indexPath];
+    CollectCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"CollectCollectionViewCell" forIndexPath:indexPath];
     
      cell.Model = self.ListArray[indexPath.item];
     

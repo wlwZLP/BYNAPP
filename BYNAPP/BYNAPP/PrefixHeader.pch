@@ -60,6 +60,8 @@
 #import "UserModel.h"
 #import "LPAnimationView.h"
 #import "LPPopTool.h"
+#import "JKSandBoxManager.h"
+
 
 //常用分类
 #import "UIView+AnimationExtend.h"

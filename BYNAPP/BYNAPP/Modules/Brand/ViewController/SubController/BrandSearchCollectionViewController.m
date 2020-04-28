@@ -38,7 +38,8 @@
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
     
-    [self GetBrandSearchNetWorkData:@"肯德基"];
+    [self GetBrandSearchNetWorkData:self.SearchText];
+    
     
 }
 
@@ -52,8 +53,6 @@
     [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
        
         NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
-        
-        YYNSLog(@"搜索结果数据-----------%@",Data);
         
         self.brandTopArray =  [NSArray modelArrayWithClass:[BrandSearchModel class] json:EncodeArrayFromDic(Data, @"brands")];
         

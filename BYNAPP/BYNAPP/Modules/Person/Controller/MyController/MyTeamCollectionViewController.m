@@ -15,7 +15,13 @@
 
 @property(nonatomic,strong)YYTeamHeadView * TeamHeadView;
 
-@property(nonatomic,strong)NSArray <MyTeamModel*> * TeamListArray;
+@property(nonatomic,strong)NSMutableArray <MyTeamModel*> * TeamListArray;
+
+@property(nonatomic,strong)UserModel * UserModel;
+
+@property(nonatomic,strong)NSString * NavSort;
+
+@property(nonatomic,strong)NSString * HeadSort;
 
 @end
 
@@ -27,9 +33,23 @@
     
     [super viewDidLoad];
     
+    self.NavSort = @"1";
+    
+    self.HeadSort = @"";
+    
+    self.TeamListArray = [NSMutableArray array];
+    
+    self.UserModel = [YYSaveTool YY_GetSaveModelWithkey:YYUser modelClass:UserModel.class];
+    
     [self.collectionView registerClass:[TeamCollectionViewCell class] forCellWithReuseIdentifier:@"TeamCollectionViewCell"];
     
     [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
+    
+    self.collectionView.mj_footer = [LPRefreshFooter footerWithRefreshingBlock:^{
+          
+         [self GetMyTeamControllNetMoreData];
+          
+    }];
     
     [self GetMyTeamControllNetworkData];
     
@@ -39,13 +59,21 @@
 
 -(void)GetMyTeamControllNetworkData{
     
+    self.RefreshCount = 1;
+    
+    [self.TeamListArray removeAllObjects];
+    
     NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVUserTeam];
+    
+    NSDictionary * dict = @{@"level":self.NavSort,@"sort":self.HeadSort,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
          
-    [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
                 
         NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
     
-        self.TeamListArray = [NSArray modelArrayWithClass:[MyTeamModel class] json:EncodeArrayFromDic(DataDic, @"data")];
+        self.RefreshCount ++ ;
+        
+        [self.TeamListArray addObjectsFromArray:[NSArray modelArrayWithClass:[MyTeamModel class] json:EncodeArrayFromDic(DataDic, @"data")]];
         
         [self.collectionView reloadData];
           
@@ -53,7 +81,7 @@
               
          NSDictionary * DataDic = EncodeDicFromDic(responseCache, @"data");
 
-         self.TeamListArray = [NSArray modelArrayWithClass:[MyTeamModel class] json:EncodeArrayFromDic(DataDic, @"data")];
+         [self.TeamListArray addObjectsFromArray:[NSArray modelArrayWithClass:[MyTeamModel class] json:EncodeArrayFromDic(DataDic, @"data")]];
      
           [self.collectionView reloadData];
 
@@ -61,6 +89,37 @@
     
     
 }
+
+-(void)GetMyTeamControllNetMoreData{
+    
+    NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVUserTeam];
+    
+    NSDictionary * dict = @{@"level":self.NavSort,@"sort":self.HeadSort,@"page":[NSString stringWithFormat:@"%ld",(long)self.RefreshCount]};
+         
+    [PPNetworkTools GET:url parameters:dict success:^(id responseObject) {
+                
+        NSDictionary * DataDic = EncodeDicFromDic(responseObject, @"data");
+        
+        self.RefreshCount ++ ;
+    
+        [self.TeamListArray addObjectsFromArray:[NSArray modelArrayWithClass:[MyTeamModel class] json:EncodeArrayFromDic(DataDic, @"data")]];
+        
+        [self.collectionView.mj_footer endRefreshing];
+        
+        [self.collectionView reloadData];
+          
+    } failure:^(NSError *error, id responseCache) {
+              
+         [self.collectionView.mj_footer endRefreshing];
+        
+          [self.collectionView reloadData];
+
+     }];
+    
+    
+}
+
+
 
 
 #pragma mark <UICollectionViewDataSource>
@@ -129,8 +188,7 @@
         headerView.backgroundColor = YYBGColor;
         
         [headerView addSubview:self.TeamHeadView];
-        
-     
+         
         return headerView;
     
     }
@@ -150,6 +208,28 @@
     if (_TeamHeadView == nil) {
         
        _TeamHeadView = [[YYTeamHeadView alloc] initWithFrame:CGRectMake(0, 0 , YYScreenWidth , 145)];
+        
+        YYWeakSelf(self);
+        
+        _TeamHeadView.MyTeamNavBtnBlockClick = ^(NSString * _Nonnull NavType) {
+            
+            weakself.NavSort = NavType;
+            
+            [weakself GetMyTeamControllNetworkData];
+            
+        };
+        
+        _TeamHeadView.MyTeamTopBlockClick = ^(NSString * _Nonnull SortType) {
+            
+            weakself.HeadSort = SortType;
+            
+            [weakself GetMyTeamControllNetworkData];
+            
+        };
+        
+        _TeamHeadView.PeoPleNumLabel.text = [NSString stringWithFormat:@"邀请人数:%@人",self.UserModel.team_num];
+        
+        _TeamHeadView.InvitMyPeoLabel.text = [NSString stringWithFormat:@"我的邀请人:%@",self.UserModel.parent_name];
         
      }
     
@@ -174,6 +254,9 @@
       return 0.5;
     
 }
+
+
+
 
 
 @end

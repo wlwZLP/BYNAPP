@@ -81,11 +81,10 @@
     [TitleLabel YYUpdateConstraints];
     
     
-    
     UILabel * PriceLabel = [[UILabel alloc]init];
     PriceLabel.text = @"¥15.5";
     PriceLabel.textColor = YYHexColor(@"#FB5434");
-    PriceLabel.frame = CGRectMake(165, 65, 50, 20);
+    PriceLabel.frame = CGRectMake(165, 65, 150, 20);
     PriceLabel.textAlignment = NSTextAlignmentLeft;
     PriceLabel.font = [UIFont systemFontOfSize:15 weight:1];
     [MainBGView addSubview:PriceLabel];

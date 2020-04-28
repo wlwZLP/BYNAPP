@@ -173,9 +173,9 @@ static int const HomelabelWith = 90;
     [TopBarView addSubview:HomeRightBtn];
     
     
-    
-    
 }
+
+
 
 #pragma mark 点击头部搜索 消息按钮
 -(void)SearchButtonClick{
@@ -228,9 +228,9 @@ static int const HomelabelWith = 90;
     }
     
     return _HomeSearchBar;
-    
-    
+
 }
+
 
 #pragma mark - UISearchBardelegete
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{

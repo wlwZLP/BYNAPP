@@ -10,14 +10,14 @@
 #import <Foundation/Foundation.h>
 
 //文件目录
-//temp文件夹沙盒路径
+//tmp文件夹沙盒路径
 #define JKSandBoxPathTemp                   NSTemporaryDirectory()
 
 //document文件夹沙盒路径
 #define JKSandBoxPathDocument               [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 
 //cache文件夹文件夹沙盒路径
-#define JKSandBoxPathCache                  [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+#define JKSandBoxPathCache   [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 
 @interface JKSandBoxManager : NSObject
 

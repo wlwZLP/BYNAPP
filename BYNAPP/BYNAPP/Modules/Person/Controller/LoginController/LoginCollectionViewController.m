@@ -43,6 +43,9 @@
 ///  获取邀请人是否成功
 @property (nonatomic,strong)NSString * InvitSucefulResult;
 
+///  获取UserModel 数据
+@property (nonatomic,strong)UserModel * UserModel;
+
 @end
 
 @implementation LoginCollectionViewController
@@ -461,12 +464,10 @@
                  NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
                 
                  NSString * Token = EncodeStringFromDic(Data, @"token");
-                
-                 [YYSaveTool SetCahceForvalue:@"1" forKey:YYLogin];
                  
                  [YYSaveTool SetCahceForvalue:Token forKey:YYToken];
               
-                 [self.navigationController popToRootViewControllerAnimated:YES];
+                 [self GetPersonUserNetworkData];
               
            }else{
               
@@ -496,11 +497,9 @@
                 
                  NSString * Token = EncodeStringFromDic(Data, @"token");
                 
-                 [YYSaveTool SetCahceForvalue:@"1" forKey:YYLogin];
-                 
                  [YYSaveTool SetCahceForvalue:Token forKey:YYToken];
-              
-                 [self.navigationController popToRootViewControllerAnimated:YES];
+               
+                 [self GetPersonUserNetworkData];
               
            }else{
               
@@ -516,10 +515,50 @@
            
     }
     
-
 }
 
 
+#pragma mark ===============获取个人用户信息数据=============
+
+-(void)GetPersonUserNetworkData{
+    
+     
+   NSString * url = [NSString stringWithFormat:@"%@%@",Common_URL,URL_APIMPVUserInfo];
+   
+   [PPNetworkTools GET:url parameters:nil success:^(id responseObject) {
+       
+        NSDictionary * Data = EncodeDicFromDic(responseObject, @"data");
+        
+        if (Data.count == 0) {
+        
+             [YYSaveTool SetCahceForvalue:@"0" forKey:YYLogin];
+            
+             [YYSaveTool RemoveCacheForKey:YYToken];
+            
+             [self.navigationController popViewControllerAnimated:YES];
+            
+        }else{
+         
+             [YYSaveTool SetCahceForvalue:@"1" forKey:YYLogin];
+            
+             self.UserModel = [UserModel modelWithDictionary:Data];
+            
+             [YYSaveTool YY_SaveModel:self.UserModel key:YYUser];
+            
+             [self.navigationController popViewControllerAnimated:YES];
+            
+        }
+   
+        [self.collectionView reloadData];
+       
+   } failure:^(NSError *error, id responseCache) {
+       
+        [self.collectionView reloadData];
+
+   }];
+          
+    
+}
 
 #pragma mark ===============监听UITextField 获取邀请人信息=============
 
@@ -543,6 +582,7 @@
                 [self.PersonInVitImg sd_setImageWithURL:[NSURL URLWithString:EncodeStringFromDic(Data, @"avatar")] placeholderImage:[UIImage imageNamed:@"MainBg"]];
                            
                 self.InvitNameLabel.text = EncodeStringFromDic(Data, @"name");
+                
                 
              }else{
                 

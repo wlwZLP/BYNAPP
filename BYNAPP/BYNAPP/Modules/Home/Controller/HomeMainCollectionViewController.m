@@ -124,7 +124,7 @@
     
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
        
-        [self.collectionView.mj_header endRefreshing];
+         [self.collectionView.mj_header endRefreshing];
         
          YYCache * cache = [[YYCache alloc]initWithName:MyCache];
         
@@ -148,8 +148,6 @@
         NSDictionary * Data1 = EncodeDicFromDic(responseObject, @"data");
          
         [self.BannerImgArray removeAllObjects];
-         
-        YYNSLog(@"获取首页数据--------%@",Data1);
         
         self.BannerArray =  [NSArray modelArrayWithClass:[HomeBannerModel class] json:EncodeArrayFromDic(Data1, @"banners")];
         

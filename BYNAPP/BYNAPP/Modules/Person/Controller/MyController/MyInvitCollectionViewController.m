@@ -31,6 +31,27 @@
     
     [super viewDidLoad];
     
+    self.view.backgroundColor = UIColor.whiteColor;
+       
+    self.collectionView.backgroundColor = UIColor.whiteColor;
+          
+    self.collectionView.frame = CGRectMake(0, 0 , YYScreenWidth, YYScreenHeight - 80);
+      
+    self.collectionView.showsHorizontalScrollIndicator = NO;
+      
+    [self.collectionView registerClass:[InvitImgCollectionViewCell class] forCellWithReuseIdentifier:@"InvitImgCollectionViewCell"];
+      
+    [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
+      
+    UIButton * SaveBtn = [[UIButton alloc] initWithFrame:CGRectMake(12, YYScreenHeight - YYBarHeight - 70 , YYScreenWidth - 24 , 45)];
+    [SaveBtn addTarget:self action:@selector(SavePosterButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    SaveBtn.backgroundColor = YYHexColor(@"#FFD409");
+    [SaveBtn setTitleColor:YY22Color forState:UIControlStateNormal];
+    [SaveBtn setTitle:@"保存海报" forState:UIControlStateNormal];
+    [SaveBtn.titleLabel setFont :[UIFont fontWithName:@"Helvetica-Bold" size:16]];
+    [self.view addSubview:SaveBtn];
+    [YYTools ChangeView:SaveBtn RadiusSize:16 BorderColor:YYHexColor(@"#FFD409")];
+    
     [self GetPersonInVitNetWordData];
       
     
@@ -65,26 +86,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     
-   self.view.backgroundColor = UIColor.whiteColor;
-    
-   self.collectionView.backgroundColor = UIColor.whiteColor;
-       
-   self.collectionView.frame = CGRectMake(0, 0, YYScreenWidth, 1.3 * YYScreenWidth + 200);
-   
-   self.collectionView.showsHorizontalScrollIndicator = NO;
-   
-   [self.collectionView registerClass:[InvitImgCollectionViewCell class] forCellWithReuseIdentifier:@"InvitImgCollectionViewCell"];
-   
-   [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"headerId"];
-   
-   UIButton * SaveBtn = [[UIButton alloc] initWithFrame:CGRectMake(12, 1.3 * YYScreenWidth + 230 - YYBarHeight , YYScreenWidth - 24 , 45)];
-   [SaveBtn addTarget:self action:@selector(SavePosterButtonClick) forControlEvents:UIControlEventTouchUpInside];
-   SaveBtn.backgroundColor = YYHexColor(@"#FFD409");
-   [SaveBtn setTitleColor:YY22Color forState:UIControlStateNormal];
-   [SaveBtn setTitle:@"保存海报" forState:UIControlStateNormal];
-   [SaveBtn.titleLabel setFont :[UIFont fontWithName:@"Helvetica-Bold" size:16]];
-   [self.view addSubview:SaveBtn];
-   [YYTools ChangeView:SaveBtn RadiusSize:16 BorderColor:YYHexColor(@"#FFD409")];
+  
     
     
 }
@@ -94,13 +96,31 @@
 
 -(void)SavePosterButtonClick{
     
-    [self YYShowAlertViewTitle:@"保存海报"];
-    
-    
+    [self.PostersArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+         
+         NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:obj]];
+         UIImage * image = [UIImage imageWithData:data]; // 取得图片他
+         UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+         
+     }];
     
 }
 
+#pragma mark -- <保存到相册>
+-(void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
 
+    if(error){
+        
+        [self YYShowMessage: @"保存图片失败"];
+       
+    }else{
+    
+        [self YYShowMessage: @"保存图片成功"];
+        
+    }
+    
+    
+}
 
 
 #pragma mark <UICollectionViewDataSource>
@@ -148,7 +168,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
     
-       return (CGSize){0,0};
+      return (CGSize){0,0};
     
 }
 
@@ -179,7 +199,7 @@
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-      return UIEdgeInsetsMake(0, YYScreenWidth * 0.08, 40 , YYScreenWidth * 0.08);//上左下右
+      return UIEdgeInsetsMake(0, YYScreenWidth * 0.08, 0 , YYScreenWidth * 0.08);//上左下右
    
 }
 
@@ -197,11 +217,10 @@
 
 #pragma mark uiscrollview delegate
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
-{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     
   
-    YYNSLog(@"----------%f", scrollView.contentOffset.x);
+//     YYNSLog(@"----------%f",  scrollView.contentOffset.x );
  
 
     

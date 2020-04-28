@@ -252,8 +252,6 @@
     }
     
    
-    
-   
 }
 
 
@@ -309,6 +307,10 @@
         
         if(headerView == nil){
             headerView = [[UICollectionReusableView alloc] init];
+        }
+        
+        for (UIView *view in headerView.subviews) {
+             [view removeFromSuperview];
         }
         
         headerView.backgroundColor = YYBGColor;

@@ -212,7 +212,6 @@
         self.HeaderTopBlockClick(@"month_sales_asc");
     }
     
-    
 }
 
 

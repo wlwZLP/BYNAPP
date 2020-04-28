@@ -28,7 +28,7 @@ static int const HomelabelWith = 90;
 @property(nonatomic,strong)NSArray<BrandPlistModel*> * BrandTitleModelArray;
 
 /** 首页搜索空间 */
-@property (nonatomic, strong)UISearchBar * HomeSearchBar;
+@property (nonatomic, strong)UISearchBar * BrandSearchBar;
 
 @end
 
@@ -73,8 +73,9 @@ static int const HomelabelWith = 90;
 -(void)viewWillAppear:(BOOL)animated{
     
     [self.navigationController setNavigationBarHidden:YES animated:nil];
-   
     
+    self.BrandSearchBar.text = @"";
+   
 }
 
 
@@ -123,20 +124,20 @@ static int const HomelabelWith = 90;
     TopBarView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:TopBarView];
     
-    [TopBarView addSubview:self.HomeSearchBar];
+    [TopBarView addSubview:self.BrandSearchBar];
     
     UIButton * SearchBtn = [[UIButton alloc] initWithFrame:CGRectMake(YYScreenWidth - 125, YYStatusHeight + 6 , 66, 32)];
     SearchBtn.titleLabel.font = [UIFont systemFontOfSize:13.0];
     SearchBtn.backgroundColor = YYHexColor(@"#FFD409");
+    [SearchBtn addTarget:self action:@selector(BrandSearchBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [SearchBtn setTitleColor:YY66Color forState:UIControlStateNormal];
     [SearchBtn setTitle:@"搜索" forState:UIControlStateNormal];
     [SearchBtn.titleLabel setFont :[ UIFont fontWithName :@"Helvetica-Bold" size : 15]];
     [TopBarView addSubview:SearchBtn];
     [YYTools ChangeView:SearchBtn RadiusSize:16 BorderColor:YYHexColor(@"#FFD409")];
-    
+
     UIButton * HomeRightBtn = [[UIButton alloc]init];
     [HomeRightBtn setBackgroundImage:[UIImage imageNamed:@"HomeMes"] forState:UIControlStateNormal];
-    // frame
     HomeRightBtn.frame = CGRectMake(YYScreenWidth - 40 , YYStatusHeight + 10, 26, 24);
     [TopBarView addSubview:HomeRightBtn];
     
@@ -144,39 +145,59 @@ static int const HomelabelWith = 90;
 }
 
 
+-(void)BrandSearchBtnClick{
+    
+    if (self.BrandSearchBar.text.length == 0) {
+        
+        UITextField *textField = self.BrandSearchBar.BYNGetSearchTextFiled;
+        
+        [textField shake];
+        
+        return;
+    }
+    
+    BrandSearchCollectionViewController * Search = [[BrandSearchCollectionViewController alloc]init];
+    Search.title = @"搜索";
+    Search.SearchText = self.BrandSearchBar.text;
+    [self.navigationController pushViewController:Search animated:YES];
+    
+    
+    
+}
 
 /**
  *  懒加载UISearchBar
  *
  *  @return SalesSearchBar
  */
-- (UISearchBar *)HomeSearchBar
+-(UISearchBar *)BrandSearchBar
 {
     
-    if (_HomeSearchBar== nil) {
+    if (_BrandSearchBar== nil) {
         
-       _HomeSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, YYStatusHeight + 6 , YYScreenWidth - 100 , 32)];
-       _HomeSearchBar.backgroundColor = [UIColor colorWithRed:255/255.0 green:254/255.0 blue:248/255.0 alpha:1.0];
-       _HomeSearchBar.showsCancelButton = NO;
-       _HomeSearchBar.tintColor = [UIColor orangeColor];
-       _HomeSearchBar.backgroundImage = [UIImage imageWithColor:[UIColor clearColor]];
-       _HomeSearchBar.placeholder = @"粘贴标题，搜索优惠";
-       _HomeSearchBar.delegate = self;
-        _HomeSearchBar.searchBarStyle  = UISearchBarStyleProminent;
-       [YYTools ChangeView:_HomeSearchBar RadiusSize:10 BorderColor:YYHexColor(@"#FFD409")];
-        UITextField *textField = _HomeSearchBar.BYNGetSearchTextFiled;
-        textField.backgroundColor = [UIColor colorWithRed:255/255.0 green:254/255.0 blue:248/255.0 alpha:1.0];
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10 , 17 , 17)];
-        imageView.backgroundColor = [UIColor clearColor];
-        imageView.image = [UIImage imageNamed:@"HomeSearch"];
-        textField.leftView = imageView;
-        NSMutableAttributedString *arrStr = [[NSMutableAttributedString alloc]initWithString:textField.placeholder attributes:@{NSForegroundColorAttributeName:YY99Color,NSFontAttributeName:[UIFont systemFontOfSize:12]}];
-        textField.attributedPlaceholder = arrStr;
+       _BrandSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(10, YYStatusHeight + 6 , YYScreenWidth - 100 , 32)];
+       _BrandSearchBar.backgroundColor = [UIColor colorWithRed:255/255.0 green:254/255.0 blue:248/255.0 alpha:1.0];
+       _BrandSearchBar.showsCancelButton = NO;
+       _BrandSearchBar.tintColor = [UIColor orangeColor];
+       _BrandSearchBar.backgroundImage = [UIImage imageWithColor:[UIColor whiteColor]];
+       _BrandSearchBar.placeholder = @"粘贴标题，搜索优惠";
+       _BrandSearchBar.delegate = self;
+       _BrandSearchBar.searchBarStyle  = UISearchBarStyleProminent;
+       [YYTools ChangeView:_BrandSearchBar RadiusSize:10 BorderColor:YYHexColor(@"#FFD409")];
+        
+       UITextField *textField = _BrandSearchBar.BYNGetSearchTextFiled;
+       textField.backgroundColor = [UIColor colorWithRed:255/255.0 green:254/255.0 blue:248/255.0 alpha:1.0];
+       UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10 , 17 , 17)];
+       imageView.backgroundColor = [UIColor clearColor];
+       imageView.image = [UIImage imageNamed:@"HomeSearch"];
+       textField.leftView = imageView;
+       NSMutableAttributedString *arrStr = [[NSMutableAttributedString alloc]initWithString:textField.placeholder attributes:@{NSForegroundColorAttributeName:YY99Color,NSFontAttributeName:[UIFont systemFontOfSize:12]}];
+       textField.attributedPlaceholder = arrStr;
         
         
-    }
+   }
     
-    return _HomeSearchBar;
+    return _BrandSearchBar;
     
 }
 
@@ -212,7 +233,7 @@ static int const HomelabelWith = 90;
     TitlescrollView.bounces = YES;
     TitlescrollView.scrollsToTop = YES;
     [self.view addSubview:TitlescrollView];
-     self.titleScrollView = TitlescrollView;
+    self.titleScrollView = TitlescrollView;
     
     // 标题栏按钮
     [self setupTitleButtons];
@@ -413,14 +434,63 @@ static int const HomelabelWith = 90;
 #pragma mark - UISearchBardelegete
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
     
-    BrandSearchCollectionViewController * Search = [[BrandSearchCollectionViewController alloc]init];
-    Search.title = @"搜索";
-    [self.navigationController pushViewController:Search animated:YES];
-    return NO;
+
+    return YES;
+    
+}
+
+// return NO to not become first responder
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
+    
+    NSLog(@"编辑开始");
+    
+}
+
+// called when text starts editing
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar{
+    
+    return YES;
+}
+// return NO to not resign first responder
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+    
+    NSLog(@"编辑完成");
     
 }
 
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+
+    
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    
+     if (self.BrandSearchBar.text.length == 0) {
+           
+         UITextField *textField = self.BrandSearchBar.BYNGetSearchTextFiled;
+           
+         [textField shake];
+         
+         return;
+     }
+    
+     BrandSearchCollectionViewController * Search = [[BrandSearchCollectionViewController alloc]init];
+     Search.title = @"搜索";
+     Search.SearchText = self.BrandSearchBar.text;
+     [self.navigationController pushViewController:Search animated:YES];
+    
+}
+
+
+// called when keyboard search button pressed
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    
+    return YES;
+    
+    
+}
 
 
 

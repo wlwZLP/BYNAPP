@@ -12,9 +12,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface YYTeamHeadView : UIView
 
-@property (nonatomic,copy) void(^TopLeftBtnBlockClick)(void);
+@property(nonatomic,strong)UILabel * PeoPleNumLabel;
 
-@property (nonatomic,copy) void(^TopRightBlockClick)(void);
+@property(nonatomic,strong)UILabel * InvitMyPeoLabel;
+
+@property (nonatomic,copy) void(^MyTeamNavBtnBlockClick)(NSString * NavType);
+
+@property (nonatomic,copy) void(^MyTeamTopBlockClick)(NSString * SortType);
 
 
 @end

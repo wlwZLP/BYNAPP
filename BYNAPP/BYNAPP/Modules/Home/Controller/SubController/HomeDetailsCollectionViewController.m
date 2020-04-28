@@ -255,6 +255,17 @@
 #pragma mark ===============分享点击事件============
 -(void)ShareButtonClick{
     
+    NSString * ISLogin = [YYSaveTool GetCacheForKey:YYLogin];
+       
+    if ([ISLogin isEqualToString:@"0"]) {
+           
+        LoginCollectionViewController * LoginVc = [[LoginCollectionViewController alloc]init];
+        LoginVc.title = @"";
+        [self.navigationController pushViewController:LoginVc animated:YES];
+        return;
+           
+    }
+    
     [[LPAnimationView sharedMask]show:self.ShareView withType:QWAlertViewStyleActionSheetDown];
     
 }
@@ -262,6 +273,18 @@
 
 #pragma mark ===============购买点击事件=============
 -(void)BottomBuyButtonClick{
+    
+    
+    NSString * ISLogin = [YYSaveTool GetCacheForKey:YYLogin];
+       
+    if ([ISLogin isEqualToString:@"0"]) {
+           
+        LoginCollectionViewController * LoginVc = [[LoginCollectionViewController alloc]init];
+        LoginVc.title = @"";
+        [self.navigationController pushViewController:LoginVc animated:YES];
+        return;
+           
+    }
     
     NSString * IsNeed_oauth = EncodeStringFromDic(self.DetailsDic, @"need_oauth");
     

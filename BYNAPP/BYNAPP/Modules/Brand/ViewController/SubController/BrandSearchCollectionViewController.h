@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface BrandSearchCollectionViewController : YYBaseCollectionViewController
 
+@property(nonatomic,strong)NSString * SearchText;
+
 @end
 
 NS_ASSUME_NONNULL_END
